@@ -1,6 +1,6 @@
 import apiConfig from '../api/ApiConfig';
 
-const getUserToken = async (identifier, password) => {
+const getTokenUser = async (identifier, password) => {
   try {
     const { data } = await apiConfig.post('auth/local', { identifier, password });
 
@@ -10,4 +10,4 @@ const getUserToken = async (identifier, password) => {
   }
 };
 
-export default getUserToken;
+export default getTokenUser;
