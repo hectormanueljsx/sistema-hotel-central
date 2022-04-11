@@ -1,4 +1,4 @@
-import apiConfig from '../api/ApiConfig';
+import apiConfig from '../api/apiConfig';
 
 const getTokenUser = async (identifier, password) => {
   try {
