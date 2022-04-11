@@ -1,5 +1,7 @@
 import axios from 'axios';
 
-export default axios.create({
+const apiConfig = axios.create({
   baseURL: 'https://strapi-hotelcentral.herokuapp.com/',
 });
+
+export default apiConfig;
