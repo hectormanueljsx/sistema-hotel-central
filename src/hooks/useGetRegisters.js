@@ -5,30 +5,34 @@ import getTokenUser from '../services/getTokenUser';
 const useGetRegisters = (identifier, password, start, limit) => {
   const [registers, setRegisters] = useState([]);
   const [loading, setLoading] = useState(false);
+  const [error, setError] = useState(false);
 
   const endpoint = `registros?_start=${start}&_limit=${limit}&_sort=fecha:DESC`;
 
-  const getData = async () => {
-    setLoading(true);
-
+  const getRegisters = async () => {
     try {
+      setLoading(true);
+
       const userToken = await getTokenUser(identifier, password);
       const { data } = await apiConfig.get(endpoint, {
-        headers: { Authorization: `Bearer ${userToken}` },
+        headers: {
+          Authorization: `Bearer ${userToken}`,
+        },
       });
 
       setRegisters(data);
-      setLoading(false);
     } catch (error) {
-      return error;
+      setError(error);
+    } finally {
+      setLoading(false);
     }
   };
 
   useEffect(() => {
-    getData();
+    getRegisters();
   }, []);
 
-  return { registers, loading };
+  return { registers, loading, error };
 };
 
 export default useGetRegisters;
