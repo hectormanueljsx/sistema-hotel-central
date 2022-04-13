@@ -17,7 +17,6 @@ const useDelete = (identifier, password, endpoint, id) => {
           Authorization: `Bearer ${userToken}`,
         },
       });
-
     } catch (error) {
       setError(error);
     } finally {
