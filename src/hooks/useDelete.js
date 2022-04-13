@@ -11,7 +11,6 @@ const useDelete = (identifier, password, endpoint, id) => {
       setLoading(true);
 
       const userToken = await getTokenUser(identifier, password);
-
       const { data } = await apiConfig.delete(`${endpoint}/${id}`, {
         headers: {
           Authorization: `Bearer ${userToken}`,
