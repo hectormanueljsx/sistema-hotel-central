@@ -8,17 +8,13 @@ const usePostTarifa = (identifier, password, description, price, persons) => {
   const [error, setError] = useState(false);
 
   const endpoint = `tarifas`;
-  const dataTarifa = {
-    descripcion: description,
-    precio: price,
-    no_personas: persons,
-  };
+  const dataTarifa = { description, price, persons };
+
   const postTarifa = async () => {
     try {
       setLoading(true);
 
       const userToken = await getTokenUser(identifier, password);
-
       const { data } = await apiConfig.post(endpoint, dataTarifa, {
         headers: {
           Authorization: `Bearer ${userToken}`,
