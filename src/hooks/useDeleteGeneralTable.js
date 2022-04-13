@@ -2,7 +2,7 @@ import { useEffect, useState } from 'react';
 import apiConfig from '../api/apiConfig';
 import getTokenUser from '../services/getTokenUser';
 
-const useDelete = (identifier, password, endpoint, id) => {
+const useDeleteGeneralTable = (identifier, password, endpoint, id) => {
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState(false);
 
@@ -30,4 +30,4 @@ const useDelete = (identifier, password, endpoint, id) => {
   return { loading, error };
 };
 
-export default useDelete;
+export default useDeleteGeneralTable;
