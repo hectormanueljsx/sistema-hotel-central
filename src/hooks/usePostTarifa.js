@@ -7,7 +7,7 @@ const usePostTarifa = (identifier, password, description, price, persons) => {
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState(false);
 
-  const endpoint = `tarifas`;
+  const endpoint = 'tarifas';
   const dataTarifa = { description, price, persons };
 
   const postTarifa = async () => {
