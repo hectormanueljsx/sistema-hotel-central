@@ -6,7 +6,7 @@ const useDelete = (identifier, password, endpoint, id) => {
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState(false);
 
-  const getData = async () => {
+  const deleteData = async () => {
     try {
       setLoading(true);
 
@@ -24,7 +24,7 @@ const useDelete = (identifier, password, endpoint, id) => {
   };
 
   useEffect(() => {
-    getData();
+    deleteData();
   }, []);
 
   return { loading, error };
