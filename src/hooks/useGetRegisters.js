@@ -2,12 +2,10 @@ import { useEffect, useState } from 'react';
 import apiConfig from '../api/apiConfig';
 import getTokenUser from '../services/getTokenUser';
 
-const useGetRegisters = (identifier, password, start, limit) => {
+const useGetRegisters = (identifier, password, endpoint) => {
   const [registers, setRegisters] = useState([]);
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState(false);
-
-  const endpoint = `registros?_start=${start}&_limit=${limit}&_sort=fecha:DESC`;
 
   const getRegisters = async () => {
     try {
