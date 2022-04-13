@@ -2,23 +2,30 @@ import { useEffect, useState } from 'react';
 import apiConfig from '../api/apiConfig';
 import getTokenUser from '../services/getTokenUser';
 
-const useGetData = (identifier, password, endpoint) => {
-  const [list, setList] = useState([]);
+const usePostRoom = (identifier, password, clima, tv, hab_tarifas) => {
+  const [room, setRoom] = useState([]);
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState(false);
 
-  const getData = async () => {
+  const endpoint = `habitacions`;
+  const dataRoom = {
+    clima,
+    tv,
+    hab_tarifas,
+  };
+
+  const postRoom = async () => {
     try {
       setLoading(true);
 
       const userToken = await getTokenUser(identifier, password);
-      const { data } = await apiConfig.get(endpoint, {
+      const { data } = await apiConfig.post(endpoint, dataRoom, {
         headers: {
           Authorization: `Bearer ${userToken}`,
         },
       });
 
-      setList(data);
+      setRoom(data);
     } catch (error) {
       setError(error);
     } finally {
@@ -27,10 +34,10 @@ const useGetData = (identifier, password, endpoint) => {
   };
 
   useEffect(() => {
-    getData();
+    postRoom();
   }, []);
 
-  return { list, loading, error };
+  return { room, loading, error };
 };
 
-export default useGetData;
+export default usePostRoom;
