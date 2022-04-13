@@ -12,7 +12,6 @@ const useGetData = (identifier, password, endpoint) => {
       setLoading(true);
 
       const userToken = await getTokenUser(identifier, password);
-
       const { data } = await apiConfig.get(endpoint, {
         headers: {
           Authorization: `Bearer ${userToken}`,
