@@ -7,12 +7,8 @@ const usePostRoom = (identifier, password, clima, tv, hab_tarifas) => {
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState(false);
 
-  const endpoint = `habitacions`;
-  const dataRoom = {
-    clima,
-    tv,
-    hab_tarifas,
-  };
+  const endpoint = 'habitacions';
+  const dataRoom = { clima, tv, hab_tarifas };
 
   const postRoom = async () => {
     try {
