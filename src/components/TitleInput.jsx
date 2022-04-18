@@ -1,9 +1,11 @@
 import React from 'react';
 import { Typography } from '@mui/material';
 
+import { stylesTitleInput } from './stylesGlobals';
+
 const TitleInput = ({ titleInput }) => {
   return (
-    <Typography component='p' sx={{ fontWeight: 500, marginBottom: 0.5 }}>
+    <Typography component='p' sx={stylesTitleInput}>
       {titleInput}
     </Typography>
   );
