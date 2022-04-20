@@ -2,25 +2,25 @@ import React from 'react';
 import {
   Box,
   Button,
+  Checkbox,
   Container,
   CssBaseline,
   FormControl,
+  FormControlLabel,
   Select,
   TextField,
-  FormControlLabel,
-  Checkbox,
 } from '@mui/material';
 import SaveIcon from '@mui/icons-material/Save';
+
 import TitlePage from '../../TitlePage';
 import TitleInput from '../../TitleInput';
-import { stylesContainerBox, stylesContainerInput, stylesContainerSection } from '../stylesCaja';
-import useGetGeneralTable from '../../../hooks/useGetGeneralTable';
+import { stylesContainerBox, stylesContainerInput, stylesContainerSection } from '../stylesEgresos';
 
-const FormCreateGasto = () => {
+const FormCreateEgresos = () => {
   return (
-    <Container component='section' sx={[stylesContainerSection, { width: 400 }]}>
+    <Container component='section' sx={[stylesContainerSection, { width: 400, height: 655.02 }]}>
       <CssBaseline />
-      <TitlePage titlePage='Registrar Gasto' />
+      <TitlePage titlePage='Registro de Gasto' />
       <Box component='form' sx={stylesContainerBox}>
         <Box component='div' sx={stylesContainerInput}>
           <TitleInput titleInput='Concepto' />
@@ -40,10 +40,11 @@ const FormCreateGasto = () => {
           <TextField variant='outlined' type='text' margin='none' size='small' placeholder='$0.00' required fullWidth />
         </Box>
         <Box component='div' sx={stylesContainerInput}>
-          <FormControlLabel control={<Checkbox />} label='Con Factura' />
+          <TitleInput titleInput='Con factura' />
+          <FormControlLabel control={<Checkbox disableRipple sx={{ padding: 0, paddingLeft: 1 }} />} />
         </Box>
         <Box component='div' sx={stylesContainerInput}>
-          <TitleInput titleInput='Forma de Pago' />
+          <TitleInput titleInput='Forma de pago' />
           <FormControl fullWidth>
             <Select size='small'></Select>
           </FormControl>
@@ -61,11 +62,11 @@ const FormCreateGasto = () => {
           </FormControl>
         </Box>
         <Button variant='contained' size='large' startIcon={<SaveIcon />} sx={{ marginTop: 2 }}>
-          Registrar
+          Registrar Gasto
         </Button>
       </Box>
     </Container>
   );
 };
 
-export default FormCreateGasto;
+export default FormCreateEgresos;
