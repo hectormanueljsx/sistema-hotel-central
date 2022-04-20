@@ -1,19 +1,19 @@
 import { useEffect, useState } from 'react';
+
 import apiConfig from '../api/apiConfig';
 import getTokenUser from '../services/getTokenUser';
 
-const usePostGeneralTable = (identifier, password, endpoint, dataGeneral) => {
+const usePostGeneralTable = (identifier, password, endpoint, generalData) => {
   const [general, setGeneral] = useState([]);
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState(false);
 
-
-  const postGeneral= async () => {
+  const postData = async () => {
     try {
       setLoading(true);
 
       const userToken = await getTokenUser(identifier, password);
-      const { data } = await apiConfig.post(endpoint, dataGeneral, {
+      const { data } = await apiConfig.post(endpoint, generalData, {
         headers: {
           Authorization: `Bearer ${userToken}`,
         },
@@ -28,7 +28,7 @@ const usePostGeneralTable = (identifier, password, endpoint, dataGeneral) => {
   };
 
   useEffect(() => {
-    postGeneral();
+    postData();
   }, []);
 
   return { general, loading, error };
