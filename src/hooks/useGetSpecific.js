@@ -2,7 +2,7 @@ import { useEffect, useState } from 'react';
 import apiConfig from '../api/apiConfig';
 import getTokenUser from '../services/getTokenUser';
 
-const useGetGeneralTable = (identifier, password, endpoint, atribute, parameter) => {
+const useGetSpecific = (identifier, password, endpoint, attribute, params) => {
   const [list, setList] = useState([]);
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState(false);
@@ -12,7 +12,7 @@ const useGetGeneralTable = (identifier, password, endpoint, atribute, parameter)
       setLoading(true);
 
       const userToken = await getTokenUser(identifier, password);
-      const { data } = await apiConfig.get(`${endpoint}?${atribute}=${parameter}`, {
+      const { data } = await apiConfig.get(`${endpoint}?${attribute}=${params}`, {
         headers: {
           Authorization: `Bearer ${userToken}`,
         },
@@ -33,4 +33,4 @@ const useGetGeneralTable = (identifier, password, endpoint, atribute, parameter)
   return { list, loading, error };
 };
 
-export default useGetGeneralTable;
+export default useGetSpecific;
