@@ -4,7 +4,7 @@ import { Box, Container, CssBaseline } from '@mui/material';
 import FormCreateEgresos from './FormCreateEgresos';
 import TableViewEgresos from './TableViewEgresos';
 
-const Gastos = () => {
+const Egresos = () => {
   return (
     <Container maxWidth='xl'>
       <CssBaseline />
@@ -16,4 +16,4 @@ const Gastos = () => {
   );
 };
 
-export default Gastos;
+export default Egresos;
