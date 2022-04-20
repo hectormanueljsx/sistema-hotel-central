@@ -1,18 +1,19 @@
 import { useEffect, useState } from 'react';
+
 import apiConfig from '../api/apiConfig';
 import getTokenUser from '../services/getTokenUser';
 
-const usePutGeneralTable = (identifier, password, endpoint, dataGeneral, id) => {
+const usePutGeneralTable = (identifier, password, endpoint, id, generalData) => {
   const [general, setGeneral] = useState([]);
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState(false);
 
-  const putGeneral = async () => {
+  const putData = async () => {
     try {
       setLoading(true);
       const userToken = await getTokenUser(identifier, password);
 
-      const { data } = await apiConfig.put(`${endpoint}/${id}`, dataGeneral, {
+      const { data } = await apiConfig.put(`${endpoint}/${id}`, generalData, {
         headers: {
           Authorization: `Bearer ${userToken}`,
         },
@@ -27,7 +28,7 @@ const usePutGeneralTable = (identifier, password, endpoint, dataGeneral, id) => 
   };
 
   useEffect(() => {
-    putGeneral();
+    putData();
   }, []);
 
   return { general, loading, error };
