@@ -14,7 +14,7 @@ import SaveIcon from '@mui/icons-material/Save';
 
 import TitlePage from '../../TitlePage';
 import TitleInput from '../../TitleInput';
-import { stylesContainerBox, stylesContainerInput, stylesContainerSection } from '../stylesEgresos';
+import { stylesContainerBox, stylesContainerInput, stylesContainerSection } from '../stylesCaja';
 
 const FormCreateEgresos = () => {
   return (
