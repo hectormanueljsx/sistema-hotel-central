@@ -51,7 +51,6 @@ const FormCreateCategoriaEgresos = () => {
               placeholder='Recepcionista'
               required
               fullWidth
-              autoFocus
             />
           </Box>
           <Button variant='contained' size='large' startIcon={<SaveIcon />} sx={{ marginTop: 2 }}>
