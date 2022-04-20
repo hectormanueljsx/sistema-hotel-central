@@ -17,4 +17,8 @@ const stylesContainerInput = {
   marginBottom: 2,
 };
 
-export { stylesContainerSection, stylesContainerBox, stylesContainerInput };
+const stylesTableCell = {
+  padding: 1,
+};
+
+export { stylesContainerSection, stylesContainerBox, stylesContainerInput, stylesTableCell };
