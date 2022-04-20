@@ -8,7 +8,7 @@ import { stylesContainerBox, stylesContainerInput, stylesContainerSection } from
 
 const FormCreateCategoriaEgresos = () => {
   return (
-    <>
+    <Container component='section' sx={{ display: 'flex', flexDirection: 'column', width: 400 }}>
       <Container component='section' sx={[stylesContainerSection, { width: 400, height: 250.25 }]}>
         <CssBaseline />
         <TitlePage titlePage='Registro de Categoría' />
@@ -58,7 +58,7 @@ const FormCreateCategoriaEgresos = () => {
           </Button>
         </Box>
       </Container>
-    </>
+    </Container>
   );
 };
 
