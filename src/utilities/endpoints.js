@@ -23,7 +23,7 @@ const generalEndpoints = {
 
 const historicalEndpoints = {
   historicoCajas: 'cajas?_sort=fecha_caja:DESC_start=',
-  historicoEgresos: 'egresos?_sort=fecha_egreso:DESC_start=0',
+  historicoEgresos: 'egresos?_sort=fecha_egreso:DESC_start=',
   historicoReservaciones: 'reservacions?_sort=fecha_reservacion:DESC_start=',
   historicoFacturados: 'facturados?_sort=fecha_facturado:DESC_start=',
   historicoPagos: 'pagos?_sort=fecha_pago:DESC_start=',
