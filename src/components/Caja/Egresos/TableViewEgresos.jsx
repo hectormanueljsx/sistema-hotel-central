@@ -15,12 +15,12 @@ import TitlePage from '../../TitlePage';
 import { stylesContainerSection, stylesTableCell } from '../stylesCaja';
 
 const columns = [
-  { id: 'num_gasto', label: 'N° Gasto', width: 120 },
-  { id: 'fecha', label: 'Fecha', width: 280 },
+  { id: 'num_gasto', label: 'N° Gasto', width: 140 },
+  { id: 'fecha', label: 'Fecha', width: 200 },
   { id: 'concepto', label: 'Concepto', width: 200 },
   { id: 'categoria', label: 'Categoria', width: 200 },
-  { id: 'importe', label: 'Importe', width: 100 },
-  { id: 'detalle', label: 'Detalle', width: 100 },
+  { id: 'importe', label: 'Importe', width: 112 },
+  { id: 'acciones', label: 'Acciones', width: 100 },
 ];
 
 const TableViewEgresos = () => {
