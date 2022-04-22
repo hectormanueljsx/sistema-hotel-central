@@ -25,7 +25,7 @@ const TableViewUsuarios = () => {
   return (
     <Container component='section' sx={[stylesContainerSection, { width: 1000 }]}>
       <CssBaseline />
-      <TitlePage titlePage='Lista de Tarifas' />
+      <TitlePage titlePage='Lista de Usuarios' />
       <Box component='div'>
         <TableContainer>
           <Table>
