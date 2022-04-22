@@ -15,7 +15,7 @@ import TitlePage from '../../TitlePage';
 import { stylesContainerSection, stylesTableCell } from '../stylesCaja';
 
 const columns = [
-  { id: 'desc_categoria', label: 'Descripción Categoría', width: 400 },
+  { id: 'desc_categoria', label: 'Descripción Categoría', width: 352 },
   { id: 'desc_subcategoria', label: 'Descripción Subcategoría', width: 600 },
 ];
 
