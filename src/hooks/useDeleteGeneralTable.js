@@ -1,7 +1,7 @@
 import { useEffect, useState } from 'react';
 
-import apiConfig from '../api/apiConfig';
-import getTokenUser from '../services/getTokenUser';
+import apiConfig from '@/api/apiConfig';
+import getTokenUser from '@/services/getTokenUser';
 
 const useDeleteGeneralTable = (identifier, password, endpoint, id) => {
   const [loading, setLoading] = useState(false);
