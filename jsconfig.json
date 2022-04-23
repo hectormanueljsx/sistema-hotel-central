@@ -3,7 +3,7 @@
     "strict": true,
     "baseUrl": ".",
     "paths": {
-      "@/*": [ "./src/*" ],
+      "@/*": ["./src/*"],
       "@/api/*": ["./src/api/*"],
       "@/components/*": ["./src/components/*"],
       "@/hooks/*": ["./src/hooks/*"],
