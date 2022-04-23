@@ -11,8 +11,8 @@ import {
   TableRow,
 } from '@mui/material';
 
-import TitlePage from '../../TitlePage';
-import { stylesContainerSection, stylesTableCell } from '../stylesHabitaciones';
+import TitlePage from '@/components/TitlePage';
+import { stylesContainerSection, stylesTableCell } from '@/habitaciones/stylesHabitaciones';
 
 const columns = [
   { id: 'desc_tarifa', label: 'Descripción Tarifa', width: 432 },
