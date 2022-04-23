@@ -1,6 +1,7 @@
 import { useEffect, useState } from 'react';
-import apiConfig from '../api/apiConfig';
-import getTokenUser from '../services/getTokenUser';
+
+import apiConfig from '@/api/apiConfig';
+import getTokenUser from '@/services/getTokenUser';
 
 const useGetSpecific = (identifier, password, endpoint, attribute, value) => {
   const [list, setList] = useState([]);
