@@ -6,6 +6,8 @@
       "@/*": ["./src/*"],
       "@/api/*": ["./src/api/*"],
       "@/components/*": ["./src/components/*"],
+      "@/caja/*": ["./src/components/Caja/*"],
+      "@/habitaciones/*": ["./src/components/Habitaciones/*"],
       "@/hooks/*": ["./src/hooks/*"],
       "@/services/*": ["./src/services/*"],
       "@/utilities/*": ["./src/utilities/*"]
