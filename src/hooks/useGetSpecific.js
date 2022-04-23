@@ -2,7 +2,7 @@ import { useEffect, useState } from 'react';
 import apiConfig from '../api/apiConfig';
 import getTokenUser from '../services/getTokenUser';
 
-const useGetSpecific = (identifier, password, endpoint, attribute, params) => {
+const useGetSpecific = (identifier, password, endpoint, attribute, value) => {
   const [list, setList] = useState([]);
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState(false);
@@ -12,7 +12,7 @@ const useGetSpecific = (identifier, password, endpoint, attribute, params) => {
       setLoading(true);
 
       const userToken = await getTokenUser(identifier, password);
-      const { data } = await apiConfig.get(`${endpoint}?${attribute}=${params}`, {
+      const { data } = await apiConfig.get(`${endpoint}?${attribute}=${value}`, {
         headers: {
           Authorization: `Bearer ${userToken}`,
         },
