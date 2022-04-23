@@ -1,7 +1,7 @@
 import { useEffect, useState } from 'react';
 
-import apiConfig from '../api/apiConfig';
-import getTokenUser from '../services/getTokenUser';
+import apiConfig from '@/api/apiConfig';
+import getTokenUser from '@/services/getTokenUser';
 
 const usePutGeneralTable = (identifier, password, endpoint, id, generalData) => {
   const [general, setGeneral] = useState([]);
