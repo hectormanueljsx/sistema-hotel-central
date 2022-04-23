@@ -1,17 +1,9 @@
 {
   "compilerOptions": {
-    "strict": true,
     "baseUrl": ".",
+    "strict": true,
     "paths": {
-      "@/*": ["./src/*"],
-      "@/api/*": ["./src/api/*"],
-      "@/components/*": ["./src/components/*"],
-      "@/caja/*": ["./src/components/Caja/*"],
-      "@/habitaciones/*": ["./src/components/Habitaciones/*"],
-      "@/hooks/*": ["./src/hooks/*"],
-      "@/services/*": ["./src/services/*"],
-      "@/utilities/*": ["./src/utilities/*"]
+      "@/*": ["./src/*"]
     }
-  },
-  "exclude": ["node_modules"]
+  }
 }
