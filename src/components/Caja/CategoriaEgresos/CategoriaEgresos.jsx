@@ -1,8 +1,8 @@
 import React from 'react';
 import { Box, Container, CssBaseline } from '@mui/material';
 
-import FormCreateCategoriaEgresos from './FormCreateCategoriaEgresos';
-import TableViewCategoriaEgresos from './TableViewCategoriaEgresos';
+import FormCreateCategoriaEgresos from '@/components/Caja/CategoriaEgresos/FormCreateCategoriaEgresos';
+import TableViewCategoriaEgresos from '@/components/Caja/CategoriaEgresos/TableViewCategoriaEgresos';
 
 const CategoriaEgresos = () => {
   return (

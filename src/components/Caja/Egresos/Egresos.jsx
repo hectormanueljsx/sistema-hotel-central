@@ -1,8 +1,8 @@
 import React from 'react';
 import { Box, Container, CssBaseline } from '@mui/material';
 
-import FormCreateEgresos from './FormCreateEgresos';
-import TableViewEgresos from './TableViewEgresos';
+import FormCreateEgresos from '@/components/Caja/Egresos/FormCreateEgresos';
+import TableViewEgresos from '@/components/Caja/Egresos/TableViewEgresos';
 
 const Egresos = () => {
   return (

@@ -11,8 +11,8 @@ import {
   TableRow,
 } from '@mui/material';
 
-import TitlePage from '../../TitlePage';
-import { stylesContainerSection, stylesTableCell } from '../stylesCaja';
+import TitlePage from '@/components/TitlePage';
+import { stylesContainerSection, stylesTableCell } from '@/components/Caja/stylesCaja';
 
 const columns = [
   { id: 'desc_categoria', label: 'Descripción Categoría', width: 352 },

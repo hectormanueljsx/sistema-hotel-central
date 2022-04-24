@@ -2,9 +2,9 @@ import React from 'react';
 import { Box, Button, Container, CssBaseline, FormControl, Select, TextField } from '@mui/material';
 import SaveIcon from '@mui/icons-material/Save';
 
-import TitlePage from '../../TitlePage';
-import TitleInput from '../../TitleInput';
-import { stylesContainerBox, stylesContainerInput, stylesContainerSection } from '../stylesCaja';
+import TitlePage from '@/components/TitlePage';
+import TitleInput from '@/components/TitleInput';
+import { stylesContainerBox, stylesContainerInput, stylesContainerSection } from '@/components/Caja/stylesCaja';
 
 const FormCreateCategoriaEgresos = () => {
   return (
