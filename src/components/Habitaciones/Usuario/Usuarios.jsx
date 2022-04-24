@@ -1,8 +1,8 @@
 import React from 'react';
 import { Box, Container, CssBaseline } from '@mui/material';
 
-import FormCreateUsuario from './FormCreateUsuario';
-import TableViewUsuarios from './TableViewUsuarios';
+import FormCreateUsuario from '@/components/Habitaciones/Usuario/FormCreateUsuario';
+import TableViewUsuarios from '@/components/Habitaciones/Usuario/TableViewUsuarios';
 
 const Usuarios = () => {
   return (

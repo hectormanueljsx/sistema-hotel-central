@@ -4,7 +4,11 @@ import SaveIcon from '@mui/icons-material/Save';
 
 import TitlePage from '@/components/TitlePage';
 import TitleInput from '@/components/TitleInput';
-import { stylesContainerBox, stylesContainerInput, stylesContainerSection } from '@/habitaciones/stylesHabitaciones';
+import {
+  stylesContainerBox,
+  stylesContainerInput,
+  stylesContainerSection,
+} from '@/components/Habitaciones/stylesHabitaciones';
 
 const FormCreateTarifa = () => {
   return (

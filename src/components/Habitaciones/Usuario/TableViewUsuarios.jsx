@@ -11,8 +11,8 @@ import {
   TableRow,
 } from '@mui/material';
 
-import TitlePage from '../../TitlePage';
-import { stylesContainerSection, stylesTableCell } from '../stylesHabitaciones';
+import TitlePage from '@/components/TitlePage';
+import { stylesContainerSection, stylesTableCell } from '@/components/Habitaciones/stylesHabitaciones';
 
 const columns = [
   { id: 'nombre', label: 'Nombre', width: 412 },

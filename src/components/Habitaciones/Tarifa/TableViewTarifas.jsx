@@ -12,7 +12,7 @@ import {
 } from '@mui/material';
 
 import TitlePage from '@/components/TitlePage';
-import { stylesContainerSection, stylesTableCell } from '@/habitaciones/stylesHabitaciones';
+import { stylesContainerSection, stylesTableCell } from '@/components/Habitaciones/stylesHabitaciones';
 
 const columns = [
   { id: 'desc_tarifa', label: 'Descripción Tarifa', width: 432 },
