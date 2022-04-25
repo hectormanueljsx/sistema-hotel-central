@@ -1,19 +1,19 @@
 import React from 'react';
 import { Box, Container, CssBaseline } from '@mui/material';
 
-import FormConsultEgresos from './FormConsultEgresos'
-import TableViewEgresos from './TableViewEgresos';
+import FormEgresos from '@/components/Reportes/Egresos/FormEgresos';
+import TableViewEgresos from '@/components/Reportes/Egresos/TableViewEgresos';
 
-const Anticipo = () => {
+const Egresos = () => {
   return (
     <Container maxWidth='xl'>
       <CssBaseline />
       <Box sx={{ display: 'flex' }}>
-        <FormConsultEgresos />
+        <FormEgresos />
         <TableViewEgresos />
       </Box>
     </Container>
   );
 };
 
-export default Anticipo;
+export default Egresos;
