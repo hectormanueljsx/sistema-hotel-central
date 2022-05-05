@@ -14,8 +14,8 @@ import {
 const FormCreateCategoriaEgresos = () => {
   return (
     <Container component='section' disableGutters sx={stylesContainerDoubleForm}>
+      <CssBaseline />
       <Container component='section' sx={[stylesContainerSection, { height: 250.25 }]}>
-        <CssBaseline />
         <TitlePage titlePage='Registro de Categoría' />
         <Box component='form' sx={stylesContainerBox}>
           <Box component='div' sx={stylesContainerInput}>
@@ -37,7 +37,6 @@ const FormCreateCategoriaEgresos = () => {
         </Box>
       </Container>
       <Container component='section' sx={[stylesContainerSection, { height: 334.25 }]}>
-        <CssBaseline />
         <TitlePage titlePage='Registro de Subcategoría' />
         <Box component='form' sx={stylesContainerBox}>
           <Box component='div' sx={stylesContainerInput}>
