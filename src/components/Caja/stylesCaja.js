@@ -1,3 +1,9 @@
+const stylesContainerDoubleForm = {
+  display: 'flex',
+  flexDirection: 'column',
+  width: 400,
+};
+
 const stylesContainerSection = {
   backgroundColor: '#ffffff',
   borderRadius: 1,
@@ -21,4 +27,4 @@ const stylesTableCell = {
   padding: 1,
 };
 
-export { stylesContainerSection, stylesContainerBox, stylesContainerInput, stylesTableCell };
+export { stylesContainerDoubleForm, stylesContainerSection, stylesContainerBox, stylesContainerInput, stylesTableCell };
