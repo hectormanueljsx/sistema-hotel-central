@@ -6,7 +6,7 @@ import TableViewCategoriaEgresos from '@/components/Caja/CategoriaEgresos/TableV
 
 const CategoriaEgresos = () => {
   return (
-    <Container maxWidth='xl'>
+    <Container component='section' disableGutters maxWidth='xl'>
       <CssBaseline />
       <Box sx={{ display: 'flex' }}>
         <FormCreateCategoriaEgresos />
