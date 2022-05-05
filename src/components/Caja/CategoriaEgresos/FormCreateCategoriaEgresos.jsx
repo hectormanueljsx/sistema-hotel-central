@@ -4,12 +4,17 @@ import SaveIcon from '@mui/icons-material/Save';
 
 import TitlePage from '@/components/TitlePage';
 import TitleInput from '@/components/TitleInput';
-import { stylesContainerBox, stylesContainerInput, stylesContainerSection } from '@/components/Caja/stylesCaja';
+import {
+  stylesContainerDoubleForm,
+  stylesContainerBox,
+  stylesContainerInput,
+  stylesContainerSection,
+} from '@/components/Caja/stylesCaja';
 
 const FormCreateCategoriaEgresos = () => {
   return (
-    <Container component='section' sx={{ display: 'flex', flexDirection: 'column', width: 400 }}>
-      <Container component='section' sx={[stylesContainerSection, { width: 400, height: 250.25 }]}>
+    <Container component='section' disableGutters sx={stylesContainerDoubleForm}>
+      <Container component='section' sx={[stylesContainerSection, { height: 250.25 }]}>
         <CssBaseline />
         <TitlePage titlePage='Registro de Categoría' />
         <Box component='form' sx={stylesContainerBox}>
@@ -31,7 +36,7 @@ const FormCreateCategoriaEgresos = () => {
           </Button>
         </Box>
       </Container>
-      <Container component='section' sx={[stylesContainerSection, { width: 400, height: 334.25 }]}>
+      <Container component='section' sx={[stylesContainerSection, { height: 334.25 }]}>
         <CssBaseline />
         <TitlePage titlePage='Registro de Subcategoría' />
         <Box component='form' sx={stylesContainerBox}>
