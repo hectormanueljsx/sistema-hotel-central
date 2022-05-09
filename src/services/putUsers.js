@@ -1,5 +1,5 @@
-import apiConfig from '../api/apiConfig';
-import getTokenUser from './getTokenUser';
+import apiConfig from '@/api/apiConfig';
+import getTokenUser from '@/services/getTokenUser';
 
 const putUsers = async (identifier, password, dataUser, dataRole) => {
   try {
