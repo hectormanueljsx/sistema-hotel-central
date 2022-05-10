@@ -43,7 +43,7 @@ const TableViewTarifas = () => {
   const { list, loading, error } = useGetGeneralTable(identifier, password, endpoint);
 
   return (
-    <Container component='section' sx={[stylesContainerSection, { width: 1000, height: 571.16 }]}>
+    <Container component='section' disableGutters sx={[stylesContainerSection, { width: 1000, height: 571.16 }]}>
       <CssBaseline />
       <TitlePage titlePage='Lista de Tarifas' />
       <Box component='div'>
