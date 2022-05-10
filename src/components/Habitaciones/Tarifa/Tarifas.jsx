@@ -6,7 +6,7 @@ import TableViewTarifas from '@/components/Habitaciones/Tarifa/TableViewTarifas'
 
 const Tarifas = () => {
   return (
-    <Container maxWidth='xl'>
+    <Container component='section' disableGutters maxWidth='xl'>
       <CssBaseline />
       <Box sx={{ display: 'flex' }}>
         <FormCreateTarifa />
