@@ -30,7 +30,7 @@ const TableViewCategoriaEgresos = () => {
   const { list, loading, error } = useGetGeneralTable(identifier, password, endpoint);
 
   return (
-    <Container component='section' sx={[stylesContainerSection, { width: 1000 }]}>
+    <Container component='section' disableGutters sx={[stylesContainerSection, { width: 1000 }]}>
       <CssBaseline />
       <TitlePage titlePage='Lista de Categorías Registradas' />
       <Box component='div'>
