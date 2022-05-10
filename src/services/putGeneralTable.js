@@ -16,4 +16,4 @@ const putGeneralTable = async (identifier, password, endpoint, id, generalData) 
   }
 };
 
-export { putGeneralTable };
+export default putGeneralTable;

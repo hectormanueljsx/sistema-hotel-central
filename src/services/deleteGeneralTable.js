@@ -16,4 +16,4 @@ const deleteGeneralTable = async (identifier, password, endpoint, id) => {
   }
 };
 
-export { deleteGeneralTable };
+export default deleteGeneralTable;

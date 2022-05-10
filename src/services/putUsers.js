@@ -22,4 +22,4 @@ const putUsers = async (identifier, password, endpoint, idUser, dataUser, dataRo
   }
 };
 
-export { putUsers };
+export default putUsers;

@@ -16,4 +16,4 @@ const postGeneralTable = async (identifier, password, endpoint, generalData) => 
   }
 };
 
-export { postGeneralTable };
+export default postGeneralTable;
