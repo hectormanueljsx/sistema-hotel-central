@@ -22,4 +22,4 @@ const postUsers = async (identifier, password, endpoint, dataUser, dataRole) => 
   }
 };
 
-export default postUsers;
+export { postUsers };
