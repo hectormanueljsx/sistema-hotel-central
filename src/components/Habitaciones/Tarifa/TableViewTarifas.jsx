@@ -13,6 +13,8 @@ import {
 
 import TitlePage from '@/components/TitlePage';
 import { stylesContainerSection, stylesTableCell } from '@/components/Habitaciones/stylesHabitaciones';
+import useGetGeneralTable from '@/hooks/useGetGeneralTable';
+import { generalEndpoints } from '../../../utilities/endpoints';
 
 const columns = [
   { id: 'desc_tarifa', label: 'Descripción Tarifa', width: 432 },
@@ -22,6 +24,13 @@ const columns = [
 ];
 
 const TableViewTarifas = () => {
+  const identifier = 'test@email.com';
+  const password = 'Test123';
+  const endpoint = generalEndpoints.tarifa;
+
+  const { list, loading, error } = useGetGeneralTable(identifier, password, endpoint);
+  console.log(list);
+
   return (
     <Container component='section' sx={[stylesContainerSection, { width: 1000 }]}>
       <CssBaseline />
@@ -39,12 +48,16 @@ const TableViewTarifas = () => {
               </TableRow>
             </TableHead>
             <TableBody>
-              <TableRow>
-                <TableCell sx={stylesTableCell}>AUXILIAR PROMO</TableCell>
-                <TableCell sx={stylesTableCell}>1</TableCell>
-                <TableCell sx={stylesTableCell}>400</TableCell>
-                <TableCell sx={stylesTableCell}>Acciones</TableCell>
-              </TableRow>
+              {list.map((item, index) => {
+                const { descripcion, no_personas, precio } = item;
+                return (
+                  <TableRow key={index}>
+                    <TableCell sx={stylesTableCell}>{descripcion}</TableCell>
+                    <TableCell sx={stylesTableCell}>{no_personas}</TableCell>
+                    <TableCell sx={stylesTableCell}>{precio}</TableCell>
+                  </TableRow>
+                );
+              })}
             </TableBody>
           </Table>
         </TableContainer>
