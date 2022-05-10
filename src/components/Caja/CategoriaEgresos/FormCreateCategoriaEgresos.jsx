@@ -1,9 +1,11 @@
-import React from 'react';
-import { Box, Button, Container, CssBaseline, FormControl, Select, TextField } from '@mui/material';
+import React, { useState } from 'react';
+import { Box, Button, Container, CssBaseline, FormControl, MenuItem, Select, TextField } from '@mui/material';
 import SaveIcon from '@mui/icons-material/Save';
 
 import TitlePage from '@/components/TitlePage';
 import TitleInput from '@/components/TitleInput';
+import useGetGeneralTable from '@/hooks/useGetGeneralTable';
+import { generalEndpoints } from '@/utilities/endpoints';
 import {
   stylesContainerDoubleForm,
   stylesContainerBox,
@@ -12,6 +14,18 @@ import {
 } from '@/components/Caja/stylesCaja';
 
 const FormCreateCategoriaEgresos = () => {
+  const [options, setOptions] = useState('');
+
+  const handleChange = event => {
+    setOptions(event.target.value);
+  };
+
+  const identifier = 'test@email.com';
+  const password = 'Test123';
+  const endpoint = generalEndpoints.categoria;
+
+  const { list, loading, error } = useGetGeneralTable(identifier, password, endpoint);
+
   return (
     <Container component='section' disableGutters sx={stylesContainerDoubleForm}>
       <CssBaseline />
@@ -42,7 +56,17 @@ const FormCreateCategoriaEgresos = () => {
           <Box component='div' sx={stylesContainerInput}>
             <TitleInput titleInput='Seleccione categoría' />
             <FormControl fullWidth>
-              <Select size='small'></Select>
+              <Select size='small' value={options} onChange={handleChange}>
+                {list.map((item, index) => {
+                  const { categoria } = item;
+
+                  return (
+                    <MenuItem key={index} value={categoria}>
+                      {categoria}
+                    </MenuItem>
+                  );
+                })}
+              </Select>
             </FormControl>
           </Box>
           <Box component='div' sx={stylesContainerInput}>
