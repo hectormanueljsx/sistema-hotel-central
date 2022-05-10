@@ -25,9 +25,9 @@ const TableViewCategoriaEgresos = () => {
   const password = 'Test123';
   const endpoint = generalEndpoints.categoria;
 
-  const { list, loading, error } = useGetGeneralTable(identifier, password, endpoint);
-
   const handleChange = panel => (event, isExpanded) => setExpanded(isExpanded ? panel : false);
+
+  const { list, loading, error } = useGetGeneralTable(identifier, password, endpoint);
 
   return (
     <Container component='section' sx={[stylesContainerSection, { width: 1000 }]}>
