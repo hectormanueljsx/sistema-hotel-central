@@ -3,6 +3,7 @@ import {
   Box,
   Container,
   CssBaseline,
+  IconButton,
   Table,
   TableBody,
   TableCell,
@@ -11,18 +12,21 @@ import {
   TablePagination,
   TableRow,
 } from '@mui/material';
+import RemoveRedEyeIcon from '@mui/icons-material/RemoveRedEye';
+import DeleteIcon from '@mui/icons-material/Delete';
 
 import TitlePage from '@/components/TitlePage';
 import Loader from '@/components/Utilities/Loader';
 import useGetGeneralTable from '@/hooks/useGetGeneralTable';
+import deleteGeneralTable from '@/services/deleteGeneralTable';
 import { generalEndpoints } from '@/utilities/endpoints';
 import { stylesContainerSection, stylesTableCell } from '@/components/Habitaciones/stylesHabitaciones';
 
 const columns = [
   { id: 'desc_tarifa', label: 'Descripción Tarifa', width: 432 },
-  { id: 'num_personas', label: 'Número de Personas', width: 160 },
-  { id: 'precio_aplicado', label: 'Precio Aplicado', width: 160 },
-  { id: 'acciones', label: 'Acciones', width: 200 },
+  { id: 'num_personas', label: 'Número de Personas', width: 210 },
+  { id: 'precio_aplicado', label: 'Precio Aplicado', width: 210 },
+  { id: 'acciones', label: 'Acciones', width: 100 },
 ];
 
 const TableViewTarifas = () => {
@@ -40,10 +44,15 @@ const TableViewTarifas = () => {
     setPage(0);
   };
 
+  const deleteRegistro = async id => {
+    await deleteGeneralTable(identifier, password, endpoint, id);
+    location.reload();
+  };
+
   const { list, loading, error } = useGetGeneralTable(identifier, password, endpoint);
 
   return (
-    <Container component='section' disableGutters sx={[stylesContainerSection, { width: 1000, height: 571.16 }]}>
+    <Container component='section' disableGutters sx={[stylesContainerSection, { width: 1000, height: 711 }]}>
       <CssBaseline />
       <TitlePage titlePage='Lista de Tarifas' />
       <Box component='div'>
@@ -63,13 +72,26 @@ const TableViewTarifas = () => {
             </TableHead>
             <TableBody>
               {list.slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage).map((item, index) => {
-                const { descripcion, no_personas, precio } = item;
+                const { id, descripcion, no_personas, precio } = item;
                 return (
                   <TableRow key={index}>
                     <TableCell sx={stylesTableCell}>{descripcion}</TableCell>
                     <TableCell sx={stylesTableCell}>{no_personas}</TableCell>
                     <TableCell sx={stylesTableCell}>{precio}</TableCell>
-                    <TableCell sx={stylesTableCell}></TableCell>
+                    <TableCell sx={stylesTableCell}>
+                      <IconButton color='info' size='small'>
+                        <RemoveRedEyeIcon />
+                      </IconButton>
+                      <IconButton
+                        color='error'
+                        size='small'
+                        onClick={() => {
+                          deleteRegistro(id);
+                        }}
+                      >
+                        <DeleteIcon />
+                      </IconButton>
+                    </TableCell>
                   </TableRow>
                 );
               })}
