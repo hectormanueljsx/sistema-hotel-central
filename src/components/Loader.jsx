@@ -1,7 +1,7 @@
 import React from 'react';
 import { Box, CircularProgress, CssBaseline } from '@mui/material';
 
-import { stylesLoaderRender } from '@/components/Utilities/stylesUtilities';
+import { stylesLoaderRender } from '@/components/stylesGlobals';
 
 const Loader = () => {
   return (
