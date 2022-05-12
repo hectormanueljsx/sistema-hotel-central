@@ -24,9 +24,9 @@ import { stylesContainerSection, stylesTableCell } from '@/components/Habitacion
 
 const columns = [
   { id: 'desc_tarifa', label: 'Descripción Tarifa', width: 432 },
-  { id: 'num_personas', label: 'Número de Personas', width: 210 },
-  { id: 'precio_aplicado', label: 'Precio Aplicado', width: 210 },
-  { id: 'acciones', label: 'Acciones', width: 100 },
+  { id: 'num_personas', label: 'Número de Personas', width: 160 },
+  { id: 'precio_aplicado', label: 'Precio Aplicado', width: 160 },
+  { id: 'acciones', label: 'Acciones', width: 200 },
 ];
 
 const TableViewTarifas = () => {
