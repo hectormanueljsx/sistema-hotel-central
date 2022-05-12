@@ -92,7 +92,6 @@ const FormCreateUsuario = () => {
             placeholder='Email'
             required
             fullWidth
-            autoFocus
           />
         </Box>
         <Box component='div' sx={stylesContainerInput}>
