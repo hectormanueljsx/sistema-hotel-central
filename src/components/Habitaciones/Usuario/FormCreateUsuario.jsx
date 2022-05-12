@@ -1,11 +1,11 @@
 import React, { useState } from 'react';
-import { Box, Button, Container, CssBaseline, TextField, Checkbox, FormControlLabel } from '@mui/material';
+import { Box, Button, Checkbox, Container, CssBaseline, FormControlLabel, TextField } from '@mui/material';
 import SaveIcon from '@mui/icons-material/Save';
 
 import TitlePage from '@/components/TitlePage';
 import TitleInput from '@/components/TitleInput';
-import { generalEndpoints } from '@/utilities/endpoints';
 import postUsers from '@/services/postUsers';
+import { generalEndpoints } from '@/utilities/endpoints';
 import {
   stylesContainerBox,
   stylesContainerInput,
@@ -25,9 +25,7 @@ const FormCreateUsuario = () => {
   const password = 'Test123';
   const endpoint = generalEndpoints.usuario;
 
-  const handleInputChange = event => {
-    setDatos({ ...datos, [event.target.name]: event.target.value });
-  };
+  const handleInputChange = event => setDatos({ ...datos, [event.target.name]: event.target.value });
 
   const sendDatos = async event => {
     event.preventDefault();
@@ -35,8 +33,14 @@ const FormCreateUsuario = () => {
     const confirmed = true;
     const blocked = true;
 
-    if (datos.password == datos.confirm) {
-      if (datos.username && datos.password && datos.email && datos.confirm && rol) {
+    if (datos.password.trim() == datos.confirm.trim()) {
+      if (
+        datos.username.trim().length > 0 &&
+        datos.password.trim().length > 0 &&
+        datos.email.trim().length > 0 &&
+        datos.confirm.trim().length > 0 &&
+        rol
+      ) {
         const dataUser = {
           username: datos.username,
           password: datos.password,
@@ -57,7 +61,7 @@ const FormCreateUsuario = () => {
   };
 
   return (
-    <Container component='section' disableGutters sx={[stylesContainerSection, { width: 400, height: 625.25 }]}>
+    <Container component='section' disableGutters sx={[stylesContainerSection, { width: 400, height: 630.25 }]}>
       <CssBaseline />
       <TitlePage titlePage='Registro de Nuevo Usuario' />
       <Box component='form' sx={stylesContainerBox}>
