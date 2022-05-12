@@ -2,7 +2,6 @@ import React from 'react';
 import { Box, Container, CssBaseline } from '@mui/material';
 
 import TableViewHabitacionPendiente from '@/components/Reportes/Habitacion/TableViewHabitacionPendiente';
-import FormSearchHabitacionPendiente from '@/components/Reportes/Habitacion/FormSearchHabitacionPendiente';
 
 const HabitacionPendiente = () => {
   return (
@@ -10,7 +9,6 @@ const HabitacionPendiente = () => {
       <CssBaseline />
       <Box sx={{ display: 'flex' }}>
         <TableViewHabitacionPendiente />
-        <FormSearchHabitacionPendiente />
       </Box>
     </Container>
   );
