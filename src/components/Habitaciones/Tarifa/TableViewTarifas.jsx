@@ -83,13 +83,7 @@ const TableViewTarifas = () => {
                       <IconButton color='info' size='small'>
                         <RemoveRedEyeIcon />
                       </IconButton>
-                      <IconButton
-                        color='error'
-                        size='small'
-                        onClick={() => {
-                          deleteRegistro(id);
-                        }}
-                      >
+                      <IconButton color='error' size='small' onClick={() => deleteRegistro(id)}>
                         <DeleteIcon />
                       </IconButton>
                     </TableCell>
