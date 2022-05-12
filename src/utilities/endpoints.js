@@ -33,6 +33,7 @@ const historicalEndpoints = {
   historicoMantenimientos: 'mantenimientos?_sort=fecha_mantenimiento:DESC_start=',
   historicoTransferencias: 'transferencias?_sort=fecha_transferencia:DESC_start=',
   historicoRegistros: 'registros?_sort=fecha_registro:DESC_start=',
+  historicoHistorial: 'historials?_sort=fecha_hosp:DESC&_start=',
 };
 
 export { generalEndpoints, historicalEndpoints };
