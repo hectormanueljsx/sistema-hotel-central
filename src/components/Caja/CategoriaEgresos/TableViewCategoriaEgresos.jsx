@@ -13,7 +13,7 @@ import ExpandMore from '@mui/icons-material/ExpandMore';
 import ArrowRightIcon from '@mui/icons-material/ArrowRight';
 
 import TitlePage from '@/components/TitlePage';
-import Loader from '@/components/Utilities/Loader';
+import Loader from '@/components/Loader';
 import useGetGeneralTable from '@/hooks/useGetGeneralTable';
 import { generalEndpoints } from '@/utilities/endpoints';
 import { stylesContainerSection } from '@/components/Caja/stylesCaja';
