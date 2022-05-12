@@ -9,16 +9,14 @@ import {
   TableCell,
   TableContainer,
   TableHead,
-  TableRow,
   TablePagination,
+  TableRow,
 } from '@mui/material';
-
 import RemoveRedEyeIcon from '@mui/icons-material/RemoveRedEye';
 import DeleteIcon from '@mui/icons-material/Delete';
 
 import TitlePage from '@/components/TitlePage';
 import Loader from '@/components/Utilities/Loader';
-
 import useGetGeneralTable from '@/hooks/useGetGeneralTable';
 import deleteGeneralTable from '@/services/deleteGeneralTable';
 import { generalEndpoints } from '@/utilities/endpoints';
@@ -54,7 +52,7 @@ const TableViewUsuarios = () => {
   const { list, loading, error } = useGetGeneralTable(identifier, password, endpoint);
 
   return (
-    <Container component='section' disableGutters sx={[stylesContainerSection, { width: 1000 }]}>
+    <Container component='section' disableGutters sx={[stylesContainerSection, { width: 1000, height: 711 }]}>
       <CssBaseline />
       <TitlePage titlePage='Lista de Usuarios' />
       <Box component='div'>
@@ -63,17 +61,20 @@ const TableViewUsuarios = () => {
           <Table>
             <TableHead>
               <TableRow>
-                {columns.map((column, index) => (
-                  <TableCell key={index} sx={[stylesTableCell, { width: column.width }]}>
-                    {column.label}
-                  </TableCell>
-                ))}
+                {loading
+                  ? null
+                  : columns.map((column, index) => (
+                      <TableCell key={index} sx={[stylesTableCell, { width: column.width }]}>
+                        {column.label}
+                      </TableCell>
+                    ))}
               </TableRow>
             </TableHead>
             <TableBody>
               {list.slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage).map((item, index) => {
                 const { id, username, role, ult_ingreso } = item;
                 const { name } = role;
+
                 return (
                   <TableRow key={index}>
                     <TableCell sx={stylesTableCell}>{username}</TableCell>
