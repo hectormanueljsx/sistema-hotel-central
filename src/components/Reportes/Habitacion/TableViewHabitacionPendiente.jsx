@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState } from 'react';
 import {
   Box,
   Container,
@@ -8,15 +8,19 @@ import {
   TableCell,
   TableContainer,
   TableHead,
+  TablePagination,
   TableRow,
   TextField,
 } from '@mui/material';
 
 import TitlePage from '@/components/TitlePage';
+import Loader from '@/components/Loader';
+import useGetGeneralTable from '@/hooks/useGetGeneralTable';
+import { historicalEndpoints } from '@/utilities/endpoints';
 import { stylesContainerSection, stylesTableCell, stylesContainerInput } from '@/components/Reportes/stylesReportes';
 
 const columns = [
-  { id: 'num_registro', label: 'N° de Registro', width: 100 }, //
+  { id: 'num_registro', label: 'N° de Registro', width: 100 },
   { id: 'llegada', label: 'Llegada', width: 130 },
   { id: 'salida', label: 'Salida', width: 130 },
   { id: 'cliente', label: 'Cliente', width: 350 },
@@ -27,6 +31,23 @@ const columns = [
 ];
 
 const TableViewHabitacionPendiente = () => {
+  const [page, setPage] = useState(0);
+  const [rowsPerPage, setRowsPerPage] = useState(10);
+
+  const identifier = 'test@email.com';
+  const password = 'Test123';
+  const start = '0';
+  const endpoint = `${historicalEndpoints.historicoHistorial}${start}`;
+
+  const handleChangePage = (event, newPage) => setPage(newPage);
+
+  const handleChangeRowsPerPage = event => {
+    setRowsPerPage(+event.target.value);
+    setPage(0);
+  };
+
+  const { list, loading, error } = useGetGeneralTable(identifier, password, endpoint);
+
   return (
     <Container component='section' disableGutters maxWidth='xl' sx={[stylesContainerSection, { width: 1400 }]}>
       <CssBaseline />
@@ -44,31 +65,62 @@ const TableViewHabitacionPendiente = () => {
         />
       </Box>
       <Box component='div'>
+        {loading && <Loader />}
         <TableContainer>
           <Table>
             <TableHead>
               <TableRow>
-                {columns.map((column, index) => (
-                  <TableCell key={index} sx={[stylesTableCell, { width: column.width }]}>
-                    {column.label}
-                  </TableCell>
-                ))}
+                {loading
+                  ? null
+                  : columns.map((column, index) => (
+                      <TableCell key={index} sx={[stylesTableCell, { width: column.width }]}>
+                        {column.label}
+                      </TableCell>
+                    ))}
               </TableRow>
             </TableHead>
             <TableBody>
-              <TableRow>
-                <TableCell sx={stylesTableCell}>206062</TableCell>
-                <TableCell sx={stylesTableCell}>23-02-2022</TableCell>
-                <TableCell sx={stylesTableCell}>24-02-2022</TableCell>
-                <TableCell sx={stylesTableCell}>RUFINO YTURBE SANTIAGO</TableCell>
-                <TableCell sx={stylesTableCell}>10,220.00</TableCell>
-                <TableCell sx={stylesTableCell}>7,480.00</TableCell>
-                <TableCell sx={stylesTableCell}>1590.00</TableCell>
-                <TableCell sx={stylesTableCell}>CHECK-OUT</TableCell>
-              </TableRow>
+              {list.slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage).map((item, index) => {
+                const {
+                  id,
+                  fecha_hosp,
+                  tarifa,
+                  pagado,
+                  registro: {
+                    fecha_salida,
+                    estado,
+                    cliente: { nombre },
+                  },
+                } = item;
+
+                return (
+                  <TableRow key={index}>
+                    <TableCell sx={stylesTableCell}>{id}</TableCell>
+                    <TableCell sx={stylesTableCell}>{fecha_hosp}</TableCell>
+                    <TableCell sx={stylesTableCell}>{fecha_salida}</TableCell>
+                    <TableCell sx={stylesTableCell}>{nombre}</TableCell>
+                    <TableCell sx={stylesTableCell}>{tarifa}.00</TableCell>
+                    <TableCell sx={stylesTableCell}>{pagado}.00</TableCell>
+                    <TableCell sx={stylesTableCell}>{tarifa - pagado}.00</TableCell>
+                    <TableCell sx={stylesTableCell}>{estado === '0' ? 'CHECK-OUT' : 'CHECK-IN'}</TableCell>
+                  </TableRow>
+                );
+              })}
             </TableBody>
           </Table>
         </TableContainer>
+        {loading ? null : (
+          <TablePagination
+            rowsPerPageOptions={[]}
+            component='div'
+            count={list.length}
+            rowsPerPage={rowsPerPage}
+            page={page}
+            onPageChange={handleChangePage}
+            onRowsPerPageChange={handleChangeRowsPerPage}
+            labelDisplayedRows={({ from, to, count }) => `${from}-${to} de ${count}`}
+          />
+        )}
       </Box>
     </Container>
   );
