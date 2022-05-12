@@ -6,7 +6,7 @@ import TableViewUsuarios from '@/components/Habitaciones/Usuario/TableViewUsuari
 
 const Usuarios = () => {
   return (
-    <Container maxWidth='xl'>
+    <Container component='section' disableGutters maxWidth='xl'>
       <CssBaseline />
       <Box sx={{ display: 'flex' }}>
         <FormCreateUsuario />
