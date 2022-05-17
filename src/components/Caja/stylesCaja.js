@@ -23,8 +23,21 @@ const stylesContainerInput = {
   marginBottom: 2,
 };
 
+const stylesAccordion = {
+  display: 'flex',
+  alignItems: 'center',
+  justifyContent: 'space-between',
+};
+
 const stylesTableCell = {
   padding: 1,
 };
 
-export { stylesContainerDoubleForm, stylesContainerSection, stylesContainerBox, stylesContainerInput, stylesTableCell };
+export {
+  stylesContainerDoubleForm,
+  stylesContainerSection,
+  stylesContainerBox,
+  stylesContainerInput,
+  stylesAccordion,
+  stylesTableCell,
+};
