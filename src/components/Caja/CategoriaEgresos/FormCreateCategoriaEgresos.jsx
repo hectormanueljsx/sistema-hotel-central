@@ -15,18 +15,16 @@ import {
 } from '@/components/Caja/stylesCaja';
 
 const FormCreateCategoriaEgresos = () => {
-  const [options, setOptions] = useState('');
   const [categoria, setCategoria] = useState('');
-  const [Subcategoria, setSubcategoria] = useState('');
+  const [options, setOptions] = useState('');
+  const [subcategoria, setSubcategoria] = useState('');
 
   const identifier = 'test@email.com';
   const password = 'Test123';
   const endpointCategory = generalEndpoints.categoria;
   const endpointSubcategory = generalEndpoints.subcategoria;
 
-  const handleChange = event => {
-    setOptions(event.target.value);
-  };
+  const handleChange = event => setOptions(event.target.value);
 
   const handleInputChangeCategoria = event => setCategoria(event.target.value);
 
@@ -36,34 +34,33 @@ const FormCreateCategoriaEgresos = () => {
     event.preventDefault();
 
     if (categoria.trim().length > 0) {
-      const categoryData = {
-        categoria: categoria.toUpperCase(),
-      };
+      const categoryData = { categoria: categoria.toUpperCase() };
 
       await postGeneralTable(identifier, password, endpointCategory, categoryData);
       location.reload();
     } else {
-      alert('Por favor, llene el campo de categoria');
+      alert('Por favor, rellene el campo de categoria');
     }
   };
 
-  const sendDatosSubCategoria = async event => {
+  const sendDatosSubcategoria = async event => {
     event.preventDefault();
 
-    if (Subcategoria.trim().length > 0) {
+    if (options && subcategoria.trim().length > 0) {
       const subcategoryData = {
-        descripcion: Subcategoria.toUpperCase(),
+        descripcion: subcategoria.toUpperCase(),
         categoria: { id: options },
       };
 
       await postGeneralTable(identifier, password, endpointSubcategory, subcategoryData);
       location.reload();
     } else {
-      alert('Por favor escoja una categoria y  llene el campo de subcategoria');
+      alert('Por favor, seleccione una categoria y/o rellene el campo de subcategoria');
     }
   };
 
   const { list, loading, error } = useGetGeneralTable(identifier, password, endpointCategory);
+
   return (
     <Container component='section' disableGutters sx={stylesContainerDoubleForm}>
       <CssBaseline />
@@ -131,7 +128,7 @@ const FormCreateCategoriaEgresos = () => {
           </Box>
           <Button
             variant='contained'
-            onClick={sendDatosSubCategoria}
+            onClick={sendDatosSubcategoria}
             size='large'
             startIcon={<SaveIcon />}
             sx={{ marginTop: 2 }}
