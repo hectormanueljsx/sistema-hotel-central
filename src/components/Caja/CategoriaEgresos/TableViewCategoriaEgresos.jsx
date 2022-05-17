@@ -3,6 +3,7 @@ import {
   Accordion,
   AccordionDetails,
   AccordionSummary,
+  IconButton,
   Box,
   Container,
   CssBaseline,
@@ -11,10 +12,12 @@ import {
 } from '@mui/material';
 import ExpandMore from '@mui/icons-material/ExpandMore';
 import ArrowRightIcon from '@mui/icons-material/ArrowRight';
+import DeleteIcon from '@mui/icons-material/Delete';
 
 import TitlePage from '@/components/TitlePage';
 import Loader from '@/components/Loader';
 import useGetGeneralTable from '@/hooks/useGetGeneralTable';
+import deleteGeneralTable from '@/services/deleteGeneralTable';
 import { generalEndpoints } from '@/utilities/endpoints';
 import { stylesContainerSection } from '@/components/Caja/stylesCaja';
 
@@ -23,11 +26,24 @@ const TableViewCategoriaEgresos = () => {
 
   const identifier = 'test@email.com';
   const password = 'Test123';
-  const endpoint = generalEndpoints.categoria;
+  const endpointCategoria = generalEndpoints.categoria;
+  const endpointSubategoria = generalEndpoints.subcategoria;
 
   const handleChange = panel => (event, isExpanded) => setExpanded(isExpanded ? panel : false);
 
-  const { list, loading, error } = useGetGeneralTable(identifier, password, endpoint);
+  const { list, loading, error } = useGetGeneralTable(identifier, password, endpointCategoria);
+
+  const deleteSubcategoria = async id => {
+    await deleteGeneralTable(identifier, password, endpointSubategoria, id);
+    location.reload();
+  };
+
+  const deleteCategoria = async (id, subcategoria) => {
+    subcategoria == 0
+      ? await deleteGeneralTable(identifier, password, endpointCategoria, id)
+      : alert('No se puede eliminar una categoria con subcategorias');
+    location.reload();
+  };
 
   return (
     <Container component='section' disableGutters sx={[stylesContainerSection, { width: 1000 }]}>
@@ -36,7 +52,7 @@ const TableViewCategoriaEgresos = () => {
       <Box component='div'>
         {loading && <Loader />}
         {list.map((item, index) => {
-          const { categoria, subcategorias } = item;
+          const { categoria, subcategorias, id } = item;
 
           return (
             <Accordion key={index} expanded={expanded === `panel${index}`} onChange={handleChange(`panel${index}`)}>
@@ -44,6 +60,9 @@ const TableViewCategoriaEgresos = () => {
                 <Typography key={index} sx={{ fontWeight: '700' }}>
                   {categoria}
                 </Typography>
+                <IconButton color='error' size='small' onClick={() => deleteCategoria(id, subcategorias.length)}>
+                  <DeleteIcon />
+                </IconButton>
               </AccordionSummary>
               {subcategorias.map((value, idx) => {
                 return (
@@ -57,6 +76,9 @@ const TableViewCategoriaEgresos = () => {
                     <Typography key={idx} sx={{ fontWeight: '300' }}>
                       {value.descripcion}
                     </Typography>
+                    <IconButton color='error' size='small' onClick={() => deleteSubcategoria(value.id)}>
+                      <DeleteIcon />
+                    </IconButton>
                   </AccordionDetails>
                 );
               })}
