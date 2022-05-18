@@ -1,10 +1,10 @@
 import React, { useState } from 'react';
 import { Box, Button, Checkbox, Container, CssBaseline, FormControlLabel, TextField } from '@mui/material';
-import SaveIcon from '@mui/icons-material/Save';
+import UpdateRoundedIcon from '@mui/icons-material/UpdateRounded';
 
 import TitlePage from '@/components/TitlePage';
 import TitleInput from '@/components/TitleInput';
-import postUsers from '@/services/postUsers';
+import putUsers from '@/services/putUsers';
 import { generalEndpoints } from '@/utilities/endpoints';
 import {
   stylesContainerBox,
@@ -12,52 +12,69 @@ import {
   stylesContainerSection,
 } from '@/components/Habitaciones/stylesHabitaciones';
 
-const FormCreateUsuario = () => {
-  const [datos, setDatos] = useState({
-    username: '',
-    password: '',
-    email: '',
-    confirm: '',
+const UpdateUsuario = dataUsers => {
+  const [data, setData] = useState({
+    username: dataUsers.datos.username,
+    password: dataUsers.datos.identifier,
+    email: dataUsers.datos.email,
+    confirm: dataUsers.datos.confirm,
   });
-  const [rol, setRol] = useState('');
+  const [rol, setRol] = useState(dataUsers.datos.role.id);
 
   const identifier = 'test@email.com';
   const password = 'Test123';
   const endpoint = generalEndpoints.usuario;
 
+  const handleInputChange = event => setData({ ...data, [event.target.name]: event.target.value });
   const handleCheckbox = e => setRol(e.target.value);
-  const handleInputChange = event => setDatos({ ...datos, [event.target.name]: event.target.value });
 
-  const sendDatos = async event => {
+  let rolAdmin = false;
+  let rolRecepcion = false;
+  let rolEncargado = false;
+  if (rol === 4) {
+    rolAdmin = true;
+  } else if (rol === 3) {
+    rolRecepcion = true;
+  } else if (rol == 5) {
+    rolEncargado = true;
+  }
+
+  const updateDatos = async event => {
     event.preventDefault();
 
     const confirmed = true;
     const blocked = true;
+    let dataUser = '';
+    let dataRole = '';
 
-    if (datos.password.trim() == datos.confirm.trim()) {
-      if (
-        datos.username.trim().length > 0 &&
-        datos.password.trim().length > 0 &&
-        datos.email.trim().length > 0 &&
-        datos.confirm.trim().length > 0 &&
-        rol
-      ) {
-        const dataUser = {
-          username: datos.username,
-          password: datos.password,
-          email: datos.email,
+    if (data.username && data.email && rol) {
+      if (data.password) {
+        if (data.password == data.confirm) {
+          dataUser = {
+            username: data.username,
+            password: data.password,
+            email: data.email,
+            confirmed,
+            blocked,
+          };
+          dataRole = { role: { id: rol } };
+        } else {
+          alert('Las contraseñas no coinciden');
+        }
+      } else {
+        dataUser = {
+          username: data.username,
+          email: data.email,
           confirmed,
           blocked,
         };
-        const dataRole = { role: { id: rol } };
-
-        await postUsers(identifier, password, endpoint, dataUser, dataRole);
-        location.reload();
-      } else {
-        alert('Por favor, llene todos los campos');
+        dataRole = { role: { id: rol } };
       }
+
+      await putUsers(identifier, password, endpoint, dataUsers.datos.id, dataUser, dataRole);
+      location.reload();
     } else {
-      alert('Las contraseñas no coinciden');
+      alert('Por favor, llene todos los campos');
     }
   };
 
@@ -69,6 +86,7 @@ const FormCreateUsuario = () => {
         <Box component='div' sx={stylesContainerInput}>
           <TitleInput titleInput='Nombre de usuario' />
           <TextField
+            defaultValue={dataUsers.datos.username}
             onChange={handleInputChange}
             name='username'
             variant='outlined'
@@ -84,6 +102,7 @@ const FormCreateUsuario = () => {
         <Box component='div' sx={stylesContainerInput}>
           <TitleInput titleInput='Correo Electronico' />
           <TextField
+            defaultValue={dataUsers.datos.email}
             onChange={handleInputChange}
             name='email'
             variant='outlined'
@@ -104,7 +123,7 @@ const FormCreateUsuario = () => {
             type='password'
             margin='none'
             size='small'
-            placeholder='Contraseña'
+            placeholder='Nueva Contraseña'
             required
             fullWidth
           />
@@ -126,24 +145,30 @@ const FormCreateUsuario = () => {
         <Box component='div' sx={stylesContainerInput}>
           <TitleInput titleInput='Selecciona un rol' />
           <FormControlLabel
-            control={<Checkbox name='admin' value={'4'} onChange={handleCheckbox} />}
+            control={<Checkbox name='admin' checked={rolAdmin} value={'4'} onChange={handleCheckbox} />}
             label='Administrador'
           />
           <FormControlLabel
-            control={<Checkbox name='recepcion' value={'3'} onChange={handleCheckbox} />}
+            control={<Checkbox name='recepcion' checked={rolRecepcion} value={'3'} onChange={handleCheckbox} />}
             label='Recepcionista'
           />
           <FormControlLabel
-            control={<Checkbox name='encargado' value={'5'} onChange={handleCheckbox} />}
+            control={<Checkbox name='encargado' checked={rolEncargado} value={'5'} onChange={handleCheckbox} />}
             label='Encargado'
           />
         </Box>
-        <Button variant='contained' onClick={sendDatos} size='large' startIcon={<SaveIcon />} sx={{ marginTop: 2 }}>
-          Registrar Usuario
+        <Button
+          variant='contained'
+          onClick={updateDatos}
+          size='large'
+          startIcon={<UpdateRoundedIcon />}
+          sx={{ marginTop: 2 }}
+        >
+          Actualizar Usuario
         </Button>
       </Box>
     </Container>
   );
 };
 
-export default FormCreateUsuario;
+export default UpdateUsuario;

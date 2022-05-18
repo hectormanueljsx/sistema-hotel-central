@@ -11,14 +11,17 @@ import {
   TableHead,
   TablePagination,
   TableRow,
+  Modal,
 } from '@mui/material';
-import RemoveRedEyeIcon from '@mui/icons-material/RemoveRedEye';
+
+import EditRoundedIcon from '@mui/icons-material/EditRounded';
 import DeleteIcon from '@mui/icons-material/Delete';
 
 import TitlePage from '@/components/TitlePage';
 import Loader from '@/components/Loader';
 import useGetGeneralTable from '@/hooks/useGetGeneralTable';
 import deleteGeneralTable from '@/services/deleteGeneralTable';
+import UpdateTarifas from './UpdateTarifa';
 import { generalEndpoints } from '@/utilities/endpoints';
 import { stylesContainerSection, stylesTableCell } from '@/components/Habitaciones/stylesHabitaciones';
 
@@ -32,6 +35,14 @@ const columns = [
 const TableViewTarifas = () => {
   const [page, setPage] = useState(0);
   const [rowsPerPage, setRowsPerPage] = useState(10);
+  const [open, setOpen] = useState(false);
+  const [dataTarifa, setDataTarifa] = useState('');
+
+  const handleOpen = item => {
+    setOpen(true);
+    setDataTarifa(item);
+  };
+  const handleClose = () => setOpen(false);
 
   const identifier = 'test@email.com';
   const password = 'Test123';
@@ -80,8 +91,8 @@ const TableViewTarifas = () => {
                     <TableCell sx={stylesTableCell}>{no_personas}</TableCell>
                     <TableCell sx={stylesTableCell}>{precio}</TableCell>
                     <TableCell sx={stylesTableCell}>
-                      <IconButton color='info' size='small'>
-                        <RemoveRedEyeIcon />
+                      <IconButton color='info' size='small' onClick={() => handleOpen(item)}>
+                        <EditRoundedIcon />
                       </IconButton>
                       <IconButton color='error' size='small' onClick={() => deleteRegistro(id)}>
                         <DeleteIcon />
@@ -106,6 +117,11 @@ const TableViewTarifas = () => {
           />
         )}
       </Box>
+      <Modal open={open} onClose={handleClose}>
+        <Box sx={{ top: '50%', left: '50%' }}>
+          <UpdateTarifas datos={dataTarifa} />
+        </Box>
+      </Modal>
     </Container>
   );
 };
