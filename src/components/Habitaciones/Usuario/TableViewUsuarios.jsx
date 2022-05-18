@@ -11,14 +11,16 @@ import {
   TableHead,
   TablePagination,
   TableRow,
+  Modal,
 } from '@mui/material';
-import RemoveRedEyeIcon from '@mui/icons-material/RemoveRedEye';
+import EditRoundedIcon from '@mui/icons-material/EditRounded';
 import DeleteIcon from '@mui/icons-material/Delete';
 
 import TitlePage from '@/components/TitlePage';
 import Loader from '@/components/Loader';
 import useGetGeneralTable from '@/hooks/useGetGeneralTable';
 import deleteGeneralTable from '@/services/deleteGeneralTable';
+import UpdateUsuario from './UpdateUsuario';
 import { generalEndpoints } from '@/utilities/endpoints';
 import { stylesContainerSection, stylesTableCell } from '@/components/Habitaciones/stylesHabitaciones';
 
@@ -32,6 +34,14 @@ const columns = [
 const TableViewUsuarios = () => {
   const [page, setPage] = useState(0);
   const [rowsPerPage, setRowsPerPage] = useState(10);
+  const [open, setOpen] = useState(false);
+  const [dataUser, setDataUser] = useState('');
+
+  const handleOpen = (item) => {
+    setOpen(true);
+    setDataUser(item);
+  };
+  const handleClose = () => setOpen(false);
 
   const identifier = 'test@email.com';
   const password = 'Test123';
@@ -72,7 +82,7 @@ const TableViewUsuarios = () => {
             </TableHead>
             <TableBody>
               {list.slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage).map((item, index) => {
-                const { id, username, role, ult_ingreso } = item;
+                const { id, username, role, ult_ingreso, identifier } = item;
                 const { name } = role;
 
                 return (
@@ -81,8 +91,8 @@ const TableViewUsuarios = () => {
                     <TableCell sx={stylesTableCell}>{name}</TableCell>
                     <TableCell sx={stylesTableCell}>{ult_ingreso}</TableCell>
                     <TableCell sx={stylesTableCell}>
-                      <IconButton color='info' size='small'>
-                        <RemoveRedEyeIcon />
+                      <IconButton color='info' size='small' onClick={() => handleOpen(item)}>
+                        <EditRoundedIcon />
                       </IconButton>
                       <IconButton color='error' size='small' onClick={() => deleteRegistro(id)}>
                         <DeleteIcon />
@@ -107,6 +117,11 @@ const TableViewUsuarios = () => {
           />
         )}
       </Box>
+      <Modal open={open} onClose={handleClose}>
+        <Box sx={{ top: '50%', left: '50%' }}>
+          <UpdateUsuario datos={(dataUser)} />
+        </Box>
+      </Modal>
     </Container>
   );
 };
