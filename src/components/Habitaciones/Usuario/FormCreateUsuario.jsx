@@ -25,6 +25,7 @@ const FormCreateUsuario = () => {
   const password = 'Test123';
   const endpoint = generalEndpoints.usuario;
 
+  const handleCheckbox = e => setRol(e.target.value);
   const handleInputChange = event => setDatos({ ...datos, [event.target.name]: event.target.value });
 
   const sendDatos = async event => {
@@ -125,15 +126,15 @@ const FormCreateUsuario = () => {
         <Box component='div' sx={stylesContainerInput}>
           <TitleInput titleInput='Selecciona un rol' />
           <FormControlLabel
-            control={<Checkbox name='admin' value={'4'} onChange={e => setRol(e.target.value)} />}
+            control={<Checkbox name='admin' value={'4'} onChange={handleCheckbox} />}
             label='Administrador'
           />
           <FormControlLabel
-            control={<Checkbox name='recepcion' value={'3'} onChange={e => setRol(e.target.value)} />}
+            control={<Checkbox name='recepcion' value={'3'} onChange={handleCheckbox} />}
             label='Recepcionista'
           />
           <FormControlLabel
-            control={<Checkbox name='encargado' value={'5'} onChange={e => setRol(e.target.value)} />}
+            control={<Checkbox name='encargado' value={'5'} onChange={handleCheckbox} />}
             label='Encargado'
           />
         </Box>
