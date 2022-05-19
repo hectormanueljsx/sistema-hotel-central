@@ -14,7 +14,7 @@ import {
   stylesContainerSection,
 } from '@/components/Caja/stylesCaja';
 
-const FormCreateCategoriaEgresos = () => {
+const FormCreateCategoriaEgresos = ({ setMessageError, setMessageSuccess }) => {
   const [categoria, setCategoria] = useState('');
   const [options, setOptions] = useState('');
   const [subcategoria, setSubcategoria] = useState('');
@@ -37,9 +37,10 @@ const FormCreateCategoriaEgresos = () => {
       const categoryData = { categoria: categoria.toUpperCase() };
 
       await postGeneralTable(identifier, password, endpointCategory, categoryData);
+      setMessageSuccess('Categoria registrada correctamente');
       location.reload();
     } else {
-      alert('Por favor, rellene el campo de categoria');
+      setMessageError('Por favor, rellene el campo de categoria');
     }
   };
 
@@ -53,9 +54,10 @@ const FormCreateCategoriaEgresos = () => {
       };
 
       await postGeneralTable(identifier, password, endpointSubcategory, subcategoryData);
+      setMessageSuccess('Subcategoria registrada correctamente');
       location.reload();
     } else {
-      alert('Por favor, seleccione una categoria y/o rellene el campo de subcategoria');
+      setMessageError('Por favor, seleccione una categoria y/o rellene el campo de subcategoria');
     }
   };
 
