@@ -95,7 +95,7 @@ const FormCreateCategoriaEgresos = ({ setMessageError, setMessageSuccess }) => {
           </Button>
         </Box>
       </Container>
-      <Container component='section' sx={[stylesContainerSection, { height: 334.25 }]}>
+      <Container component='section' sx={[stylesContainerSection, { height: 334.25, marginTop: 5 }]}>
         <TitlePage titlePage='Registro de Subcategoría' />
         <Box component='form' sx={stylesContainerBox}>
           <Box component='div' sx={stylesContainerInput}>
