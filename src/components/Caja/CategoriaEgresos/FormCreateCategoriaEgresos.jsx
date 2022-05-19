@@ -39,10 +39,15 @@ const FormCreateCategoriaEgresos = ({ setOpenAlert, setMessageError, setMessageS
       await postGeneralTable(identifier, password, endpointCategory, categoryData);
       setOpenAlert(true);
       setMessageSuccess('Categoria registrada correctamente');
-      location.reload();
+      setTimeout(() => {
+        location.reload();
+      }, 1500);
     } else {
       setOpenAlert(true);
       setMessageError('Por favor, rellene el campo de categoria');
+      setTimeout(() => {
+        location.reload();
+      }, 1500);
     }
   };
 
@@ -58,10 +63,15 @@ const FormCreateCategoriaEgresos = ({ setOpenAlert, setMessageError, setMessageS
       await postGeneralTable(identifier, password, endpointSubcategory, subcategoryData);
       setOpenAlert(true);
       setMessageSuccess('Subcategoria registrada correctamente');
-      location.reload();
+      setTimeout(() => {
+        location.reload();
+      }, 1500);
     } else {
       setOpenAlert(true);
       setMessageError('Por favor, seleccione una categoria y/o rellene el campo de subcategoria');
+      setTimeout(() => {
+        location.reload();
+      }, 1500);
     }
   };
 
