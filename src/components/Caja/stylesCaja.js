@@ -9,7 +9,6 @@ const stylesContainerSection = {
   borderRadius: 1,
   boxShadow: '0px 0px 5px rgba(0, 0, 0, 0.25)',
   padding: 3,
-  marginTop: 5,
 };
 
 const stylesContainerBox = {
@@ -33,6 +32,13 @@ const stylesTableCell = {
   padding: 1,
 };
 
+const stylesBoxAlerts = {
+  display: 'flex',
+  justifyContent: 'right',
+  marginTop: 2,
+  marginBottom: 2,
+};
+
 export {
   stylesContainerDoubleForm,
   stylesContainerSection,
@@ -40,4 +46,5 @@ export {
   stylesContainerInput,
   stylesAccordion,
   stylesTableCell,
+  stylesBoxAlerts,
 };
