@@ -8,7 +8,7 @@ import TableViewCategoriaEgresos from '@/components/Caja/CategoriaEgresos/TableV
 const CategoriaEgresos = () => {
   const [messageError, setMessageError] = useState('');
   const [messageSuccess, setMessageSuccess] = useState('');
-  const [openAlert, setOpenAlert] = useState(false);
+  const [openAlert, setOpenAlert] = useState(true);
 
   return (
     <Container component='section' disableGutters maxWidth='xl'>
