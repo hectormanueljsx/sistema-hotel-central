@@ -13,21 +13,19 @@ const CategoriaEgresos = () => {
   return (
     <Container component='section' disableGutters maxWidth='xl'>
       <CssBaseline />
-      <Box sx={{ display: 'flex', flexDirection: 'column' }}>
-        {messageError && (
-          <AlertGlobalForms message={messageError} open={openAlert} setOpen={setOpenAlert} severity='error' />
-        )}
-        {messageSuccess && (
-          <AlertGlobalForms message={messageSuccess} open={openAlert} setOpen={setOpenAlert} severity='success' />
-        )}
-        <Box sx={{ display: 'flex' }}>
-          <FormCreateCategoriaEgresos
-            setMessageError={setMessageError}
-            setMessageSuccess={setMessageSuccess}
-            setOpenAlert={setOpenAlert}
-          />
-          <TableViewCategoriaEgresos />
-        </Box>
+      {messageError && (
+        <AlertGlobalForms message={messageError} open={openAlert} setOpen={setOpenAlert} severity='error' />
+      )}
+      {messageSuccess && (
+        <AlertGlobalForms message={messageSuccess} open={openAlert} setOpen={setOpenAlert} severity='success' />
+      )}
+      <Box sx={{ display: 'flex' }}>
+        <FormCreateCategoriaEgresos
+          setMessageError={setMessageError}
+          setMessageSuccess={setMessageSuccess}
+          setOpenAlert={setOpenAlert}
+        />
+        <TableViewCategoriaEgresos />
       </Box>
     </Container>
   );
