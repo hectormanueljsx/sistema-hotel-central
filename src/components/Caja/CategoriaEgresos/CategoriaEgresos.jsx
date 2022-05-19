@@ -15,8 +15,8 @@ const CategoriaEgresos = () => {
       <CssBaseline />
       <Box sx={{ display: 'flex', flexDirection: 'column' }}>
         <Box sx={stylesBoxAlerts}>
-          {messageError && <AlertGlobalForms messageError={messageError} severity='error' />}
-          {messageSuccess && <AlertGlobalForms messageError={messageSuccess} severity='success' />}
+          {messageError && <AlertGlobalForms message={messageError} severity='error' />}
+          {messageSuccess && <AlertGlobalForms message={messageSuccess} severity='success' />}
         </Box>
         <Box sx={{ display: 'flex' }}>
           <FormCreateCategoriaEgresos setMessageError={setMessageError} setMessageSuccess={setMessageSuccess} />

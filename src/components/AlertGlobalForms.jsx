@@ -1,10 +1,10 @@
 import React from 'react';
 import { Alert } from '@mui/material';
 
-const AlertGlobalForms = ({ messageError, severity }) => {
+const AlertGlobalForms = ({ message, severity }) => {
   return (
     <Alert variant='outlined' severity={severity}>
-      {messageError}
+      {message}
     </Alert>
   );
 };
