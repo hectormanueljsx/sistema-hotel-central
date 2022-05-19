@@ -33,13 +33,6 @@ const stylesTableCell = {
   padding: 1,
 };
 
-const stylesBoxAlerts = {
-  display: 'flex',
-  justifyContent: 'right',
-  marginTop: 2,
-  marginBottom: 2,
-};
-
 export {
   stylesContainerDoubleForm,
   stylesContainerSection,
@@ -47,5 +40,4 @@ export {
   stylesContainerInput,
   stylesAccordion,
   stylesTableCell,
-  stylesBoxAlerts,
 };
