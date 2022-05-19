@@ -12,7 +12,7 @@ import {
   stylesContainerSection,
 } from '@/components/Habitaciones/stylesHabitaciones';
 
-const FormCreateUsuario = () => {
+const FormCreateUsuario = ({ setOpenAlert, setMessageError, setMessageSuccess }) => {
   const [datos, setDatos] = useState({
     username: '',
     password: '',
@@ -52,12 +52,24 @@ const FormCreateUsuario = () => {
         const dataRole = { role: { id: rol } };
 
         await postUsers(identifier, password, endpoint, dataUser, dataRole);
-        location.reload();
+        setOpenAlert(true);
+        setMessageSuccess('Usuario registrado correctamente');
+        setTimeout(() => {
+          location.reload();
+        }, 1500);
       } else {
-        alert('Por favor, llene todos los campos');
+        setOpenAlert(true);
+        setMessageError('Por favor, rellene todos los campos');
+        setTimeout(() => {
+          location.reload();
+        }, 1500);
       }
     } else {
-      alert('Las contraseñas no coinciden');
+      setOpenAlert(true);
+      setMessageError('Las contraseñas no coinciden');
+      setTimeout(() => {
+        location.reload();
+      }, 1500);
     }
   };
 
