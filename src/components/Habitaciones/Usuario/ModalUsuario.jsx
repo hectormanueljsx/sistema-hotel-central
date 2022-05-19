@@ -12,7 +12,7 @@ import {
   stylesContainerSection,
 } from '@/components/Habitaciones/stylesHabitaciones';
 
-const UpdateUsuario = dataUsers => {
+const ModalUsuario = dataUsers => {
   const [data, setData] = useState({
     username: dataUsers.datos.username,
     password: dataUsers.datos.identifier,
@@ -171,4 +171,4 @@ const UpdateUsuario = dataUsers => {
   );
 };
 
-export default UpdateUsuario;
+export default ModalUsuario;
