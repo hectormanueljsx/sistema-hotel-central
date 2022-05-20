@@ -14,7 +14,7 @@ import {
   stylesContainerSection,
 } from '@/components/Caja/stylesCaja';
 
-const FormCreateCategoriaEgresos = ({ setOpenAlert, setMessageError, setMessageSuccess }) => {
+const FormCreateCategoriaEgresos = ({ setOpenAlert, setMessageInfo, setMessageSeverity }) => {
   const [categoria, setCategoria] = useState('');
   const [options, setOptions] = useState('');
   const [subcategoria, setSubcategoria] = useState('');
@@ -25,9 +25,7 @@ const FormCreateCategoriaEgresos = ({ setOpenAlert, setMessageError, setMessageS
   const endpointSubcategory = generalEndpoints.subcategoria;
 
   const handleChange = event => setOptions(event.target.value);
-
   const handleInputChangeCategoria = event => setCategoria(event.target.value);
-
   const handleInputChangeSubcategoria = event => setSubcategoria(event.target.value);
 
   const sendDatosCategoria = async event => {
@@ -38,16 +36,15 @@ const FormCreateCategoriaEgresos = ({ setOpenAlert, setMessageError, setMessageS
 
       await postGeneralTable(identifier, password, endpointCategory, categoryData);
       setOpenAlert(true);
-      setMessageSuccess('Categoria registrada correctamente');
+      setMessageInfo('Categoria registrada correctamente');
+      setMessageSeverity('success');
       setTimeout(() => {
         location.reload();
       }, 1500);
     } else {
       setOpenAlert(true);
-      setMessageError('Por favor, rellene el campo de categoria');
-      setTimeout(() => {
-        location.reload();
-      }, 1500);
+      setMessageInfo('Por favor, rellene todos los campos');
+      setMessageSeverity('error');
     }
   };
 
@@ -62,16 +59,15 @@ const FormCreateCategoriaEgresos = ({ setOpenAlert, setMessageError, setMessageS
 
       await postGeneralTable(identifier, password, endpointSubcategory, subcategoryData);
       setOpenAlert(true);
-      setMessageSuccess('Subcategoria registrada correctamente');
+      setMessageInfo('Subcategoria registrada correctamente');
+      setMessageSeverity('success');
       setTimeout(() => {
         location.reload();
       }, 1500);
     } else {
       setOpenAlert(true);
-      setMessageError('Por favor, seleccione una categoria y/o rellene el campo de subcategoria');
-      setTimeout(() => {
-        location.reload();
-      }, 1500);
+      setMessageInfo('Por favor, seleccione una categoria y/o rellene el campo de subcategoria');
+      setMessageSeverity('error');
     }
   };
 
