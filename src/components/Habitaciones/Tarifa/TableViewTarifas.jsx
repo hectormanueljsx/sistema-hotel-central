@@ -4,6 +4,7 @@ import {
   Container,
   CssBaseline,
   IconButton,
+  Modal,
   Table,
   TableBody,
   TableCell,
@@ -11,19 +12,17 @@ import {
   TableHead,
   TablePagination,
   TableRow,
-  Modal,
 } from '@mui/material';
-
-import EditRoundedIcon from '@mui/icons-material/EditRounded';
+import EditIcon from '@mui/icons-material/Edit';
 import DeleteIcon from '@mui/icons-material/Delete';
 
 import TitlePage from '@/components/TitlePage';
 import Loader from '@/components/Loader';
+import ModalTarifa from '@/components/Habitaciones/Tarifa/ModalTarifa';
 import useGetGeneralTable from '@/hooks/useGetGeneralTable';
 import deleteGeneralTable from '@/services/deleteGeneralTable';
-import UpdateTarifas from './UpdateTarifa';
 import { generalEndpoints } from '@/utilities/endpoints';
-import { stylesContainerSection, stylesTableCell } from '@/components/Habitaciones/stylesHabitaciones';
+import { stylesContainerSection, stylesModal, stylesTableCell } from '@/components/Habitaciones/stylesHabitaciones';
 
 const columns = [
   { id: 'desc_tarifa', label: 'Descripción Tarifa', width: 432 },
@@ -35,18 +34,19 @@ const columns = [
 const TableViewTarifas = () => {
   const [page, setPage] = useState(0);
   const [rowsPerPage, setRowsPerPage] = useState(10);
-  const [open, setOpen] = useState(false);
+  const [openModal, setOpenModal] = useState(false);
   const [dataTarifa, setDataTarifa] = useState('');
-
-  const handleOpen = item => {
-    setOpen(true);
-    setDataTarifa(item);
-  };
-  const handleClose = () => setOpen(false);
 
   const identifier = 'test@email.com';
   const password = 'Test123';
   const endpoint = generalEndpoints.tarifa;
+
+  const handleOpen = item => {
+    setOpenModal(true);
+    setDataTarifa(item);
+  };
+
+  const handleClose = () => setOpenModal(false);
 
   const handleChangePage = (event, newPage) => setPage(newPage);
 
@@ -89,10 +89,10 @@ const TableViewTarifas = () => {
                   <TableRow key={index}>
                     <TableCell sx={stylesTableCell}>{descripcion}</TableCell>
                     <TableCell sx={stylesTableCell}>{no_personas}</TableCell>
-                    <TableCell sx={stylesTableCell}>{precio}</TableCell>
+                    <TableCell sx={stylesTableCell}>${precio}</TableCell>
                     <TableCell sx={stylesTableCell}>
                       <IconButton color='info' size='small' onClick={() => handleOpen(item)}>
-                        <EditRoundedIcon />
+                        <EditIcon />
                       </IconButton>
                       <IconButton color='error' size='small' onClick={() => deleteRegistro(id)}>
                         <DeleteIcon />
@@ -117,9 +117,9 @@ const TableViewTarifas = () => {
           />
         )}
       </Box>
-      <Modal open={open} onClose={handleClose}>
-        <Box sx={{ top: '50%', left: '50%' }}>
-          <UpdateTarifas datos={dataTarifa} />
+      <Modal open={openModal} onClose={handleClose}>
+        <Box sx={stylesModal}>
+          <ModalTarifa datos={dataTarifa} />
         </Box>
       </Modal>
     </Container>
