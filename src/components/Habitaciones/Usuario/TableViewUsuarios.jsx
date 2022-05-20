@@ -22,7 +22,7 @@ import ModalUsuario from '@/components/Habitaciones/Usuario/ModalUsuario';
 import useGetGeneralTable from '@/hooks/useGetGeneralTable';
 import deleteGeneralTable from '@/services/deleteGeneralTable';
 import { generalEndpoints } from '@/utilities/endpoints';
-import { stylesContainerSection, stylesTableCell } from '@/components/Habitaciones/stylesHabitaciones';
+import { stylesContainerSection, stylesModal, stylesTableCell } from '@/components/Habitaciones/stylesHabitaciones';
 
 const columns = [
   { id: 'username', label: 'Nombre', width: 412 },
@@ -119,7 +119,7 @@ const TableViewUsuarios = () => {
         )}
       </Box>
       <Modal open={openModal} onClose={handleClose}>
-        <Box sx={{ top: '50%', left: '50%' }}>
+        <Box sx={stylesModal}>
           <ModalUsuario datos={dataUser} />
         </Box>
       </Modal>
