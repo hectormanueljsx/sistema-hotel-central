@@ -40,7 +40,6 @@ const ModalUsuario = ({ dataUsuario, setOpenAlert, setMessageInfo, setMessageSev
     event.preventDefault();
 
     const confirmed = true;
-    const blocked = true;
     let dataUser = '';
     let dataRole = '';
 
@@ -52,7 +51,6 @@ const ModalUsuario = ({ dataUsuario, setOpenAlert, setMessageInfo, setMessageSev
             password: data.password,
             email: data.email,
             confirmed,
-            blocked,
           };
 
           dataRole = { role: { id: rol } };
@@ -66,7 +64,6 @@ const ModalUsuario = ({ dataUsuario, setOpenAlert, setMessageInfo, setMessageSev
           username: data.username,
           email: data.email,
           confirmed,
-          blocked,
         };
 
         dataRole = { role: { id: rol } };
