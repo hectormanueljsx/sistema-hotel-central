@@ -3,7 +3,7 @@ import { Snackbar } from '@mui/material';
 import MuiAlert from '@mui/material/Alert';
 import Slide from '@mui/material/Slide';
 
-const AlertGlobalForms = ({ message, severity, open, setOpen }) => {
+const AlertGlobalForms = ({ open, setOpen, messageInfo, messageSeverity }) => {
   const handleClose = (event, reason) => {
     if (reason === 'clickaway') return;
 
@@ -12,8 +12,8 @@ const AlertGlobalForms = ({ message, severity, open, setOpen }) => {
 
   const Alert = forwardRef(function Alert(props, ref) {
     return (
-      <MuiAlert sx={{ marginTop: 7 }} ref={ref} variant='filled' severity={severity}>
-        {message}
+      <MuiAlert sx={{ marginTop: 7 }} ref={ref} variant='filled' severity={messageSeverity}>
+        {messageInfo}
       </MuiAlert>
     );
   });
