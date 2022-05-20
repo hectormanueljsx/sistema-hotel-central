@@ -6,26 +6,32 @@ import FormCreateUsuario from '@/components/Habitaciones/Usuario/FormCreateUsuar
 import TableViewUsuarios from '@/components/Habitaciones/Usuario/TableViewUsuarios';
 
 const Usuarios = () => {
-  const [messageError, setMessageError] = useState('');
-  const [messageSuccess, setMessageSuccess] = useState('');
+  const [messageInfo, setMessageInfo] = useState('');
+  const [messageSeverity, setMessageSeverity] = useState('');
   const [openAlert, setOpenAlert] = useState(true);
 
   return (
     <Container component='section' disableGutters maxWidth='xl'>
       <CssBaseline />
-      {messageError && (
-        <AlertGlobalForms message={messageError} open={openAlert} setOpen={setOpenAlert} severity='error' />
-      )}
-      {messageSuccess && (
-        <AlertGlobalForms message={messageSuccess} open={openAlert} setOpen={setOpenAlert} severity='success' />
+      {messageInfo && (
+        <AlertGlobalForms
+          open={openAlert}
+          setOpen={setOpenAlert}
+          messageInfo={messageInfo}
+          messageSeverity={messageSeverity}
+        />
       )}
       <Box sx={{ display: 'flex' }}>
         <FormCreateUsuario
-          setMessageError={setMessageError}
-          setMessageSuccess={setMessageSuccess}
           setOpenAlert={setOpenAlert}
+          setMessageInfo={setMessageInfo}
+          setMessageSeverity={setMessageSeverity}
         />
-        <TableViewUsuarios />
+        <TableViewUsuarios
+          setOpenAlert={setOpenAlert}
+          setMessageInfo={setMessageInfo}
+          setMessageSeverity={setMessageSeverity}
+        />
       </Box>
     </Container>
   );

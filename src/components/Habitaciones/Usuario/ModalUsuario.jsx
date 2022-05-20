@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { Box, Button, Checkbox, Container, CssBaseline, FormControlLabel, TextField } from '@mui/material';
-import UpdateRoundedIcon from '@mui/icons-material/UpdateRounded';
+import UpdateIcon from '@mui/icons-material/Update';
 
 import TitlePage from '@/components/TitlePage';
 import TitleInput from '@/components/TitleInput';
@@ -12,14 +12,14 @@ import {
   stylesContainerSection,
 } from '@/components/Habitaciones/stylesHabitaciones';
 
-const ModalUsuario = dataUsers => {
+const ModalUsuario = ({ dataUsuario, setOpenAlert, setMessageInfo, setMessageSeverity }) => {
   const [data, setData] = useState({
-    username: dataUsers.datos.username,
-    password: dataUsers.datos.identifier,
-    email: dataUsers.datos.email,
-    confirm: dataUsers.datos.confirm,
+    username: dataUsuario.username,
+    password: dataUsuario.identifier,
+    email: dataUsuario.email,
+    confirm: dataUsuario.confirm,
   });
-  const [rol, setRol] = useState(dataUsers.datos.role.id);
+  const [rol, setRol] = useState(dataUsuario.role.id);
 
   const identifier = 'test@email.com';
   const password = 'Test123';
@@ -31,13 +31,10 @@ const ModalUsuario = dataUsers => {
   let rolAdmin = false;
   let rolRecepcion = false;
   let rolEncargado = false;
-  if (rol === 4) {
-    rolAdmin = true;
-  } else if (rol === 3) {
-    rolRecepcion = true;
-  } else if (rol == 5) {
-    rolEncargado = true;
-  }
+
+  if (rol === 4) rolAdmin = true;
+  if (rol === 3) rolRecepcion = true;
+  if (rol === 5) rolEncargado = true;
 
   const updateDatos = async event => {
     event.preventDefault();
@@ -49,7 +46,7 @@ const ModalUsuario = dataUsers => {
 
     if (data.username && data.email && rol) {
       if (data.password) {
-        if (data.password == data.confirm) {
+        if (data.password === data.confirm) {
           dataUser = {
             username: data.username,
             password: data.password,
@@ -57,9 +54,12 @@ const ModalUsuario = dataUsers => {
             confirmed,
             blocked,
           };
+
           dataRole = { role: { id: rol } };
         } else {
-          alert('Las contraseñas no coinciden');
+          setOpenAlert(true);
+          setMessageInfo('Las contraseñas no coinciden');
+          setMessageSeverity('error');
         }
       } else {
         dataUser = {
@@ -68,25 +68,37 @@ const ModalUsuario = dataUsers => {
           confirmed,
           blocked,
         };
+
         dataRole = { role: { id: rol } };
       }
 
-      await putUsers(identifier, password, endpoint, dataUsers.datos.id, dataUser, dataRole);
-      location.reload();
+      await putUsers(identifier, password, endpoint, dataUsuario.id, dataUser, dataRole);
+      setOpenAlert(true);
+      setMessageInfo('Usuario actualizado correctamente');
+      setMessageSeverity('success');
+      setTimeout(() => {
+        location.reload();
+      }, 1500);
     } else {
-      alert('Por favor, llene todos los campos');
+      setOpenAlert(true);
+      setMessageInfo('Por favor, rellene todos los campos');
+      setMessageSeverity('error');
     }
   };
 
   return (
-    <Container component='section' disableGutters sx={[stylesContainerSection, { width: 400, height: 630.25 }]}>
+    <Container
+      component='section'
+      disableGutters
+      sx={[stylesContainerSection, { width: 400, height: 630.25, marginTop: 0 }]}
+    >
       <CssBaseline />
-      <TitlePage titlePage='Registro de Nuevo Usuario' />
+      <TitlePage titlePage='Actualización de Usuario' />
       <Box component='form' sx={stylesContainerBox}>
         <Box component='div' sx={stylesContainerInput}>
           <TitleInput titleInput='Nombre de usuario' />
           <TextField
-            defaultValue={dataUsers.datos.username}
+            defaultValue={dataUsuario.username}
             onChange={handleInputChange}
             name='username'
             variant='outlined'
@@ -102,7 +114,7 @@ const ModalUsuario = dataUsers => {
         <Box component='div' sx={stylesContainerInput}>
           <TitleInput titleInput='Correo Electronico' />
           <TextField
-            defaultValue={dataUsers.datos.email}
+            defaultValue={dataUsuario.email}
             onChange={handleInputChange}
             name='email'
             variant='outlined'
@@ -157,13 +169,7 @@ const ModalUsuario = dataUsers => {
             label='Encargado'
           />
         </Box>
-        <Button
-          variant='contained'
-          onClick={updateDatos}
-          size='large'
-          startIcon={<UpdateRoundedIcon />}
-          sx={{ marginTop: 2 }}
-        >
+        <Button variant='contained' onClick={updateDatos} size='large' startIcon={<UpdateIcon />} sx={{ marginTop: 2 }}>
           Actualizar Usuario
         </Button>
       </Box>

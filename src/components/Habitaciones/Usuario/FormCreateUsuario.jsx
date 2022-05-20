@@ -12,7 +12,7 @@ import {
   stylesContainerSection,
 } from '@/components/Habitaciones/stylesHabitaciones';
 
-const FormCreateUsuario = ({ setOpenAlert, setMessageError, setMessageSuccess }) => {
+const FormCreateUsuario = ({ setOpenAlert, setMessageInfo, setMessageSeverity }) => {
   const [datos, setDatos] = useState({
     username: '',
     password: '',
@@ -53,23 +53,20 @@ const FormCreateUsuario = ({ setOpenAlert, setMessageError, setMessageSuccess })
 
         await postUsers(identifier, password, endpoint, dataUser, dataRole);
         setOpenAlert(true);
-        setMessageSuccess('Usuario registrado correctamente');
+        setMessageInfo('Usuario registrado correctamente');
+        setMessageSeverity('success');
         setTimeout(() => {
           location.reload();
         }, 1500);
       } else {
         setOpenAlert(true);
-        setMessageError('Por favor, rellene todos los campos');
-        setTimeout(() => {
-          location.reload();
-        }, 1500);
+        setMessageInfo('Por favor, rellene todos los campos');
+        setMessageSeverity('error');
       }
     } else {
       setOpenAlert(true);
-      setMessageError('Las contraseñas no coinciden');
-      setTimeout(() => {
-        location.reload();
-      }, 1500);
+      setMessageInfo('Las contraseñas no coinciden');
+      setMessageSeverity('error');
     }
   };
 

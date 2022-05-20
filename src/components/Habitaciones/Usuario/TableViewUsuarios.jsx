@@ -31,15 +31,15 @@ const columns = [
   { id: 'acciones', label: 'Acciones', width: 200 },
 ];
 
-const TableViewUsuarios = () => {
+const TableViewUsuarios = ({ setOpenAlert, setMessageInfo, setMessageSeverity }) => {
   const [page, setPage] = useState(0);
   const [rowsPerPage, setRowsPerPage] = useState(10);
-  const [dataUser, setDataUser] = useState('');
+  const [dataUsuario, setDataUsuario] = useState('');
   const [openModal, setOpenModal] = useState(false);
 
   const handleOpen = item => {
     setOpenModal(true);
-    setDataUser(item);
+    setDataUsuario(item);
   };
 
   const handleClose = () => setOpenModal(false);
@@ -120,7 +120,12 @@ const TableViewUsuarios = () => {
       </Box>
       <Modal open={openModal} onClose={handleClose}>
         <Box sx={stylesModal}>
-          <ModalUsuario datos={dataUser} />
+          <ModalUsuario
+            dataUsuario={dataUsuario}
+            setOpenAlert={setOpenAlert}
+            setMessageInfo={setMessageInfo}
+            setMessageSeverity={setMessageSeverity}
+          />
         </Box>
       </Modal>
     </Container>
