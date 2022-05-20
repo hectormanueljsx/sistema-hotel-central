@@ -21,4 +21,11 @@ const stylesTableCell = {
   padding: 1,
 };
 
-export { stylesContainerSection, stylesContainerBox, stylesContainerInput, stylesTableCell };
+const stylesModal = {
+  position: 'absolute',
+  top: '50%',
+  left: '50%',
+  transform: 'translate(-50%, -50%)',
+};
+
+export { stylesContainerSection, stylesContainerBox, stylesContainerInput, stylesTableCell, stylesModal };
