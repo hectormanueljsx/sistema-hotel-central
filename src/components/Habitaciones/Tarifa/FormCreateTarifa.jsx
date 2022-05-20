@@ -12,7 +12,7 @@ import {
   stylesContainerSection,
 } from '@/components/Habitaciones/stylesHabitaciones';
 
-const FormCreateTarifa = ({ setOpenAlert, setMessageError, setMessageSuccess }) => {
+const FormCreateTarifa = ({ setOpenAlert, setMessageInfo, setMessageSeverity }) => {
   const [datos, setDatos] = useState({
     descripcion: '',
     precio: '',
@@ -37,16 +37,15 @@ const FormCreateTarifa = ({ setOpenAlert, setMessageError, setMessageSuccess }) 
 
       await postGeneralTable(identifier, password, endpoint, generalData);
       setOpenAlert(true);
-      setMessageSuccess('Tarifa registrada correctamente');
+      setMessageInfo('Tarifa registrada correctamente');
+      setMessageSeverity('success');
       setTimeout(() => {
         location.reload();
       }, 1500);
     } else {
       setOpenAlert(true);
-      setMessageError('Por favor, rellene todos los campos');
-      setTimeout(() => {
-        location.reload();
-      }, 1500);
+      setMessageInfo('Por favor, rellene todos los campos');
+      setMessageSeverity('error');
     }
   };
 

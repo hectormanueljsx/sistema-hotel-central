@@ -31,7 +31,7 @@ const columns = [
   { id: 'acciones', label: 'Acciones', width: 200 },
 ];
 
-const TableViewTarifas = () => {
+const TableViewTarifas = ({ setOpenAlert, setMessageInfo, setMessageSeverity }) => {
   const [page, setPage] = useState(0);
   const [rowsPerPage, setRowsPerPage] = useState(10);
   const [openModal, setOpenModal] = useState(false);
@@ -119,7 +119,12 @@ const TableViewTarifas = () => {
       </Box>
       <Modal open={openModal} onClose={handleClose}>
         <Box sx={stylesModal}>
-          <ModalTarifa datos={dataTarifa} />
+          <ModalTarifa
+            dataTarifa={dataTarifa}
+            setOpenAlert={setOpenAlert}
+            setMessageInfo={setMessageInfo}
+            setMessageSeverity={setMessageSeverity}
+          />
         </Box>
       </Modal>
     </Container>

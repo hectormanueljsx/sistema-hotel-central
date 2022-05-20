@@ -12,12 +12,12 @@ import {
   stylesContainerSection,
 } from '@/components/Habitaciones/stylesHabitaciones';
 
-const ModalTarifa = dataTarifa => {
+const ModalTarifa = ({ dataTarifa, setOpenAlert, setMessageInfo, setMessageSeverity }) => {
   const [data, setData] = useState({
-    id: dataTarifa.datos.id,
-    descripcion: dataTarifa.datos.descripcion,
-    precio: dataTarifa.datos.precio,
-    numPersonas: dataTarifa.datos.no_personas,
+    id: dataTarifa.id,
+    descripcion: dataTarifa.descripcion,
+    precio: dataTarifa.precio,
+    numPersonas: dataTarifa.no_personas,
   });
 
   const identifier = 'test@email.com';
@@ -36,10 +36,17 @@ const ModalTarifa = dataTarifa => {
         no_personas: data.numPersonas,
       };
 
-      await putGeneralTable(identifier, password, endpoint, dataTarifa.datos.id, generalData);
-      location.reload();
+      await putGeneralTable(identifier, password, endpoint, dataTarifa.id, generalData);
+      setOpenAlert(true);
+      setMessageInfo('Tarifa actualizada correctamente');
+      setMessageSeverity('success');
+      setTimeout(() => {
+        location.reload();
+      }, 1500);
     } else {
-      alert('Por favor, llene todos los campos');
+      setOpenAlert(true);
+      setMessageInfo('Por favor, rellene todos los campos');
+      setMessageSeverity('error');
     }
   };
 
@@ -55,7 +62,7 @@ const ModalTarifa = dataTarifa => {
         <Box component='div' sx={stylesContainerInput}>
           <TitleInput titleInput='Descripción de la tarifa' />
           <TextField
-            defaultValue={dataTarifa.datos.descripcion}
+            defaultValue={dataTarifa.descripcion}
             onChange={handleInputChange}
             name='descripcion'
             variant='outlined'
@@ -70,7 +77,7 @@ const ModalTarifa = dataTarifa => {
         <Box component='div' sx={stylesContainerInput}>
           <TitleInput titleInput='Precio de la tarifa' />
           <TextField
-            defaultValue={dataTarifa.datos.precio}
+            defaultValue={dataTarifa.precio}
             onChange={handleInputChange}
             name='precio'
             variant='outlined'
@@ -84,7 +91,7 @@ const ModalTarifa = dataTarifa => {
         <Box component='div' sx={stylesContainerInput}>
           <TitleInput titleInput='No. de personas' />
           <TextField
-            defaultValue={dataTarifa.datos.no_personas}
+            defaultValue={dataTarifa.no_personas}
             onChange={handleInputChange}
             name='numPersonas'
             variant='outlined'
