@@ -43,44 +43,46 @@ const ModalUsuario = ({ dataUsuario, setOpenAlert, setMessageInfo, setMessageSev
     let dataUser = '';
     let dataRole = '';
 
-    if (data.username && data.email && rol) {
-      if (data.password) {
-        if (data.password === data.confirm) {
-          dataUser = {
-            username: data.username,
-            password: data.password,
-            email: data.email,
-            confirmed,
-          };
-
-          dataRole = { role: { id: rol } };
-        } else {
-          setOpenAlert(true);
-          setMessageInfo('Las contraseñas no coinciden');
-          setMessageSeverity('error');
-        }
-      } else {
-        dataUser = {
-          username: data.username,
-          email: data.email,
-          confirmed,
-        };
-
-        dataRole = { role: { id: rol } };
-      }
-
-      await putUsers(identifier, password, endpoint, dataUsuario.id, dataUser, dataRole);
-      setOpenAlert(true);
-      setMessageInfo('Usuario actualizado correctamente');
-      setMessageSeverity('success');
-      setTimeout(() => {
-        location.reload();
-      }, 1500);
-    } else {
+    if (data.username === '' || data.email === '' || rol === '') {
       setOpenAlert(true);
       setMessageInfo('Por favor, rellene todos los campos');
       setMessageSeverity('error');
+      return;
     }
+
+    if (data.password !== data.confirm) {
+      setOpenAlert(true);
+      setMessageInfo('Las contraseñas no coinciden');
+      setMessageSeverity('error');
+      return;
+    }
+
+    if (data.password === '' && data.confirm === '') {
+      dataUser = {
+        username: data.username,
+        email: data.email,
+        confirmed,
+      };
+
+      dataRole = { role: { id: rol } };
+    } else {
+      dataUser = {
+        username: data.username,
+        password: data.password,
+        email: data.email,
+        confirmed,
+      };
+
+      dataRole = { role: { id: rol } };
+    }
+
+    await putUsers(identifier, password, endpoint, dataUsuario.id, dataUser, dataRole);
+    setOpenAlert(true);
+    setMessageInfo('Usuario actualizado correctamente');
+    setMessageSeverity('success');
+    setTimeout(() => {
+      location.reload();
+    }, 1500);
   };
 
   return (
