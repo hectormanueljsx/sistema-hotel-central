@@ -4,6 +4,7 @@ import {
   Container,
   CssBaseline,
   IconButton,
+  Modal,
   Table,
   TableBody,
   TableCell,
@@ -11,16 +12,15 @@ import {
   TableHead,
   TablePagination,
   TableRow,
-  Modal,
 } from '@mui/material';
-import EditRoundedIcon from '@mui/icons-material/EditRounded';
+import EditIcon from '@mui/icons-material/Edit';
 import DeleteIcon from '@mui/icons-material/Delete';
 
 import TitlePage from '@/components/TitlePage';
 import Loader from '@/components/Loader';
+import ModalUsuario from '@/components/Habitaciones/Usuario/ModalUsuario';
 import useGetGeneralTable from '@/hooks/useGetGeneralTable';
 import deleteGeneralTable from '@/services/deleteGeneralTable';
-import UpdateUsuario from './UpdateUsuario';
 import { generalEndpoints } from '@/utilities/endpoints';
 import { stylesContainerSection, stylesTableCell } from '@/components/Habitaciones/stylesHabitaciones';
 
@@ -34,14 +34,15 @@ const columns = [
 const TableViewUsuarios = () => {
   const [page, setPage] = useState(0);
   const [rowsPerPage, setRowsPerPage] = useState(10);
-  const [open, setOpen] = useState(false);
   const [dataUser, setDataUser] = useState('');
+  const [openModal, setOpenModal] = useState(false);
 
-  const handleOpen = (item) => {
-    setOpen(true);
+  const handleOpen = item => {
+    setOpenModal(true);
     setDataUser(item);
   };
-  const handleClose = () => setOpen(false);
+
+  const handleClose = () => setOpenModal(false);
 
   const identifier = 'test@email.com';
   const password = 'Test123';
@@ -92,7 +93,7 @@ const TableViewUsuarios = () => {
                     <TableCell sx={stylesTableCell}>{ult_ingreso}</TableCell>
                     <TableCell sx={stylesTableCell}>
                       <IconButton color='info' size='small' onClick={() => handleOpen(item)}>
-                        <EditRoundedIcon />
+                        <EditIcon />
                       </IconButton>
                       <IconButton color='error' size='small' onClick={() => deleteRegistro(id)}>
                         <DeleteIcon />
@@ -117,9 +118,9 @@ const TableViewUsuarios = () => {
           />
         )}
       </Box>
-      <Modal open={open} onClose={handleClose}>
+      <Modal open={openModal} onClose={handleClose}>
         <Box sx={{ top: '50%', left: '50%' }}>
-          <UpdateUsuario datos={(dataUser)} />
+          <ModalUsuario datos={dataUser} />
         </Box>
       </Modal>
     </Container>
