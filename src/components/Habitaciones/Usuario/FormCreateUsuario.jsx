@@ -32,9 +32,8 @@ const FormCreateUsuario = ({ setOpenAlert, setMessageInfo, setMessageSeverity })
     event.preventDefault();
 
     const confirmed = true;
-    const blocked = true;
 
-    if (datos.password.trim() == datos.confirm.trim()) {
+    if (datos.password.trim() === datos.confirm.trim()) {
       if (
         datos.username.trim().length > 0 &&
         datos.password.trim().length > 0 &&
@@ -47,7 +46,6 @@ const FormCreateUsuario = ({ setOpenAlert, setMessageInfo, setMessageSeverity })
           password: datos.password,
           email: datos.email,
           confirmed,
-          blocked,
         };
         const dataRole = { role: { id: rol } };
 
@@ -96,7 +94,7 @@ const FormCreateUsuario = ({ setOpenAlert, setMessageInfo, setMessageSeverity })
             onChange={handleInputChange}
             name='email'
             variant='outlined'
-            type='text'
+            type='email'
             margin='none'
             size='small'
             placeholder='Email'
