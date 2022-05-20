@@ -12,7 +12,7 @@ import {
   stylesContainerSection,
 } from '@/components/Habitaciones/stylesHabitaciones';
 
-const UpdateTarifas = dataTarifa => {
+const ModalTarifa = dataTarifa => {
   const [data, setData] = useState({
     id: dataTarifa.datos.id,
     descripcion: dataTarifa.datos.descripcion,
@@ -105,7 +105,13 @@ const UpdateTarifas = dataTarifa => {
             fullWidth
           />
         </Box>
-        <Button variant='contained' size='large' onClick={updateDatos} startIcon={<UpdateRoundedIcon />} sx={{ marginTop: 2 }}>
+        <Button
+          variant='contained'
+          size='large'
+          onClick={updateDatos}
+          startIcon={<UpdateRoundedIcon />}
+          sx={{ marginTop: 2 }}
+        >
           Actualizar Tarifa
         </Button>
       </Box>
@@ -113,4 +119,4 @@ const UpdateTarifas = dataTarifa => {
   );
 };
 
-export default UpdateTarifas;
+export default ModalTarifa;
