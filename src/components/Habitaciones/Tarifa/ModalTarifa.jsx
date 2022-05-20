@@ -1,6 +1,6 @@
-import React, { useEffect, useState } from 'react';
+import React, { useState } from 'react';
 import { Box, Button, Container, CssBaseline, TextField } from '@mui/material';
-import UpdateRoundedIcon from '@mui/icons-material/UpdateRounded';
+import UpdateIcon from '@mui/icons-material/Update';
 
 import TitlePage from '@/components/TitlePage';
 import TitleInput from '@/components/TitleInput';
@@ -38,30 +38,20 @@ const ModalTarifa = dataTarifa => {
 
       await putGeneralTable(identifier, password, endpoint, dataTarifa.datos.id, generalData);
       location.reload();
-      console.log(data);
     } else {
       alert('Por favor, llene todos los campos');
     }
   };
+
   return (
-    <Container component='section' disableGutters sx={[stylesContainerSection, { width: 400, height: 540.25 }]}>
+    <Container
+      component='section'
+      disableGutters
+      sx={[stylesContainerSection, { width: 400, height: 418.25, marginTop: 0 }]}
+    >
       <CssBaseline />
-      <TitlePage titlePage='Registro de Nueva Tarifa' />
+      <TitlePage titlePage='Actualización de Tarifa' />
       <Box component='form' sx={stylesContainerBox}>
-        <Box component='div' sx={stylesContainerInput}>
-          <TitleInput titleInput='ID' />
-          <TextField
-            value={dataTarifa.datos.id}
-            name='id'
-            variant='outlined'
-            type='text'
-            margin='none'
-            size='small'
-            required
-            fullWidth
-            autoFocus
-          />
-        </Box>
         <Box component='div' sx={stylesContainerInput}>
           <TitleInput titleInput='Descripción de la tarifa' />
           <TextField
@@ -105,13 +95,7 @@ const ModalTarifa = dataTarifa => {
             fullWidth
           />
         </Box>
-        <Button
-          variant='contained'
-          size='large'
-          onClick={updateDatos}
-          startIcon={<UpdateRoundedIcon />}
-          sx={{ marginTop: 2 }}
-        >
+        <Button variant='contained' size='large' onClick={updateDatos} startIcon={<UpdateIcon />} sx={{ marginTop: 2 }}>
           Actualizar Tarifa
         </Button>
       </Box>
