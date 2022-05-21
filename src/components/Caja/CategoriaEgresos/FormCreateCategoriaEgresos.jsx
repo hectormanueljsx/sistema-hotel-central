@@ -34,13 +34,20 @@ const FormCreateCategoriaEgresos = ({ setOpenAlert, setMessageInfo, setMessageSe
     if (categoria.trim().length > 0) {
       const categoryData = { categoria: categoria.toUpperCase() };
 
-      await postGeneralTable(identifier, password, endpointCategory, categoryData);
-      setOpenAlert(true);
-      setMessageInfo('Categoria registrada correctamente');
-      setMessageSeverity('success');
-      setTimeout(() => {
-        location.reload();
-      }, 1500);
+      const res = await postGeneralTable(identifier, password, endpointCategory, categoryData);
+
+      if (res.status === 200) {
+        setOpenAlert(true);
+        setMessageInfo('Categoria registrada correctamente');
+        setMessageSeverity('success');
+        setTimeout(() => {
+          location.reload();
+        }, 1500);
+      } else {
+        setOpenAlert(true);
+        setMessageInfo('Error al registrar categoria');
+        setMessageSeverity('error');
+      }
     } else {
       setOpenAlert(true);
       setMessageInfo('Por favor, rellene todos los campos');
@@ -57,13 +64,20 @@ const FormCreateCategoriaEgresos = ({ setOpenAlert, setMessageInfo, setMessageSe
         categoria: { id: options },
       };
 
-      await postGeneralTable(identifier, password, endpointSubcategory, subcategoryData);
-      setOpenAlert(true);
-      setMessageInfo('Subcategoria registrada correctamente');
-      setMessageSeverity('success');
-      setTimeout(() => {
-        location.reload();
-      }, 1500);
+      const res = await postGeneralTable(identifier, password, endpointSubcategory, subcategoryData);
+
+      if (res.status === 200) {
+        setOpenAlert(true);
+        setMessageInfo('Subcategoria registrada correctamente');
+        setMessageSeverity('success');
+        setTimeout(() => {
+          location.reload();
+        }, 1500);
+      } else {
+        setOpenAlert(true);
+        setMessageInfo('Error al registrar subcategoria');
+        setMessageSeverity('error');
+      }
     } else {
       setOpenAlert(true);
       setMessageInfo('Por favor, seleccione una categoria y/o rellene el campo de subcategoria');

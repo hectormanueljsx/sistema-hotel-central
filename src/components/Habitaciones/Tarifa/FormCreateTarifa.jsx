@@ -35,13 +35,20 @@ const FormCreateTarifa = ({ setOpenAlert, setMessageInfo, setMessageSeverity }) 
         no_personas: datos.numPersonas,
       };
 
-      await postGeneralTable(identifier, password, endpoint, generalData);
-      setOpenAlert(true);
-      setMessageInfo('Tarifa registrada correctamente');
-      setMessageSeverity('success');
-      setTimeout(() => {
-        location.reload();
-      }, 1500);
+      const res = await postGeneralTable(identifier, password, endpoint, generalData);
+
+      if (res.status === 200) {
+        setOpenAlert(true);
+        setMessageInfo('Tarifa registrada correctamente');
+        setMessageSeverity('success');
+        setTimeout(() => {
+          location.reload();
+        }, 1500);
+      } else {
+        setOpenAlert(true);
+        setMessageInfo('Error al registrar tarifa');
+        setMessageSeverity('error');
+      }
     } else {
       setOpenAlert(true);
       setMessageInfo('Por favor, rellene todos los campos');

@@ -49,13 +49,20 @@ const FormCreateUsuario = ({ setOpenAlert, setMessageInfo, setMessageSeverity })
         };
         const dataRole = { role: { id: rol } };
 
-        await postUsers(identifier, password, endpoint, dataUser, dataRole);
-        setOpenAlert(true);
-        setMessageInfo('Usuario registrado correctamente');
-        setMessageSeverity('success');
-        setTimeout(() => {
-          location.reload();
-        }, 1500);
+        const res = await postUsers(identifier, password, endpoint, dataUser, dataRole);
+
+        if (res.status === 200) {
+          setOpenAlert(true);
+          setMessageInfo('Usuario registrado correctamente');
+          setMessageSeverity('success');
+          setTimeout(() => {
+            location.reload();
+          }, 1500);
+        } else {
+          setOpenAlert(true);
+          setMessageInfo('Error al registrar usuario');
+          setMessageSeverity('error');
+        }
       } else {
         setOpenAlert(true);
         setMessageInfo('Por favor, rellene todos los campos');
