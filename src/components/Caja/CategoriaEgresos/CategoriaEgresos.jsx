@@ -18,7 +18,7 @@ const CategoriaEgresos = () => {
           open={openAlert}
           setOpen={setOpenAlert}
           messageInfo={messageInfo}
-          messageSeverity={messageSeverity}
+          messageSeverity={messageSeverity || 'info'}
         />
       )}
       <Box sx={{ display: 'flex' }}>
