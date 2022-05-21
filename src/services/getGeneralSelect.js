@@ -9,6 +9,7 @@ const getGeneralSelect = async (identifier, password, endpoint) => {
         Authorization: `Bearer ${userToken}`,
       },
     });
+
     return data;
   } catch (error) {
     return error;
