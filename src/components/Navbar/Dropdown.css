@@ -1,0 +1,29 @@
+.services-submenu {
+  width: auto;
+  position: absolute;
+  top: 80px;
+  list-style: none;
+  text-align: start;
+  padding: 0;
+}
+
+.services-submenu li {
+  background: #101e2e;
+  cursor: pointer;
+}
+
+.services-submenu li a:hover {
+  background: #51bab3;
+}
+
+.services-submenu.clicked {
+  display: none;
+}
+
+.submenu-item {
+  color: #ffffff;
+  display: block;
+  text-decoration: none;
+  width: 100%;
+  height: 100%;
+}
