@@ -19,22 +19,14 @@ const ModalUsuario = ({ dataUsuario, setOpenAlert, setMessageInfo, setMessageSev
     email: dataUsuario.email,
     confirm: dataUsuario.confirm,
   });
-  const [rol, setRol] = useState(dataUsuario.role.id);
+  const [rol, setRol] = useState('');
 
   const identifier = 'test@email.com';
   const password = 'Test123';
   const endpoint = generalEndpoints.usuario;
 
-  const handleInputChange = event => setData({ ...data, [event.target.name]: event.target.value });
   const handleCheckbox = e => setRol(e.target.value);
-
-  let rolAdmin = false;
-  let rolRecepcion = false;
-  let rolEncargado = false;
-
-  if (rol === 4) rolAdmin = true;
-  if (rol === 3) rolRecepcion = true;
-  if (rol === 5) rolEncargado = true;
+  const handleInputChange = event => setData({ ...data, [event.target.name]: event.target.value });
 
   const updateDatos = async event => {
     event.preventDefault();
@@ -44,6 +36,7 @@ const ModalUsuario = ({ dataUsuario, setOpenAlert, setMessageInfo, setMessageSev
     let dataRole = '';
 
     if (data.username === '' || data.email === '' || rol === '') {
+      console.log(rol);
       setOpenAlert(true);
       setMessageInfo('Por favor, rellene todos los campos');
       setMessageSeverity('error');
@@ -156,15 +149,36 @@ const ModalUsuario = ({ dataUsuario, setOpenAlert, setMessageInfo, setMessageSev
         <Box component='div' sx={stylesContainerInput}>
           <TitleInput titleInput='Selecciona un rol' />
           <FormControlLabel
-            control={<Checkbox name='admin' checked={rolAdmin} value={'4'} onChange={handleCheckbox} />}
+            control={
+              <Checkbox
+                name='admin'
+                defaultChecked={dataUsuario.role.id === 4 ? true : false}
+                value={'4'}
+                onChange={handleCheckbox}
+              />
+            }
             label='Administrador'
           />
           <FormControlLabel
-            control={<Checkbox name='recepcion' checked={rolRecepcion} value={'3'} onChange={handleCheckbox} />}
+            control={
+              <Checkbox
+                name='recepcion'
+                defaultChecked={dataUsuario.role.id === 3 ? true : false}
+                value={'3'}
+                onChange={handleCheckbox}
+              />
+            }
             label='Recepcionista'
           />
           <FormControlLabel
-            control={<Checkbox name='encargado' checked={rolEncargado} value={'5'} onChange={handleCheckbox} />}
+            control={
+              <Checkbox
+                name='encargado'
+                defaultChecked={dataUsuario.role.id === 5 ? true : false}
+                value={'5'}
+                onChange={handleCheckbox}
+              />
+            }
             label='Encargado'
           />
         </Box>
