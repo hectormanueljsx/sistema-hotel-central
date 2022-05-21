@@ -5,7 +5,7 @@ import { NavLink } from 'react-router-dom';
 import { navItems, habitacionesDropdown } from '@/components/Navbar/NavItems';
 import '@/components/Navbar/Navbar.css';
 import Logotipo from '@/assets/logotipo-hc.png';
-import Dropdown from './Dropdown';
+import Dropdown from '@/components/Navbar/Dropdown';
 
 const Navbar = () => {
   const [dropdown, setDropdown] = useState(false);
