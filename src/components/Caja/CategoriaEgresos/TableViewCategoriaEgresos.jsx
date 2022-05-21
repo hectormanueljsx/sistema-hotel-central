@@ -31,13 +31,9 @@ const TableViewCategoriaEgresos = () => {
 
   const handleChange = panel => (event, isExpanded) => setExpanded(isExpanded ? panel : false);
 
-  const deleteCategoria = async (id, subcategoria) => {
-    if (subcategoria === 0) {
-      await deleteGeneralTable(identifier, password, endpointCategoria, id);
-      location.reload();
-    } else {
-      alert('No se puede eliminar una categoria con subcategorias');
-    }
+  const deleteCategoria = async id => {
+    await deleteGeneralTable(identifier, password, endpointCategoria, id);
+    location.reload();
   };
 
   const deleteSubcategoria = async id => {
@@ -64,12 +60,7 @@ const TableViewCategoriaEgresos = () => {
                     {categoria}
                   </Typography>
                   {subcategorias.length === 0 && (
-                    <IconButton
-                      color='error'
-                      size='small'
-                      sx={{}}
-                      onClick={() => deleteCategoria(id, subcategorias.length)}
-                    >
+                    <IconButton color='error' size='small' onClick={() => deleteCategoria(id)}>
                       <DeleteIcon />
                     </IconButton>
                   )}
