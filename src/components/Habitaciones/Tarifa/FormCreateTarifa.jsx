@@ -37,7 +37,7 @@ const FormCreateTarifa = ({ setOpenAlert, setMessageInfo, setMessageSeverity }) 
 
       const res = await postGeneralTable(identifier, password, endpoint, generalData);
 
-      if (res.status === 200) {
+      if (res.status >= 200 && res.status <= 299) {
         setOpenAlert(true);
         setMessageInfo('Tarifa registrada correctamente');
         setMessageSeverity('success');
@@ -48,6 +48,7 @@ const FormCreateTarifa = ({ setOpenAlert, setMessageInfo, setMessageSeverity }) 
         setOpenAlert(true);
         setMessageInfo('Error al registrar tarifa');
         setMessageSeverity('error');
+        return;
       }
     } else {
       setOpenAlert(true);

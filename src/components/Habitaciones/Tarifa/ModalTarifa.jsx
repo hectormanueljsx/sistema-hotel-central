@@ -36,13 +36,21 @@ const ModalTarifa = ({ dataTarifa, setOpenAlert, setMessageInfo, setMessageSever
         no_personas: data.numPersonas,
       };
 
-      await putGeneralTable(identifier, password, endpoint, dataTarifa.id, generalData);
-      setOpenAlert(true);
-      setMessageInfo('Tarifa actualizada correctamente');
-      setMessageSeverity('success');
-      setTimeout(() => {
-        location.reload();
-      }, 1500);
+      const res = await putGeneralTable(identifier, password, endpoint, dataTarifa.id, generalData);
+
+      if (res.status >= 200 && res.status <= 299) {
+        setOpenAlert(true);
+        setMessageInfo('Tarifa actualizada correctamente');
+        setMessageSeverity('success');
+        setTimeout(() => {
+          location.reload();
+        }, 1500);
+      } else {
+        setOpenAlert(true);
+        setMessageInfo('Error al actualizar tarifa');
+        setMessageSeverity('error');
+        return;
+      }
     } else {
       setOpenAlert(true);
       setMessageInfo('Por favor, rellene todos los campos');
@@ -81,7 +89,7 @@ const ModalTarifa = ({ dataTarifa, setOpenAlert, setMessageInfo, setMessageSever
             onChange={handleInputChange}
             name='precio'
             variant='outlined'
-            type='text'
+            type='number'
             margin='none'
             size='small'
             required
@@ -95,7 +103,7 @@ const ModalTarifa = ({ dataTarifa, setOpenAlert, setMessageInfo, setMessageSever
             onChange={handleInputChange}
             name='numPersonas'
             variant='outlined'
-            type='text'
+            type='number'
             margin='none'
             size='small'
             required

@@ -47,7 +47,6 @@ const TableViewTarifas = ({ setOpenAlert, setMessageInfo, setMessageSeverity }) 
   };
 
   const handleClose = () => setOpenModal(false);
-
   const handleChangePage = (event, newPage) => setPage(newPage);
 
   const handleChangeRowsPerPage = event => {
