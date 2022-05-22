@@ -37,17 +37,16 @@ const TableViewUsuarios = ({ setOpenAlert, setMessageInfo, setMessageSeverity })
   const [dataUsuario, setDataUsuario] = useState('');
   const [openModal, setOpenModal] = useState(false);
 
+  const identifier = 'test@email.com';
+  const password = 'Test123';
+  const endpoint = generalEndpoints.usuario;
+
   const handleOpen = item => {
     setOpenModal(true);
     setDataUsuario(item);
   };
 
   const handleClose = () => setOpenModal(false);
-
-  const identifier = 'test@email.com';
-  const password = 'Test123';
-  const endpoint = generalEndpoints.usuario;
-
   const handleChangePage = (event, newPage) => setPage(newPage);
 
   const handleChangeRowsPerPage = event => {
