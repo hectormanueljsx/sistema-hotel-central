@@ -4,13 +4,13 @@ import getTokenUser from '@/services/getTokenUser';
 const putGeneralTable = async (identifier, password, endpoint, id, generalData) => {
   try {
     const userToken = await getTokenUser(identifier, password);
-    const { data } = await apiConfig.put(`${endpoint}/${id}`, generalData, {
+    const { data, status } = await apiConfig.put(`${endpoint}/${id}`, generalData, {
       headers: {
         Authorization: `Bearer ${userToken}`,
       },
     });
 
-    return data;
+    return { data, status };
   } catch (error) {
     return error;
   }

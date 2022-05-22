@@ -4,7 +4,7 @@ import getTokenUser from '@/services/getTokenUser';
 const postUsers = async (identifier, password, endpoint, dataUser, dataRole) => {
   try {
     const userToken = await getTokenUser(identifier, password);
-    const { data } = await apiConfig.post(endpoint, dataUser, {
+    const { data, status } = await apiConfig.post(endpoint, dataUser, {
       headers: {
         Authorization: `Bearer ${userToken}`,
       },
@@ -16,7 +16,7 @@ const postUsers = async (identifier, password, endpoint, dataUser, dataRole) => 
       },
     });
 
-    return data;
+    return { data, status };
   } catch (error) {
     return error;
   }
