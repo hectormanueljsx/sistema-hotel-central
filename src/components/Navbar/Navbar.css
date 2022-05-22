@@ -50,5 +50,6 @@
 }
 
 .navbar-item a:hover {
+  border-radius: 4px;
   background-color: #51bab3;
 }

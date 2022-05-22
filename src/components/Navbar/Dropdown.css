@@ -18,6 +18,7 @@
 }
 
 .services-submenu li a:hover {
+  border-radius: 0;
   background: #51bab3;
 }
 
