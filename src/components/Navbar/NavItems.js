@@ -37,7 +37,14 @@ export const navItems = [
   },
 ];
 
-export const cajaDropdown = [{}];
+export const cajaDropdown = [
+  {
+    id: 3,
+    title: 'Categoria de Egresos',
+    path: './caja/categoria-egresos',
+    cName: 'submenu-item',
+  },
+];
 
 export const reportesDropdown = [{}];
 
