@@ -12,7 +12,7 @@
   cursor: pointer;
 }
 
-.services-submenu a {
+.services-submenu li a {
   font-size: 16px;
   font-weight: 500;
 }
