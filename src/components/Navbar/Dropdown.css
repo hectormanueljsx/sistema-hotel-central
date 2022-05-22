@@ -8,8 +8,13 @@
 }
 
 .services-submenu li {
-  background: #101e2e;
+  background-color: #101e2e;
   cursor: pointer;
+}
+
+.services-submenu a {
+  font-size: 16px;
+  font-weight: 500;
 }
 
 .services-submenu li a:hover {
