@@ -2,13 +2,14 @@ import React, { useState } from 'react';
 import { Button, CssBaseline } from '@mui/material';
 import { NavLink } from 'react-router-dom';
 
-import { navItems, habitacionesDropdown } from '@/components/Navbar/NavItems';
-import '@/components/Navbar/Navbar.css';
-import Logotipo from '@/assets/logotipo-hc.png';
 import Dropdown from '@/components/Navbar/Dropdown';
+import { navItems, cajaDropdown, habitacionesDropdown } from '@/components/Navbar/NavItems';
+import Logotipo from '@/assets/logotipo-hc.png';
+import '@/components/Navbar/Navbar.css';
 
 const Navbar = () => {
-  const [dropdown, setDropdown] = useState(false);
+  const [dropdownHabitaciones, setDropdownHabitaciones] = useState(false);
+  const [dropdownCaja, setDropdownCaja] = useState(false);
 
   return (
     <section className='navbar-fluid'>
@@ -25,11 +26,25 @@ const Navbar = () => {
                 <li
                   key={item.id}
                   className={item.cName}
-                  onMouseEnter={() => setDropdown(true)}
-                  onMouseLeave={() => setDropdown(false)}
+                  onMouseEnter={() => setDropdownHabitaciones(true)}
+                  onMouseLeave={() => setDropdownHabitaciones(false)}
                 >
                   <NavLink to={item.path}>{item.title}</NavLink>
-                  {dropdown && <Dropdown habitacionesDropdown={habitacionesDropdown} />}
+                  {dropdownHabitaciones && <Dropdown dropdownItem={habitacionesDropdown} />}
+                </li>
+              );
+            }
+
+            if (item.title === 'Caja') {
+              return (
+                <li
+                  key={item.id}
+                  className={item.cName}
+                  onMouseEnter={() => setDropdownCaja(true)}
+                  onMouseLeave={() => setDropdownCaja(false)}
+                >
+                  <NavLink to={item.path}>{item.title}</NavLink>
+                  {dropdownCaja && <Dropdown dropdownItem={cajaDropdown} />}
                 </li>
               );
             }
