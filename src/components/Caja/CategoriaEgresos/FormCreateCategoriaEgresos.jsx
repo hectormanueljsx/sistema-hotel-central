@@ -36,7 +36,7 @@ const FormCreateCategoriaEgresos = ({ setOpenAlert, setMessageInfo, setMessageSe
 
       const res = await postGeneralTable(identifier, password, endpointCategory, categoryData);
 
-      if (res.status === 200) {
+      if (res.status >= 200 && res.status <= 299) {
         setOpenAlert(true);
         setMessageInfo('Categoria registrada correctamente');
         setMessageSeverity('success');
@@ -47,6 +47,7 @@ const FormCreateCategoriaEgresos = ({ setOpenAlert, setMessageInfo, setMessageSe
         setOpenAlert(true);
         setMessageInfo('Error al registrar categoria');
         setMessageSeverity('error');
+        return;
       }
     } else {
       setOpenAlert(true);
@@ -66,7 +67,7 @@ const FormCreateCategoriaEgresos = ({ setOpenAlert, setMessageInfo, setMessageSe
 
       const res = await postGeneralTable(identifier, password, endpointSubcategory, subcategoryData);
 
-      if (res.status === 200) {
+      if (res.status >= 200 && res.status <= 299) {
         setOpenAlert(true);
         setMessageInfo('Subcategoria registrada correctamente');
         setMessageSeverity('success');
@@ -77,6 +78,7 @@ const FormCreateCategoriaEgresos = ({ setOpenAlert, setMessageInfo, setMessageSe
         setOpenAlert(true);
         setMessageInfo('Error al registrar subcategoria');
         setMessageSeverity('error');
+        return;
       }
     } else {
       setOpenAlert(true);
