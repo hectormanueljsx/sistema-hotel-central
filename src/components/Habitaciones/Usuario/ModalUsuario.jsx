@@ -19,7 +19,7 @@ const ModalUsuario = ({ dataUsuario, setOpenAlert, setMessageInfo, setMessageSev
     email: dataUsuario.email,
     confirm: dataUsuario.confirm,
   });
-  const [rol, setRol] = useState('');
+  const [rol, setRol] = useState(dataUsuario.role.id);
 
   const identifier = 'test@email.com';
   const password = 'Test123';
@@ -35,8 +35,7 @@ const ModalUsuario = ({ dataUsuario, setOpenAlert, setMessageInfo, setMessageSev
     let dataUser = '';
     let dataRole = '';
 
-    if (data.username === '' || data.email === '' || rol === '') {
-      console.log(rol);
+    if (data.username === '' || data.email === '') {
       setOpenAlert(true);
       setMessageInfo('Por favor, rellene todos los campos');
       setMessageSeverity('error');
@@ -69,13 +68,21 @@ const ModalUsuario = ({ dataUsuario, setOpenAlert, setMessageInfo, setMessageSev
       dataRole = { role: { id: rol } };
     }
 
-    await putUsers(identifier, password, endpoint, dataUsuario.id, dataUser, dataRole);
-    setOpenAlert(true);
-    setMessageInfo('Usuario actualizado correctamente');
-    setMessageSeverity('success');
-    setTimeout(() => {
-      location.reload();
-    }, 1500);
+    const res = await putUsers(identifier, password, endpoint, dataUsuario.id, dataUser, dataRole);
+
+    if (res.status >= 200 && res.status <= 299) {
+      setOpenAlert(true);
+      setMessageInfo('Usuario actualizado correctamente');
+      setMessageSeverity('success');
+      setTimeout(() => {
+        location.reload();
+      }, 1500);
+    } else {
+      setOpenAlert(true);
+      setMessageInfo('Error al actualizar usuario');
+      setMessageSeverity('error');
+      return;
+    }
   };
 
   return (
@@ -110,7 +117,7 @@ const ModalUsuario = ({ dataUsuario, setOpenAlert, setMessageInfo, setMessageSev
             onChange={handleInputChange}
             name='email'
             variant='outlined'
-            type='text'
+            type='email'
             margin='none'
             size='small'
             placeholder='Email'

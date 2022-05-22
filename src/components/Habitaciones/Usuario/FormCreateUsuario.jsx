@@ -51,7 +51,7 @@ const FormCreateUsuario = ({ setOpenAlert, setMessageInfo, setMessageSeverity })
 
         const res = await postUsers(identifier, password, endpoint, dataUser, dataRole);
 
-        if (res.status === 200) {
+        if (res.status >= 200 && res.status <= 299) {
           setOpenAlert(true);
           setMessageInfo('Usuario registrado correctamente');
           setMessageSeverity('success');
@@ -62,6 +62,7 @@ const FormCreateUsuario = ({ setOpenAlert, setMessageInfo, setMessageSeverity })
           setOpenAlert(true);
           setMessageInfo('Error al registrar usuario');
           setMessageSeverity('error');
+          return;
         }
       } else {
         setOpenAlert(true);
