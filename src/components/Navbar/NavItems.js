@@ -2,7 +2,7 @@ export const navItems = [
   {
     id: 1,
     title: 'Home',
-    path: './home/',
+    path: './home',
     cName: 'navbar-item',
   },
   {
