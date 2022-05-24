@@ -8,8 +8,11 @@ import Logotipo from '@/assets/logotipo-hc.png';
 import '@/components/Navbar/Navbar.css';
 
 const Navbar = () => {
-  const [dropdownHabitaciones, setDropdownHabitaciones] = useState(false);
+  const [dropdownReservas, setDropdownReservas] = useState(false);
+  const [dropdownCotizar, setDropdownCotizar] = useState(false);
   const [dropdownCaja, setDropdownCaja] = useState(false);
+  const [dropdownReportes, setDropdownReportes] = useState(false);
+  const [dropdownHabitaciones, setDropdownHabitaciones] = useState(false);
 
   return (
     <section className='navbar-fluid'>
@@ -21,16 +24,28 @@ const Navbar = () => {
 
         <ul className='navbar-items'>
           {navItems.map(item => {
-            if (item.title === 'Habitaciones') {
+            if (item.title === 'Reservas') {
               return (
                 <li
                   key={item.id}
                   className={item.cName}
-                  onMouseEnter={() => setDropdownHabitaciones(true)}
-                  onMouseLeave={() => setDropdownHabitaciones(false)}
+                  onMouseEnter={() => setDropdownReservas(true)}
+                  onMouseLeave={() => setDropdownReservas(false)}
                 >
                   <NavLink to={item.path}>{item.title}</NavLink>
-                  {dropdownHabitaciones && <Dropdown dropdownItem={habitacionesDropdown} />}
+                </li>
+              );
+            }
+
+            if (item.title === 'Cotizar') {
+              return (
+                <li
+                  key={item.id}
+                  className={item.cName}
+                  onMouseEnter={() => setDropdownCotizar(true)}
+                  onMouseLeave={() => setDropdownCotizar(false)}
+                >
+                  <NavLink to={item.path}>{item.title}</NavLink>
                 </li>
               );
             }
@@ -49,11 +64,32 @@ const Navbar = () => {
               );
             }
 
-            return (
-              <li key={item.id} className={item.cName}>
-                <NavLink to={item.path}>{item.title}</NavLink>
-              </li>
-            );
+            if (item.title === 'Reportes') {
+              return (
+                <li
+                  key={item.id}
+                  className={item.cName}
+                  onMouseEnter={() => setDropdownReportes(true)}
+                  onMouseLeave={() => setDropdownReportes(false)}
+                >
+                  <NavLink to={item.path}>{item.title}</NavLink>
+                </li>
+              );
+            }
+
+            if (item.title === 'Habitaciones') {
+              return (
+                <li
+                  key={item.id}
+                  className={item.cName}
+                  onMouseEnter={() => setDropdownHabitaciones(true)}
+                  onMouseLeave={() => setDropdownHabitaciones(false)}
+                >
+                  <NavLink to={item.path}>{item.title}</NavLink>
+                  {dropdownHabitaciones && <Dropdown dropdownItem={habitacionesDropdown} />}
+                </li>
+              );
+            }
           })}
         </ul>
         <Button>Perfil</Button>
