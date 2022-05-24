@@ -10,11 +10,11 @@ const stylesTitleInput = {
   marginBottom: 0.5,
 };
 
-const stylesLoaderRender = {
+const stylesLoaderAlertRender = {
   display: 'flex',
   justifyContent: 'center',
   alignItems: 'center',
   marginTop: 10,
 };
 
-export { stylesTitlePage, stylesTitleInput, stylesLoaderRender };
+export { stylesTitlePage, stylesTitleInput, stylesLoaderAlertRender };
