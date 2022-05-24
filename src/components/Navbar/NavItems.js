@@ -37,6 +37,10 @@ export const navItems = [
   },
 ];
 
+export const reservasDropdown = [{}];
+
+export const cotizarDropdown = [{}];
+
 export const cajaDropdown = [
   {
     id: 3,
