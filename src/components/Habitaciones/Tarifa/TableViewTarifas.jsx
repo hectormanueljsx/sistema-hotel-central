@@ -18,6 +18,7 @@ import DeleteIcon from '@mui/icons-material/Delete';
 
 import TitlePage from '@/components/TitlePage';
 import Loader from '@/components/Loader';
+import AlertGlobalTables from '@/components/AlertGlobalTables';
 import ModalTarifa from '@/components/Habitaciones/Tarifa/ModalTarifa';
 import useGetGeneralTable from '@/hooks/useGetGeneralTable';
 import deleteGeneralTable from '@/services/deleteGeneralTable';
@@ -67,11 +68,12 @@ const TableViewTarifas = ({ setOpenAlert, setMessageInfo, setMessageSeverity }) 
       <TitlePage titlePage='Lista de Tarifas' />
       <Box component='div'>
         {loading && <Loader />}
+        {error && <AlertGlobalTables messageError='Ah ocurrido un error al obtener los datos' />}
         <TableContainer>
           <Table>
             <TableHead>
               <TableRow>
-                {loading
+                {loading || error
                   ? null
                   : columns.map((column, index) => (
                       <TableCell key={index} sx={[stylesTableCell, { width: column.width }]}>
@@ -103,7 +105,7 @@ const TableViewTarifas = ({ setOpenAlert, setMessageInfo, setMessageSeverity }) 
             </TableBody>
           </Table>
         </TableContainer>
-        {loading ? null : (
+        {loading || error ? null : (
           <TablePagination
             rowsPerPageOptions={[]}
             component='div'

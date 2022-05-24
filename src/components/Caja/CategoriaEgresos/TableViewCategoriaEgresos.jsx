@@ -16,6 +16,7 @@ import DeleteIcon from '@mui/icons-material/Delete';
 
 import TitlePage from '@/components/TitlePage';
 import Loader from '@/components/Loader';
+import AlertGlobalTables from '@/components/AlertGlobalTables';
 import useGetGeneralTable from '@/hooks/useGetGeneralTable';
 import deleteGeneralTable from '@/services/deleteGeneralTable';
 import { generalEndpoints } from '@/utilities/endpoints';
@@ -49,6 +50,7 @@ const TableViewCategoriaEgresos = () => {
       <TitlePage titlePage='Lista de Categorías Registradas' />
       <Box component='div'>
         {loading && <Loader />}
+        {error && <AlertGlobalTables messageError='Ah ocurrido un error al obtener los datos' />}
         {list.map((item, index) => {
           const { categoria, subcategorias, id } = item;
 
