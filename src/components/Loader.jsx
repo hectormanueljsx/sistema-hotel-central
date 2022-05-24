@@ -1,11 +1,11 @@
 import React from 'react';
 import { Box, CircularProgress, CssBaseline } from '@mui/material';
 
-import { stylesLoaderRender } from '@/components/stylesGlobals';
+import { stylesLoaderAlertRender } from '@/components/stylesGlobals';
 
 const Loader = () => {
   return (
-    <Box sx={stylesLoaderRender}>
+    <Box sx={stylesLoaderAlertRender}>
       <CssBaseline />
       <CircularProgress />
     </Box>
