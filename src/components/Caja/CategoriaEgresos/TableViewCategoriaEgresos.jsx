@@ -24,8 +24,8 @@ import { stylesAccordion, stylesContainerSection } from '@/components/Caja/style
 const TableViewCategoriaEgresos = () => {
   const [expanded, setExpanded] = useState(false);
 
-  const identifier = 'test@email.com';
-  const password = 'Test123';
+  const identifier = localStorage.getItem('identifier');
+  const password = localStorage.getItem('password');
   const endpointCategoria = generalEndpoints.categoria;
   const endpointSubategoria = generalEndpoints.subcategoria;
 

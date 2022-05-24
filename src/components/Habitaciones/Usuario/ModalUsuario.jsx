@@ -21,8 +21,8 @@ const ModalUsuario = ({ dataUsuario, setOpenAlert, setMessageInfo, setMessageSev
   });
   const [rol, setRol] = useState(dataUsuario.role.id);
 
-  const identifier = 'test@email.com';
-  const password = 'Test123';
+  const identifier = localStorage.getItem('identifier');
+  const password = localStorage.getItem('password');
   const endpoint = generalEndpoints.usuario;
 
   const handleCheckbox = e => setRol(e.target.value);

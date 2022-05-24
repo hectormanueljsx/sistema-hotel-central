@@ -37,8 +37,8 @@ const TableViewTarifas = ({ setOpenAlert, setMessageInfo, setMessageSeverity }) 
   const [openModal, setOpenModal] = useState(false);
   const [dataTarifa, setDataTarifa] = useState('');
 
-  const identifier = 'test@email.com';
-  const password = 'Test123';
+  const identifier = localStorage.getItem('identifier');
+  const password = localStorage.getItem('password');
   const endpoint = generalEndpoints.tarifa;
 
   const handleOpen = item => {

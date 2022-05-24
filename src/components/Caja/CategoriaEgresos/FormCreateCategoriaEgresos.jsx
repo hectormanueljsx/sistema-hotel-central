@@ -19,8 +19,8 @@ const FormCreateCategoriaEgresos = ({ setOpenAlert, setMessageInfo, setMessageSe
   const [options, setOptions] = useState('');
   const [subcategoria, setSubcategoria] = useState('');
 
-  const identifier = 'test@email.com';
-  const password = 'Test123';
+  const identifier = localStorage.getItem('identifier');
+  const password = localStorage.getItem('password');
   const endpointCategory = generalEndpoints.categoria;
   const endpointSubcategory = generalEndpoints.subcategoria;
 

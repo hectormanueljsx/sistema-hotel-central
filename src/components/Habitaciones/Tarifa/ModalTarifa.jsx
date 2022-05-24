@@ -20,8 +20,8 @@ const ModalTarifa = ({ dataTarifa, setOpenAlert, setMessageInfo, setMessageSever
     numPersonas: dataTarifa.no_personas,
   });
 
-  const identifier = 'test@email.com';
-  const password = 'Test123';
+  const identifier = localStorage.getItem('identifier');
+  const password = localStorage.getItem('password');
   const endpoint = generalEndpoints.tarifa;
 
   const handleInputChange = event => setData({ ...data, [event.target.name]: event.target.value });

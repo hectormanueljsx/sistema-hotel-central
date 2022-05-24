@@ -37,8 +37,8 @@ const TableViewUsuarios = ({ setOpenAlert, setMessageInfo, setMessageSeverity })
   const [dataUsuario, setDataUsuario] = useState('');
   const [openModal, setOpenModal] = useState(false);
 
-  const identifier = 'test@email.com';
-  const password = 'Test123';
+  const identifier = localStorage.getItem('identifier');
+  const password = localStorage.getItem('password');
   const endpoint = generalEndpoints.usuario;
 
   const handleOpen = item => {

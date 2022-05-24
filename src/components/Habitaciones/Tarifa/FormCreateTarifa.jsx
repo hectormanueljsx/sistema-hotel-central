@@ -19,8 +19,8 @@ const FormCreateTarifa = ({ setOpenAlert, setMessageInfo, setMessageSeverity }) 
     numPersonas: '',
   });
 
-  const identifier = 'test@email.com';
-  const password = 'Test123';
+  const identifier = localStorage.getItem('identifier');
+  const password = localStorage.getItem('password');
   const endpoint = generalEndpoints.tarifa;
 
   const handleInputChange = event => setDatos({ ...datos, [event.target.name]: event.target.value });
