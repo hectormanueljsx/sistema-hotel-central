@@ -26,12 +26,12 @@ const Login = () => {
       const res = await postLogin(datosLogin.username, datosLogin.password);
 
       if (res.status >= 200 && res.status <= 299) {
-        localStorage.setItem('jwt', res.jwt);
-        localStorage.setItem('user', datosLogin.username);
+        localStorage.setItem('id', res.id);
+        localStorage.setItem('identifier', res.email);
         localStorage.setItem('password', datosLogin.password);
         localStorage.setItem('role', res.name);
         setOpenAlert(true);
-        setMessageInfo('Usuario registrado correctamente');
+        setMessageInfo('Inicio de sesión correcto');
         setMessageSeverity('success');
         setTimeout(() => {}, 1500);
       } else {
