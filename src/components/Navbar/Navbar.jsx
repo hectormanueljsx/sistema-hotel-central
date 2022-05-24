@@ -24,6 +24,14 @@ const Navbar = () => {
 
         <ul className='navbar-items'>
           {navItems.map(item => {
+            if (item.title === 'Home') {
+              return (
+                <li key={item.id} className={item.cName}>
+                  <NavLink to={item.path}>{item.title}</NavLink>
+                </li>
+              );
+            }
+
             if (item.title === 'Reservas') {
               return (
                 <li
