@@ -4,15 +4,16 @@ const postLogin = async (identifier, password) => {
   try {
     const {
       data: {
-        jwt,
         user: {
+          id,
+          email,
           role: { name },
         },
       },
       status,
     } = await apiConfig.post('auth/local', { identifier, password });
 
-    return { jwt, status, name };
+    return { id, email, name, status };
   } catch (error) {
     return error;
   }
