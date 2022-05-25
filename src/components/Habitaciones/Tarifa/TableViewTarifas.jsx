@@ -40,7 +40,7 @@ const TableViewTarifas = ({ setOpenAlert, setMessageInfo, setMessageSeverity }) 
 
   const identifier = localStorage.getItem('identifier');
   const password = localStorage.getItem('password');
-  const endpoint = generalEndpoints.tarifa;
+  const endpointTarifa = generalEndpoints.tarifa;
 
   const handleOpen = item => {
     setOpenModal(true);
@@ -56,11 +56,11 @@ const TableViewTarifas = ({ setOpenAlert, setMessageInfo, setMessageSeverity }) 
   };
 
   const deleteRegistro = async id => {
-    await deleteGeneralTable(identifier, password, endpoint, id);
+    await deleteGeneralTable(identifier, password, endpointTarifa, id);
     location.reload();
   };
 
-  const { list, loading, error } = useGetGeneralTable(identifier, password, endpoint);
+  const { list, loading, error } = useGetGeneralTable(identifier, password, endpointTarifa);
 
   return (
     <Container component='section' disableGutters sx={[stylesContainerSection, { width: 1000, height: 711 }]}>

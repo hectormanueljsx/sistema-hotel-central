@@ -23,7 +23,7 @@ const FormCreateUsuario = ({ setOpenAlert, setMessageInfo, setMessageSeverity })
 
   const identifier = localStorage.getItem('identifier');
   const password = localStorage.getItem('password');
-  const endpoint = generalEndpoints.usuario;
+  const endpointUsuario = generalEndpoints.usuario;
 
   const handleCheckbox = e => setRol(e.target.value);
   const handleInputChange = event => setDatos({ ...datos, [event.target.name]: event.target.value });
@@ -49,7 +49,7 @@ const FormCreateUsuario = ({ setOpenAlert, setMessageInfo, setMessageSeverity })
         };
         const dataRole = { role: { id: rol } };
 
-        const res = await postUsers(identifier, password, endpoint, dataUser, dataRole);
+        const res = await postUsers(identifier, password, endpointUsuario, dataUser, dataRole);
 
         if (res.status >= 200 && res.status <= 299) {
           setOpenAlert(true);

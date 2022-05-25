@@ -21,8 +21,8 @@ const FormCreateCategoriaEgresos = ({ setOpenAlert, setMessageInfo, setMessageSe
 
   const identifier = localStorage.getItem('identifier');
   const password = localStorage.getItem('password');
-  const endpointCategory = generalEndpoints.categoria;
-  const endpointSubcategory = generalEndpoints.subcategoria;
+  const endpointCategoria = generalEndpoints.categoria;
+  const endpointSubcategoria = generalEndpoints.subcategoria;
 
   const handleChange = event => setOptions(event.target.value);
   const handleInputChangeCategoria = event => setCategoria(event.target.value);
@@ -34,7 +34,7 @@ const FormCreateCategoriaEgresos = ({ setOpenAlert, setMessageInfo, setMessageSe
     if (categoria.trim().length > 0) {
       const categoryData = { categoria: categoria.toUpperCase() };
 
-      const res = await postGeneralTable(identifier, password, endpointCategory, categoryData);
+      const res = await postGeneralTable(identifier, password, endpointCategoria, categoryData);
 
       if (res.status >= 200 && res.status <= 299) {
         setOpenAlert(true);
@@ -65,7 +65,7 @@ const FormCreateCategoriaEgresos = ({ setOpenAlert, setMessageInfo, setMessageSe
         categoria: { id: options },
       };
 
-      const res = await postGeneralTable(identifier, password, endpointSubcategory, subcategoryData);
+      const res = await postGeneralTable(identifier, password, endpointSubcategoria, subcategoryData);
 
       if (res.status >= 200 && res.status <= 299) {
         setOpenAlert(true);
@@ -87,7 +87,7 @@ const FormCreateCategoriaEgresos = ({ setOpenAlert, setMessageInfo, setMessageSe
     }
   };
 
-  const { list, loading, error } = useGetGeneralTable(identifier, password, endpointCategory);
+  const { list, loading, error } = useGetGeneralTable(identifier, password, endpointCategoria);
 
   return (
     <Container component='section' disableGutters sx={stylesContainerDoubleForm}>

@@ -21,7 +21,7 @@ const FormCreateTarifa = ({ setOpenAlert, setMessageInfo, setMessageSeverity }) 
 
   const identifier = localStorage.getItem('identifier');
   const password = localStorage.getItem('password');
-  const endpoint = generalEndpoints.tarifa;
+  const endpointTarifa = generalEndpoints.tarifa;
 
   const handleInputChange = event => setDatos({ ...datos, [event.target.name]: event.target.value });
 
@@ -35,7 +35,7 @@ const FormCreateTarifa = ({ setOpenAlert, setMessageInfo, setMessageSeverity }) 
         no_personas: datos.numPersonas,
       };
 
-      const res = await postGeneralTable(identifier, password, endpoint, generalData);
+      const res = await postGeneralTable(identifier, password, endpointTarifa, generalData);
 
       if (res.status >= 200 && res.status <= 299) {
         setOpenAlert(true);

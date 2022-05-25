@@ -22,7 +22,7 @@ const ModalTarifa = ({ dataTarifa, setOpenAlert, setMessageInfo, setMessageSever
 
   const identifier = localStorage.getItem('identifier');
   const password = localStorage.getItem('password');
-  const endpoint = generalEndpoints.tarifa;
+  const endpointTarifa = generalEndpoints.tarifa;
 
   const handleInputChange = event => setData({ ...data, [event.target.name]: event.target.value });
 
@@ -36,7 +36,7 @@ const ModalTarifa = ({ dataTarifa, setOpenAlert, setMessageInfo, setMessageSever
         no_personas: data.numPersonas,
       };
 
-      const res = await putGeneralTable(identifier, password, endpoint, dataTarifa.id, generalData);
+      const res = await putGeneralTable(identifier, password, endpointTarifa, dataTarifa.id, generalData);
 
       if (res.status >= 200 && res.status <= 299) {
         setOpenAlert(true);

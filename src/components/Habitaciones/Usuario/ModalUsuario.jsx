@@ -23,7 +23,7 @@ const ModalUsuario = ({ dataUsuario, setOpenAlert, setMessageInfo, setMessageSev
 
   const identifier = localStorage.getItem('identifier');
   const password = localStorage.getItem('password');
-  const endpoint = generalEndpoints.usuario;
+  const endpointUsuario = generalEndpoints.usuario;
 
   const handleCheckbox = e => setRol(e.target.value);
   const handleInputChange = event => setData({ ...data, [event.target.name]: event.target.value });
@@ -68,7 +68,7 @@ const ModalUsuario = ({ dataUsuario, setOpenAlert, setMessageInfo, setMessageSev
       dataRole = { role: { id: rol } };
     }
 
-    const res = await putUsers(identifier, password, endpoint, dataUsuario.id, dataUser, dataRole);
+    const res = await putUsers(identifier, password, endpointUsuario, dataUsuario.id, dataUser, dataRole);
 
     if (res.status >= 200 && res.status <= 299) {
       setOpenAlert(true);
