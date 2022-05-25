@@ -33,6 +33,13 @@ const stylesTableCell = {
   padding: 1,
 };
 
+const stylesModal = {
+  position: 'absolute',
+  top: '50%',
+  left: '50%',
+  transform: 'translate(-50%, -50%)',
+};
+
 export {
   stylesContainerDoubleForm,
   stylesContainerSection,
@@ -40,4 +47,5 @@ export {
   stylesContainerInput,
   stylesAccordion,
   stylesTableCell,
+  stylesModal,
 };
