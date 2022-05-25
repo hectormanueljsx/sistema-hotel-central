@@ -92,7 +92,7 @@ const FormCreateCategoriaEgresos = ({ setOpenAlert, setMessageInfo, setMessageSe
   return (
     <Container component='section' disableGutters sx={stylesContainerDoubleForm}>
       <CssBaseline />
-      <Container component='section' sx={[stylesContainerSection, { height: 250.25 }]}>
+      <Container component='section' sx={[stylesContainerSection, { width: 400, height: 250.25 }]}>
         <TitlePage titlePage='Registro de Categoría' />
         <Box component='form' sx={stylesContainerBox}>
           <Box component='div' sx={stylesContainerInput}>
@@ -121,7 +121,7 @@ const FormCreateCategoriaEgresos = ({ setOpenAlert, setMessageInfo, setMessageSe
           </Button>
         </Box>
       </Container>
-      <Container component='section' sx={[stylesContainerSection, { height: 334.25, marginTop: 5 }]}>
+      <Container component='section' sx={[stylesContainerSection, { width: 400, height: 334.25, marginTop: 5 }]}>
         <TitlePage titlePage='Registro de Subcategoría' />
         <Box component='form' sx={stylesContainerBox}>
           <Box component='div' sx={stylesContainerInput}>
