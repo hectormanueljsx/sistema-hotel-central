@@ -13,6 +13,9 @@ const Navbar = () => {
   const [dropdownCaja, setDropdownCaja] = useState(false);
   const [dropdownReportes, setDropdownReportes] = useState(false);
   const [dropdownHabitaciones, setDropdownHabitaciones] = useState(false);
+  const [dropdownUser, setDropdownUser] = useState(false);
+
+  const user = localStorage.getItem('username');
 
   return (
     <section className='navbar-fluid'>
@@ -92,7 +95,14 @@ const Navbar = () => {
             }
           })}
         </ul>
-        <Button>Perfil</Button>
+        <li
+          key={0}
+          className='navbar-item'
+          onMouseEnter={() => setDropdownUser(true)}
+          onMouseLeave={() => setDropdownUser(false)}
+        >
+          <button>{user}</button>
+        </li>
       </nav>
     </section>
   );

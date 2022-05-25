@@ -36,6 +36,7 @@ const Login = () => {
         localStorage.setItem('id', res.id);
         localStorage.setItem('identifier', res.email);
         localStorage.setItem('password', datosLogin.password);
+        localStorage.setItem('username', res.username);
         localStorage.setItem('role', res.name);
         setOpenAlert(true);
         setMessageInfo('Inicio de sesión correcto');
