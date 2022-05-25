@@ -24,14 +24,6 @@ const Navbar = () => {
 
         <ul className='navbar-items'>
           {navItems.map(item => {
-            if (item.title === 'Home') {
-              return (
-                <li key={item.id} className={item.cName}>
-                  <NavLink to={item.path}>{item.title}</NavLink>
-                </li>
-              );
-            }
-
             if (item.title === 'Reservas') {
               return (
                 <li
@@ -40,7 +32,7 @@ const Navbar = () => {
                   onMouseEnter={() => setDropdownReservas(true)}
                   onMouseLeave={() => setDropdownReservas(false)}
                 >
-                  <NavLink to={item.path}>{item.title}</NavLink>
+                  <button>{item.title}</button>
                 </li>
               );
             }
@@ -53,7 +45,7 @@ const Navbar = () => {
                   onMouseEnter={() => setDropdownCotizar(true)}
                   onMouseLeave={() => setDropdownCotizar(false)}
                 >
-                  <NavLink to={item.path}>{item.title}</NavLink>
+                  <button>{item.title}</button>
                 </li>
               );
             }
@@ -66,7 +58,7 @@ const Navbar = () => {
                   onMouseEnter={() => setDropdownCaja(true)}
                   onMouseLeave={() => setDropdownCaja(false)}
                 >
-                  <NavLink to={item.path}>{item.title}</NavLink>
+                  <button>{item.title}</button>
                   {dropdownCaja && <Dropdown dropdownItem={cajaDropdown} />}
                 </li>
               );
@@ -80,7 +72,7 @@ const Navbar = () => {
                   onMouseEnter={() => setDropdownReportes(true)}
                   onMouseLeave={() => setDropdownReportes(false)}
                 >
-                  <NavLink to={item.path}>{item.title}</NavLink>
+                  <button>{item.title}</button>
                 </li>
               );
             }
@@ -93,7 +85,7 @@ const Navbar = () => {
                   onMouseEnter={() => setDropdownHabitaciones(true)}
                   onMouseLeave={() => setDropdownHabitaciones(false)}
                 >
-                  <NavLink to={item.path}>{item.title}</NavLink>
+                  <button>{item.title}</button>
                   {dropdownHabitaciones && <Dropdown dropdownItem={habitacionesDropdown} />}
                 </li>
               );

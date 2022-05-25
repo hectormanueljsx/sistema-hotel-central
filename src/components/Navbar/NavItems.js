@@ -1,38 +1,27 @@
 export const navItems = [
   {
     id: 1,
-    title: 'Home',
-    path: './',
+    title: 'Reservas',
     cName: 'navbar-item',
   },
   {
     id: 2,
-    title: 'Reservas',
-    path: './reservas/',
+    title: 'Cotizar',
     cName: 'navbar-item',
   },
   {
     id: 3,
-    title: 'Cotizar',
-    path: './cotizar/',
+    title: 'Caja',
     cName: 'navbar-item',
   },
   {
     id: 4,
-    title: 'Caja',
-    path: './caja/categoria-egresos',
+    title: 'Reportes',
     cName: 'navbar-item',
   },
   {
     id: 5,
-    title: 'Reportes',
-    path: './reportes/',
-    cName: 'navbar-item',
-  },
-  {
-    id: 6,
     title: 'Habitaciones',
-    path: './habitaciones/tarifas',
     cName: 'navbar-item',
   },
 ];
