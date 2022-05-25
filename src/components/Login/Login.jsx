@@ -16,13 +16,13 @@ import {
 import LogoIcon from '@/assets/favicon.png';
 
 const Login = () => {
+  const [messageInfo, setMessageInfo] = useState('');
+  const [messageSeverity, setMessageSeverity] = useState('');
+  const [openAlert, setOpenAlert] = useState(true);
   const [datosLogin, setDatosLogin] = useState({
     username: '',
     password: '',
   });
-  const [messageInfo, setMessageInfo] = useState('');
-  const [messageSeverity, setMessageSeverity] = useState('');
-  const [openAlert, setOpenAlert] = useState(true);
 
   const handleInputChange = event => setDatosLogin({ ...datosLogin, [event.target.name]: event.target.value });
 
