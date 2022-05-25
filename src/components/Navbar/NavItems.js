@@ -33,8 +33,14 @@ export const cotizarDropdown = [{}];
 export const cajaDropdown = [
   {
     id: 3,
-    title: 'Categoria de Egresos',
-    path: './caja/categoria-egresos',
+    title: 'Categorias de Egresos',
+    path: './caja/categorias-de-egresos',
+    cName: 'submenu-item',
+  },
+  {
+    id: 4,
+    title: 'Egresos',
+    path: './caja/egresos',
     cName: 'submenu-item',
   },
 ];
