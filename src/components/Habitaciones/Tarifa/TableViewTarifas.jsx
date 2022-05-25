@@ -90,7 +90,13 @@ const TableViewTarifas = ({ setOpenAlert, setMessageInfo, setMessageSeverity }) 
                   <TableRow key={index}>
                     <TableCell sx={stylesTableCell}>{descripcion}</TableCell>
                     <TableCell sx={stylesTableCell}>{no_personas}</TableCell>
-                    <TableCell sx={stylesTableCell}>${precio}</TableCell>
+                    <TableCell sx={stylesTableCell}>
+                      {precio.toLocaleString('es-MX', {
+                        style: 'currency',
+                        currency: 'MXN',
+                        minimumFractionDigits: 2,
+                      })}
+                    </TableCell>
                     <TableCell sx={stylesTableCell}>
                       <IconButton color='info' size='small' onClick={() => handleOpen(item)}>
                         <EditIcon />
