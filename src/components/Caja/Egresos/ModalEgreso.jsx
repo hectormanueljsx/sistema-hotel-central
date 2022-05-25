@@ -19,7 +19,7 @@ import TitlePage from '@/components/TitlePage';
 import TitleInput from '@/components/TitleInput';
 import putGeneralTable from '@/services/putGeneralTable';
 import { generalEndpoints } from '@/utilities/endpoints';
-import { stylesContainerBox, stylesContainerInput, stylesContainerSection } from '@/components/Caja/stylesCaja';
+import { stylesContainerInput, stylesContainerSection } from '@/components/Caja/stylesCaja';
 
 const ModalEgreso = ({
   dataEgreso,
