@@ -56,7 +56,7 @@ const Login = () => {
   };
 
   return (
-    <Container component='section' disableGutters sx={[stylesContainerSection, { width: 400 }]}>
+    <Container component='section' disableGutters sx={[stylesContainerSection, { width: 400, height: 428.25 }]}>
       <CssBaseline />
       {messageInfo && (
         <AlertGlobalForms
