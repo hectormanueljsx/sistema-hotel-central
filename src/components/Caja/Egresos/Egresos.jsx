@@ -1,39 +1,65 @@
 import React, { useState } from 'react';
 import { Box, Container, CssBaseline } from '@mui/material';
 
+import AlertGlobalForms from '@/components/AlertGlobalForms';
 import FormCreateEgresos from '@/components/Caja/Egresos/FormCreateEgresos';
 import TableViewEgresos from '@/components/Caja/Egresos/TableViewEgresos';
 import getGeneralSelect from '@/services/getGeneralSelect';
 import { generalEndpoints } from '@/utilities/endpoints';
 
 const Egresos = () => {
+  const [messageInfo, setMessageInfo] = useState('');
+  const [messageSeverity, setMessageSeverity] = useState('');
+  const [openAlert, setOpenAlert] = useState(true);
   const [pago, setPago] = useState([]);
   const [categoria, setCategoria] = useState([]);
 
-  const identifier = 'test@email.com';
-  const password = 'Test123';
+  const identifier = localStorage.getItem('identifier');
+  const password = localStorage.getItem('password');
   const endpointPago = generalEndpoints.pago;
   const endpointCategoria = generalEndpoints.categoria;
 
-  async function getPago() {
+  const getPago = async () => {
     await getGeneralSelect(identifier, password, endpointPago).then(res => {
       setPago(res.data);
     });
-  }
-  document.addEventListener('DOMContentLoaded', getPago, false);
+  };
 
-  async function getCategoria() {
-    await getGeneralSelect(identifier, password, endpointCategoria).then(result => {
-      setCategoria(result.data);
+  const getCategoria = async () => {
+    await getGeneralSelect(identifier, password, endpointCategoria).then(res => {
+      setCategoria(res.data);
     });
-  }
+  };
+
+  document.addEventListener('DOMContentLoaded', getPago, false);
   document.addEventListener('DOMContentLoaded', getCategoria, false);
+
   return (
-    <Container maxWidth='xl'>
+    <Container component='section' disableGutters maxWidth='xl'>
       <CssBaseline />
+      {messageInfo && (
+        <AlertGlobalForms
+          open={openAlert}
+          setOpen={setOpenAlert}
+          messageInfo={messageInfo}
+          messageSeverity={messageSeverity || 'info'}
+        />
+      )}
       <Box sx={{ display: 'flex' }}>
-        <FormCreateEgresos pago={pago} categoria={categoria}/>
-        <TableViewEgresos pago={pago} categoria={categoria}/>
+        <FormCreateEgresos
+          setOpenAlert={setOpenAlert}
+          setMessageInfo={setMessageInfo}
+          setMessageSeverity={setMessageSeverity}
+          pago={pago}
+          categoria={categoria}
+        />
+        <TableViewEgresos
+          setOpenAlert={setOpenAlert}
+          setMessageInfo={setMessageInfo}
+          setMessageSeverity={setMessageSeverity}
+          pago={pago}
+          categoria={categoria}
+        />
       </Box>
     </Container>
   );

@@ -3,25 +3,27 @@ import {
   Box,
   Container,
   CssBaseline,
+  IconButton,
+  Modal,
   Table,
   TableBody,
   TableCell,
   TableContainer,
   TableHead,
-  TableRow,
   TablePagination,
-  Modal,
-  IconButton,
+  TableRow,
 } from '@mui/material';
-import VisibilityRoundedIcon from '@mui/icons-material/VisibilityRounded';
+import VisibilityIcon from '@mui/icons-material/Visibility';
+import moment from 'moment';
 
 import TitlePage from '@/components/TitlePage';
 import Loader from '@/components/Loader';
+import AlertGlobalTables from '@/components/AlertGlobalTables';
+import ModalEgreso from '@/components/Caja/Egresos/ModalEgreso';
 import useGetSpecific from '@/hooks/useGetSpecific';
 import getSpecificSelect from '@/services/getSpecificSelect';
-import ModalEgreso from './ModalEgreso';
 import { generalEndpoints } from '@/utilities/endpoints';
-import { stylesContainerSection, stylesTableCell } from '@/components/Caja/stylesCaja';
+import { stylesContainerSection, stylesModal, stylesTableCell } from '@/components/Caja/stylesCaja';
 
 const columns = [
   { id: 'num_gasto', label: 'N° Gasto', width: 140 },
@@ -32,40 +34,42 @@ const columns = [
   { id: 'acciones', label: 'Acciones', width: 100 },
 ];
 
-const TableViewEgresos = ({ pago, categoria }) => {
+const TableViewEgresos = ({ setOpenAlert, setMessageInfo, setMessageSeverity, pago, categoria }) => {
   const [page, setPage] = useState(0);
   const [rowsPerPage, setRowsPerPage] = useState(10);
-  const [open, setOpen] = useState(false);
+  const [openModal, setOpenModal] = useState(false);
   const [dataEgreso, setDataEgreso] = useState('');
-  const [dataCategoria, setdataCategoria] = useState('');
+  const [dataCategoria, setDataCategoria] = useState('');
 
-  const identifier = 'test@email.com';
-  const password = 'Test123';
-  const endpoint = generalEndpoints.egreso;
+  const identifier = localStorage.getItem('identifier');
+  const password = localStorage.getItem('password');
+  const endpointEgreso = generalEndpoints.egreso;
+  const endpointCategoria = generalEndpoints.categoria;
+
   const attribute = 'facturado';
   const valueAttribute = false;
-
-  const endpointCategoria = generalEndpoints.categoria;
   const attributeCategoria = 'id';
 
   const handleOpen = async (item, categoriaData) => {
-    await getSpecificSelect(identifier, password, endpointCategoria, attributeCategoria, categoriaData).then(result => {
-      setdataCategoria(result.data);
-    });
+    const result = await getSpecificSelect(identifier, password, endpointCategoria, attributeCategoria, categoriaData);
+
+    setDataCategoria(result.data);
     setDataEgreso(item);
-    setOpen(true);
+    setOpenModal(true);
   };
-  const handleClose = () => setOpen(false);
+
+  const handleClose = () => setOpenModal(false);
   const handleChangePage = (event, newPage) => setPage(newPage);
 
   const handleChangeRowsPerPage = event => {
     setRowsPerPage(parseInt(event.target.value, 10));
     setPage(0);
   };
+
   const { listGetSpecific, loadingGetSpecific, errorGetSpecific } = useGetSpecific(
     identifier,
     password,
-    endpoint,
+    endpointEgreso,
     attribute,
     valueAttribute,
   );
@@ -76,11 +80,12 @@ const TableViewEgresos = ({ pago, categoria }) => {
       <TitlePage titlePage='Gastos no Incluidos en un Corte de Caja' />
       <Box component='div'>
         {loadingGetSpecific && <Loader />}
+        {errorGetSpecific && <AlertGlobalTables messageError='Ah ocurrido un error al obtener los datos' />}
         <TableContainer>
           <Table>
             <TableHead>
               <TableRow>
-                {loadingGetSpecific
+                {loadingGetSpecific || errorGetSpecific
                   ? null
                   : columns.map((column, index) => (
                       <TableCell key={index} sx={[stylesTableCell, { width: column.width }]}>
@@ -97,13 +102,19 @@ const TableViewEgresos = ({ pago, categoria }) => {
                 return (
                   <TableRow key={index}>
                     <TableCell sx={stylesTableCell}>{id}</TableCell>
-                    <TableCell sx={stylesTableCell}>{fecha}</TableCell>
+                    <TableCell sx={stylesTableCell}>{moment(fecha).format('YYYY-MM-DD hh:mm:ss')}</TableCell>
                     <TableCell sx={stylesTableCell}>{concepto}</TableCell>
                     <TableCell sx={stylesTableCell}>{descripcion}</TableCell>
-                    <TableCell sx={stylesTableCell}>{importe}</TableCell>
+                    <TableCell sx={stylesTableCell}>
+                      {importe.toLocaleString('es-MX', {
+                        style: 'currency',
+                        currency: 'MXN',
+                        minimumFractionDigits: 2,
+                      })}
+                    </TableCell>
                     <TableCell sx={stylesTableCell}>
                       <IconButton color='info' size='small' onClick={() => handleOpen(item, categoria)}>
-                        <VisibilityRoundedIcon />
+                        <VisibilityIcon />
                       </IconButton>
                     </TableCell>
                   </TableRow>
@@ -112,7 +123,7 @@ const TableViewEgresos = ({ pago, categoria }) => {
             </TableBody>
           </Table>
         </TableContainer>
-        {loadingGetSpecific ? null : (
+        {loadingGetSpecific || errorGetSpecific ? null : (
           <TablePagination
             rowsPerPageOptions={[]}
             component='div'
@@ -125,9 +136,17 @@ const TableViewEgresos = ({ pago, categoria }) => {
           />
         )}
       </Box>
-      <Modal open={open} onClose={handleClose}>
-        <Box sx={{ top: '50%', left: '50%' }}>
-          <ModalEgreso dataEgreso={dataEgreso} pago={pago} categoria={categoria} dataCategoria={dataCategoria} />
+      <Modal open={openModal} onClose={handleClose}>
+        <Box sx={stylesModal}>
+          <ModalEgreso
+            dataEgreso={dataEgreso}
+            pago={pago}
+            categoria={categoria}
+            dataCategoria={dataCategoria}
+            setOpenAlert={setOpenAlert}
+            setMessageInfo={setMessageInfo}
+            setMessageSeverity={setMessageSeverity}
+          />
         </Box>
       </Modal>
     </Container>
