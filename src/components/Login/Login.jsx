@@ -1,12 +1,19 @@
 import React, { useState } from 'react';
-import { Box, Button, Container, CssBaseline, TextField } from '@mui/material';
+import { Box, Button, CardMedia, Container, CssBaseline, TextField } from '@mui/material';
 import LoginIcon from '@mui/icons-material/Login';
 
 import TitlePage from '@/components/TitlePage';
 import TitleInput from '@/components/TitleInput';
 import AlertGlobalForms from '@/components/AlertGlobalForms';
 import postLogin from '@/services/postLogin';
-import { stylesContainerBox, stylesContainerInput, stylesContainerSection } from '@/components/Login/stylesLogin';
+import {
+  stylesContainerBox,
+  stylesContainerImage,
+  stylesContainerInput,
+  stylesContainerSection,
+  stylesIconImage,
+} from '@/components/Login/stylesLogin';
+import LogoIcon from '@/assets/favicon.png';
 
 const Login = () => {
   const [datosLogin, setDatosLogin] = useState({
@@ -58,7 +65,10 @@ const Login = () => {
           messageSeverity={messageSeverity || 'info'}
         />
       )}
-      <TitlePage titlePage='Hotel Central Login' />
+      <Box component='section' sx={stylesContainerImage}>
+        <CardMedia component='img' image={LogoIcon} alt='Logo Icon' sx={stylesIconImage} />
+        <TitlePage titlePage='Iniciar sesión' />
+      </Box>
       <Box component='form' sx={stylesContainerBox}>
         <Box component='div' sx={stylesContainerInput}>
           <TitleInput titleInput='Nombre de usuario' />

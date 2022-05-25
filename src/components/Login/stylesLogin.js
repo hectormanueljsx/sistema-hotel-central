@@ -17,4 +17,18 @@ const stylesContainerInput = {
   marginBottom: 2,
 };
 
-export { stylesContainerSection, stylesContainerBox, stylesContainerInput };
+const stylesContainerImage = {
+  display: 'flex',
+  flexDirection: 'column',
+  justifyContent: 'center',
+  alignItems: 'center',
+  marginBottom: 1,
+};
+
+const stylesIconImage = {
+  height: 70,
+  width: 70,
+  marginBottom: 2,
+};
+
+export { stylesContainerSection, stylesContainerBox, stylesContainerInput, stylesContainerImage, stylesIconImage };
