@@ -42,7 +42,7 @@ const FormCreateUsuario = ({ setOpenAlert, setMessageInfo, setMessageSeverity })
         rol
       ) {
         const dataUser = {
-          username: datos.username,
+          username: datos.username.toUpperCase(),
           password: datos.password,
           email: datos.email,
           confirmed,
