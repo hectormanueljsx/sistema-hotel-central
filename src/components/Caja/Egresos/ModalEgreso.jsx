@@ -11,27 +11,27 @@ import {
   TextField,
   MenuItem,
 } from '@mui/material';
-import SaveIcon from '@mui/icons-material/Save';
+import UpdateIcon from '@mui/icons-material/Update';
+import EditIcon from '@mui/icons-material/Edit';
 
 import TitlePage from '@/components/TitlePage';
 import TitleInput from '@/components/TitleInput';
-import postGeneralTable from '@/services/postGeneralTable';
 import { generalEndpoints } from '@/utilities/endpoints';
+import putGeneralTable from '@/services/putGeneralTable';
 import { stylesContainerBox, stylesContainerInput, stylesContainerSection } from '@/components/Caja/stylesCaja';
 
-const FormCreateEgresos = ({ pago, categoria }) => {
+const ModalEgreso = ({ dataEgreso, pago, categoria, dataCategoria }) => {
   const [datos, setDatos] = useState({
-    fecha: '',
-    importe: '',
-    facturado: '',
-    concepto: '',
-    formaPago: '',
-    subcategoria: '',
+    importe: dataEgreso.importe,
+    concepto: dataEgreso.concepto,
   });
-  const [idPago, setidPago] = useState('');
-  const [idCategoria, setidCategoria] = useState('');
-  const [idSubcategoria, setidSubcategoria] = useState('');
+  const [idPago, setidPago] = useState(dataEgreso.pago.id);
+  const [idCategoria, setidCategoria] = useState(dataCategoria[0]);
+  const [idSubcategoria, setidSubcategoria] = useState(dataEgreso.subcategoria.id);
   const [facturado, setFacturado] = useState(false);
+  const [disabledModal, setdisabledModal] = useState(true);
+  const [DisableView, setDisableView] = useState(false);
+
   const identifier = 'test@email.com';
   const password = 'Test123';
   const endpointEgreso = generalEndpoints.egreso;
@@ -41,27 +41,32 @@ const FormCreateEgresos = ({ pago, categoria }) => {
   const handleSubCategoria = event => setidSubcategoria(event.target.value);
   const handleInputChange = event => setDatos({ ...datos, [event.target.name]: event.target.value });
   const handleCheckbox = e => setFacturado(e.target.checked);
+
   //pendiente el usuario dinamico
-  const postEgreso = async event => {
+  const putEgreso = async event => {
     event.preventDefault();
-    const hoy = new Date();
-    if (datos.concepto.trim().length > 0 && datos.importe.trim().length && idPago && idSubcategoria) {
+
+    if (datos.concepto && datos.importe && idPago && idSubcategoria) {
       const generalData = {
-        fecha: hoy.toISOString(),
         importe: datos.importe,
         facturado,
         concepto: datos.concepto.toUpperCase(),
-        users_permissions_user: { id: 21 },
         pago: { id: idPago },
         subcategoria: { id: idSubcategoria },
       };
       console.log(generalData);
-      await postGeneralTable(identifier, password, endpointEgreso, generalData);
+      await putGeneralTable(identifier, password, endpointEgreso, dataEgreso.id, generalData);
       location.reload();
     } else {
       alert('Por favor, llene todos los campos');
     }
   };
+  const viewDisabled = event => {
+    event.preventDefault();
+    setdisabledModal(false);
+    setDisableView(true);
+  };
+
   return (
     <Container component='section' sx={[stylesContainerSection, { width: 400, height: 655.02 }]}>
       <CssBaseline />
@@ -70,6 +75,7 @@ const FormCreateEgresos = ({ pago, categoria }) => {
         <Box component='div' sx={stylesContainerInput}>
           <TitleInput titleInput='Concepto' />
           <TextField
+            defaultValue={dataEgreso.concepto}
             onChange={handleInputChange}
             name='concepto'
             variant='outlined'
@@ -78,13 +84,14 @@ const FormCreateEgresos = ({ pago, categoria }) => {
             size='small'
             placeholder='Concepto'
             required
-            fullWidth
+            disabled={disabledModal}
             autoFocus
           />
         </Box>
         <Box component='div' sx={stylesContainerInput}>
           <TitleInput titleInput='Importe' />
           <TextField
+            defaultValue={dataEgreso.importe}
             onChange={handleInputChange}
             name='importe'
             variant='outlined'
@@ -93,25 +100,55 @@ const FormCreateEgresos = ({ pago, categoria }) => {
             size='small'
             placeholder='$0.00'
             required
-            fullWidth
+            disabled={disabledModal}
           />
         </Box>
         <Box component='div' sx={stylesContainerInput}>
           <TitleInput titleInput='Con factura' />
-          <FormControlLabel
+          <FormControlLabel disabled={disabledModal}
             control={
               <Checkbox name='factura' onChange={handleCheckbox} disableRipple sx={{ padding: 0, paddingLeft: 1 }} />
             }
           />
         </Box>
         <Box component='div' sx={stylesContainerInput}>
+          <TitleInput titleInput='Subtotal' />
+          <TextField
+            value={dataEgreso.subtotal}
+            name='subtotal'
+            variant='outlined'
+            type='number'
+            margin='none'
+            size='small'
+            placeholder='subtotal'
+            required
+            disabled={true}
+            autoFocus
+          />
+        </Box>
+        <Box component='div' sx={stylesContainerInput}>
+          <TitleInput titleInput='Iva' />
+          <TextField
+            value={dataEgreso.iva}
+            name='iva'
+            variant='outlined'
+            type='number'
+            margin='none'
+            size='small'
+            placeholder='iva'
+            disabled={true}
+            required
+            autoFocus
+          />
+        </Box>
+        <Box component='div' sx={stylesContainerInput}>
           <TitleInput titleInput='Forma de pago' />
-          <FormControl fullWidth>
+          <FormControl disabled={disabledModal}>
             <Select size='small' value={idPago} onChange={handlePago}>
               {pago.map((item, index) => {
                 const { f_pago, id } = item;
                 return (
-                  <MenuItem key={index} value={id}>
+                  <MenuItem key={f_pago} value={id}>
                     {f_pago}
                   </MenuItem>
                 );
@@ -121,7 +158,7 @@ const FormCreateEgresos = ({ pago, categoria }) => {
         </Box>
         <Box component='div' sx={stylesContainerInput}>
           <TitleInput titleInput='Categoría' />
-          <FormControl fullWidth>
+          <FormControl disabled={disabledModal}>
             <Select size='small' value={idCategoria} onChange={handleCategoria}>
               {categoria.map((item, index) => {
                 const { categoria } = item;
@@ -136,7 +173,7 @@ const FormCreateEgresos = ({ pago, categoria }) => {
         </Box>
         <Box component='div' sx={stylesContainerInput}>
           <TitleInput titleInput='Subcategoría' />
-          <FormControl fullWidth>
+          <FormControl disabled={disabledModal}>
             <Select size='small' value={idSubcategoria} onChange={handleSubCategoria}>
               {idCategoria
                 ? idCategoria.subcategorias.map((subitem, idx) => {
@@ -151,12 +188,59 @@ const FormCreateEgresos = ({ pago, categoria }) => {
             </Select>
           </FormControl>
         </Box>
-        <Button variant='contained' onClick={postEgreso} size='large' startIcon={<SaveIcon />} sx={{ marginTop: 2 }}>
-          Registrar Gasto
+        <Box component='div' sx={stylesContainerInput}>
+          <TitleInput titleInput='Fecha' />
+          <TextField
+            value={dataEgreso.fecha}
+            name='fecha'
+            variant='outlined'
+            type='datetime'
+            margin='none'
+            size='small'
+            placeholder='fecha'
+            required
+            disabled={true}
+            autoFocus
+          />
+        </Box>
+        <Box component='div' sx={stylesContainerInput}>
+          <TitleInput titleInput='Usuario' />
+          <TextField
+            value={dataEgreso.users_permissions_user.username}
+            name='usuario'
+            variant='outlined'
+            type='text'
+            margin='none'
+            size='small'
+            placeholder='usuario'
+            required
+            disabled={true}
+            autoFocus
+          />
+        </Box>
+        <Button
+          variant='contained'
+          disabled={DisableView}
+          onClick={viewDisabled}
+          size='large'
+          startIcon={<EditIcon />}
+          sx={{ marginTop: 2 }}
+        >
+          Modificar
+        </Button>
+        <Button
+          variant='contained'
+          disabled={disabledModal}
+          onClick={putEgreso}
+          size='large'
+          startIcon={<UpdateIcon />}
+          sx={{ marginTop: 2 }}
+        >
+          Actualizar
         </Button>
       </Box>
     </Container>
   );
 };
 
-export default FormCreateEgresos;
+export default ModalEgreso;
