@@ -7,13 +7,14 @@ const postLogin = async (identifier, password) => {
         user: {
           id,
           email,
+          username,
           role: { name },
         },
       },
       status,
     } = await apiConfig.post('auth/local', { identifier, password });
 
-    return { id, email, name, status };
+    return { id, email, username, name, status };
   } catch (error) {
     return error;
   }
