@@ -19,7 +19,7 @@ import postGeneralTable from '@/services/postGeneralTable';
 import { generalEndpoints } from '@/utilities/endpoints';
 import { stylesContainerBox, stylesContainerInput, stylesContainerSection } from '@/components/Caja/stylesCaja';
 
-const FormCreateEgresos = ({ pago, categoria }) => {
+const FormCreateEgresos = ({ setOpenAlert, setMessageInfo, setMessageSeverity, pago, categoria }) => {
   const [datos, setDatos] = useState({
     fecha: '',
     importe: '',
@@ -32,8 +32,10 @@ const FormCreateEgresos = ({ pago, categoria }) => {
   const [idCategoria, setidCategoria] = useState('');
   const [idSubcategoria, setidSubcategoria] = useState('');
   const [facturado, setFacturado] = useState(false);
-  const identifier = 'test@email.com';
-  const password = 'Test123';
+
+  const identifier = localStorage.getItem('identifier');
+  const password = localStorage.getItem('password');
+  const idUser = localStorage.getItem('id');
   const endpointEgreso = generalEndpoints.egreso;
 
   const handlePago = event => setidPago(event.target.value);
@@ -41,27 +43,45 @@ const FormCreateEgresos = ({ pago, categoria }) => {
   const handleSubCategoria = event => setidSubcategoria(event.target.value);
   const handleInputChange = event => setDatos({ ...datos, [event.target.name]: event.target.value });
   const handleCheckbox = e => setFacturado(e.target.checked);
-  //pendiente el usuario dinamico
+
   const postEgreso = async event => {
     event.preventDefault();
+
     const hoy = new Date();
+
     if (datos.concepto.trim().length > 0 && datos.importe.trim().length && idPago && idSubcategoria) {
       const generalData = {
         fecha: hoy.toISOString(),
         importe: datos.importe,
         facturado,
         concepto: datos.concepto.toUpperCase(),
-        users_permissions_user: { id: 21 },
+        users_permissions_user: { id: idUser },
         pago: { id: idPago },
         subcategoria: { id: idSubcategoria },
       };
-      console.log(generalData);
-      await postGeneralTable(identifier, password, endpointEgreso, generalData);
-      location.reload();
+
+      const res = await postGeneralTable(identifier, password, endpointEgreso, generalData);
+
+      if (res.status >= 200 && res.status <= 299) {
+        setOpenAlert(true);
+        setMessageInfo('Gasto registrado correctamente');
+        setMessageSeverity('success');
+        setTimeout(() => {
+          location.reload();
+        }, 1500);
+      } else {
+        setOpenAlert(true);
+        setMessageInfo('Error al registrar gasto');
+        setMessageSeverity('error');
+        return;
+      }
     } else {
-      alert('Por favor, llene todos los campos');
+      setOpenAlert(true);
+      setMessageInfo('Por favor, rellene todos los campos');
+      setMessageSeverity('error');
     }
   };
+
   return (
     <Container component='section' sx={[stylesContainerSection, { width: 400, height: 655.02 }]}>
       <CssBaseline />
@@ -108,10 +128,11 @@ const FormCreateEgresos = ({ pago, categoria }) => {
           <TitleInput titleInput='Forma de pago' />
           <FormControl fullWidth>
             <Select size='small' value={idPago} onChange={handlePago}>
-              {pago.map((item, index) => {
+              {pago.map(item => {
                 const { f_pago, id } = item;
+
                 return (
-                  <MenuItem key={index} value={id}>
+                  <MenuItem key={id} value={id}>
                     {f_pago}
                   </MenuItem>
                 );
@@ -123,10 +144,11 @@ const FormCreateEgresos = ({ pago, categoria }) => {
           <TitleInput titleInput='Categoría' />
           <FormControl fullWidth>
             <Select size='small' value={idCategoria} onChange={handleCategoria}>
-              {categoria.map((item, index) => {
-                const { categoria } = item;
+              {categoria.map(item => {
+                const { categoria, id } = item;
+
                 return (
-                  <MenuItem key={categoria} value={item}>
+                  <MenuItem key={id} value={item}>
                     {categoria}
                   </MenuItem>
                 );
@@ -139,10 +161,11 @@ const FormCreateEgresos = ({ pago, categoria }) => {
           <FormControl fullWidth>
             <Select size='small' value={idSubcategoria} onChange={handleSubCategoria}>
               {idCategoria
-                ? idCategoria.subcategorias.map((subitem, idx) => {
+                ? idCategoria.subcategorias.map(subitem => {
                     const { descripcion, id } = subitem;
+
                     return (
-                      <MenuItem key={descripcion} value={id}>
+                      <MenuItem key={id} value={id}>
                         {descripcion}
                       </MenuItem>
                     );

@@ -7,42 +7,56 @@ import {
   CssBaseline,
   FormControl,
   FormControlLabel,
+  MenuItem,
   Select,
   TextField,
-  MenuItem,
 } from '@mui/material';
 import UpdateIcon from '@mui/icons-material/Update';
 import EditIcon from '@mui/icons-material/Edit';
+import moment from 'moment';
 
 import TitlePage from '@/components/TitlePage';
 import TitleInput from '@/components/TitleInput';
-import { generalEndpoints } from '@/utilities/endpoints';
 import putGeneralTable from '@/services/putGeneralTable';
-import { stylesContainerBox, stylesContainerInput, stylesContainerSection } from '@/components/Caja/stylesCaja';
+import { generalEndpoints } from '@/utilities/endpoints';
+import { stylesContainerInput, stylesContainerSection } from '@/components/Caja/stylesCaja';
 
-const ModalEgreso = ({ dataEgreso, pago, categoria, dataCategoria }) => {
+const ModalEgreso = ({
+  dataEgreso,
+  pago,
+  categoria,
+  dataCategoria,
+  setOpenAlert,
+  setMessageInfo,
+  setMessageSeverity,
+}) => {
   const [datos, setDatos] = useState({
     importe: dataEgreso.importe,
     concepto: dataEgreso.concepto,
   });
-  const [idPago, setidPago] = useState(dataEgreso.pago.id);
-  const [idCategoria, setidCategoria] = useState(dataCategoria[0]);
-  const [idSubcategoria, setidSubcategoria] = useState(dataEgreso.subcategoria.id);
+  const [idPago, setIdPago] = useState(dataEgreso.pago.id);
+  const [idCategoria, setIdCategoria] = useState(dataCategoria[0]);
+  const [idSubcategoria, setIdSubcategoria] = useState(dataEgreso.subcategoria.id);
   const [facturado, setFacturado] = useState(false);
-  const [disabledModal, setdisabledModal] = useState(true);
-  const [DisableView, setDisableView] = useState(false);
+  const [disabledModal, setDisabledModal] = useState(true);
+  const [disableView, setDisableView] = useState(false);
 
-  const identifier = 'test@email.com';
-  const password = 'Test123';
+  const identifier = localStorage.getItem('identifier');
+  const password = localStorage.getItem('password');
   const endpointEgreso = generalEndpoints.egreso;
 
-  const handlePago = event => setidPago(event.target.value);
-  const handleCategoria = event => setidCategoria(event.target.value);
-  const handleSubCategoria = event => setidSubcategoria(event.target.value);
+  const handlePago = event => setIdPago(event.target.value);
+  const handleCategoria = event => setIdCategoria(event.target.value);
+  const handleSubCategoria = event => setIdSubcategoria(event.target.value);
   const handleInputChange = event => setDatos({ ...datos, [event.target.name]: event.target.value });
   const handleCheckbox = e => setFacturado(e.target.checked);
 
-  //pendiente el usuario dinamico
+  const viewDisabled = event => {
+    event.preventDefault();
+    setDisabledModal(false);
+    setDisableView(true);
+  };
+
   const putEgreso = async event => {
     event.preventDefault();
 
@@ -54,190 +68,222 @@ const ModalEgreso = ({ dataEgreso, pago, categoria, dataCategoria }) => {
         pago: { id: idPago },
         subcategoria: { id: idSubcategoria },
       };
-      console.log(generalData);
-      await putGeneralTable(identifier, password, endpointEgreso, dataEgreso.id, generalData);
-      location.reload();
+
+      const res = await putGeneralTable(identifier, password, endpointEgreso, dataEgreso.id, generalData);
+
+      if (res.status >= 200 && res.status <= 299) {
+        setOpenAlert(true);
+        setMessageInfo('Egreso actualizado correctamente');
+        setMessageSeverity('success');
+        setTimeout(() => {
+          location.reload();
+        }, 1500);
+      } else {
+        setOpenAlert(true);
+        setMessageInfo('Error al actualizar egreso');
+        setMessageSeverity('error');
+        return;
+      }
     } else {
-      alert('Por favor, llene todos los campos');
+      setOpenAlert(true);
+      setMessageInfo('Por favor, rellene todos los campos');
+      setMessageSeverity('error');
     }
-  };
-  const viewDisabled = event => {
-    event.preventDefault();
-    setdisabledModal(false);
-    setDisableView(true);
   };
 
   return (
-    <Container component='section' sx={[stylesContainerSection, { width: 400, height: 655.02 }]}>
+    <Container component='section' sx={[stylesContainerSection, { width: 800, marginTop: 0 }]}>
       <CssBaseline />
       <TitlePage titlePage='Registro de Gasto' />
-      <Box component='form' sx={stylesContainerBox}>
-        <Box component='div' sx={stylesContainerInput}>
-          <TitleInput titleInput='Concepto' />
-          <TextField
-            defaultValue={dataEgreso.concepto}
-            onChange={handleInputChange}
-            name='concepto'
-            variant='outlined'
-            type='text'
-            margin='none'
-            size='small'
-            placeholder='Concepto'
-            required
+      <Box component='form' sx={{ display: 'flex', flexDirection: 'column' }}>
+        <Box sx={{ display: 'flex', justifyContent: 'space-between' }}>
+          <Box component='div' sx={[stylesContainerInput, { width: 352.03 }]}>
+            <TitleInput titleInput='Concepto' />
+            <TextField
+              defaultValue={dataEgreso.concepto}
+              onChange={handleInputChange}
+              name='concepto'
+              variant='outlined'
+              type='text'
+              margin='none'
+              size='small'
+              placeholder='Concepto'
+              required
+              fullWidth
+              disabled={disabledModal}
+              autoFocus
+            />
+          </Box>
+          <Box component='div' sx={[stylesContainerInput, { width: 352.03 }]}>
+            <TitleInput titleInput='Importe' />
+            <TextField
+              defaultValue={dataEgreso.importe}
+              onChange={handleInputChange}
+              name='importe'
+              variant='outlined'
+              type='number'
+              margin='none'
+              size='small'
+              placeholder='$0.00'
+              required
+              fullWidth
+              disabled={disabledModal}
+            />
+          </Box>
+        </Box>
+        <Box sx={{ display: 'flex', justifyContent: 'space-between' }}>
+          <Box component='div' sx={[stylesContainerInput, { width: 352.03 }]}>
+            <TitleInput titleInput='Con factura' />
+            <FormControlLabel
+              disabled={disabledModal}
+              control={
+                <Checkbox name='factura' onChange={handleCheckbox} disableRipple sx={{ padding: 0, paddingLeft: 1 }} />
+              }
+            />
+          </Box>
+          <Box component='div' sx={[stylesContainerInput, { width: 352.03 }]}>
+            <TitleInput titleInput='Subtotal' />
+            <TextField
+              value={dataEgreso.subtotal}
+              name='subtotal'
+              variant='outlined'
+              type='number'
+              margin='none'
+              size='small'
+              placeholder='subtotal'
+              required
+              fullWidth
+              disabled={true}
+              autoFocus
+            />
+          </Box>
+        </Box>
+        <Box sx={{ display: 'flex', justifyContent: 'space-between' }}>
+          <Box component='div' sx={[stylesContainerInput, { width: 352.03 }]}>
+            <TitleInput titleInput='Iva' />
+            <TextField
+              value={dataEgreso.iva}
+              name='iva'
+              variant='outlined'
+              type='number'
+              margin='none'
+              size='small'
+              placeholder='iva'
+              disabled={true}
+              fullWidth
+              required
+              autoFocus
+            />
+          </Box>
+          <Box component='div' sx={[stylesContainerInput, { width: 352.03 }]}>
+            <TitleInput titleInput='Forma de pago' />
+            <FormControl disabled={disabledModal} fullWidth>
+              <Select size='small' value={idPago} onChange={handlePago}>
+                {pago.map(item => {
+                  const { f_pago, id } = item;
+
+                  return (
+                    <MenuItem key={id} value={id}>
+                      {f_pago}
+                    </MenuItem>
+                  );
+                })}
+              </Select>
+            </FormControl>
+          </Box>
+        </Box>
+        <Box sx={{ display: 'flex', justifyContent: 'space-between' }}>
+          <Box component='div' sx={[stylesContainerInput, { width: 352.03 }]}>
+            <TitleInput titleInput='Categoría' />
+            <FormControl disabled={disabledModal} fullWidth>
+              <Select size='small' value={idCategoria.id} onChange={handleCategoria}>
+                {categoria.map(item => {
+                  const { categoria, id } = item;
+
+                  return (
+                    <MenuItem key={id} value={id}>
+                      {categoria}
+                    </MenuItem>
+                  );
+                })}
+              </Select>
+            </FormControl>
+          </Box>
+          <Box component='div' sx={[stylesContainerInput, { width: 352.03 }]}>
+            <TitleInput titleInput='Subcategoría' />
+            <FormControl disabled={disabledModal} fullWidth>
+              <Select size='small' value={idSubcategoria} onChange={handleSubCategoria}>
+                {idCategoria
+                  ? idCategoria.subcategorias.map(subitem => {
+                      const { descripcion, id } = subitem;
+
+                      return (
+                        <MenuItem key={id} value={id}>
+                          {descripcion}
+                        </MenuItem>
+                      );
+                    })
+                  : null}
+              </Select>
+            </FormControl>
+          </Box>
+        </Box>
+        <Box sx={{ display: 'flex', justifyContent: 'space-between' }}>
+          <Box component='div' sx={[stylesContainerInput, { width: 352.03 }]}>
+            <TitleInput titleInput='Fecha' />
+            <TextField
+              value={moment(dataEgreso.fecha).format('YYYY-MM-DD hh:mm:ss')}
+              name='fecha'
+              variant='outlined'
+              type='datetime'
+              margin='none'
+              size='small'
+              placeholder='fecha'
+              required
+              fullWidth
+              disabled={true}
+              autoFocus
+            />
+          </Box>
+          <Box component='div' sx={[stylesContainerInput, { width: 352.03 }]}>
+            <TitleInput titleInput='Usuario' />
+            <TextField
+              value={dataEgreso.users_permissions_user.username}
+              name='usuario'
+              variant='outlined'
+              type='text'
+              margin='none'
+              size='small'
+              placeholder='usuario'
+              required
+              fullWidth
+              disabled={true}
+              autoFocus
+            />
+          </Box>
+        </Box>
+        <Box sx={{ display: 'flex', justifyContent: 'center', gap: 3, marginTop: 2 }}>
+          <Button
+            variant='contained'
+            disabled={disableView}
+            onClick={viewDisabled}
+            size='large'
+            startIcon={<EditIcon />}
+            sx={{ width: 163.22 }}
+          >
+            Modificar
+          </Button>
+          <Button
+            variant='contained'
             disabled={disabledModal}
-            autoFocus
-          />
+            onClick={putEgreso}
+            size='large'
+            startIcon={<UpdateIcon />}
+            sx={{ width: 163.22 }}
+          >
+            Actualizar
+          </Button>
         </Box>
-        <Box component='div' sx={stylesContainerInput}>
-          <TitleInput titleInput='Importe' />
-          <TextField
-            defaultValue={dataEgreso.importe}
-            onChange={handleInputChange}
-            name='importe'
-            variant='outlined'
-            type='number'
-            margin='none'
-            size='small'
-            placeholder='$0.00'
-            required
-            disabled={disabledModal}
-          />
-        </Box>
-        <Box component='div' sx={stylesContainerInput}>
-          <TitleInput titleInput='Con factura' />
-          <FormControlLabel disabled={disabledModal}
-            control={
-              <Checkbox name='factura' onChange={handleCheckbox} disableRipple sx={{ padding: 0, paddingLeft: 1 }} />
-            }
-          />
-        </Box>
-        <Box component='div' sx={stylesContainerInput}>
-          <TitleInput titleInput='Subtotal' />
-          <TextField
-            value={dataEgreso.subtotal}
-            name='subtotal'
-            variant='outlined'
-            type='number'
-            margin='none'
-            size='small'
-            placeholder='subtotal'
-            required
-            disabled={true}
-            autoFocus
-          />
-        </Box>
-        <Box component='div' sx={stylesContainerInput}>
-          <TitleInput titleInput='Iva' />
-          <TextField
-            value={dataEgreso.iva}
-            name='iva'
-            variant='outlined'
-            type='number'
-            margin='none'
-            size='small'
-            placeholder='iva'
-            disabled={true}
-            required
-            autoFocus
-          />
-        </Box>
-        <Box component='div' sx={stylesContainerInput}>
-          <TitleInput titleInput='Forma de pago' />
-          <FormControl disabled={disabledModal}>
-            <Select size='small' value={idPago} onChange={handlePago}>
-              {pago.map((item, index) => {
-                const { f_pago, id } = item;
-                return (
-                  <MenuItem key={f_pago} value={id}>
-                    {f_pago}
-                  </MenuItem>
-                );
-              })}
-            </Select>
-          </FormControl>
-        </Box>
-        <Box component='div' sx={stylesContainerInput}>
-          <TitleInput titleInput='Categoría' />
-          <FormControl disabled={disabledModal}>
-            <Select size='small' value={idCategoria} onChange={handleCategoria}>
-              {categoria.map((item, index) => {
-                const { categoria } = item;
-                return (
-                  <MenuItem key={categoria} value={item}>
-                    {categoria}
-                  </MenuItem>
-                );
-              })}
-            </Select>
-          </FormControl>
-        </Box>
-        <Box component='div' sx={stylesContainerInput}>
-          <TitleInput titleInput='Subcategoría' />
-          <FormControl disabled={disabledModal}>
-            <Select size='small' value={idSubcategoria} onChange={handleSubCategoria}>
-              {idCategoria
-                ? idCategoria.subcategorias.map((subitem, idx) => {
-                    const { descripcion, id } = subitem;
-                    return (
-                      <MenuItem key={descripcion} value={id}>
-                        {descripcion}
-                      </MenuItem>
-                    );
-                  })
-                : null}
-            </Select>
-          </FormControl>
-        </Box>
-        <Box component='div' sx={stylesContainerInput}>
-          <TitleInput titleInput='Fecha' />
-          <TextField
-            value={dataEgreso.fecha}
-            name='fecha'
-            variant='outlined'
-            type='datetime'
-            margin='none'
-            size='small'
-            placeholder='fecha'
-            required
-            disabled={true}
-            autoFocus
-          />
-        </Box>
-        <Box component='div' sx={stylesContainerInput}>
-          <TitleInput titleInput='Usuario' />
-          <TextField
-            value={dataEgreso.users_permissions_user.username}
-            name='usuario'
-            variant='outlined'
-            type='text'
-            margin='none'
-            size='small'
-            placeholder='usuario'
-            required
-            disabled={true}
-            autoFocus
-          />
-        </Box>
-        <Button
-          variant='contained'
-          disabled={DisableView}
-          onClick={viewDisabled}
-          size='large'
-          startIcon={<EditIcon />}
-          sx={{ marginTop: 2 }}
-        >
-          Modificar
-        </Button>
-        <Button
-          variant='contained'
-          disabled={disabledModal}
-          onClick={putEgreso}
-          size='large'
-          startIcon={<UpdateIcon />}
-          sx={{ marginTop: 2 }}
-        >
-          Actualizar
-        </Button>
       </Box>
     </Container>
   );
