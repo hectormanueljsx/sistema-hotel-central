@@ -51,10 +51,8 @@ const TableViewEgresos = ({ setOpenAlert, setMessageInfo, setMessageSeverity, pa
   const attributeCategoria = 'id';
 
   const handleOpen = async (item, categoriaData) => {
-    await getSpecificSelect(identifier, password, endpointCategoria, attributeCategoria, categoriaData).then(result => {
-      setDataCategoria(result.data);
-    });
-
+    const result = await getSpecificSelect(identifier, password, endpointCategoria, attributeCategoria, categoriaData);
+    setDataCategoria(result.data);
     setDataEgreso(item);
     setOpenModal(true);
   };
