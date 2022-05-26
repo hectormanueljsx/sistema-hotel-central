@@ -181,6 +181,7 @@ const ModalEgreso = ({
               <Select size='small' value={idPago} onChange={handlePago}>
                 {pago.map(item => {
                   const { f_pago, id } = item;
+
                   return (
                     <MenuItem key={id} value={id}>
                       {f_pago}
@@ -195,11 +196,12 @@ const ModalEgreso = ({
           <Box component='div' sx={[stylesContainerInput, { width: 352.03 }]}>
             <TitleInput titleInput='Categoría' />
             <FormControl disabled={disabledModal} fullWidth>
-              <Select size='small' value={idCategoria} onChange={handleCategoria}>
+              <Select size='small' value={idCategoria.id} onChange={handleCategoria}>
                 {categoria.map(item => {
                   const { categoria, id } = item;
+
                   return (
-                    <MenuItem key={id} value={item}>
+                    <MenuItem key={id} value={id}>
                       {categoria}
                     </MenuItem>
                   );
@@ -214,6 +216,7 @@ const ModalEgreso = ({
                 {idCategoria
                   ? idCategoria.subcategorias.map(subitem => {
                       const { descripcion, id } = subitem;
+
                       return (
                         <MenuItem key={id} value={id}>
                           {descripcion}
