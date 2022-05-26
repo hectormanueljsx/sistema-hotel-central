@@ -20,19 +20,19 @@ const Egresos = () => {
   const endpointCategoria = generalEndpoints.categoria;
 
   const getPago = async () => {
-    await getGeneralSelect(identifier, password, endpointPago).then(res => {
-      setPago(res.data);
-    });
+    const res = await getGeneralSelect(identifier, password, endpointPago);
+    setPago(res.data);
   };
 
   const getCategoria = async () => {
-    await getGeneralSelect(identifier, password, endpointCategoria).then(res => {
-      setCategoria(res.data);
-    });
+    const res = await getGeneralSelect(identifier, password, endpointCategoria);
+    setCategoria(res.data);
   };
 
-  document.addEventListener('DOMContentLoaded', getPago, false);
-  document.addEventListener('DOMContentLoaded', getCategoria, false);
+  document.addEventListener('DOMContentLoaded', () => {
+    getPago();
+    getCategoria();
+  });
 
   return (
     <Container component='section' disableGutters maxWidth='xl'>
