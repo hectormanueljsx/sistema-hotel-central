@@ -74,7 +74,7 @@ const TableViewEgresos = ({ setOpenAlert, setMessageInfo, setMessageSeverity, pa
   );
 
   return (
-    <Container component='section' disableGutters sx={[stylesContainerSection, { width: 1000 }]}>
+    <Container component='section' disableGutters sx={[stylesContainerSection, { width: 1000, height: 711 }]}>
       <CssBaseline />
       <TitlePage titlePage='Gastos no Incluidos en un Corte de Caja' />
       <Box component='div'>
