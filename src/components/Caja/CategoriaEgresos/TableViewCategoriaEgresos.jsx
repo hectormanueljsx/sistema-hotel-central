@@ -51,14 +51,14 @@ const TableViewCategoriaEgresos = () => {
       <Box component='div'>
         {loading && <Loader />}
         {error && <AlertGlobalTables messageError='Ah ocurrido un error al obtener los datos' />}
-        {list.map((item, index) => {
+        {list.map(item => {
           const { categoria, subcategorias, id } = item;
 
           return (
-            <Accordion key={index} expanded={expanded === `panel${index}`} onChange={handleChange(`panel${index}`)}>
-              <AccordionSummary key={index} expandIcon={<ExpandMore />}>
+            <Accordion key={id} expanded={expanded === `panel${id}`} onChange={handleChange(`panel${id}`)}>
+              <AccordionSummary key={id} expandIcon={<ExpandMore />}>
                 <Box sx={[stylesAccordion, { width: 850 }]}>
-                  <Typography key={index} sx={{ fontWeight: '700' }}>
+                  <Typography key={id} sx={{ fontWeight: '700' }}>
                     {categoria}
                   </Typography>
                   {subcategorias.length === 0 && (
@@ -68,17 +68,17 @@ const TableViewCategoriaEgresos = () => {
                   )}
                 </Box>
               </AccordionSummary>
-              {subcategorias.map((subitem, idx) => {
+              {subcategorias.map(subitem => {
                 const { descripcion, id } = subitem;
 
                 return (
-                  <AccordionDetails key={idx} sx={{ padding: 0, marginBottom: 1 }}>
+                  <AccordionDetails key={id} sx={{ padding: 0, marginBottom: 1 }}>
                     <Box sx={[stylesAccordion, { width: 866 }]}>
                       <Box sx={[stylesAccordion, { marginLeft: 5 }]}>
                         <ListItemIcon sx={{ minWidth: 0 }}>
                           <ArrowRightIcon />
                         </ListItemIcon>
-                        <Typography key={idx} sx={{ fontWeight: '300' }}>
+                        <Typography key={id} sx={{ fontWeight: '300' }}>
                           {descripcion}
                         </Typography>
                       </Box>
