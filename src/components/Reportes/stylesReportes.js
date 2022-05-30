@@ -3,7 +3,7 @@ const stylesContainerSection = {
   borderRadius: 1,
   boxShadow: '0px 0px 5px rgba(0, 0, 0, 0.25)',
   padding: 3,
-  marginTop: 5,
+  marginTop: 6,
 };
 
 const stylesContainerBox = {
@@ -27,4 +27,5 @@ const stylesModal = {
   left: '50%',
   transform: 'translate(-50%, -50%)',
 };
+
 export { stylesContainerSection, stylesContainerBox, stylesContainerInput, stylesTableCell, stylesModal };
