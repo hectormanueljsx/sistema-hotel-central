@@ -94,12 +94,17 @@ const TableViewEgresos = ({ setOpenAlert, setMessageInfo, setMessageSeverity, pa
               </TableRow>
             </TableHead>
             <TableBody>
-              {listGetSpecific.slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage).map((item, index) => {
-                const { id, fecha, concepto, subcategoria, importe } = item;
-                const { descripcion, categoria } = subcategoria;
+              {listGetSpecific.slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage).map(item => {
+                const {
+                  id,
+                  fecha,
+                  concepto,
+                  subcategoria: { descripcion, categoria },
+                  importe,
+                } = item;
 
                 return (
-                  <TableRow key={index}>
+                  <TableRow key={id}>
                     <TableCell sx={stylesTableCell}>{id}</TableCell>
                     <TableCell sx={stylesTableCell}>{moment(fecha).format('YYYY-MM-DD hh:mm:ss')}</TableCell>
                     <TableCell sx={stylesTableCell}>{concepto}</TableCell>
