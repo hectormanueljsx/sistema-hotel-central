@@ -83,12 +83,16 @@ const TableViewUsuarios = ({ setOpenAlert, setMessageInfo, setMessageSeverity })
               </TableRow>
             </TableHead>
             <TableBody>
-              {list.slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage).map((item, index) => {
-                const { id, username, role, ult_ingreso, identifier } = item;
-                const { name } = role;
+              {list.slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage).map(item => {
+                const {
+                  id,
+                  username,
+                  role: { name },
+                  ult_ingreso,
+                } = item;
 
                 return (
-                  <TableRow key={index}>
+                  <TableRow key={id}>
                     <TableCell sx={stylesTableCell}>{username}</TableCell>
                     <TableCell sx={stylesTableCell}>{name}</TableCell>
                     <TableCell sx={stylesTableCell}>{ult_ingreso}</TableCell>
