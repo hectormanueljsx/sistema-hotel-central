@@ -20,6 +20,7 @@ import TitleInput from '@/components/TitleInput';
 import putGeneralTable from '@/services/putGeneralTable';
 import { generalEndpoints } from '@/utilities/endpoints';
 import { stylesContainerInput, stylesContainerSection } from '@/components/Caja/stylesCaja';
+import getSpecificSelect from '@/services/getSpecificSelect';
 
 const ModalEgreso = ({
   dataEgreso,
@@ -35,8 +36,9 @@ const ModalEgreso = ({
     concepto: dataEgreso.concepto,
   });
   const [idPago, setIdPago] = useState(dataEgreso.pago.id);
-  const [idCategoria, setIdCategoria] = useState(dataCategoria[0]);
+  const [idCategoria, setIdCategoria] = useState(dataCategoria[0].id);
   const [idSubcategoria, setIdSubcategoria] = useState(dataEgreso.subcategoria.id);
+  const [itemCategoria, setItemCategoria] = useState(dataCategoria[0]);
   const [facturado, setFacturado] = useState(false);
   const [disabledModal, setDisabledModal] = useState(true);
   const [disableView, setDisableView] = useState(false);
@@ -44,9 +46,21 @@ const ModalEgreso = ({
   const identifier = localStorage.getItem('identifier');
   const password = localStorage.getItem('password');
   const endpointEgreso = generalEndpoints.egreso;
+  const endpointCategoria = generalEndpoints.categoria;
+  const attributeCategoria = 'id';
 
   const handlePago = event => setIdPago(event.target.value);
-  const handleCategoria = event => setIdCategoria(event.target.value);
+  const handleCategoria = async event => {
+    const result = await getSpecificSelect(
+      identifier,
+      password,
+      endpointCategoria,
+      attributeCategoria,
+      event.target.value,
+    );
+    setItemCategoria(result.data[0]);
+    setIdCategoria(result.data[0].id);
+  };
   const handleSubCategoria = event => setIdSubcategoria(event.target.value);
   const handleInputChange = event => setDatos({ ...datos, [event.target.name]: event.target.value });
   const handleCheckbox = e => setFacturado(e.target.checked);
@@ -196,7 +210,7 @@ const ModalEgreso = ({
           <Box component='div' sx={[stylesContainerInput, { width: 352.03 }]}>
             <TitleInput titleInput='Categoría' />
             <FormControl disabled={disabledModal} fullWidth>
-              <Select size='small' value={idCategoria.id} onChange={handleCategoria}>
+              <Select size='small' value={idCategoria} onChange={handleCategoria}>
                 {categoria.map(item => {
                   const { categoria, id } = item;
 
@@ -213,8 +227,8 @@ const ModalEgreso = ({
             <TitleInput titleInput='Subcategoría' />
             <FormControl disabled={disabledModal} fullWidth>
               <Select size='small' value={idSubcategoria} onChange={handleSubCategoria}>
-                {idCategoria
-                  ? idCategoria.subcategorias.map(subitem => {
+                {itemCategoria
+                  ? itemCategoria.subcategorias.map(subitem => {
                       const { descripcion, id } = subitem;
 
                       return (
