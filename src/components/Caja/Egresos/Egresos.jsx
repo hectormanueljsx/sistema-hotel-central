@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { Box, Container, CssBaseline } from '@mui/material';
 
 import AlertGlobalForms from '@/components/AlertGlobalForms';
@@ -29,10 +29,10 @@ const Egresos = () => {
     setCategoria(res.data);
   };
 
-  document.addEventListener('DOMContentLoaded', () => {
+  useEffect(() => {
     getPago();
     getCategoria();
-  });
+  }, []);
 
   return (
     <Container component='section' disableGutters maxWidth='xl'>
