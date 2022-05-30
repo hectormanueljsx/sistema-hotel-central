@@ -26,10 +26,10 @@ import { generalEndpoints } from '@/utilities/endpoints';
 import { stylesContainerSection, stylesModal, stylesTableCell } from '@/components/Habitaciones/stylesHabitaciones';
 
 const columns = [
-  { id: 'username', label: 'Nombre', width: 412 },
-  { id: 'role', label: 'Rol', width: 140 },
-  { id: 'ult_ingreso', label: 'Último Ingreso', width: 200 },
-  { id: 'acciones', label: 'Acciones', width: 200 },
+  { id: 'username', label: 'Nombre', width: 462 },
+  { id: 'role', label: 'Rol', width: 165 },
+  { id: 'ult_ingreso', label: 'Último Ingreso', width: 225 },
+  { id: 'acciones', label: 'Acciones', width: 100 },
 ];
 
 const TableViewUsuarios = ({ setOpenAlert, setMessageInfo, setMessageSeverity }) => {
