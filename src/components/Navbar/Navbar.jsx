@@ -3,7 +3,7 @@ import { Button, CssBaseline } from '@mui/material';
 import { NavLink } from 'react-router-dom';
 
 import Dropdown from '@/components/Navbar/Dropdown';
-import { navItems, cajaDropdown, habitacionesDropdown } from '@/components/Navbar/NavItems';
+import { navItems, cajaDropdown, habitacionesDropdown, reportesDropdown } from '@/components/Navbar/NavItems';
 import Logotipo from '@/assets/logotipo-hc.png';
 import '@/components/Navbar/Navbar.css';
 
@@ -76,6 +76,7 @@ const Navbar = () => {
                   onMouseLeave={() => setDropdownReportes(false)}
                 >
                   <button>{item.title}</button>
+                  {dropdownReportes && <Dropdown dropdownItem={reportesDropdown} />}
                 </li>
               );
             }
