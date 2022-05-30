@@ -17,10 +17,10 @@ import moment from 'moment';
 
 import TitlePage from '@/components/TitlePage';
 import TitleInput from '@/components/TitleInput';
+import getSpecificSelect from '@/services/getSpecificSelect';
 import putGeneralTable from '@/services/putGeneralTable';
 import { generalEndpoints } from '@/utilities/endpoints';
 import { stylesContainerInput, stylesContainerSection } from '@/components/Caja/stylesCaja';
-import getSpecificSelect from '@/services/getSpecificSelect';
 
 const ModalEgreso = ({
   dataEgreso,
@@ -50,6 +50,10 @@ const ModalEgreso = ({
   const attributeCategoria = 'id';
 
   const handlePago = event => setIdPago(event.target.value);
+  const handleSubCategoria = event => setIdSubcategoria(event.target.value);
+  const handleInputChange = event => setDatos({ ...datos, [event.target.name]: event.target.value });
+  const handleCheckbox = e => setFacturado(e.target.checked);
+
   const handleCategoria = async event => {
     const result = await getSpecificSelect(
       identifier,
@@ -61,9 +65,6 @@ const ModalEgreso = ({
     setItemCategoria(result.data[0]);
     setIdCategoria(result.data[0].id);
   };
-  const handleSubCategoria = event => setIdSubcategoria(event.target.value);
-  const handleInputChange = event => setDatos({ ...datos, [event.target.name]: event.target.value });
-  const handleCheckbox = e => setFacturado(e.target.checked);
 
   const viewDisabled = event => {
     event.preventDefault();
