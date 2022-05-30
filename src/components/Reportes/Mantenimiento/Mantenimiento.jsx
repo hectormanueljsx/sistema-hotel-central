@@ -1,43 +1,42 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { Box, Container, CssBaseline } from '@mui/material';
 
 import AlertGlobalForms from '@/components/AlertGlobalForms';
 import FormCreateMantenimiento from '@/components/Reportes/Mantenimiento/FormCreateMantenimiento';
 import TableViewMantenimiento from '@/components/Reportes/Mantenimiento/TableViewMantenimiento';
 import getGeneralSelect from '@/services/getGeneralSelect';
-import { generalEndpoints } from '@/utilities/endpoints';
 import getSpecificSelect from '@/services/getSpecificSelect';
+import { generalEndpoints } from '@/utilities/endpoints';
 
 const Mantenimiento = () => {
   const [messageInfo, setMessageInfo] = useState('');
   const [messageSeverity, setMessageSeverity] = useState('');
   const [openAlert, setOpenAlert] = useState(true);
-
   const [habitacion, setHabitacion] = useState([]);
   const [subcategoria, setSubcategoria] = useState([]);
 
   const identifier = localStorage.getItem('identifier');
   const password = localStorage.getItem('password');
-
   const endpointHabitacion = generalEndpoints.habitacion;
   const endpointCategoria = generalEndpoints.categoria;
   const attribute = 'categoria';
   const valueAttribute = 'MANTENIMIENTO';
 
-  async function getHabitacion() {
-    await getGeneralSelect(identifier, password, endpointHabitacion).then(res => {
-      setHabitacion(res.data);
-    });
-  }
-  document.addEventListener('DOMContentLoaded', getHabitacion, false);
+  const getHabitacion = async () => {
+    const res = await getGeneralSelect(identifier, password, endpointHabitacion);
+    setHabitacion(res.data);
+  };
 
-  async function getCategoria() {
-    await getSpecificSelect(identifier, password, endpointCategoria, attribute, valueAttribute).then(result => {
-      const { subcategorias } = result.data[0];
-      setSubcategoria(subcategorias);
-    });
-  }
-  document.addEventListener('DOMContentLoaded', getCategoria, false);
+  const getCategoria = async () => {
+    const res = await getSpecificSelect(identifier, password, endpointCategoria, attribute, valueAttribute);
+    const { subcategorias } = res.data[0];
+    setSubcategoria(subcategorias);
+  };
+
+  useEffect(() => {
+    getHabitacion();
+    getCategoria();
+  }, []);
 
   return (
     <Container component='section' disableGutters maxWidth='xl'>

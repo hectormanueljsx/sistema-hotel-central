@@ -13,23 +13,24 @@ import {
   TablePagination,
   TableRow,
 } from '@mui/material';
-import VisibilityRoundedIcon from '@mui/icons-material/VisibilityRounded';
+import VisibilityIcon from '@mui/icons-material/Visibility';
 import DeleteIcon from '@mui/icons-material/Delete';
 
 import TitlePage from '@/components/TitlePage';
 import Loader from '@/components/Loader';
+import AlertGlobalTables from '@/components/AlertGlobalTables';
+import ModalMantenimiento from '@/components/Reportes/Mantenimiento/ModalMantenimiento';
 import useGetGeneralTable from '@/hooks/useGetGeneralTable';
 import deleteGeneralTable from '@/services/deleteGeneralTable';
 import { generalEndpoints } from '@/utilities/endpoints';
-import { stylesContainerSection, stylesTableCell, stylesModal } from '@/components/Reportes/stylesReportes';
-import ModalMantenimiento from './ModalMantenimiento';
+import { stylesContainerSection, stylesModal, stylesTableCell } from '@/components/Reportes/stylesReportes';
 
 const columns = [
-  { id: 'fechInicio', label: 'Fecha de Inicio', width: 180 },
-  { id: 'motivo', label: 'Motivo', width: 322 },
-  { id: 'categoria', label: 'Categorias', width: 180 },
-  { id: 'estado', label: 'Estado', width: 260 },
-  { id: 'acciones', label: 'Acciones', width: 200 },
+  { id: 'fechInicio', label: 'Fecha de Inicio', width: 170 },
+  { id: 'motivo', label: 'Motivo', width: 280 },
+  { id: 'categoria', label: 'Categorias', width: 250 },
+  { id: 'estado', label: 'Estado', width: 152 },
+  { id: 'acciones', label: 'Acciones', width: 100 },
 ];
 
 const TableViewMantenimiento = ({ setOpenAlert, setMessageInfo, setMessageSeverity, habitacion, subcategoria }) => {
@@ -40,8 +41,7 @@ const TableViewMantenimiento = ({ setOpenAlert, setMessageInfo, setMessageSeveri
 
   const identifier = localStorage.getItem('identifier');
   const password = localStorage.getItem('password');
-
-  const endpoint = generalEndpoints.mantenimiento;
+  const endpointMantenimiento = generalEndpoints.mantenimiento;
 
   const handleOpen = item => {
     setOpenModal(true);
@@ -57,11 +57,11 @@ const TableViewMantenimiento = ({ setOpenAlert, setMessageInfo, setMessageSeveri
   };
 
   const deleteRegistro = async id => {
-    await deleteGeneralTable(identifier, password, endpoint, id);
+    await deleteGeneralTable(identifier, password, endpointMantenimiento, id);
     location.reload();
   };
 
-  const { list, loading, error } = useGetGeneralTable(identifier, password, endpoint);
+  const { list, loading, error } = useGetGeneralTable(identifier, password, endpointMantenimiento);
 
   return (
     <Container component='section' disableGutters sx={[stylesContainerSection, { width: 1000, height: 711 }]}>
@@ -69,11 +69,12 @@ const TableViewMantenimiento = ({ setOpenAlert, setMessageInfo, setMessageSeveri
       <TitlePage titlePage='Lista de Mantenimientos' />
       <Box component='div'>
         {loading && <Loader />}
+        {error && <AlertGlobalTables messageError='Ah ocurrido un error al obtener los datos' />}
         <TableContainer>
           <Table>
             <TableHead>
               <TableRow>
-                {loading
+                {loading || error
                   ? null
                   : columns.map((column, index) => (
                       <TableCell key={index} sx={[stylesTableCell, { width: column.width }]}>
@@ -83,18 +84,24 @@ const TableViewMantenimiento = ({ setOpenAlert, setMessageInfo, setMessageSeveri
               </TableRow>
             </TableHead>
             <TableBody>
-              {list.slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage).map((item, index) => {
-                const { id, f_inicio, f_fin, motivo, estado, subcategoria } = item;
-                const { descripcion } = subcategoria;
+              {list.slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage).map(item => {
+                const {
+                  id,
+                  f_inicio,
+                  motivo,
+                  estado,
+                  subcategoria: { descripcion },
+                } = item;
+
                 return (
-                  <TableRow key={index}>
+                  <TableRow key={id}>
                     <TableCell sx={stylesTableCell}>{f_inicio}</TableCell>
                     <TableCell sx={stylesTableCell}>{motivo}</TableCell>
                     <TableCell sx={stylesTableCell}>{descripcion}</TableCell>
                     <TableCell sx={stylesTableCell}>{estado ? 'Finalizado' : 'No finalizado'}</TableCell>
                     <TableCell sx={stylesTableCell}>
                       <IconButton color='info' size='small' onClick={() => handleOpen(item)}>
-                        <VisibilityRoundedIcon />
+                        <VisibilityIcon />
                       </IconButton>
                       <IconButton color='error' size='small' onClick={() => deleteRegistro(id)}>
                         <DeleteIcon />
@@ -106,7 +113,7 @@ const TableViewMantenimiento = ({ setOpenAlert, setMessageInfo, setMessageSeveri
             </TableBody>
           </Table>
         </TableContainer>
-        {loading ? null : (
+        {loading || error ? null : (
           <TablePagination
             rowsPerPageOptions={[]}
             component='div'
