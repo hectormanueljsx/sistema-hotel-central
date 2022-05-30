@@ -26,10 +26,10 @@ import { generalEndpoints } from '@/utilities/endpoints';
 import { stylesContainerSection, stylesModal, stylesTableCell } from '@/components/Habitaciones/stylesHabitaciones';
 
 const columns = [
-  { id: 'desc_tarifa', label: 'Descripción Tarifa', width: 432 },
-  { id: 'num_personas', label: 'Número de Personas', width: 160 },
-  { id: 'precio_aplicado', label: 'Precio Aplicado', width: 160 },
-  { id: 'acciones', label: 'Acciones', width: 200 },
+  { id: 'desc_tarifa', label: 'Descripción de la Tarifa', width: 482 },
+  { id: 'num_personas', label: 'Número de Personas', width: 185 },
+  { id: 'precio_aplicado', label: 'Precio Aplicado', width: 185 },
+  { id: 'acciones', label: 'Acciones', width: 100 },
 ];
 
 const TableViewTarifas = ({ setOpenAlert, setMessageInfo, setMessageSeverity }) => {
