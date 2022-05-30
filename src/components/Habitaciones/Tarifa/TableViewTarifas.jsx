@@ -83,11 +83,11 @@ const TableViewTarifas = ({ setOpenAlert, setMessageInfo, setMessageSeverity }) 
               </TableRow>
             </TableHead>
             <TableBody>
-              {list.slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage).map((item, index) => {
+              {list.slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage).map(item => {
                 const { id, descripcion, no_personas, precio } = item;
 
                 return (
-                  <TableRow key={index}>
+                  <TableRow key={id}>
                     <TableCell sx={stylesTableCell}>{descripcion}</TableCell>
                     <TableCell sx={stylesTableCell}>{no_personas}</TableCell>
                     <TableCell sx={stylesTableCell}>
