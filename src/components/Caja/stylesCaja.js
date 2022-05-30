@@ -40,6 +40,12 @@ const stylesModal = {
   transform: 'translate(-50%, -50%)',
 };
 
+const stylesContainerBoxButtonAlign = {
+  display: 'flex',
+  flexDirection: 'column',
+  alignItems: 'flex-end',
+};
+
 export {
   stylesContainerDoubleForm,
   stylesContainerSection,
@@ -48,4 +54,5 @@ export {
   stylesAccordion,
   stylesTableCell,
   stylesModal,
+  stylesContainerBoxButtonAlign,
 };
