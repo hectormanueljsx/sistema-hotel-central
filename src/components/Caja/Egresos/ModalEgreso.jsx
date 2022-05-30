@@ -20,7 +20,11 @@ import TitleInput from '@/components/TitleInput';
 import getSpecificSelect from '@/services/getSpecificSelect';
 import putGeneralTable from '@/services/putGeneralTable';
 import { generalEndpoints } from '@/utilities/endpoints';
-import { stylesContainerInput, stylesContainerSection } from '@/components/Caja/stylesCaja';
+import {
+  stylesContainerBoxButtonAlign,
+  stylesContainerInput,
+  stylesContainerSection,
+} from '@/components/Caja/stylesCaja';
 
 const ModalEgreso = ({
   dataEgreso,
@@ -107,12 +111,12 @@ const ModalEgreso = ({
   };
 
   return (
-    <Container component='section' sx={[stylesContainerSection, { width: 800, marginTop: 0 }]}>
+    <Container component='section' sx={[stylesContainerSection, { width: 780, marginTop: 0 }]}>
       <CssBaseline />
-      <TitlePage titlePage='Registro de Gasto' />
+      <TitlePage titlePage='Actualización de Gasto' />
       <Box component='form' sx={{ display: 'flex', flexDirection: 'column' }}>
         <Box sx={{ display: 'flex', justifyContent: 'space-between' }}>
-          <Box component='div' sx={[stylesContainerInput, { width: 352.03 }]}>
+          <Box component='div' sx={[stylesContainerInput, { width: 352 }]}>
             <TitleInput titleInput='Concepto' />
             <TextField
               defaultValue={dataEgreso.concepto}
@@ -129,7 +133,7 @@ const ModalEgreso = ({
               autoFocus
             />
           </Box>
-          <Box component='div' sx={[stylesContainerInput, { width: 352.03 }]}>
+          <Box component='div' sx={[stylesContainerInput, { width: 352 }]}>
             <TitleInput titleInput='Importe' />
             <TextField
               defaultValue={dataEgreso.importe}
@@ -147,7 +151,7 @@ const ModalEgreso = ({
           </Box>
         </Box>
         <Box sx={{ display: 'flex', justifyContent: 'space-between' }}>
-          <Box component='div' sx={[stylesContainerInput, { width: 352.03 }]}>
+          <Box component='div' sx={[stylesContainerInput, { width: 352 }]}>
             <TitleInput titleInput='Con factura' />
             <FormControlLabel
               disabled={disabledModal}
@@ -156,7 +160,7 @@ const ModalEgreso = ({
               }
             />
           </Box>
-          <Box component='div' sx={[stylesContainerInput, { width: 352.03 }]}>
+          <Box component='div' sx={[stylesContainerInput, { width: 352 }]}>
             <TitleInput titleInput='Subtotal' />
             <TextField
               value={dataEgreso.subtotal}
@@ -174,7 +178,7 @@ const ModalEgreso = ({
           </Box>
         </Box>
         <Box sx={{ display: 'flex', justifyContent: 'space-between' }}>
-          <Box component='div' sx={[stylesContainerInput, { width: 352.03 }]}>
+          <Box component='div' sx={[stylesContainerInput, { width: 352 }]}>
             <TitleInput titleInput='Iva' />
             <TextField
               value={dataEgreso.iva}
@@ -190,7 +194,7 @@ const ModalEgreso = ({
               autoFocus
             />
           </Box>
-          <Box component='div' sx={[stylesContainerInput, { width: 352.03 }]}>
+          <Box component='div' sx={[stylesContainerInput, { width: 352 }]}>
             <TitleInput titleInput='Forma de pago' />
             <FormControl disabled={disabledModal} fullWidth>
               <Select size='small' value={idPago} onChange={handlePago}>
@@ -208,7 +212,7 @@ const ModalEgreso = ({
           </Box>
         </Box>
         <Box sx={{ display: 'flex', justifyContent: 'space-between' }}>
-          <Box component='div' sx={[stylesContainerInput, { width: 352.03 }]}>
+          <Box component='div' sx={[stylesContainerInput, { width: 352 }]}>
             <TitleInput titleInput='Categoría' />
             <FormControl disabled={disabledModal} fullWidth>
               <Select size='small' value={idCategoria} onChange={handleCategoria}>
@@ -224,7 +228,7 @@ const ModalEgreso = ({
               </Select>
             </FormControl>
           </Box>
-          <Box component='div' sx={[stylesContainerInput, { width: 352.03 }]}>
+          <Box component='div' sx={[stylesContainerInput, { width: 352 }]}>
             <TitleInput titleInput='Subcategoría' />
             <FormControl disabled={disabledModal} fullWidth>
               <Select size='small' value={idSubcategoria} onChange={handleSubCategoria}>
@@ -244,7 +248,7 @@ const ModalEgreso = ({
           </Box>
         </Box>
         <Box sx={{ display: 'flex', justifyContent: 'space-between' }}>
-          <Box component='div' sx={[stylesContainerInput, { width: 352.03 }]}>
+          <Box component='div' sx={[stylesContainerInput, { width: 352 }]}>
             <TitleInput titleInput='Fecha' />
             <TextField
               value={moment(dataEgreso.fecha).format('YYYY-MM-DD hh:mm:ss')}
@@ -260,7 +264,7 @@ const ModalEgreso = ({
               autoFocus
             />
           </Box>
-          <Box component='div' sx={[stylesContainerInput, { width: 352.03 }]}>
+          <Box component='div' sx={[stylesContainerInput, { width: 352 }]}>
             <TitleInput titleInput='Usuario' />
             <TextField
               value={dataEgreso.users_permissions_user.username}
@@ -277,27 +281,29 @@ const ModalEgreso = ({
             />
           </Box>
         </Box>
-        <Box sx={{ display: 'flex', justifyContent: 'center', gap: 3, marginTop: 2 }}>
-          <Button
-            variant='contained'
-            disabled={disableView}
-            onClick={viewDisabled}
-            size='large'
-            startIcon={<EditIcon />}
-            sx={{ width: 163.22 }}
-          >
-            Modificar
-          </Button>
-          <Button
-            variant='contained'
-            disabled={disabledModal}
-            onClick={putEgreso}
-            size='large'
-            startIcon={<UpdateIcon />}
-            sx={{ width: 163.22 }}
-          >
-            Actualizar
-          </Button>
+        <Box sx={{ display: 'flex', justifyContent: 'space-between', marginTop: 2 }}>
+          <Box component='div' sx={[stylesContainerBoxButtonAlign, { width: 352 }]}>
+            <Button
+              variant='contained'
+              disabled={disableView}
+              onClick={viewDisabled}
+              size='large'
+              startIcon={<EditIcon />}
+            >
+              Modificar
+            </Button>
+          </Box>
+          <Box component='div' sx={{ width: 352 }}>
+            <Button
+              variant='contained'
+              disabled={disabledModal}
+              onClick={putEgreso}
+              size='large'
+              startIcon={<UpdateIcon />}
+            >
+              Actualizar
+            </Button>
+          </Box>
         </Box>
       </Box>
     </Container>
