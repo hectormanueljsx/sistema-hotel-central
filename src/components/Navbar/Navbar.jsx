@@ -1,9 +1,15 @@
 import React, { useState } from 'react';
-import { Button, CssBaseline } from '@mui/material';
+import { CssBaseline } from '@mui/material';
 import { NavLink } from 'react-router-dom';
 
 import Dropdown from '@/components/Navbar/Dropdown';
-import { navItems, cajaDropdown, habitacionesDropdown, reportesDropdown } from '@/components/Navbar/NavItems';
+import {
+  navItems,
+  cajaDropdown,
+  habitacionesDropdown,
+  reportesDropdown,
+  userDropdown,
+} from '@/components/Navbar/NavItems';
 import Logotipo from '@/assets/logotipo-hc.png';
 import '@/components/Navbar/Navbar.css';
 
@@ -96,14 +102,17 @@ const Navbar = () => {
             }
           })}
         </ul>
-        <li
-          key={0}
-          className='navbar-item'
-          onMouseEnter={() => setDropdownUser(true)}
-          onMouseLeave={() => setDropdownUser(false)}
-        >
-          <button>{user}</button>
-        </li>
+        <ul className='navbar-items'>
+          <li
+            key={0}
+            className='navbar-item'
+            onMouseEnter={() => setDropdownUser(true)}
+            onMouseLeave={() => setDropdownUser(false)}
+          >
+            <button>{user}</button>
+            {dropdownUser && <Dropdown dropdownItem={userDropdown} />}
+          </li>
+        </ul>
       </nav>
     </section>
   );

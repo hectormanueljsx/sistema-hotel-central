@@ -67,10 +67,13 @@ export const habitacionesDropdown = [
     path: './habitaciones/habitaciones',
     cName: 'submenu-item',
   },
+];
+
+export const userDropdown = [
   {
-    id: '652cd6da-21da-40e3-922a-46e92d889ad0',
+    id: '9b8ddf1e-cc84-48da-8189-6a2c8cadf3ab',
     title: 'Usuarios',
-    path: './habitaciones/usuarios',
+    path: './administracion/usuarios',
     cName: 'submenu-item',
   },
 ];

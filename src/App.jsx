@@ -6,7 +6,8 @@ import CategoriaEgresos from '@/components/Caja/CategoriaEgresos/CategoriaEgreso
 import Egresos from '@/components/Caja/Egresos/Egresos';
 import Mantenimiento from '@/components/Reportes/Mantenimiento/Mantenimiento';
 import Tarifas from '@/components/Habitaciones/Tarifa/Tarifas';
-import Usuarios from '@/components/Habitaciones/Usuario/Usuarios';
+import Habitaciones from '@/components/Habitaciones/Habitaciones/Habitaciones';
+import Usuarios from '@/components/Administracion/Usuario/Usuarios';
 import Navbar from '@/components/Navbar/Navbar';
 import Login from '@/components/Login/Login';
 import NotFound from '@/components/NotFound/NotFound';
@@ -30,8 +31,8 @@ const App = () => {
         <Route path='/caja/egresos' element={<Egresos />} />
         <Route path='/reportes/mantenimiento' element={<Mantenimiento />} />
         <Route path='/habitaciones/tarifas' element={<Tarifas />} />
-        <Route path='/habitaciones/habitaciones' />
-        <Route path='/habitaciones/usuarios' element={<Usuarios />} />
+        <Route path='/habitaciones/habitaciones' element={<Habitaciones />} />
+        <Route path='/administracion/usuarios' element={<Usuarios />} />
         <Route path='*' element={<NotFound />} />
       </Routes>
     </ThemeProvider>
