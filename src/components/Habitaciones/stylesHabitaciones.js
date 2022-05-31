@@ -28,4 +28,17 @@ const stylesModal = {
   transform: 'translate(-50%, -50%)',
 };
 
-export { stylesContainerSection, stylesContainerBox, stylesContainerInput, stylesTableCell, stylesModal };
+const stylesContainerBoxButtonAlign = {
+  display: 'flex',
+  flexDirection: 'column',
+  alignItems: 'flex-end',
+};
+
+export {
+  stylesContainerSection,
+  stylesContainerBox,
+  stylesContainerInput,
+  stylesTableCell,
+  stylesModal,
+  stylesContainerBoxButtonAlign,
+};
