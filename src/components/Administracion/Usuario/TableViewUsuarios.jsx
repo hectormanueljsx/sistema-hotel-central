@@ -19,11 +19,11 @@ import DeleteIcon from '@mui/icons-material/Delete';
 import TitlePage from '@/components/TitlePage';
 import Loader from '@/components/Loader';
 import AlertGlobalTables from '@/components/AlertGlobalTables';
-import ModalUsuario from '@/components/Habitaciones/Usuario/ModalUsuario';
+import ModalUsuario from '@/components/Administracion/Usuario/ModalUsuario';
 import useGetGeneralTable from '@/hooks/useGetGeneralTable';
 import deleteGeneralTable from '@/services/deleteGeneralTable';
 import { generalEndpoints } from '@/utilities/endpoints';
-import { stylesContainerSection, stylesModal, stylesTableCell } from '@/components/Habitaciones/stylesHabitaciones';
+import { stylesContainerSection, stylesModal, stylesTableCell } from '@/components/Administracion/stylesAdministracion';
 
 const columns = [
   { id: 'username', label: 'Nombre', width: 462 },

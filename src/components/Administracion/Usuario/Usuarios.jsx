@@ -2,8 +2,8 @@ import React, { useState } from 'react';
 import { Box, Container, CssBaseline } from '@mui/material';
 
 import AlertGlobalForms from '@/components/AlertGlobalForms';
-import FormCreateUsuario from '@/components/Habitaciones/Usuario/FormCreateUsuario';
-import TableViewUsuarios from '@/components/Habitaciones/Usuario/TableViewUsuarios';
+import FormCreateUsuario from '@/components/Administracion/Usuario/FormCreateUsuario';
+import TableViewUsuarios from '@/components/Administracion/Usuario/TableViewUsuarios';
 
 const Usuarios = () => {
   const [messageInfo, setMessageInfo] = useState('');

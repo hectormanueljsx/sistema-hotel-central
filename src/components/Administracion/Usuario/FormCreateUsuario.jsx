@@ -10,7 +10,7 @@ import {
   stylesContainerBox,
   stylesContainerInput,
   stylesContainerSection,
-} from '@/components/Habitaciones/stylesHabitaciones';
+} from '@/components/Administracion/stylesAdministracion';
 
 const FormCreateUsuario = ({ setOpenAlert, setMessageInfo, setMessageSeverity }) => {
   const [datos, setDatos] = useState({

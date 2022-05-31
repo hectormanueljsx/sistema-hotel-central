@@ -10,7 +10,7 @@ import {
   stylesContainerBox,
   stylesContainerInput,
   stylesContainerSection,
-} from '@/components/Habitaciones/stylesHabitaciones';
+} from '@/components/Administracion/stylesAdministracion';
 
 const ModalUsuario = ({ dataUsuario, setOpenAlert, setMessageInfo, setMessageSeverity }) => {
   const [data, setData] = useState({
