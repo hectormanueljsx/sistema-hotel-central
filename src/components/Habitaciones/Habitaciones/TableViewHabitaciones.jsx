@@ -13,11 +13,12 @@ import {
   TablePagination,
   TableRow,
 } from '@mui/material';
-import EditIcon from '@mui/icons-material/Edit';
+import VisibilityIcon from '@mui/icons-material/Visibility';
 import DeleteIcon from '@mui/icons-material/Delete';
 
 import TitlePage from '@/components/TitlePage';
 import Loader from '@/components/Loader';
+import AlertGlobalTables from '@/components/AlertGlobalTables';
 import ModalHabitaciones from '@/components/Habitaciones/Habitaciones/ModalHabitacion';
 import useGetGeneralTable from '@/hooks/useGetGeneralTable';
 import deleteGeneralTable from '@/services/deleteGeneralTable';
@@ -25,26 +26,28 @@ import { generalEndpoints } from '@/utilities/endpoints';
 import { stylesContainerSection, stylesModal, stylesTableCell } from '@/components/Habitaciones/stylesHabitaciones';
 
 const columns = [
-  { id: 'num', label: 'N° Habitacion', width: 400 },
-  { id: 'servicios', label: 'Servicios', width: 600 },
-  { id: 'acciones', label: 'Acciones', width: 400 },
+  { id: 'num', label: 'N° Habitacion', width: 300 },
+  { id: 'servicios', label: 'Servicios', width: 552 },
+  { id: 'acciones', label: 'Acciones', width: 100 },
 ];
+
 let dataServices = [];
 let dataSelectTarifas = [];
+
 const TableViewHabitaciones = ({ setOpenAlert, setMessageInfo, setMessageSeverity }) => {
   const [page, setPage] = useState(0);
   const [rowsPerPage, setRowsPerPage] = useState(10);
   const [openModal, setOpenModal] = useState(false);
   const [dataHabitaciones, setDataHabitaciones] = useState('');
 
+  const identifier = localStorage.getItem('identifier');
+  const password = localStorage.getItem('password');
+  const endpointHabitacion = generalEndpoints.habitacion;
+
   const services = {
     clima: '',
     tv: '',
   };
-
-  const identifier = localStorage.getItem('identifier');
-  const password = localStorage.getItem('password');
-  const endpointHabitacion = generalEndpoints.habitacion;
 
   const handleOpen = item => {
     item.tv === true ? dataServices.push('TV') : null;
@@ -52,12 +55,12 @@ const TableViewHabitaciones = ({ setOpenAlert, setMessageInfo, setMessageSeverit
     dataSelectTarifas = item.tarifas.map(element => {
       return element.descripcion;
     });
+
     setOpenModal(true);
     setDataHabitaciones(item);
   };
 
   const handleClose = () => setOpenModal(false);
-
   const handleChangePage = (event, newPage) => setPage(newPage);
 
   const handleChangeRowsPerPage = event => {
@@ -78,11 +81,12 @@ const TableViewHabitaciones = ({ setOpenAlert, setMessageInfo, setMessageSeverit
       <TitlePage titlePage='Lista de Habitaciones' />
       <Box component='div'>
         {loading && <Loader />}
+        {error && <AlertGlobalTables messageError='Ah ocurrido un error al obtener los datos' />}
         <TableContainer>
           <Table>
             <TableHead>
               <TableRow>
-                {loading
+                {loading || error
                   ? null
                   : columns.map((column, index) => (
                       <TableCell key={index} sx={[stylesTableCell, { width: column.width }]}>
@@ -92,17 +96,24 @@ const TableViewHabitaciones = ({ setOpenAlert, setMessageInfo, setMessageSeverit
               </TableRow>
             </TableHead>
             <TableBody>
-              {list.slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage).map((item, index) => {
+              {list.slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage).map(item => {
                 const { id, clima, tv, num_hab } = item;
+
+                let arrayServices = [];
+
                 clima === true ? (services.clima = 'Clima') : (services.clima = '');
                 tv === true ? (services.tv = 'TV') : (services.tv = '');
+
+                services.clima !== '' ? arrayServices.push(services.clima) : null;
+                services.tv !== '' ? arrayServices.push(services.tv) : null;
+
                 return (
-                  <TableRow key={index}>
+                  <TableRow key={id}>
                     <TableCell sx={stylesTableCell}>{num_hab}</TableCell>
-                    <TableCell sx={stylesTableCell}>{`${services.clima} ${services.tv}`}</TableCell>
+                    <TableCell sx={stylesTableCell}>{arrayServices.join(', ')}</TableCell>
                     <TableCell sx={stylesTableCell}>
                       <IconButton color='info' size='small' onClick={() => handleOpen(item)}>
-                        <EditIcon />
+                        <VisibilityIcon />
                       </IconButton>
                       <IconButton color='error' size='small' onClick={() => deleteHabitacion(id)}>
                         <DeleteIcon />
@@ -114,7 +125,7 @@ const TableViewHabitaciones = ({ setOpenAlert, setMessageInfo, setMessageSeverit
             </TableBody>
           </Table>
         </TableContainer>
-        {loading ? null : (
+        {loading || error ? null : (
           <TablePagination
             rowsPerPageOptions={[]}
             component='div'

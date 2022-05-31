@@ -2,14 +2,14 @@ import React, { useState } from 'react';
 import {
   Box,
   Button,
+  Checkbox,
   Container,
   CssBaseline,
   FormControl,
+  ListItemText,
   MenuItem,
   Select,
   TextField,
-  ListItemText,
-  Checkbox,
 } from '@mui/material';
 import SaveIcon from '@mui/icons-material/Save';
 
@@ -24,29 +24,18 @@ import {
   stylesContainerSection,
 } from '@/components/Habitaciones/stylesHabitaciones';
 
-const ITEM_HEIGHT = 48;
-const ITEM_PADDING_TOP = 8;
-const MenuProps = {
-  PaperProps: {
-    style: {
-      maxHeight: ITEM_HEIGHT * 4.5 + ITEM_PADDING_TOP,
-      width: 250,
-    },
-  },
-};
-
 const services = ['CLIMA', 'TV'];
 
 const FormCreateHabitaciones = ({ setOpenAlert, setMessageInfo, setMessageSeverity }) => {
   const [optionServices, setOptionServices] = useState([]);
   const [optionTarifas, setOptionTarifas] = useState([]);
   const [numHabitacion, setNumHabitacion] = useState('');
-  const tarifaid = [];
 
   const identifier = 'test@email.com';
   const password = 'Test123';
-  const endpointTarifas = generalEndpoints.tarifa;
+  const endpointTarifa = generalEndpoints.tarifa;
   const endpointHabitacion = generalEndpoints.habitacion;
+  const tarifaId = [];
 
   const handleInputChangeNumHabitacion = event => setNumHabitacion(event.target.value);
 
@@ -56,6 +45,7 @@ const FormCreateHabitaciones = ({ setOpenAlert, setMessageInfo, setMessageSeveri
     } = event;
     setOptionServices(typeof value === 'string' ? value.split(',') : value);
   };
+
   const handleChangeTarifas = event => {
     const {
       target: { value },
@@ -63,35 +53,35 @@ const FormCreateHabitaciones = ({ setOpenAlert, setMessageInfo, setMessageSeveri
     setOptionTarifas(typeof value === 'string' ? value.split(',') : value);
   };
 
-  const { list, loading, error } = useGetGeneralTable(identifier, password, endpointTarifas);
-
   const sendDatos = async event => {
     event.preventDefault();
 
     if (optionServices.length > 0 && optionTarifas.length > 0 && numHabitacion.trim().length > 0) {
       for (let i = 0; i < list.length; i++) {
         if (optionTarifas.includes(list[i].descripcion)) {
-          tarifaid.push(list[i].id);
+          tarifaId.push(list[i].id);
         }
       }
+
       const HabitacionData = {
         clima: optionServices.includes('CLIMA') ? true : false,
         tv: optionServices.includes('TV') ? true : false,
         num_hab: numHabitacion,
-        tarifas: tarifaid,
+        tarifas: tarifaId,
       };
 
       const res = await postGeneralTable(identifier, password, endpointHabitacion, HabitacionData);
+
       if (res.status >= 200 && res.status <= 299) {
         setOpenAlert(true);
-        setMessageInfo('Tarifa registrada correctamente');
+        setMessageInfo('Habitación registrada correctamente');
         setMessageSeverity('success');
         setTimeout(() => {
           location.reload();
         }, 1500);
       } else {
         setOpenAlert(true);
-        setMessageInfo('Error al registrar tarifa');
+        setMessageInfo('Error al registrar habitación');
         setMessageSeverity('error');
         return;
       }
@@ -101,13 +91,16 @@ const FormCreateHabitaciones = ({ setOpenAlert, setMessageInfo, setMessageSeveri
       setMessageSeverity('error');
     }
   };
+
+  const { list, loading, error } = useGetGeneralTable(identifier, password, endpointTarifa);
+
   return (
-    <Container component='section' sx={[stylesContainerSection, { width: 400, height: 500.25 }]}>
+    <Container component='section' sx={[stylesContainerSection, { width: 400, height: 418.25 }]}>
       <CssBaseline />
-      <TitlePage titlePage='Registro de Habitacion' />
+      <TitlePage titlePage='Registro de Habitación' />
       <Box component='form' sx={stylesContainerBox}>
         <Box component='div' sx={stylesContainerInput}>
-          <TitleInput titleInput='Numero de Habitacion' />
+          <TitleInput titleInput='Numero de Habitación' />
           <TextField
             onChange={handleInputChangeNumHabitacion}
             variant='outlined'
@@ -123,20 +116,22 @@ const FormCreateHabitaciones = ({ setOpenAlert, setMessageInfo, setMessageSeveri
         </Box>
         <Box component='div' sx={stylesContainerInput}>
           <TitleInput titleInput='Seleccione Servicios' />
-          <FormControl sx={{ m: 1, width: 300 }}>
+          <FormControl fullWidth>
             <Select
-              labelId='service-multiple-checkbox-label'
-              id='service-multiple-checkbox'
               multiple
               value={optionServices}
               onChange={handleChangeServices}
               renderValue={selected => selected.join(', ')}
-              MenuProps={MenuProps}
+              size='small'
             >
               {services.map(item => {
                 return (
                   <MenuItem key={item} value={item}>
-                    <Checkbox checked={optionServices.indexOf(item) > -1} />
+                    <Checkbox
+                      checked={optionServices.indexOf(item) > -1}
+                      disableRipple
+                      sx={{ padding: 0, paddingRight: 2 }}
+                    />
                     <ListItemText primary={item} />
                   </MenuItem>
                 );
@@ -144,24 +139,26 @@ const FormCreateHabitaciones = ({ setOpenAlert, setMessageInfo, setMessageSeveri
             </Select>
           </FormControl>
         </Box>
-
         <Box component='div' sx={stylesContainerInput}>
-          <TitleInput titleInput='Seleccione las Tarifas permitidas' />
-          <FormControl sx={{ m: 1, width: 300 }}>
+          <TitleInput titleInput='Seleccione las Tarifas Permitidas' />
+          <FormControl fullWidth>
             <Select
-              labelId='demo-multiple-checkbox-label'
-              id='demo-multiple-checkbox'
               multiple
               value={optionTarifas}
               onChange={handleChangeTarifas}
               renderValue={selected => selected.join(', ')}
-              MenuProps={MenuProps}
+              size='small'
             >
               {list.map(item => {
                 const { id, descripcion } = item;
+
                 return (
                   <MenuItem key={descripcion} value={descripcion} name={id}>
-                    <Checkbox checked={optionTarifas.indexOf(descripcion) > -1} />
+                    <Checkbox
+                      checked={optionTarifas.indexOf(descripcion) > -1}
+                      disableRipple
+                      sx={{ padding: 0, paddingRight: 2 }}
+                    />
                     <ListItemText primary={descripcion} />
                   </MenuItem>
                 );
@@ -170,7 +167,7 @@ const FormCreateHabitaciones = ({ setOpenAlert, setMessageInfo, setMessageSeveri
           </FormControl>
         </Box>
         <Button variant='contained' onClick={sendDatos} size='large' startIcon={<SaveIcon />} sx={{ marginTop: 2 }}>
-          Registrar Habitacion
+          Registrar Habitación
         </Button>
       </Box>
     </Container>
