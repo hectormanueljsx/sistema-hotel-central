@@ -22,17 +22,15 @@ const generalEndpoints = {
 };
 
 const historicalEndpoints = {
-  historicoCajas: 'cajas?_sort=fecha_caja:DESC_start=',
-  historicoEgresos: 'egresos?_sort=fecha_egreso:DESC_start=',
-  historicoReservaciones: 'reservacions?_sort=fecha_reservacion:DESC_start=',
-  historicoFacturados: 'facturados?_sort=fecha_facturado:DESC_start=',
-  historicoPagos: 'pagos?_sort=fecha_pago:DESC_start=',
-  historicoCambios: 'cambios?_sort=fecha_cambio:DESC_start=',
-  historicoAnticipos: 'anticipos?_sort=fecha_anticipo:DESC_start=',
-  historicoCotizaciones: 'cotizacions?_sort=fecha_cotizacion:DESC_start=',
-  historicoMantenimientos: 'mantenimientos?_sort=fecha_mantenimiento:DESC_start=',
-  historicoTransferencias: 'transferencias?_sort=fecha_transferencia:DESC_start=',
-  historicoRegistros: 'registros?_sort=fecha_registro:DESC_start=',
+  historicoCajas: 'cajas?_sort=fecha:DESC&_start=',
+  historicoEgresos: 'egresos?_sort=fecha:DESC&_start=',
+  historicoReservaciones: 'reservacions?_sort=fecha:DESC&_start=',
+  historicoFacturados: 'facturados?_sort=fech_factura:DESC&_start=',
+  historicoCambios: 'cambios?_sort=fecha:DESC&_start=',
+  historicoAnticipos: 'anticipos?_sort=fecha:DESC&_start=',
+  historicoCotizaciones: 'cotizacions?_sort=fecha:DESC&_start=',
+  historicoMantenimientos: 'mantenimientos?_sort=f_inicio:DESC&_start=',
+  historicoRegistros: 'registros?_sort=fecha:DESC&_start=',
   historicoHistorial: 'historials?_sort=fecha_hosp:DESC&_start=',
 };
 
