@@ -60,7 +60,11 @@ const TableViewHabitaciones = ({ setOpenAlert, setMessageInfo, setMessageSeverit
     setDataHabitaciones(item);
   };
 
-  const handleClose = () => setOpenModal(false);
+  const handleClose = () => {
+    dataServices = [];
+    setOpenModal(false);
+  };
+
   const handleChangePage = (event, newPage) => setPage(newPage);
 
   const handleChangeRowsPerPage = event => {

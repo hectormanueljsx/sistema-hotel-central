@@ -37,7 +37,7 @@ const ModalHabitaciones = ({
 }) => {
   const [optionServices, setOptionServices] = useState(dataServices);
   const [optionTarifas, setOptionTarifas] = useState(dataSelectTarifas);
-  const [numHabitacion, setNumHabitacion] = useState('');
+  const [numHabitacion, setNumHabitacion] = useState(dataHabitaciones.num_hab);
   const [disabledModal, setDisabledModal] = useState(true);
   const [disableView, setDisableView] = useState(false);
 
@@ -72,7 +72,7 @@ const ModalHabitaciones = ({
   const updateDatos = async event => {
     event.preventDefault();
 
-    if (optionServices.length > 0 && optionTarifas.length > 0 && numHabitacion.trim().length > 0) {
+    if (optionServices && optionTarifas && numHabitacion) {
       for (let i = 0; i < list.length; i++) {
         if (optionTarifas.includes(list[i].descripcion)) {
           tarifaId.push(list[i].id);
@@ -85,6 +85,8 @@ const ModalHabitaciones = ({
         num_hab: numHabitacion,
         tarifas: tarifaId,
       };
+
+      console.log(habitacionData);
 
       const res = await putGeneralTable(identifier, password, endpointHabitacion, dataHabitaciones.id, habitacionData);
 
