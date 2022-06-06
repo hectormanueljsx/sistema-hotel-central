@@ -31,8 +31,8 @@ const FormCreateHabitaciones = ({ setOpenAlert, setMessageInfo, setMessageSeveri
   const [optionTarifas, setOptionTarifas] = useState([]);
   const [numHabitacion, setNumHabitacion] = useState('');
 
-  const identifier = 'test@email.com';
-  const password = 'Test123';
+  const identifier = localStorage.getItem('identifier');
+  const password = localStorage.getItem('password');
   const endpointTarifa = generalEndpoints.tarifa;
   const endpointHabitacion = generalEndpoints.habitacion;
   const tarifaId = [];
@@ -130,7 +130,7 @@ const FormCreateHabitaciones = ({ setOpenAlert, setMessageInfo, setMessageSeveri
                     <Checkbox
                       checked={optionServices.indexOf(item) > -1}
                       disableRipple
-                      sx={{ padding: 0, paddingRight: 2 }}
+                      sx={{ padding: 0, paddingRight: 1.125 }}
                     />
                     <ListItemText primary={item} />
                   </MenuItem>
@@ -157,7 +157,7 @@ const FormCreateHabitaciones = ({ setOpenAlert, setMessageInfo, setMessageSeveri
                     <Checkbox
                       checked={optionTarifas.indexOf(descripcion) > -1}
                       disableRipple
-                      sx={{ padding: 0, paddingRight: 2 }}
+                      sx={{ padding: 0, paddingRight: 1.125 }}
                     />
                     <ListItemText primary={descripcion} />
                   </MenuItem>
