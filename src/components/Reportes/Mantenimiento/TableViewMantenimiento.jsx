@@ -14,18 +14,17 @@ import {
   TableRow,
 } from '@mui/material';
 import VisibilityIcon from '@mui/icons-material/Visibility';
-import DeleteIcon from '@mui/icons-material/Delete';
 
 import TitlePage from '@/components/TitlePage';
 import Loader from '@/components/Loader';
 import AlertGlobalTables from '@/components/AlertGlobalTables';
 import ModalMantenimiento from '@/components/Reportes/Mantenimiento/ModalMantenimiento';
 import useGetGeneralTable from '@/hooks/useGetGeneralTable';
-import deleteGeneralTable from '@/services/deleteGeneralTable';
 import { generalEndpoints } from '@/utilities/endpoints';
 import { stylesContainerSection, stylesModal, stylesTableCell } from '@/components/Reportes/stylesReportes';
 
 const columns = [
+  { id: 'fechaReporte', label: 'Fecha de Reporte', width: 170 },
   { id: 'fechInicio', label: 'Fecha de Inicio', width: 170 },
   { id: 'motivo', label: 'Motivo', width: 280 },
   { id: 'categoria', label: 'Categorias', width: 250 },
@@ -54,11 +53,6 @@ const TableViewMantenimiento = ({ setOpenAlert, setMessageInfo, setMessageSeveri
   const handleChangeRowsPerPage = event => {
     setRowsPerPage(parseInt(event.target.value, 10));
     setPage(0);
-  };
-
-  const deleteRegistro = async id => {
-    await deleteGeneralTable(identifier, password, endpointMantenimiento, id);
-    location.reload();
   };
 
   const { list, loading, error } = useGetGeneralTable(identifier, password, endpointMantenimiento);
@@ -91,20 +85,19 @@ const TableViewMantenimiento = ({ setOpenAlert, setMessageInfo, setMessageSeveri
                   motivo,
                   estado,
                   subcategoria: { descripcion },
+                  f_reporte,
                 } = item;
 
                 return (
                   <TableRow key={id}>
+                    <TableCell sx={stylesTableCell}>{f_reporte}</TableCell>
                     <TableCell sx={stylesTableCell}>{f_inicio}</TableCell>
                     <TableCell sx={stylesTableCell}>{motivo}</TableCell>
                     <TableCell sx={stylesTableCell}>{descripcion}</TableCell>
-                    <TableCell sx={stylesTableCell}>{estado ? 'Finalizado' : 'No finalizado'}</TableCell>
+                    <TableCell sx={stylesTableCell}>{estado}</TableCell>
                     <TableCell sx={stylesTableCell}>
                       <IconButton color='info' size='small' onClick={() => handleOpen(item)}>
                         <VisibilityIcon />
-                      </IconButton>
-                      <IconButton color='error' size='small' onClick={() => deleteRegistro(id)}>
-                        <DeleteIcon />
                       </IconButton>
                     </TableCell>
                   </TableRow>
