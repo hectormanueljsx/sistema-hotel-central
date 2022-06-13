@@ -1,7 +1,7 @@
 import React, { forwardRef } from 'react';
-import { Snackbar } from '@mui/material';
-import MuiAlert from '@mui/material/Alert';
-import Slide from '@mui/material/Slide';
+import { Alert as MuiAlert, Slide, Snackbar } from '@mui/material';
+
+import { stylesMuiAlert } from '@/components/Alert/AlertStyles';
 
 const AlertGlobalForms = ({ open, setOpen, messageInfo, messageSeverity }) => {
   const handleClose = (event, reason) => {
@@ -12,7 +12,7 @@ const AlertGlobalForms = ({ open, setOpen, messageInfo, messageSeverity }) => {
 
   const Alert = forwardRef(function Alert(props, ref) {
     return (
-      <MuiAlert sx={{ marginTop: 7 }} ref={ref} variant='filled' severity={messageSeverity}>
+      <MuiAlert sx={stylesMuiAlert} ref={ref} variant='filled' severity={messageSeverity}>
         {messageInfo}
       </MuiAlert>
     );

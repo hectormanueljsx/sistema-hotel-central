@@ -1,12 +1,11 @@
 import React from 'react';
-import { Alert, Box, CssBaseline } from '@mui/material';
+import { Alert, Box } from '@mui/material';
 
-import { stylesLoaderAlertRender } from '@/components/stylesGlobals';
+import { stylesErrorTable } from '@/components/Alert/AlertStyles';
 
 const AlertGlobalTables = ({ messageError }) => {
   return (
-    <Box sx={stylesLoaderAlertRender}>
-      <CssBaseline />
+    <Box sx={stylesErrorTable}>
       <Alert icon={false} variant='filled' severity='error'>
         {messageError}
       </Alert>
