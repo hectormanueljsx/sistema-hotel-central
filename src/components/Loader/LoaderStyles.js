@@ -1,6 +1,6 @@
 import { css } from '@emotion/react';
 
-export const loaderStyles = css`
+export const stylesLoader = css`
   display: flex;
   justify-content: center;
   align-items: center;
