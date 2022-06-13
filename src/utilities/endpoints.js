@@ -1,4 +1,4 @@
-const generalEndpoints = {
+export const generalEndpoints = {
   tarifa: 'tarifas',
   habitacion: 'habitacions',
   usuario: 'users',
@@ -21,7 +21,7 @@ const generalEndpoints = {
   transferencia: 'transferencias',
 };
 
-const historicalEndpoints = {
+export const historicalEndpoints = {
   historicoCajas: 'cajas?_sort=fecha:DESC&_start=',
   historicoEgresos: 'egresos?_sort=fecha:DESC&_start=',
   historicoReservaciones: 'reservacions?_sort=fecha:DESC&_start=',
@@ -33,5 +33,3 @@ const historicalEndpoints = {
   historicoRegistros: 'registros?_sort=fecha:DESC&_start=',
   historicoHistorial: 'historials?_sort=fecha_hosp:DESC&_start=',
 };
-
-export { generalEndpoints, historicalEndpoints };
