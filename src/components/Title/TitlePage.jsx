@@ -1,7 +1,7 @@
 import React from 'react';
 import { Typography } from '@mui/material';
 
-import { stylesTitlePage } from '@/components/stylesGlobals';
+import { stylesTitlePage } from '@/components/Title/TitleStyles';
 
 const TitlePage = ({ titlePage }) => {
   return (

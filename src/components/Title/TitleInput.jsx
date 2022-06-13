@@ -1,7 +1,7 @@
 import React from 'react';
 import { Typography } from '@mui/material';
 
-import { stylesTitleInput } from '@/components/stylesGlobals';
+import { stylesTitleInput } from '@/components/Title/TitleStyles';
 
 const TitleInput = ({ titleInput }) => {
   return (
