@@ -1,16 +1,5 @@
 import React, { useState } from 'react';
-import {
-  Box,
-  Button,
-  Checkbox,
-  Container,
-  CssBaseline,
-  FormControl,
-  FormControlLabel,
-  MenuItem,
-  Select,
-  TextField,
-} from '@mui/material';
+import { Box, Button, Container, CssBaseline, FormControl, MenuItem, Select, TextField } from '@mui/material';
 import UpdateIcon from '@mui/icons-material/Update';
 import EditIcon from '@mui/icons-material/Edit';
 
@@ -37,10 +26,13 @@ const ModalMantenimiento = ({
     fechafin: dataMantenimiento.f_fin,
     motivo: dataMantenimiento.motivo,
     precio: dataMantenimiento.costo,
+    reporta: dataMantenimiento.reporta,
+    fechaReporte: dataMantenimiento.f_reporte,
+    trabajador: dataMantenimiento.trabajador,
+    estado: dataMantenimiento.estado,
   });
   const [idHabitacion, setIdHabitacion] = useState(dataMantenimiento.habitacion.id);
   const [idSubcategoria, setIdSubcategoria] = useState(dataMantenimiento.subcategoria.id);
-  const [estado, setEstado] = useState(dataMantenimiento.estado);
   const [disabledModal, setDisabledModal] = useState(true);
   const [disableView, setDisableView] = useState(false);
 
@@ -51,7 +43,6 @@ const ModalMantenimiento = ({
   const handleInputChange = event => setDatos({ ...datos, [event.target.name]: event.target.value });
   const handleHabitacion = event => setIdHabitacion(event.target.value);
   const handleSubcategoria = event => setIdSubcategoria(event.target.value);
-  const handleCheckbox = e => setEstado(e.target.checked);
 
   const viewDisabled = event => {
     event.preventDefault();
@@ -62,17 +53,26 @@ const ModalMantenimiento = ({
   const sendDatos = async event => {
     event.preventDefault();
 
-    if (datos.motivo && datos.precio && datos.fechaInicio && idHabitacion && idSubcategoria) {
+    if (datos.motivo && idHabitacion && idSubcategoria) {
+      let status = 'NO REALIZADO';
+      if (datos.fechaInicio && !datos.fechafin) {
+        status = 'EN PROCESO';
+      } else if (datos.fechaInicio && datos.fechafin) {
+        status = 'FINALIZADO';
+      }
+
       const generalData = {
+        f_reporte: datos.fechaReporte,
         f_inicio: datos.fechaInicio,
         f_fin: datos.fechafin,
         motivo: datos.motivo.toUpperCase(),
-        estado,
+        estado: status,
         costo: datos.precio,
+        reporta: datos.reporta,
+        trabajador: datos.trabajador,
         habitacion: { id: idHabitacion },
         subcategoria: { id: idSubcategoria },
       };
-
       const res = await putGeneralTable(identifier, password, endpointMantenimiento, dataMantenimiento.id, generalData);
 
       if (res.status >= 200 && res.status <= 299) {
@@ -168,27 +168,11 @@ const ModalMantenimiento = ({
         </Box>
         <Box sx={{ display: 'flex', justifyContent: 'space-between' }}>
           <Box component='div' sx={[stylesContainerInput, { width: 352 }]}>
-            <TitleInput titleInput='Estatus' />
-            <FormControlLabel
-              disabled={disabledModal}
-              control={
-                <Checkbox
-                  name='estado'
-                  defaultChecked={dataMantenimiento.estado ? true : false}
-                  onChange={handleCheckbox}
-                  disableRipple
-                  sx={{ padding: 0, paddingLeft: 1 }}
-                />
-              }
-            />
-          </Box>
-          <Box component='div' sx={[stylesContainerInput, { width: 352 }]}>
             <TitleInput titleInput='Habitacion' />
             <FormControl fullWidth disabled={disabledModal}>
               <Select size='small' value={idHabitacion} onChange={handleHabitacion}>
                 {habitacion.map(item => {
                   const { num_hab, id } = item;
-
                   return (
                     <MenuItem key={id} value={id}>
                       {num_hab}
@@ -197,6 +181,54 @@ const ModalMantenimiento = ({
                 })}
               </Select>
             </FormControl>
+          </Box>
+          <Box component='div' sx={[stylesContainerInput, { width: 352 }]}>
+            <TitleInput titleInput='Estado' />
+            <TextField
+              defaultValue={dataMantenimiento.estado}
+              name='estado'
+              variant='outlined'
+              type='text'
+              margin='none'
+              size='small'
+              disabled={true}
+              required
+              fullWidth
+            />
+          </Box>
+        </Box>
+        <Box sx={{ display: 'flex', justifyContent: 'space-between' }}>
+          <Box component='div' sx={[stylesContainerInput, { width: 352 }]}>
+            <TitleInput titleInput='Realizado por:' />
+            <TextField
+              defaultValue={dataMantenimiento.trabajador}
+              onChange={handleInputChange}
+              name='trabajador'
+              variant='outlined'
+              type='text'
+              margin='none'
+              size='small'
+              placeholder='nombre'
+              disabled={disabledModal}
+              required
+              fullWidth
+            />
+          </Box>
+          <Box component='div' sx={[stylesContainerInput, { width: 352 }]}>
+            <TitleInput titleInput='Reportado por:' />
+            <TextField
+              defaultValue={dataMantenimiento.reporta}
+              onChange={handleInputChange}
+              name='reporta'
+              variant='outlined'
+              type='text'
+              margin='none'
+              size='small'
+              placeholder='Nombre'
+              disabled={disabledModal}
+              required
+              fullWidth
+            />
           </Box>
         </Box>
         <Box sx={{ display: 'flex', justifyContent: 'space-between' }}>

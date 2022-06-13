@@ -10,9 +10,8 @@ import { stylesContainerBox, stylesContainerInput, stylesContainerSection } from
 
 const FormCreateMantenimiento = ({ setOpenAlert, setMessageInfo, setMessageSeverity, habitacion, subcategoria }) => {
   const [datos, setDatos] = useState({
-    fechInicio: '',
+    reporta: '',
     motivo: '',
-    precio: '',
   });
   const [idHabitacion, setIdHabitacion] = useState('');
   const [idSubcategoria, setIdSubcategoria] = useState('');
@@ -29,22 +28,18 @@ const FormCreateMantenimiento = ({ setOpenAlert, setMessageInfo, setMessageSever
   const sendDatos = async event => {
     event.preventDefault();
 
-    if (
-      datos.motivo.trim().length > 0 &&
-      datos.precio.trim().length > 0 &&
-      datos.fechInicio.length > 0 &&
-      idHabitacion &&
-      idSubcategoria
-    ) {
+    const date = new Date();
+
+    if (datos.motivo.trim().length > 0 && datos.reporta.trim().length > 0 && idHabitacion && idSubcategoria) {
       const generalData = {
-        f_inicio: datos.fechInicio,
+        f_reporte: date.toISOString(),
         motivo: datos.motivo.toUpperCase(),
-        costo: datos.precio,
+        reporta: datos.reporta.toUpperCase(),
         habitacion: { id: idHabitacion },
         users_permissions_user: { id: idUser },
         subcategoria: { id: idSubcategoria },
       };
-
+      console.log(generalData);
       const res = await postGeneralTable(identifier, password, endpointMantenimiento, generalData);
 
       if (res.status >= 200 && res.status <= 299) {
@@ -68,12 +63,12 @@ const FormCreateMantenimiento = ({ setOpenAlert, setMessageInfo, setMessageSever
   };
 
   return (
-    <Container component='section' disableGutters sx={[stylesContainerSection, { width: 400, height: 622.25 }]}>
+    <Container component='section' disableGutters sx={[stylesContainerSection, { width: 400, height: 522.25 }]}>
       <CssBaseline />
-      <TitlePage titlePage='Registro de Nuevo Mantenimiento' />
+      <TitlePage titlePage='Registro de Fallas' />
       <Box component='form' sx={stylesContainerBox}>
         <Box component='div' sx={stylesContainerInput}>
-          <TitleInput titleInput='Motivo del Mantenimiento' />
+          <TitleInput titleInput='Motivo' />
           <TextField
             onChange={handleInputChange}
             name='motivo'
@@ -88,30 +83,18 @@ const FormCreateMantenimiento = ({ setOpenAlert, setMessageInfo, setMessageSever
           />
         </Box>
         <Box component='div' sx={stylesContainerInput}>
-          <TitleInput titleInput='Fecha de Inicio' />
+          <TitleInput titleInput='Quien reporta?' />
           <TextField
             onChange={handleInputChange}
-            name='fechInicio'
+            name='reporta'
             variant='outlined'
-            type='date'
+            type='text'
             margin='none'
             size='small'
+            placeholder='Nombre'
             required
             fullWidth
-          />
-        </Box>
-        <Box component='div' sx={stylesContainerInput}>
-          <TitleInput titleInput='Precio' />
-          <TextField
-            onChange={handleInputChange}
-            name='precio'
-            variant='outlined'
-            type='number'
-            margin='none'
-            size='small'
-            placeholder='$0.00'
-            required
-            fullWidth
+            autoFocus
           />
         </Box>
         <Box component='div' sx={stylesContainerInput}>
@@ -131,7 +114,7 @@ const FormCreateMantenimiento = ({ setOpenAlert, setMessageInfo, setMessageSever
           </FormControl>
         </Box>
         <Box component='div' sx={stylesContainerInput}>
-          <TitleInput titleInput='Categoria' />
+          <TitleInput titleInput='Subcategoria' />
           <FormControl fullWidth>
             <Select size='small' value={idSubcategoria} onChange={handleSubcategoria}>
               {subcategoria.map(item => {
