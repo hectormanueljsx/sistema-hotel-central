@@ -7,6 +7,7 @@ import TitleInput from '@/components/Title/TitleInput';
 import postUsers from '@/services/postUsers';
 import { generalEndpoints } from '@/utilities/endpoints';
 import {
+  stylesButtonSend,
   stylesContainerBox,
   stylesContainerInput,
   stylesContainerSection,
@@ -153,7 +154,7 @@ const FormCreateUsuario = ({ setOpenAlert, setMessageInfo, setMessageSeverity })
             label='Encargado'
           />
         </Box>
-        <Button variant='contained' onClick={sendDatos} size='large' startIcon={<SaveIcon />} sx={{ marginTop: 2 }}>
+        <Button variant='contained' onClick={sendDatos} size='large' startIcon={<SaveIcon />} sx={stylesButtonSend}>
           Registrar Usuario
         </Button>
       </Box>

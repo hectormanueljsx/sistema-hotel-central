@@ -43,6 +43,10 @@ export const stylesContainerInput = css`
   margin-bottom: 16px;
 `;
 
+export const stylesButtonSend = css`
+  margin-top: 16px;
+`;
+
 export const stylesTableCell = css`
   padding: 8px;
 `;
