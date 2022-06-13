@@ -1,9 +1,9 @@
 import React, { useState } from 'react';
-import { Box, Button, Container, CssBaseline, FormControl, MenuItem, Select, TextField } from '@mui/material';
+import { Box, Button, Container, FormControl, MenuItem, Select, TextField } from '@mui/material';
 import SaveIcon from '@mui/icons-material/Save';
 
-import TitlePage from '@/components/TitlePage';
-import TitleInput from '@/components/TitleInput';
+import TitlePage from '@/components/Title/TitlePage';
+import TitleInput from '@/components/Title/TitleInput';
 import useGetGeneralTable from '@/hooks/useGetGeneralTable';
 import postGeneralTable from '@/services/postGeneralTable';
 import { generalEndpoints } from '@/utilities/endpoints';
@@ -12,7 +12,10 @@ import {
   stylesContainerBox,
   stylesContainerInput,
   stylesContainerSection,
-} from '@/components/Caja/stylesCaja';
+  stylesWidthHeightFormCategoria,
+  stylesWidthHeightFormSubcategoria,
+  stylesButtonSend,
+} from '@/components/Caja/CategoriaEgresos/CategoriaEgresosStyles';
 
 const FormCreateCategoriaEgresos = ({ setOpenAlert, setMessageInfo, setMessageSeverity }) => {
   const [categoria, setCategoria] = useState('');
@@ -91,8 +94,7 @@ const FormCreateCategoriaEgresos = ({ setOpenAlert, setMessageInfo, setMessageSe
 
   return (
     <Container component='section' disableGutters sx={stylesContainerDoubleForm}>
-      <CssBaseline />
-      <Container component='section' sx={[stylesContainerSection, { width: 400, height: 250.25 }]}>
+      <Container component='section' sx={[stylesContainerSection, stylesWidthHeightFormCategoria]}>
         <TitlePage titlePage='Registro de Categoría' />
         <Box component='form' sx={stylesContainerBox}>
           <Box component='div' sx={stylesContainerInput}>
@@ -115,13 +117,13 @@ const FormCreateCategoriaEgresos = ({ setOpenAlert, setMessageInfo, setMessageSe
             onClick={sendDatosCategoria}
             size='large'
             startIcon={<SaveIcon />}
-            sx={{ marginTop: 2 }}
+            sx={stylesButtonSend}
           >
             Registrar Categoría
           </Button>
         </Box>
       </Container>
-      <Container component='section' sx={[stylesContainerSection, { width: 400, height: 334.25, marginTop: 5 }]}>
+      <Container component='section' sx={[stylesContainerSection, stylesWidthHeightFormSubcategoria]}>
         <TitlePage titlePage='Registro de Subcategoría' />
         <Box component='form' sx={stylesContainerBox}>
           <Box component='div' sx={stylesContainerInput}>
@@ -159,7 +161,7 @@ const FormCreateCategoriaEgresos = ({ setOpenAlert, setMessageInfo, setMessageSe
             onClick={sendDatosSubcategoria}
             size='large'
             startIcon={<SaveIcon />}
-            sx={{ marginTop: 2 }}
+            sx={stylesButtonSend}
           >
             Registrar Subcategoría
           </Button>

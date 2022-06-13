@@ -1,9 +1,10 @@
 import React, { useState } from 'react';
-import { Box, Container, CssBaseline } from '@mui/material';
+import { Box, Container } from '@mui/material';
 
-import AlertGlobalForms from '@/components/AlertGlobalForms';
+import AlertGlobalForms from '@/components/Alert/AlertGlobalForms';
 import FormCreateCategoriaEgresos from '@/components/Caja/CategoriaEgresos/FormCreateCategoriaEgresos';
 import TableViewCategoriaEgresos from '@/components/Caja/CategoriaEgresos/TableViewCategoriaEgresos';
+import { stylesBoxUsuarios } from '@/components/Caja/CategoriaEgresos/CategoriaEgresosStyles';
 
 const CategoriaEgresos = () => {
   const [messageInfo, setMessageInfo] = useState('');
@@ -12,7 +13,6 @@ const CategoriaEgresos = () => {
 
   return (
     <Container component='section' disableGutters maxWidth='xl'>
-      <CssBaseline />
       {messageInfo && (
         <AlertGlobalForms
           open={openAlert}
@@ -21,7 +21,7 @@ const CategoriaEgresos = () => {
           messageSeverity={messageSeverity || 'info'}
         />
       )}
-      <Box sx={{ display: 'flex' }}>
+      <Box sx={stylesBoxUsuarios}>
         <FormCreateCategoriaEgresos
           setOpenAlert={setOpenAlert}
           setMessageInfo={setMessageInfo}

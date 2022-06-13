@@ -3,10 +3,9 @@ import {
   Accordion,
   AccordionDetails,
   AccordionSummary,
-  IconButton,
   Box,
   Container,
-  CssBaseline,
+  IconButton,
   ListItemIcon,
   Typography,
 } from '@mui/material';
@@ -14,13 +13,22 @@ import ExpandMore from '@mui/icons-material/ExpandMore';
 import ArrowRightIcon from '@mui/icons-material/ArrowRight';
 import DeleteIcon from '@mui/icons-material/Delete';
 
-import TitlePage from '@/components/TitlePage';
-import Loader from '@/components/Loader';
-import AlertGlobalTables from '@/components/AlertGlobalTables';
+import TitlePage from '@/components/Title/TitlePage';
+import Loader from '@/components/Loader/Loader';
+import AlertGlobalTables from '@/components/Alert/AlertGlobalTables';
 import useGetGeneralTable from '@/hooks/useGetGeneralTable';
 import deleteGeneralTable from '@/services/deleteGeneralTable';
 import { generalEndpoints } from '@/utilities/endpoints';
-import { stylesAccordion, stylesContainerSection } from '@/components/Caja/stylesCaja';
+import {
+  stylesAccordion,
+  stylesAccordionDetails,
+  stylesBoxCategoria,
+  stylesBoxSubcategoria,
+  stylesContainerSection,
+  stylesFontCategoria,
+  stylesFontSubcategoria,
+  stylesWidthAcordion,
+} from '@/components/Caja/CategoriaEgresos/CategoriaEgresosStyles';
 
 const TableViewCategoriaEgresos = () => {
   const [expanded, setExpanded] = useState(false);
@@ -45,8 +53,7 @@ const TableViewCategoriaEgresos = () => {
   const { list, loading, error } = useGetGeneralTable(identifier, password, endpointCategoria);
 
   return (
-    <Container component='section' disableGutters sx={[stylesContainerSection, { width: 1000 }]}>
-      <CssBaseline />
+    <Container component='section' disableGutters sx={[stylesContainerSection, stylesWidthAcordion]}>
       <TitlePage titlePage='Lista de Categorías Registradas' />
       <Box component='div'>
         {loading && <Loader />}
@@ -57,8 +64,8 @@ const TableViewCategoriaEgresos = () => {
           return (
             <Accordion key={id} expanded={expanded === `panel${id}`} onChange={handleChange(`panel${id}`)}>
               <AccordionSummary key={id} expandIcon={<ExpandMore />}>
-                <Box sx={[stylesAccordion, { width: 850 }]}>
-                  <Typography key={id} sx={{ fontWeight: '700' }}>
+                <Box sx={[stylesAccordion, stylesBoxCategoria]}>
+                  <Typography key={id} sx={stylesFontCategoria}>
                     {categoria}
                   </Typography>
                   {subcategorias.length === 0 && (
@@ -72,13 +79,13 @@ const TableViewCategoriaEgresos = () => {
                 const { descripcion, id } = subitem;
 
                 return (
-                  <AccordionDetails key={id} sx={{ padding: 0, marginBottom: 1 }}>
-                    <Box sx={[stylesAccordion, { width: 866 }]}>
+                  <AccordionDetails key={id} sx={stylesAccordionDetails}>
+                    <Box sx={[stylesAccordion, stylesBoxSubcategoria]}>
                       <Box sx={[stylesAccordion, { marginLeft: 5 }]}>
                         <ListItemIcon sx={{ minWidth: 0 }}>
                           <ArrowRightIcon />
                         </ListItemIcon>
-                        <Typography key={id} sx={{ fontWeight: '300' }}>
+                        <Typography key={id} sx={stylesFontSubcategoria}>
                           {descripcion}
                         </Typography>
                       </Box>
