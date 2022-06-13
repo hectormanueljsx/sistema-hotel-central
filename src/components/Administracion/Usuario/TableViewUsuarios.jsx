@@ -2,7 +2,6 @@ import React, { useState } from 'react';
 import {
   Box,
   Container,
-  CssBaseline,
   IconButton,
   Modal,
   Table,
@@ -16,14 +15,19 @@ import {
 import EditIcon from '@mui/icons-material/Edit';
 import DeleteIcon from '@mui/icons-material/Delete';
 
-import TitlePage from '@/components/TitlePage';
-import Loader from '@/components/Loader';
-import AlertGlobalTables from '@/components/AlertGlobalTables';
+import TitlePage from '@/components/Title/TitlePage';
+import Loader from '@/components/Loader/Loader';
+import AlertGlobalTables from '@/components/Alert/AlertGlobalTables';
 import ModalUsuario from '@/components/Administracion/Usuario/ModalUsuario';
 import useGetGeneralTable from '@/hooks/useGetGeneralTable';
 import deleteGeneralTable from '@/services/deleteGeneralTable';
 import { generalEndpoints } from '@/utilities/endpoints';
-import { stylesContainerSection, stylesModal, stylesTableCell } from '@/components/Administracion/stylesAdministracion';
+import {
+  stylesContainerSection,
+  stylesModal,
+  stylesTableCell,
+  stylesWidthHeightTable,
+} from '@/components/Administracion/Usuario/UsuarioStyles';
 
 const columns = [
   { id: 'username', label: 'Nombre', width: 462 },
@@ -63,8 +67,7 @@ const TableViewUsuarios = ({ setOpenAlert, setMessageInfo, setMessageSeverity })
   const { list, loading, error } = useGetGeneralTable(identifier, password, endpointUsuario);
 
   return (
-    <Container component='section' disableGutters sx={[stylesContainerSection, { width: 1000, height: 711 }]}>
-      <CssBaseline />
+    <Container component='section' disableGutters sx={[stylesContainerSection, stylesWidthHeightTable]}>
       <TitlePage titlePage='Lista de Usuarios' />
       <Box component='div'>
         {loading && <Loader />}

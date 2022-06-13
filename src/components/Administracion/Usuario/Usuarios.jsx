@@ -1,9 +1,10 @@
 import React, { useState } from 'react';
-import { Box, Container, CssBaseline } from '@mui/material';
+import { Box, Container } from '@mui/material';
 
-import AlertGlobalForms from '@/components/AlertGlobalForms';
+import AlertGlobalForms from '@/components/Alert/AlertGlobalForms';
 import FormCreateUsuario from '@/components/Administracion/Usuario/FormCreateUsuario';
 import TableViewUsuarios from '@/components/Administracion/Usuario/TableViewUsuarios';
+import { stylesBoxUsuarios } from '@/components/Administracion/Usuario/UsuarioStyles';
 
 const Usuarios = () => {
   const [messageInfo, setMessageInfo] = useState('');
@@ -12,7 +13,6 @@ const Usuarios = () => {
 
   return (
     <Container component='section' disableGutters maxWidth='xl'>
-      <CssBaseline />
       {messageInfo && (
         <AlertGlobalForms
           open={openAlert}
@@ -21,7 +21,7 @@ const Usuarios = () => {
           messageSeverity={messageSeverity || 'info'}
         />
       )}
-      <Box sx={{ display: 'flex' }}>
+      <Box sx={stylesBoxUsuarios}>
         <FormCreateUsuario
           setOpenAlert={setOpenAlert}
           setMessageInfo={setMessageInfo}

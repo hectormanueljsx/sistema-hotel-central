@@ -1,16 +1,17 @@
 import React, { useState } from 'react';
-import { Box, Button, Checkbox, Container, CssBaseline, FormControlLabel, TextField } from '@mui/material';
+import { Box, Button, Checkbox, Container, FormControlLabel, TextField } from '@mui/material';
 import SaveIcon from '@mui/icons-material/Save';
 
-import TitlePage from '@/components/TitlePage';
-import TitleInput from '@/components/TitleInput';
+import TitlePage from '@/components/Title/TitlePage';
+import TitleInput from '@/components/Title/TitleInput';
 import postUsers from '@/services/postUsers';
 import { generalEndpoints } from '@/utilities/endpoints';
 import {
   stylesContainerBox,
   stylesContainerInput,
   stylesContainerSection,
-} from '@/components/Administracion/stylesAdministracion';
+  stylesWidthHeightForm,
+} from '@/components/Administracion/Usuario/UsuarioStyles';
 
 const FormCreateUsuario = ({ setOpenAlert, setMessageInfo, setMessageSeverity }) => {
   const [datos, setDatos] = useState({
@@ -77,8 +78,7 @@ const FormCreateUsuario = ({ setOpenAlert, setMessageInfo, setMessageSeverity })
   };
 
   return (
-    <Container component='section' disableGutters sx={[stylesContainerSection, { width: 400, height: 630.25 }]}>
-      <CssBaseline />
+    <Container component='section' disableGutters sx={[stylesContainerSection, stylesWidthHeightForm]}>
       <TitlePage titlePage='Registro de Nuevo Usuario' />
       <Box component='form' sx={stylesContainerBox}>
         <Box component='div' sx={stylesContainerInput}>

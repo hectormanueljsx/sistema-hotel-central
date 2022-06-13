@@ -1,16 +1,17 @@
 import React, { useState } from 'react';
-import { Box, Button, Checkbox, Container, CssBaseline, FormControlLabel, TextField } from '@mui/material';
+import { Box, Button, Checkbox, Container, FormControlLabel, TextField } from '@mui/material';
 import UpdateIcon from '@mui/icons-material/Update';
 
-import TitlePage from '@/components/TitlePage';
-import TitleInput from '@/components/TitleInput';
+import TitlePage from '@/components/Title/TitlePage';
+import TitleInput from '@/components/Title/TitleInput';
 import putUsers from '@/services/putUsers';
 import { generalEndpoints } from '@/utilities/endpoints';
 import {
   stylesContainerBox,
   stylesContainerInput,
   stylesContainerSection,
-} from '@/components/Administracion/stylesAdministracion';
+  stylesWidthHeightModal,
+} from '@/components/Administracion/Usuario/UsuarioStyles';
 
 const ModalUsuario = ({ dataUsuario, setOpenAlert, setMessageInfo, setMessageSeverity }) => {
   const [data, setData] = useState({
@@ -86,12 +87,7 @@ const ModalUsuario = ({ dataUsuario, setOpenAlert, setMessageInfo, setMessageSev
   };
 
   return (
-    <Container
-      component='section'
-      disableGutters
-      sx={[stylesContainerSection, { width: 400, height: 630.25, marginTop: 0 }]}
-    >
-      <CssBaseline />
+    <Container component='section' disableGutters sx={[stylesContainerSection, stylesWidthHeightModal]}>
       <TitlePage titlePage='Actualización de Usuario' />
       <Box component='form' sx={stylesContainerBox}>
         <Box component='div' sx={stylesContainerInput}>
