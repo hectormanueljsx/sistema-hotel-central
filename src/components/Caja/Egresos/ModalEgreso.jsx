@@ -4,7 +4,6 @@ import {
   Button,
   Checkbox,
   Container,
-  CssBaseline,
   FormControl,
   FormControlLabel,
   MenuItem,
@@ -15,16 +14,22 @@ import UpdateIcon from '@mui/icons-material/Update';
 import EditIcon from '@mui/icons-material/Edit';
 import moment from 'moment';
 
-import TitlePage from '@/components/TitlePage';
-import TitleInput from '@/components/TitleInput';
+import TitlePage from '@/components/Title/TitlePage';
+import TitleInput from '@/components/Title/TitleInput';
 import getSpecificSelect from '@/services/getSpecificSelect';
 import putGeneralTable from '@/services/putGeneralTable';
 import { generalEndpoints } from '@/utilities/endpoints';
 import {
+  stylesBoxButtons,
+  stylesBoxInputs,
+  stylesBoxModal,
+  stylesCheckboxForm,
   stylesContainerBoxButtonAlign,
   stylesContainerInput,
   stylesContainerSection,
-} from '@/components/Caja/stylesCaja';
+  stylesWidthHeightModal,
+  stylesWidthInput,
+} from '@/components/Caja/Egresos/EgresosStyles';
 
 const ModalEgreso = ({
   dataEgreso,
@@ -111,12 +116,11 @@ const ModalEgreso = ({
   };
 
   return (
-    <Container component='section' sx={[stylesContainerSection, { width: 780, marginTop: 0 }]}>
-      <CssBaseline />
+    <Container component='section' sx={[stylesContainerSection, stylesWidthHeightModal]}>
       <TitlePage titlePage='Actualización de Gasto' />
-      <Box component='form' sx={{ display: 'flex', flexDirection: 'column' }}>
-        <Box sx={{ display: 'flex', justifyContent: 'space-between' }}>
-          <Box component='div' sx={[stylesContainerInput, { width: 352 }]}>
+      <Box component='form' sx={stylesBoxModal}>
+        <Box sx={stylesBoxInputs}>
+          <Box component='div' sx={[stylesContainerInput, stylesWidthInput]}>
             <TitleInput titleInput='Concepto' />
             <TextField
               defaultValue={dataEgreso.concepto}
@@ -133,7 +137,7 @@ const ModalEgreso = ({
               autoFocus
             />
           </Box>
-          <Box component='div' sx={[stylesContainerInput, { width: 352 }]}>
+          <Box component='div' sx={[stylesContainerInput, stylesWidthInput]}>
             <TitleInput titleInput='Importe' />
             <TextField
               defaultValue={dataEgreso.importe}
@@ -150,17 +154,15 @@ const ModalEgreso = ({
             />
           </Box>
         </Box>
-        <Box sx={{ display: 'flex', justifyContent: 'space-between' }}>
-          <Box component='div' sx={[stylesContainerInput, { width: 352 }]}>
+        <Box sx={stylesBoxInputs}>
+          <Box component='div' sx={[stylesContainerInput, stylesWidthInput]}>
             <TitleInput titleInput='Con factura' />
             <FormControlLabel
               disabled={disabledModal}
-              control={
-                <Checkbox name='factura' onChange={handleCheckbox} disableRipple sx={{ padding: 0, paddingLeft: 1 }} />
-              }
+              control={<Checkbox name='factura' onChange={handleCheckbox} disableRipple sx={stylesCheckboxForm} />}
             />
           </Box>
-          <Box component='div' sx={[stylesContainerInput, { width: 352 }]}>
+          <Box component='div' sx={[stylesContainerInput, stylesWidthInput]}>
             <TitleInput titleInput='Subtotal' />
             <TextField
               value={dataEgreso.subtotal}
@@ -177,8 +179,8 @@ const ModalEgreso = ({
             />
           </Box>
         </Box>
-        <Box sx={{ display: 'flex', justifyContent: 'space-between' }}>
-          <Box component='div' sx={[stylesContainerInput, { width: 352 }]}>
+        <Box sx={stylesBoxInputs}>
+          <Box component='div' sx={[stylesContainerInput, stylesWidthInput]}>
             <TitleInput titleInput='Iva' />
             <TextField
               value={dataEgreso.iva}
@@ -194,7 +196,7 @@ const ModalEgreso = ({
               autoFocus
             />
           </Box>
-          <Box component='div' sx={[stylesContainerInput, { width: 352 }]}>
+          <Box component='div' sx={[stylesContainerInput, stylesWidthInput]}>
             <TitleInput titleInput='Forma de pago' />
             <FormControl disabled={disabledModal} fullWidth>
               <Select size='small' value={idPago} onChange={handlePago}>
@@ -211,8 +213,8 @@ const ModalEgreso = ({
             </FormControl>
           </Box>
         </Box>
-        <Box sx={{ display: 'flex', justifyContent: 'space-between' }}>
-          <Box component='div' sx={[stylesContainerInput, { width: 352 }]}>
+        <Box sx={stylesBoxInputs}>
+          <Box component='div' sx={[stylesContainerInput, stylesWidthInput]}>
             <TitleInput titleInput='Categoría' />
             <FormControl disabled={disabledModal} fullWidth>
               <Select size='small' value={idCategoria} onChange={handleCategoria}>
@@ -228,7 +230,7 @@ const ModalEgreso = ({
               </Select>
             </FormControl>
           </Box>
-          <Box component='div' sx={[stylesContainerInput, { width: 352 }]}>
+          <Box component='div' sx={[stylesContainerInput, stylesWidthInput]}>
             <TitleInput titleInput='Subcategoría' />
             <FormControl disabled={disabledModal} fullWidth>
               <Select size='small' value={idSubcategoria} onChange={handleSubCategoria}>
@@ -247,8 +249,8 @@ const ModalEgreso = ({
             </FormControl>
           </Box>
         </Box>
-        <Box sx={{ display: 'flex', justifyContent: 'space-between' }}>
-          <Box component='div' sx={[stylesContainerInput, { width: 352 }]}>
+        <Box sx={stylesBoxInputs}>
+          <Box component='div' sx={[stylesContainerInput, stylesWidthInput]}>
             <TitleInput titleInput='Fecha' />
             <TextField
               value={moment(dataEgreso.fecha).format('YYYY-MM-DD hh:mm:ss')}
@@ -264,7 +266,7 @@ const ModalEgreso = ({
               autoFocus
             />
           </Box>
-          <Box component='div' sx={[stylesContainerInput, { width: 352 }]}>
+          <Box component='div' sx={[stylesContainerInput, stylesWidthInput]}>
             <TitleInput titleInput='Usuario' />
             <TextField
               value={dataEgreso.users_permissions_user.username}
@@ -281,8 +283,8 @@ const ModalEgreso = ({
             />
           </Box>
         </Box>
-        <Box sx={{ display: 'flex', justifyContent: 'space-between', marginTop: 2 }}>
-          <Box component='div' sx={[stylesContainerBoxButtonAlign, { width: 352 }]}>
+        <Box sx={stylesBoxButtons}>
+          <Box component='div' sx={[stylesContainerBoxButtonAlign, stylesWidthInput]}>
             <Button
               variant='contained'
               disabled={disableView}
@@ -293,7 +295,7 @@ const ModalEgreso = ({
               Modificar
             </Button>
           </Box>
-          <Box component='div' sx={{ width: 352 }}>
+          <Box component='div' sx={stylesWidthInput}>
             <Button
               variant='contained'
               disabled={disabledModal}

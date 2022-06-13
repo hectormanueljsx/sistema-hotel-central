@@ -2,7 +2,6 @@ import React, { useState } from 'react';
 import {
   Box,
   Container,
-  CssBaseline,
   IconButton,
   Modal,
   Table,
@@ -16,14 +15,19 @@ import {
 import VisibilityIcon from '@mui/icons-material/Visibility';
 import moment from 'moment';
 
-import TitlePage from '@/components/TitlePage';
-import Loader from '@/components/Loader';
-import AlertGlobalTables from '@/components/AlertGlobalTables';
+import TitlePage from '@/components/Title/TitlePage';
+import Loader from '@/components/Loader/Loader';
+import AlertGlobalTables from '@/components/Alert/AlertGlobalTables';
 import ModalEgreso from '@/components/Caja/Egresos/ModalEgreso';
 import useGetSpecific from '@/hooks/useGetSpecific';
 import getSpecificSelect from '@/services/getSpecificSelect';
 import { generalEndpoints } from '@/utilities/endpoints';
-import { stylesContainerSection, stylesModal, stylesTableCell } from '@/components/Caja/stylesCaja';
+import {
+  stylesContainerSection,
+  stylesModal,
+  stylesTableCell,
+  stylesWidthHeightTable,
+} from '@/components/Caja/Egresos/EgresosStyles';
 
 const columns = [
   { id: 'num_gasto', label: 'N° Gasto', width: 140 },
@@ -74,8 +78,7 @@ const TableViewEgresos = ({ setOpenAlert, setMessageInfo, setMessageSeverity, pa
   );
 
   return (
-    <Container component='section' disableGutters sx={[stylesContainerSection, { width: 1000, height: 711 }]}>
-      <CssBaseline />
+    <Container component='section' disableGutters sx={[stylesContainerSection, stylesWidthHeightTable]}>
       <TitlePage titlePage='Gastos no Incluidos en un Corte de Caja' />
       <Box component='div'>
         {loadingGetSpecific && <Loader />}

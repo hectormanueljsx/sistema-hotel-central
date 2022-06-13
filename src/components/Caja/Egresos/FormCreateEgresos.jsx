@@ -4,7 +4,6 @@ import {
   Button,
   Checkbox,
   Container,
-  CssBaseline,
   FormControl,
   FormControlLabel,
   Select,
@@ -13,11 +12,18 @@ import {
 } from '@mui/material';
 import SaveIcon from '@mui/icons-material/Save';
 
-import TitlePage from '@/components/TitlePage';
-import TitleInput from '@/components/TitleInput';
+import TitlePage from '@/components/Title/TitlePage';
+import TitleInput from '@/components/Title/TitleInput';
 import postGeneralTable from '@/services/postGeneralTable';
 import { generalEndpoints } from '@/utilities/endpoints';
-import { stylesContainerBox, stylesContainerInput, stylesContainerSection } from '@/components/Caja/stylesCaja';
+import {
+  stylesButtonSend,
+  stylesCheckboxForm,
+  stylesContainerBox,
+  stylesContainerInput,
+  stylesContainerSection,
+  stylesWidthHeightForm,
+} from '@/components/Caja/Egresos/EgresosStyles';
 
 const FormCreateEgresos = ({ setOpenAlert, setMessageInfo, setMessageSeverity, pago, categoria }) => {
   const [datos, setDatos] = useState({
@@ -83,8 +89,7 @@ const FormCreateEgresos = ({ setOpenAlert, setMessageInfo, setMessageSeverity, p
   };
 
   return (
-    <Container component='section' sx={[stylesContainerSection, { width: 400, height: 655.02 }]}>
-      <CssBaseline />
+    <Container component='section' sx={[stylesContainerSection, stylesWidthHeightForm]}>
       <TitlePage titlePage='Registro de Gasto' />
       <Box component='form' sx={stylesContainerBox}>
         <Box component='div' sx={stylesContainerInput}>
@@ -119,9 +124,7 @@ const FormCreateEgresos = ({ setOpenAlert, setMessageInfo, setMessageSeverity, p
         <Box component='div' sx={stylesContainerInput}>
           <TitleInput titleInput='Con factura' />
           <FormControlLabel
-            control={
-              <Checkbox name='factura' onChange={handleCheckbox} disableRipple sx={{ padding: 0, paddingLeft: 1 }} />
-            }
+            control={<Checkbox name='factura' onChange={handleCheckbox} disableRipple sx={stylesCheckboxForm} />}
           />
         </Box>
         <Box component='div' sx={stylesContainerInput}>
@@ -174,7 +177,7 @@ const FormCreateEgresos = ({ setOpenAlert, setMessageInfo, setMessageSeverity, p
             </Select>
           </FormControl>
         </Box>
-        <Button variant='contained' onClick={postEgreso} size='large' startIcon={<SaveIcon />} sx={{ marginTop: 2 }}>
+        <Button variant='contained' onClick={postEgreso} size='large' startIcon={<SaveIcon />} sx={stylesButtonSend}>
           Registrar Gasto
         </Button>
       </Box>

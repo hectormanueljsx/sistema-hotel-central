@@ -1,11 +1,12 @@
 import React, { useEffect, useState } from 'react';
-import { Box, Container, CssBaseline } from '@mui/material';
+import { Box, Container } from '@mui/material';
 
-import AlertGlobalForms from '@/components/AlertGlobalForms';
+import AlertGlobalForms from '@/components/Alert/AlertGlobalForms';
 import FormCreateEgresos from '@/components/Caja/Egresos/FormCreateEgresos';
 import TableViewEgresos from '@/components/Caja/Egresos/TableViewEgresos';
 import getGeneralSelect from '@/services/getGeneralSelect';
 import { generalEndpoints } from '@/utilities/endpoints';
+import { stylesBoxEgresos } from '@/components/Caja/Egresos/EgresosStyles';
 
 const Egresos = () => {
   const [messageInfo, setMessageInfo] = useState('');
@@ -36,7 +37,6 @@ const Egresos = () => {
 
   return (
     <Container component='section' disableGutters maxWidth='xl'>
-      <CssBaseline />
       {messageInfo && (
         <AlertGlobalForms
           open={openAlert}
@@ -45,7 +45,7 @@ const Egresos = () => {
           messageSeverity={messageSeverity || 'info'}
         />
       )}
-      <Box sx={{ display: 'flex' }}>
+      <Box sx={stylesBoxEgresos}>
         <FormCreateEgresos
           setOpenAlert={setOpenAlert}
           setMessageInfo={setMessageInfo}
