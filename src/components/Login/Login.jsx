@@ -1,10 +1,10 @@
 import React, { useState } from 'react';
-import { Box, Button, CardMedia, Container, CssBaseline, TextField } from '@mui/material';
+import { Box, Button, CardMedia, Container, TextField } from '@mui/material';
 import LoginIcon from '@mui/icons-material/Login';
 
-import TitlePage from '@/components/TitlePage';
-import TitleInput from '@/components/TitleInput';
-import AlertGlobalForms from '@/components/AlertGlobalForms';
+import TitlePage from '@/components/Title/TitlePage';
+import TitleInput from '@/components/Title/TitleInput';
+import AlertGlobalForms from '@/components/Alert/AlertGlobalForms';
 import postLogin from '@/services/postLogin';
 import {
   stylesContainerBox,
@@ -12,7 +12,8 @@ import {
   stylesContainerInput,
   stylesContainerSection,
   stylesIconImage,
-} from '@/components/Login/stylesLogin';
+  stylesWidthHeightForm,
+} from '@/components/Login/LoginStyles';
 import LogoIcon from '@/assets/favicon.png';
 
 const Login = () => {
@@ -56,8 +57,7 @@ const Login = () => {
   };
 
   return (
-    <Container component='section' disableGutters sx={[stylesContainerSection, { width: 400, height: 428.25 }]}>
-      <CssBaseline />
+    <Container component='section' disableGutters sx={[stylesContainerSection, stylesWidthHeightForm]}>
       {messageInfo && (
         <AlertGlobalForms
           open={openAlert}
