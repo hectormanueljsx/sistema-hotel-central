@@ -1,6 +1,6 @@
 import { css } from '@emotion/react';
 
-export const stylesBoxUsuarios = css`
+export const stylesBoxCategoriaEgresos = css`
   display: flex;
   justify-content: center;
   gap: 24px;
