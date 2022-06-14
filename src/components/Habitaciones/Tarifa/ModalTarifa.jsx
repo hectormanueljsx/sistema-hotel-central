@@ -11,8 +11,6 @@ import {
   stylesBoxButtons,
   stylesBoxInputs,
   stylesBoxModal,
-  stylesButtonSend,
-  stylesContainerBox,
   stylesContainerBoxButtonAlign,
   stylesContainerInput,
   stylesContainerSection,
