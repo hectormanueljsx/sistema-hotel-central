@@ -37,3 +37,7 @@ export const stylesIconImage = css`
   width: 70px;
   margin-bottom: 16px;
 `;
+
+export const stylesButtonSend = css`
+  margin-top: 16px;
+`;

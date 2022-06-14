@@ -8,6 +8,7 @@ import TitleInput from '@/components/Title/TitleInput';
 import AlertGlobalForms from '@/components/Alert/AlertGlobalForms';
 import postLogin from '@/services/postLogin';
 import {
+  stylesButtonSend,
   stylesContainerBox,
   stylesContainerImage,
   stylesContainerInput,
@@ -106,7 +107,7 @@ const Login = () => {
             fullWidth
           />
         </Box>
-        <Button variant='contained' onClick={handleSubmit} size='large' endIcon={<LoginIcon />} sx={{ marginTop: 2 }}>
+        <Button variant='contained' onClick={handleSubmit} size='large' endIcon={<LoginIcon />} sx={stylesButtonSend}>
           Iniciar Sesión
         </Button>
       </Box>
