@@ -41,14 +41,14 @@ const FormCreateCategoriaEgresos = ({ setOpenAlert, setMessageInfo, setMessageSe
 
       if (res.status >= 200 && res.status <= 299) {
         setOpenAlert(true);
-        setMessageInfo('Categoria registrada correctamente');
+        setMessageInfo('Categoría registrada correctamente');
         setMessageSeverity('success');
         setTimeout(() => {
           location.reload();
         }, 1500);
       } else {
         setOpenAlert(true);
-        setMessageInfo('Error al registrar categoria');
+        setMessageInfo('Error al registrar categoría');
         setMessageSeverity('error');
         return;
       }
@@ -72,20 +72,20 @@ const FormCreateCategoriaEgresos = ({ setOpenAlert, setMessageInfo, setMessageSe
 
       if (res.status >= 200 && res.status <= 299) {
         setOpenAlert(true);
-        setMessageInfo('Subcategoria registrada correctamente');
+        setMessageInfo('Subcategoría registrada correctamente');
         setMessageSeverity('success');
         setTimeout(() => {
           location.reload();
         }, 1500);
       } else {
         setOpenAlert(true);
-        setMessageInfo('Error al registrar subcategoria');
+        setMessageInfo('Error al registrar subcategoría');
         setMessageSeverity('error');
         return;
       }
     } else {
       setOpenAlert(true);
-      setMessageInfo('Por favor, seleccione una categoria y/o rellene el campo de subcategoria');
+      setMessageInfo('Por favor, seleccione una categoría y/o rellene el campo de subcategoría');
       setMessageSeverity('error');
     }
   };
@@ -143,7 +143,7 @@ const FormCreateCategoriaEgresos = ({ setOpenAlert, setMessageInfo, setMessageSe
             </FormControl>
           </Box>
           <Box component='div' sx={stylesContainerInput}>
-            <TitleInput titleInput='Nombre de la subcategoria' />
+            <TitleInput titleInput='Nombre de la subcategoría' />
             <TextField
               onChange={handleInputChangeSubcategoria}
               variant='outlined'
