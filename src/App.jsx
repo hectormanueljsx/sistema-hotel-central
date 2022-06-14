@@ -21,6 +21,10 @@ const theme = createTheme({
   },
 });
 
+const ROLES = {
+  ADMINISTRADOR: 'Administrador',
+};
+
 const App = () => {
   return (
     <ThemeProvider theme={theme}>
@@ -30,7 +34,7 @@ const App = () => {
         <Route
           path='/'
           element={
-            <ProtectedRoute>
+            <ProtectedRoute allowedRoles={[ROLES.ADMINISTRADOR]}>
               <CategoriaEgresos />
             </ProtectedRoute>
           }
@@ -39,7 +43,7 @@ const App = () => {
         <Route
           path='/caja/categorias-de-egresos'
           element={
-            <ProtectedRoute>
+            <ProtectedRoute allowedRoles={[ROLES.ADMINISTRADOR]}>
               <CategoriaEgresos />
             </ProtectedRoute>
           }
@@ -47,7 +51,7 @@ const App = () => {
         <Route
           path='/caja/egresos'
           element={
-            <ProtectedRoute>
+            <ProtectedRoute allowedRoles={[ROLES.ADMINISTRADOR]}>
               <Egresos />
             </ProtectedRoute>
           }
@@ -55,7 +59,7 @@ const App = () => {
         <Route
           path='/reportes/mantenimiento'
           element={
-            <ProtectedRoute>
+            <ProtectedRoute allowedRoles={[ROLES.ADMINISTRADOR]}>
               <Mantenimiento />
             </ProtectedRoute>
           }
@@ -63,7 +67,7 @@ const App = () => {
         <Route
           path='/habitaciones/tarifas'
           element={
-            <ProtectedRoute>
+            <ProtectedRoute allowedRoles={[ROLES.ADMINISTRADOR]}>
               <Tarifas />
             </ProtectedRoute>
           }
@@ -71,7 +75,7 @@ const App = () => {
         <Route
           path='/habitaciones/habitaciones'
           element={
-            <ProtectedRoute>
+            <ProtectedRoute allowedRoles={[ROLES.ADMINISTRADOR]}>
               <Habitaciones />
             </ProtectedRoute>
           }
@@ -79,7 +83,7 @@ const App = () => {
         <Route
           path='/administracion/usuarios'
           element={
-            <ProtectedRoute>
+            <ProtectedRoute allowedRoles={[ROLES.ADMINISTRADOR]}>
               <Usuarios />
             </ProtectedRoute>
           }
