@@ -98,7 +98,7 @@ const FormCreateUsuario = ({ setOpenAlert, setMessageInfo, setMessageSeverity })
           />
         </Box>
         <Box component='div' sx={stylesContainerInput}>
-          <TitleInput titleInput='Correo Electronico' />
+          <TitleInput titleInput='Correo electrónico' />
           <TextField
             onChange={handleInputChange}
             name='email'
