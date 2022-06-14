@@ -181,22 +181,6 @@ const ModalEgreso = ({
         </Box>
         <Box sx={stylesBoxInputs}>
           <Box component='div' sx={[stylesContainerInput, stylesWidthInput]}>
-            <TitleInput titleInput='Iva' />
-            <TextField
-              value={dataEgreso.iva}
-              name='iva'
-              variant='outlined'
-              type='number'
-              margin='none'
-              size='small'
-              placeholder='iva'
-              disabled={true}
-              fullWidth
-              required
-              autoFocus
-            />
-          </Box>
-          <Box component='div' sx={[stylesContainerInput, stylesWidthInput]}>
             <TitleInput titleInput='Forma de pago' />
             <FormControl disabled={disabledModal} fullWidth>
               <Select size='small' value={idPago} onChange={handlePago}>
@@ -212,8 +196,6 @@ const ModalEgreso = ({
               </Select>
             </FormControl>
           </Box>
-        </Box>
-        <Box sx={stylesBoxInputs}>
           <Box component='div' sx={[stylesContainerInput, stylesWidthInput]}>
             <TitleInput titleInput='Categoría' />
             <FormControl disabled={disabledModal} fullWidth>
@@ -230,6 +212,8 @@ const ModalEgreso = ({
               </Select>
             </FormControl>
           </Box>
+        </Box>
+        <Box sx={stylesBoxInputs}>
           <Box component='div' sx={[stylesContainerInput, stylesWidthInput]}>
             <TitleInput titleInput='Subcategoría' />
             <FormControl disabled={disabledModal} fullWidth>
@@ -248,8 +232,6 @@ const ModalEgreso = ({
               </Select>
             </FormControl>
           </Box>
-        </Box>
-        <Box sx={stylesBoxInputs}>
           <Box component='div' sx={[stylesContainerInput, stylesWidthInput]}>
             <TitleInput titleInput='Fecha' />
             <TextField
@@ -266,6 +248,8 @@ const ModalEgreso = ({
               autoFocus
             />
           </Box>
+        </Box>
+        <Box sx={stylesBoxInputs}>
           <Box component='div' sx={[stylesContainerInput, stylesWidthInput]}>
             <TitleInput titleInput='Usuario' />
             <TextField
