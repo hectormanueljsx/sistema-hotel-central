@@ -107,7 +107,7 @@ const ModalUsuario = ({ dataUsuario, setOpenAlert, setMessageInfo, setMessageSev
           />
         </Box>
         <Box component='div' sx={stylesContainerInput}>
-          <TitleInput titleInput='Correo Electronico' />
+          <TitleInput titleInput='Correo electrónico' />
           <TextField
             defaultValue={dataUsuario.email}
             onChange={handleInputChange}
