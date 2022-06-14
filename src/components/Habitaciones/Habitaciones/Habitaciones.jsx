@@ -1,9 +1,10 @@
 import React, { useState } from 'react';
-import { Box, Container, CssBaseline } from '@mui/material';
+import { Box, Container } from '@mui/material';
 
-import AlertGlobalForms from '@/components/AlertGlobalForms';
+import AlertGlobalForms from '@/components/Alert/AlertGlobalForms';
 import FormCreateHabitaciones from '@/components/Habitaciones/Habitaciones/FormCreateHabitaciones';
 import TableViewHabitaciones from '@/components/Habitaciones/Habitaciones/TableViewHabitaciones';
+import { stylesBoxHabitaciones } from '@/components/Habitaciones/Habitaciones/HabitacionesStyles';
 
 const Habitaciones = () => {
   const [messageInfo, setMessageInfo] = useState('');
@@ -12,7 +13,6 @@ const Habitaciones = () => {
 
   return (
     <Container component='section' disableGutters maxWidth='xl'>
-      <CssBaseline />
       {messageInfo && (
         <AlertGlobalForms
           open={openAlert}
@@ -21,7 +21,7 @@ const Habitaciones = () => {
           messageSeverity={messageSeverity || 'info'}
         />
       )}
-      <Box sx={{ display: 'flex' }}>
+      <Box sx={stylesBoxHabitaciones}>
         <FormCreateHabitaciones
           setOpenAlert={setOpenAlert}
           setMessageInfo={setMessageInfo}

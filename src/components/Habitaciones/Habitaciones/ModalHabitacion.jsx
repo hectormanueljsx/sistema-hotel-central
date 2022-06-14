@@ -4,7 +4,6 @@ import {
   Button,
   Checkbox,
   Container,
-  CssBaseline,
   FormControl,
   ListItemText,
   MenuItem,
@@ -14,16 +13,22 @@ import {
 import UpdateIcon from '@mui/icons-material/Update';
 import EditIcon from '@mui/icons-material/Edit';
 
-import TitlePage from '@/components/TitlePage';
-import TitleInput from '@/components/TitleInput';
+import TitlePage from '@/components/Title/TitlePage';
+import TitleInput from '@/components/Title/TitleInput';
 import putGeneralTable from '@/services/putGeneralTable';
 import useGetGeneralTable from '@/hooks/useGetGeneralTable';
 import { generalEndpoints } from '@/utilities/endpoints';
 import {
+  stylesBoxButtons,
+  stylesBoxInputs,
+  stylesBoxModal,
+  stylesCheckboxForm,
   stylesContainerBoxButtonAlign,
   stylesContainerInput,
   stylesContainerSection,
-} from '@/components/Habitaciones/stylesHabitaciones';
+  stylesWidthHeightModal,
+  stylesWidthInput,
+} from '@/components/Habitaciones/Habitaciones/HabitacionesStyles';
 
 const services = ['CLIMA', 'TV'];
 
@@ -113,12 +118,11 @@ const ModalHabitaciones = ({
   const { list, loading, error } = useGetGeneralTable(identifier, password, endpointTarifa);
 
   return (
-    <Container component='section' disableGutters sx={[stylesContainerSection, { width: 780, marginTop: 0 }]}>
-      <CssBaseline />
-      <TitlePage titlePage='Actualización de Habitación' />
-      <Box component='form' sx={{ display: 'flex', flexDirection: 'column' }}>
-        <Box sx={{ display: 'flex', justifyContent: 'space-between' }}>
-          <Box component='div' sx={[stylesContainerInput, { width: 352 }]}>
+    <Container component='section' disableGutters sx={[stylesContainerSection, stylesWidthHeightModal]}>
+      <TitlePage titlePage='Actualización de habitación' />
+      <Box component='form' sx={stylesBoxModal}>
+        <Box sx={stylesBoxInputs}>
+          <Box component='div' sx={[stylesContainerInput, stylesWidthInput]}>
             <TitleInput titleInput='Numero de Habitación' />
             <TextField
               disabled={disabledModal}
@@ -134,7 +138,7 @@ const ModalHabitaciones = ({
               autoFocus
             />
           </Box>
-          <Box component='div' sx={[stylesContainerInput, { width: 352 }]}>
+          <Box component='div' sx={[stylesContainerInput, stylesWidthInput]}>
             <TitleInput titleInput='Servicios' />
             <FormControl disabled={disabledModal} fullWidth>
               <Select
@@ -147,11 +151,7 @@ const ModalHabitaciones = ({
                 {services.map(item => {
                   return (
                     <MenuItem key={item} value={item}>
-                      <Checkbox
-                        checked={optionServices.indexOf(item) > -1}
-                        disableRipple
-                        sx={{ padding: 0, paddingRight: 2 }}
-                      />
+                      <Checkbox checked={optionServices.indexOf(item) > -1} disableRipple sx={stylesCheckboxForm} />
                       <ListItemText primary={item} />
                     </MenuItem>
                   );
@@ -160,9 +160,9 @@ const ModalHabitaciones = ({
             </FormControl>
           </Box>
         </Box>
-        <Box sx={{ display: 'flex', justifyContent: 'space-between' }}>
-          <Box component='div' sx={[stylesContainerInput, { width: 352 }]}>
-            <TitleInput titleInput='Tarifas Permitidas' />
+        <Box sx={stylesBoxInputs}>
+          <Box component='div' sx={[stylesContainerInput, stylesWidthInput]}>
+            <TitleInput titleInput='Tarifas permitidas' />
             <FormControl disabled={disabledModal} fullWidth>
               <Select
                 multiple
@@ -179,7 +179,7 @@ const ModalHabitaciones = ({
                       <Checkbox
                         checked={optionTarifas.indexOf(descripcion) > -1}
                         disableRipple
-                        sx={{ padding: 0, paddingRight: 2 }}
+                        sx={stylesCheckboxForm}
                       />
                       <ListItemText primary={descripcion} />
                     </MenuItem>
@@ -189,8 +189,8 @@ const ModalHabitaciones = ({
             </FormControl>
           </Box>
         </Box>
-        <Box sx={{ display: 'flex', justifyContent: 'space-between', marginTop: 2 }}>
-          <Box component='div' sx={[stylesContainerBoxButtonAlign, { width: 352 }]}>
+        <Box sx={stylesBoxButtons}>
+          <Box component='div' sx={[stylesContainerBoxButtonAlign, stylesWidthInput]}>
             <Button
               variant='contained'
               disabled={disableView}
@@ -201,7 +201,7 @@ const ModalHabitaciones = ({
               Modificar
             </Button>
           </Box>
-          <Box component='div' sx={{ width: 352 }}>
+          <Box component='div' sx={stylesWidthInput}>
             <Button
               variant='contained'
               disabled={disabledModal}

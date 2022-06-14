@@ -13,16 +13,19 @@ import {
 } from '@mui/material';
 import SaveIcon from '@mui/icons-material/Save';
 
-import TitlePage from '@/components/TitlePage';
-import TitleInput from '@/components/TitleInput';
+import TitlePage from '@/components/Title/TitlePage';
+import TitleInput from '@/components/Title/TitleInput';
 import useGetGeneralTable from '@/hooks/useGetGeneralTable';
 import postGeneralTable from '@/services/postGeneralTable';
 import { generalEndpoints } from '@/utilities/endpoints';
 import {
+  stylesButtonSend,
+  stylesCheckboxForm,
   stylesContainerBox,
   stylesContainerInput,
   stylesContainerSection,
-} from '@/components/Habitaciones/stylesHabitaciones';
+  stylesWidthHeightForm,
+} from '@/components/Habitaciones/Habitaciones/HabitacionesStyles';
 
 const services = ['CLIMA', 'TV'];
 
@@ -95,12 +98,12 @@ const FormCreateHabitaciones = ({ setOpenAlert, setMessageInfo, setMessageSeveri
   const { list, loading, error } = useGetGeneralTable(identifier, password, endpointTarifa);
 
   return (
-    <Container component='section' sx={[stylesContainerSection, { width: 400, height: 418.25 }]}>
+    <Container component='section' sx={[stylesContainerSection, stylesWidthHeightForm]}>
       <CssBaseline />
       <TitlePage titlePage='Registro de Habitación' />
       <Box component='form' sx={stylesContainerBox}>
         <Box component='div' sx={stylesContainerInput}>
-          <TitleInput titleInput='Numero de Habitación' />
+          <TitleInput titleInput='Numero de habitación' />
           <TextField
             onChange={handleInputChangeNumHabitacion}
             variant='outlined'
@@ -115,7 +118,7 @@ const FormCreateHabitaciones = ({ setOpenAlert, setMessageInfo, setMessageSeveri
           />
         </Box>
         <Box component='div' sx={stylesContainerInput}>
-          <TitleInput titleInput='Seleccione Servicios' />
+          <TitleInput titleInput='Seleccione servicios' />
           <FormControl fullWidth>
             <Select
               multiple
@@ -127,11 +130,7 @@ const FormCreateHabitaciones = ({ setOpenAlert, setMessageInfo, setMessageSeveri
               {services.map(item => {
                 return (
                   <MenuItem key={item} value={item}>
-                    <Checkbox
-                      checked={optionServices.indexOf(item) > -1}
-                      disableRipple
-                      sx={{ padding: 0, paddingRight: 1.125 }}
-                    />
+                    <Checkbox checked={optionServices.indexOf(item) > -1} disableRipple sx={stylesCheckboxForm} />
                     <ListItemText primary={item} />
                   </MenuItem>
                 );
@@ -140,7 +139,7 @@ const FormCreateHabitaciones = ({ setOpenAlert, setMessageInfo, setMessageSeveri
           </FormControl>
         </Box>
         <Box component='div' sx={stylesContainerInput}>
-          <TitleInput titleInput='Seleccione las Tarifas Permitidas' />
+          <TitleInput titleInput='Seleccione las tarifas permitidas' />
           <FormControl fullWidth>
             <Select
               multiple
@@ -154,11 +153,7 @@ const FormCreateHabitaciones = ({ setOpenAlert, setMessageInfo, setMessageSeveri
 
                 return (
                   <MenuItem key={descripcion} value={descripcion} name={id}>
-                    <Checkbox
-                      checked={optionTarifas.indexOf(descripcion) > -1}
-                      disableRipple
-                      sx={{ padding: 0, paddingRight: 1.125 }}
-                    />
+                    <Checkbox checked={optionTarifas.indexOf(descripcion) > -1} disableRipple sx={stylesCheckboxForm} />
                     <ListItemText primary={descripcion} />
                   </MenuItem>
                 );
@@ -166,7 +161,7 @@ const FormCreateHabitaciones = ({ setOpenAlert, setMessageInfo, setMessageSeveri
             </Select>
           </FormControl>
         </Box>
-        <Button variant='contained' onClick={sendDatos} size='large' startIcon={<SaveIcon />} sx={{ marginTop: 2 }}>
+        <Button variant='contained' onClick={sendDatos} size='large' startIcon={<SaveIcon />} sx={stylesButtonSend}>
           Registrar Habitación
         </Button>
       </Box>
