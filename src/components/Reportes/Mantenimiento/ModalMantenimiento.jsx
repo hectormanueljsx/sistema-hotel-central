@@ -106,7 +106,7 @@ const ModalMantenimiento = ({
       <Box component='form' sx={stylesBoxModal}>
         <Box sx={stylesBoxInputs}>
           <Box component='div' sx={[stylesContainerInput, stylesWidthInput]}>
-            <TitleInput titleInput='Motivo del Mantenimiento' />
+            <TitleInput titleInput='Motivo del mantenimiento' />
             <TextField
               defaultValue={dataMantenimiento.motivo}
               onChange={handleInputChange}
@@ -121,7 +121,7 @@ const ModalMantenimiento = ({
             />
           </Box>
           <Box component='div' sx={[stylesContainerInput, stylesWidthInput]}>
-            <TitleInput titleInput='Fecha de Inicio' />
+            <TitleInput titleInput='Fecha de inicio' />
             <TextField
               defaultValue={dataMantenimiento.f_inicio}
               onChange={handleInputChange}
@@ -138,7 +138,7 @@ const ModalMantenimiento = ({
         </Box>
         <Box sx={stylesBoxInputs}>
           <Box component='div' sx={[stylesContainerInput, stylesWidthInput]}>
-            <TitleInput titleInput='Fecha de Termino' />
+            <TitleInput titleInput='Fecha de termino' />
             <TextField
               defaultValue={dataMantenimiento.f_fin}
               onChange={handleInputChange}
