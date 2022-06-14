@@ -1,5 +1,4 @@
 import React, { useState } from 'react';
-import { CssBaseline } from '@mui/material';
 import { Link } from 'react-router-dom';
 
 import Dropdown from '@/components/Navbar/Dropdown';
@@ -25,7 +24,6 @@ const Navbar = () => {
 
   return (
     <section className='navbar-fluid'>
-      <CssBaseline />
       <nav className='navbar'>
         <Link to='/' className='navbar-link'>
           <img className='logotipo-hc' src={Logotipo} alt='Logotipo Hotel Central' />
