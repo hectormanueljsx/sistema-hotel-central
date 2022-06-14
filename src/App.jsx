@@ -1,5 +1,5 @@
 import React from 'react';
-import { createTheme, ThemeProvider } from '@mui/material';
+import { createTheme, CssBaseline, ThemeProvider } from '@mui/material';
 import { Routes, Route } from 'react-router-dom';
 
 import CategoriaEgresos from '@/components/Caja/CategoriaEgresos/CategoriaEgresos';
@@ -23,6 +23,7 @@ const theme = createTheme({
 const App = () => {
   return (
     <ThemeProvider theme={theme}>
+      <CssBaseline />
       <Navbar />
       <Routes>
         <Route path='/' />
