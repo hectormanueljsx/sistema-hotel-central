@@ -29,6 +29,7 @@ export const stylesWidthHeightTable = css`
 
 export const stylesWidthHeightModal = css`
   margin-top: 0;
+  margin-bottom: 0;
   width: 780px;
 `;
 
