@@ -1,16 +1,21 @@
 import React, { useState } from 'react';
 import { Box, Button, Checkbox, Container, FormControlLabel, TextField } from '@mui/material';
 import UpdateIcon from '@mui/icons-material/Update';
+import EditIcon from '@mui/icons-material/Edit';
 
 import TitlePage from '@/components/Title/TitlePage';
 import TitleInput from '@/components/Title/TitleInput';
 import putUsers from '@/services/putUsers';
 import { generalEndpoints } from '@/utilities/endpoints';
 import {
-  stylesContainerBox,
+  stylesBoxButtons,
+  stylesBoxInputs,
+  stylesBoxModal,
+  stylesContainerBoxButtonAlign,
   stylesContainerInput,
   stylesContainerSection,
   stylesWidthHeightModal,
+  stylesWidthInput,
 } from '@/components/Administracion/Usuario/UsuarioStyles';
 
 const ModalUsuario = ({ dataUsuario, setOpenAlert, setMessageInfo, setMessageSeverity }) => {
@@ -21,6 +26,8 @@ const ModalUsuario = ({ dataUsuario, setOpenAlert, setMessageInfo, setMessageSev
     confirm: dataUsuario.confirm,
   });
   const [rol, setRol] = useState(dataUsuario.role.id);
+  const [disabledModal, setDisabledModal] = useState(true);
+  const [disableView, setDisableView] = useState(false);
 
   const identifier = localStorage.getItem('identifier');
   const password = localStorage.getItem('password');
@@ -28,6 +35,12 @@ const ModalUsuario = ({ dataUsuario, setOpenAlert, setMessageInfo, setMessageSev
 
   const handleCheckbox = e => setRol(e.target.value);
   const handleInputChange = event => setData({ ...data, [event.target.name]: event.target.value });
+
+  const viewDisabled = event => {
+    event.preventDefault();
+    setDisabledModal(false);
+    setDisableView(true);
+  };
 
   const updateDatos = async event => {
     event.preventDefault();
@@ -89,105 +102,139 @@ const ModalUsuario = ({ dataUsuario, setOpenAlert, setMessageInfo, setMessageSev
   return (
     <Container component='section' disableGutters sx={[stylesContainerSection, stylesWidthHeightModal]}>
       <TitlePage titlePage='Actualización de Usuario' />
-      <Box component='form' sx={stylesContainerBox}>
-        <Box component='div' sx={stylesContainerInput}>
-          <TitleInput titleInput='Nombre de usuario' />
-          <TextField
-            defaultValue={dataUsuario.username}
-            onChange={handleInputChange}
-            name='username'
-            variant='outlined'
-            type='text'
-            margin='none'
-            size='small'
-            placeholder='Nombre'
-            required
-            fullWidth
-            autoFocus
-          />
+      <Box component='form' sx={stylesBoxModal}>
+        <Box sx={stylesBoxInputs}>
+          <Box component='div' sx={[stylesContainerInput, stylesWidthInput]}>
+            <TitleInput titleInput='Nombre de usuario' />
+            <TextField
+              disabled={disabledModal}
+              defaultValue={dataUsuario.username}
+              onChange={handleInputChange}
+              name='username'
+              variant='outlined'
+              type='text'
+              margin='none'
+              size='small'
+              placeholder='Nombre'
+              required
+              fullWidth
+              autoFocus
+            />
+          </Box>
+          <Box component='div' sx={[stylesContainerInput, stylesWidthInput]}>
+            <TitleInput titleInput='Correo electrónico' />
+            <TextField
+              disabled={disabledModal}
+              defaultValue={dataUsuario.email}
+              onChange={handleInputChange}
+              name='email'
+              variant='outlined'
+              type='email'
+              margin='none'
+              size='small'
+              placeholder='Email'
+              required
+              fullWidth
+            />
+          </Box>
         </Box>
-        <Box component='div' sx={stylesContainerInput}>
-          <TitleInput titleInput='Correo electrónico' />
-          <TextField
-            defaultValue={dataUsuario.email}
-            onChange={handleInputChange}
-            name='email'
-            variant='outlined'
-            type='email'
-            margin='none'
-            size='small'
-            placeholder='Email'
-            required
-            fullWidth
-          />
+        <Box sx={stylesBoxInputs}>
+          <Box component='div' sx={[stylesContainerInput, stylesWidthInput]}>
+            <TitleInput titleInput='Contraseña' />
+            <TextField
+              disabled={disabledModal}
+              onChange={handleInputChange}
+              name='password'
+              variant='outlined'
+              type='password'
+              margin='none'
+              size='small'
+              placeholder='Contraseña'
+              required
+              fullWidth
+            />
+          </Box>
+          <Box component='div' sx={[stylesContainerInput, stylesWidthInput]}>
+            <TitleInput titleInput='Confirmar contraseña' />
+            <TextField
+              disabled={disabledModal}
+              onChange={handleInputChange}
+              name='confirm'
+              variant='outlined'
+              type='password'
+              margin='none'
+              size='small'
+              placeholder='Contraseña'
+              required
+              fullWidth
+            />
+          </Box>
         </Box>
-        <Box component='div' sx={stylesContainerInput}>
-          <TitleInput titleInput='Contraseña' />
-          <TextField
-            onChange={handleInputChange}
-            name='password'
-            variant='outlined'
-            type='password'
-            margin='none'
-            size='small'
-            placeholder='Nueva Contraseña'
-            required
-            fullWidth
-          />
+        <Box sx={stylesBoxInputs}>
+          <Box component='div' sx={stylesContainerInput}>
+            <TitleInput titleInput='Selecciona un rol' />
+            <FormControlLabel
+              control={
+                <Checkbox
+                  name='admin'
+                  defaultChecked={dataUsuario.role.id === 4 ? true : false}
+                  value={'4'}
+                  onChange={handleCheckbox}
+                />
+              }
+              label='Administrador'
+              disabled={disabledModal}
+            />
+            <FormControlLabel
+              control={
+                <Checkbox
+                  name='recepcion'
+                  defaultChecked={dataUsuario.role.id === 3 ? true : false}
+                  value={'3'}
+                  onChange={handleCheckbox}
+                />
+              }
+              label='Recepcionista'
+              disabled={disabledModal}
+            />
+            <FormControlLabel
+              control={
+                <Checkbox
+                  name='encargado'
+                  defaultChecked={dataUsuario.role.id === 5 ? true : false}
+                  value={'5'}
+                  onChange={handleCheckbox}
+                />
+              }
+              label='Encargado'
+              disabled={disabledModal}
+            />
+          </Box>
         </Box>
-        <Box component='div' sx={stylesContainerInput}>
-          <TitleInput titleInput='Confirmar contraseña' />
-          <TextField
-            onChange={handleInputChange}
-            name='confirm'
-            variant='outlined'
-            type='password'
-            margin='none'
-            size='small'
-            placeholder='Contraseña'
-            required
-            fullWidth
-          />
+        <Box sx={stylesBoxButtons}>
+          <Box component='div' sx={[stylesContainerBoxButtonAlign, stylesWidthInput]}>
+            <Button
+              variant='contained'
+              disabled={disableView}
+              onClick={viewDisabled}
+              size='large'
+              startIcon={<EditIcon />}
+            >
+              Modificar
+            </Button>
+          </Box>
+          <Box component='div' sx={stylesWidthInput}>
+            <Button
+              variant='contained'
+              disabled={disabledModal}
+              onClick={updateDatos}
+              size='large'
+              startIcon={<UpdateIcon />}
+            >
+              Actualizar
+            </Button>
+          </Box>
         </Box>
-        <Box component='div' sx={stylesContainerInput}>
-          <TitleInput titleInput='Selecciona un rol' />
-          <FormControlLabel
-            control={
-              <Checkbox
-                name='admin'
-                defaultChecked={dataUsuario.role.id === 4 ? true : false}
-                value={'4'}
-                onChange={handleCheckbox}
-              />
-            }
-            label='Administrador'
-          />
-          <FormControlLabel
-            control={
-              <Checkbox
-                name='recepcion'
-                defaultChecked={dataUsuario.role.id === 3 ? true : false}
-                value={'3'}
-                onChange={handleCheckbox}
-              />
-            }
-            label='Recepcionista'
-          />
-          <FormControlLabel
-            control={
-              <Checkbox
-                name='encargado'
-                defaultChecked={dataUsuario.role.id === 5 ? true : false}
-                value={'5'}
-                onChange={handleCheckbox}
-              />
-            }
-            label='Encargado'
-          />
-        </Box>
-        <Button variant='contained' onClick={updateDatos} size='large' startIcon={<UpdateIcon />} sx={{ marginTop: 2 }}>
-          Actualizar Usuario
-        </Button>
       </Box>
     </Container>
   );

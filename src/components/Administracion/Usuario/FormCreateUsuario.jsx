@@ -142,15 +142,15 @@ const FormCreateUsuario = ({ setOpenAlert, setMessageInfo, setMessageSeverity })
         <Box component='div' sx={stylesContainerInput}>
           <TitleInput titleInput='Selecciona un rol' />
           <FormControlLabel
-            control={<Checkbox name='admin' value={'4'} onChange={handleCheckbox} />}
+            control={<Checkbox name='admin' value={'4'} onChange={handleCheckbox} disableRipple />}
             label='Administrador'
           />
           <FormControlLabel
-            control={<Checkbox name='recepcion' value={'3'} onChange={handleCheckbox} />}
+            control={<Checkbox name='recepcion' value={'3'} onChange={handleCheckbox} disableRipple />}
             label='Recepcionista'
           />
           <FormControlLabel
-            control={<Checkbox name='encargado' value={'5'} onChange={handleCheckbox} />}
+            control={<Checkbox name='encargado' value={'5'} onChange={handleCheckbox} disableRipple />}
             label='Encargado'
           />
         </Box>
