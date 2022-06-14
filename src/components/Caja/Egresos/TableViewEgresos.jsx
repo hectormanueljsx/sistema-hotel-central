@@ -30,10 +30,10 @@ import {
 } from '@/components/Caja/Egresos/EgresosStyles';
 
 const columns = [
-  { id: 'num_gasto', label: 'N° Gasto', width: 140 },
+  { id: 'num_gasto', label: 'N° de Gasto', width: 140 },
   { id: 'fecha', label: 'Fecha', width: 200 },
   { id: 'concepto', label: 'Concepto', width: 200 },
-  { id: 'categoria', label: 'Categoria', width: 200 },
+  { id: 'categoria', label: 'Categoría', width: 200 },
   { id: 'importe', label: 'Importe', width: 112 },
   { id: 'acciones', label: 'Acciones', width: 100 },
 ];
