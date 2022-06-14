@@ -3,7 +3,7 @@ import { css } from '@emotion/react';
 export const stylesBoxCategoriaEgresos = css`
   display: flex;
   justify-content: center;
-  gap: 24px;
+  gap: 32px;
 `;
 
 export const stylesContainerDoubleForm = css`
@@ -20,17 +20,20 @@ export const stylesContainerSection = css`
   box-shadow: 0px 0px 5px rgba(0, 0, 0, 0.25);
   padding: 24px;
   margin-top: 48px;
+  margin-bottom: 48px;
   margin-left: 0;
   margin-right: 0;
 `;
 
 export const stylesWidthHeightFormCategoria = css`
+  margin-bottom: 0;
   width: 400px;
   height: 250.25px;
 `;
 
 export const stylesWidthHeightFormSubcategoria = css`
   margin-top: 40px;
+  margin-bottom: 48px;
   width: 400px;
   height: 334.25px;
 `;

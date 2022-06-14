@@ -3,7 +3,7 @@ import { css } from '@emotion/react';
 export const stylesBoxTarifas = css`
   display: flex;
   justify-content: center;
-  gap: 24px;
+  gap: 32px;
 `;
 
 export const stylesContainerSection = css`
@@ -12,6 +12,7 @@ export const stylesContainerSection = css`
   box-shadow: 0px 0px 5px rgba(0, 0, 0, 0.25);
   padding: 24px;
   margin-top: 48px;
+  margin-bottom: 48px;
   margin-left: 0;
   margin-right: 0;
 `;
