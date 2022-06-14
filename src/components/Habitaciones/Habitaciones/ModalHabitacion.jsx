@@ -123,7 +123,7 @@ const ModalHabitaciones = ({
       <Box component='form' sx={stylesBoxModal}>
         <Box sx={stylesBoxInputs}>
           <Box component='div' sx={[stylesContainerInput, stylesWidthInput]}>
-            <TitleInput titleInput='Numero de Habitación' />
+            <TitleInput titleInput='Numero de habitación' />
             <TextField
               disabled={disabledModal}
               defaultValue={dataHabitaciones.num_hab}
