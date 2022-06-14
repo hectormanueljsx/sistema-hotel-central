@@ -41,7 +41,7 @@ export const stylesWidthHeightTable = css`
 export const stylesWidthHeightModal = css`
   margin-top: 0;
   margin-bottom: 0;
-  width: 400px;
+  width: 780px;
 `;
 
 export const stylesButtonSend = css`
@@ -57,4 +57,30 @@ export const stylesModal = css`
   top: 50%;
   left: 50%;
   transform: translate(-50%, -50%);
+`;
+
+export const stylesBoxModal = css`
+  display: flex;
+  flex-direction: column;
+`;
+
+export const stylesBoxInputs = css`
+  display: flex;
+  justify-content: space-between;
+`;
+
+export const stylesWidthInput = css`
+  width: 352px;
+`;
+
+export const stylesContainerBoxButtonAlign = css`
+  display: flex;
+  flex-direction: column;
+  align-items: flex-end;
+`;
+
+export const stylesBoxButtons = css`
+  display: flex;
+  justify-content: space-between;
+  margin-top: 16px;
 `;

@@ -12,7 +12,7 @@ import {
   TablePagination,
   TableRow,
 } from '@mui/material';
-import EditIcon from '@mui/icons-material/Edit';
+import VisibilityIcon from '@mui/icons-material/Visibility';
 import DeleteIcon from '@mui/icons-material/Delete';
 
 import TitlePage from '@/components/Title/TitlePage';
@@ -102,7 +102,7 @@ const TableViewTarifas = ({ setOpenAlert, setMessageInfo, setMessageSeverity }) 
                     </TableCell>
                     <TableCell sx={stylesTableCell}>
                       <IconButton color='info' size='small' onClick={() => handleOpen(item)}>
-                        <EditIcon />
+                        <VisibilityIcon />
                       </IconButton>
                       <IconButton color='error' size='small' onClick={() => deleteRegistro(id)}>
                         <DeleteIcon />
