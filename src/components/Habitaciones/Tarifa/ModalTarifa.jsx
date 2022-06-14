@@ -1,16 +1,18 @@
 import React, { useState } from 'react';
-import { Box, Button, Container, CssBaseline, TextField } from '@mui/material';
+import { Box, Button, Container, TextField } from '@mui/material';
 import UpdateIcon from '@mui/icons-material/Update';
 
-import TitlePage from '@/components/TitlePage';
-import TitleInput from '@/components/TitleInput';
+import TitlePage from '@/components/Title/TitlePage';
+import TitleInput from '@/components/Title/TitleInput';
 import putGeneralTable from '@/services/putGeneralTable';
 import { generalEndpoints } from '@/utilities/endpoints';
 import {
+  stylesButtonSend,
   stylesContainerBox,
   stylesContainerInput,
   stylesContainerSection,
-} from '@/components/Habitaciones/stylesHabitaciones';
+  stylesWidthHeightModal,
+} from '@/components/Habitaciones/Tarifa/TarifaStyles';
 
 const ModalTarifa = ({ dataTarifa, setOpenAlert, setMessageInfo, setMessageSeverity }) => {
   const [data, setData] = useState({
@@ -59,12 +61,7 @@ const ModalTarifa = ({ dataTarifa, setOpenAlert, setMessageInfo, setMessageSever
   };
 
   return (
-    <Container
-      component='section'
-      disableGutters
-      sx={[stylesContainerSection, { width: 400, height: 418.25, marginTop: 0 }]}
-    >
-      <CssBaseline />
+    <Container component='section' disableGutters sx={[stylesContainerSection, stylesWidthHeightModal]}>
       <TitlePage titlePage='Actualización de Tarifa' />
       <Box component='form' sx={stylesContainerBox}>
         <Box component='div' sx={stylesContainerInput}>
@@ -110,7 +107,7 @@ const ModalTarifa = ({ dataTarifa, setOpenAlert, setMessageInfo, setMessageSever
             fullWidth
           />
         </Box>
-        <Button variant='contained' size='large' onClick={updateDatos} startIcon={<UpdateIcon />} sx={{ marginTop: 2 }}>
+        <Button variant='contained' size='large' onClick={updateDatos} startIcon={<UpdateIcon />} sx={stylesButtonSend}>
           Actualizar Tarifa
         </Button>
       </Box>

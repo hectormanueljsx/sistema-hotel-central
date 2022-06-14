@@ -1,16 +1,18 @@
 import React, { useState } from 'react';
-import { Box, Button, Container, CssBaseline, TextField } from '@mui/material';
+import { Box, Button, Container, TextField } from '@mui/material';
 import SaveIcon from '@mui/icons-material/Save';
 
-import TitlePage from '@/components/TitlePage';
-import TitleInput from '@/components/TitleInput';
+import TitlePage from '@/components/Title/TitlePage';
+import TitleInput from '@/components/Title/TitleInput';
 import postGeneralTable from '@/services/postGeneralTable';
 import { generalEndpoints } from '@/utilities/endpoints';
 import {
+  stylesButtonSend,
   stylesContainerBox,
   stylesContainerInput,
   stylesContainerSection,
-} from '@/components/Habitaciones/stylesHabitaciones';
+  stylesWidthHeightForm,
+} from '@/components/Habitaciones/Tarifa/TarifaStyles';
 
 const FormCreateTarifa = ({ setOpenAlert, setMessageInfo, setMessageSeverity }) => {
   const [datos, setDatos] = useState({
@@ -58,8 +60,7 @@ const FormCreateTarifa = ({ setOpenAlert, setMessageInfo, setMessageSeverity }) 
   };
 
   return (
-    <Container component='section' disableGutters sx={[stylesContainerSection, { width: 400, height: 418.25 }]}>
-      <CssBaseline />
+    <Container component='section' disableGutters sx={[stylesContainerSection, stylesWidthHeightForm]}>
       <TitlePage titlePage='Registro de Nueva Tarifa' />
       <Box component='form' sx={stylesContainerBox}>
         <Box component='div' sx={stylesContainerInput}>
@@ -105,7 +106,7 @@ const FormCreateTarifa = ({ setOpenAlert, setMessageInfo, setMessageSeverity }) 
             fullWidth
           />
         </Box>
-        <Button variant='contained' onClick={sendDatos} size='large' startIcon={<SaveIcon />} sx={{ marginTop: 2 }}>
+        <Button variant='contained' onClick={sendDatos} size='large' startIcon={<SaveIcon />} sx={stylesButtonSend}>
           Registrar Tarifa
         </Button>
       </Box>

@@ -1,9 +1,10 @@
 import React, { useState } from 'react';
-import { Box, Container, CssBaseline } from '@mui/material';
+import { Box, Container } from '@mui/material';
 
-import AlertGlobalForms from '@/components/AlertGlobalForms';
+import AlertGlobalForms from '@/components/Alert/AlertGlobalForms';
 import FormCreateTarifa from '@/components/Habitaciones/Tarifa/FormCreateTarifa';
 import TableViewTarifas from '@/components/Habitaciones/Tarifa/TableViewTarifas';
+import { stylesBoxTarifas } from '@/components/Habitaciones/Tarifa/TarifaStyles';
 
 const Tarifas = () => {
   const [messageInfo, setMessageInfo] = useState('');
@@ -12,7 +13,6 @@ const Tarifas = () => {
 
   return (
     <Container component='section' disableGutters maxWidth='xl'>
-      <CssBaseline />
       {messageInfo && (
         <AlertGlobalForms
           open={openAlert}
@@ -21,7 +21,7 @@ const Tarifas = () => {
           messageSeverity={messageSeverity || 'info'}
         />
       )}
-      <Box sx={{ display: 'flex' }}>
+      <Box sx={stylesBoxTarifas}>
         <FormCreateTarifa
           setOpenAlert={setOpenAlert}
           setMessageInfo={setMessageInfo}
