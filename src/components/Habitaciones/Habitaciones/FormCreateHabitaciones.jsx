@@ -4,7 +4,6 @@ import {
   Button,
   Checkbox,
   Container,
-  CssBaseline,
   FormControl,
   ListItemText,
   MenuItem,
@@ -99,7 +98,6 @@ const FormCreateHabitaciones = ({ setOpenAlert, setMessageInfo, setMessageSeveri
 
   return (
     <Container component='section' sx={[stylesContainerSection, stylesWidthHeightForm]}>
-      <CssBaseline />
       <TitlePage titlePage='Registro de Habitación' />
       <Box component='form' sx={stylesContainerBox}>
         <Box component='div' sx={stylesContainerInput}>
