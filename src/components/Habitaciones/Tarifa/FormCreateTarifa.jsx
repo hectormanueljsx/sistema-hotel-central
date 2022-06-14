@@ -93,7 +93,7 @@ const FormCreateTarifa = ({ setOpenAlert, setMessageInfo, setMessageSeverity }) 
           />
         </Box>
         <Box component='div' sx={stylesContainerInput}>
-          <TitleInput titleInput='No. de personas' />
+          <TitleInput titleInput='N° de personas' />
           <TextField
             onChange={handleInputChange}
             name='numPersonas'
