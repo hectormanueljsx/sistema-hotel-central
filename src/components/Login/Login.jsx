@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import { Box, Button, CardMedia, Container, TextField } from '@mui/material';
 import LoginIcon from '@mui/icons-material/Login';
+import { useNavigate } from 'react-router-dom';
 
 import TitlePage from '@/components/Title/TitlePage';
 import TitleInput from '@/components/Title/TitleInput';
@@ -25,6 +26,8 @@ const Login = () => {
     password: '',
   });
 
+  const navigate = useNavigate();
+
   const handleInputChange = event => setDatosLogin({ ...datosLogin, [event.target.name]: event.target.value });
 
   const handleSubmit = async e => {
@@ -42,7 +45,10 @@ const Login = () => {
         setOpenAlert(true);
         setMessageInfo('Inicio de sesión correcto');
         setMessageSeverity('success');
-        setTimeout(() => {}, 1500);
+        setTimeout(() => {
+          navigate('/');
+          location.reload();
+        }, 1500);
       } else {
         setOpenAlert(true);
         setMessageInfo('Error al iniciar sesión, verifique sus datos');
@@ -68,7 +74,7 @@ const Login = () => {
       )}
       <Box component='section' sx={stylesContainerImage}>
         <CardMedia component='img' image={LogoIcon} alt='Logo Icon' sx={stylesIconImage} />
-        <TitlePage titlePage='Iniciar sesión' />
+        <TitlePage titlePage='Iniciar Sesión' />
       </Box>
       <Box component='form' sx={stylesContainerBox}>
         <Box component='div' sx={stylesContainerInput}>
