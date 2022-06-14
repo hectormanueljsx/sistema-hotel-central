@@ -31,7 +31,7 @@ const columns = [
   { id: 'fechaReporte', label: 'Fecha de Reporte', width: 170 },
   { id: 'fechInicio', label: 'Fecha de Inicio', width: 170 },
   { id: 'motivo', label: 'Motivo', width: 280 },
-  { id: 'categoria', label: 'Categorias', width: 250 },
+  { id: 'categoria', label: 'Categorías', width: 250 },
   { id: 'estado', label: 'Estado', width: 152 },
   { id: 'acciones', label: 'Acciones', width: 100 },
 ];
