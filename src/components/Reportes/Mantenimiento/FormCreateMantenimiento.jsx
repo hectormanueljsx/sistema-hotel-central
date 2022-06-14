@@ -1,12 +1,18 @@
 import React, { useState } from 'react';
-import { Box, Button, Container, CssBaseline, FormControl, MenuItem, Select, TextField } from '@mui/material';
+import { Box, Button, Container, FormControl, MenuItem, Select, TextField } from '@mui/material';
 import SaveIcon from '@mui/icons-material/Save';
 
-import TitlePage from '@/components/TitlePage';
-import TitleInput from '@/components/TitleInput';
+import TitlePage from '@/components/Title/TitlePage';
+import TitleInput from '@/components/Title/TitleInput';
 import postGeneralTable from '@/services/postGeneralTable';
 import { generalEndpoints } from '@/utilities/endpoints';
-import { stylesContainerBox, stylesContainerInput, stylesContainerSection } from '@/components/Reportes/stylesReportes';
+import {
+  stylesButtonSend,
+  stylesContainerBox,
+  stylesContainerInput,
+  stylesContainerSection,
+  stylesWidthHeightForm,
+} from '@/components/Reportes/Mantenimiento/MantenimientoStyles';
 
 const FormCreateMantenimiento = ({ setOpenAlert, setMessageInfo, setMessageSeverity, habitacion, subcategoria }) => {
   const [datos, setDatos] = useState({
@@ -39,7 +45,7 @@ const FormCreateMantenimiento = ({ setOpenAlert, setMessageInfo, setMessageSever
         users_permissions_user: { id: idUser },
         subcategoria: { id: idSubcategoria },
       };
-      console.log(generalData);
+
       const res = await postGeneralTable(identifier, password, endpointMantenimiento, generalData);
 
       if (res.status >= 200 && res.status <= 299) {
@@ -63,8 +69,7 @@ const FormCreateMantenimiento = ({ setOpenAlert, setMessageInfo, setMessageSever
   };
 
   return (
-    <Container component='section' disableGutters sx={[stylesContainerSection, { width: 400, height: 522.25 }]}>
-      <CssBaseline />
+    <Container component='section' disableGutters sx={[stylesContainerSection, stylesWidthHeightForm]}>
       <TitlePage titlePage='Registro de Fallas' />
       <Box component='form' sx={stylesContainerBox}>
         <Box component='div' sx={stylesContainerInput}>
@@ -83,7 +88,7 @@ const FormCreateMantenimiento = ({ setOpenAlert, setMessageInfo, setMessageSever
           />
         </Box>
         <Box component='div' sx={stylesContainerInput}>
-          <TitleInput titleInput='Quien reporta?' />
+          <TitleInput titleInput='Nombre de quién reporta' />
           <TextField
             onChange={handleInputChange}
             name='reporta'
@@ -94,11 +99,10 @@ const FormCreateMantenimiento = ({ setOpenAlert, setMessageInfo, setMessageSever
             placeholder='Nombre'
             required
             fullWidth
-            autoFocus
           />
         </Box>
         <Box component='div' sx={stylesContainerInput}>
-          <TitleInput titleInput='Habitacion' />
+          <TitleInput titleInput='Habitación' />
           <FormControl fullWidth>
             <Select size='small' value={idHabitacion} onChange={handleHabitacion}>
               {habitacion.map(item => {
@@ -114,7 +118,7 @@ const FormCreateMantenimiento = ({ setOpenAlert, setMessageInfo, setMessageSever
           </FormControl>
         </Box>
         <Box component='div' sx={stylesContainerInput}>
-          <TitleInput titleInput='Subcategoria' />
+          <TitleInput titleInput='Subcategoría' />
           <FormControl fullWidth>
             <Select size='small' value={idSubcategoria} onChange={handleSubcategoria}>
               {subcategoria.map(item => {
@@ -129,7 +133,7 @@ const FormCreateMantenimiento = ({ setOpenAlert, setMessageInfo, setMessageSever
             </Select>
           </FormControl>
         </Box>
-        <Button variant='contained' onClick={sendDatos} size='large' startIcon={<SaveIcon />} sx={{ marginTop: 2 }}>
+        <Button variant='contained' onClick={sendDatos} size='large' startIcon={<SaveIcon />} sx={stylesButtonSend}>
           Registrar Mantenimiento
         </Button>
       </Box>

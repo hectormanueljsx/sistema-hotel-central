@@ -1,17 +1,22 @@
 import React, { useState } from 'react';
-import { Box, Button, Container, CssBaseline, FormControl, MenuItem, Select, TextField } from '@mui/material';
+import { Box, Button, Container, FormControl, MenuItem, Select, TextField } from '@mui/material';
 import UpdateIcon from '@mui/icons-material/Update';
 import EditIcon from '@mui/icons-material/Edit';
 
-import TitlePage from '@/components/TitlePage';
-import TitleInput from '@/components/TitleInput';
+import TitlePage from '@/components/Title/TitlePage';
+import TitleInput from '@/components/Title/TitleInput';
 import putGeneralTable from '@/services/putGeneralTable';
 import { generalEndpoints } from '@/utilities/endpoints';
 import {
+  stylesBoxButtons,
+  stylesBoxInputs,
+  stylesBoxModal,
   stylesContainerBoxButtonAlign,
   stylesContainerInput,
   stylesContainerSection,
-} from '@/components/Reportes/stylesReportes';
+  stylesWidthHeightModal,
+  stylesWidthInput,
+} from '@/components/Reportes/Mantenimiento/MantenimientoStyles';
 
 const ModalMantenimiento = ({
   habitacion,
@@ -96,12 +101,11 @@ const ModalMantenimiento = ({
   };
 
   return (
-    <Container component='section' disableGutters sx={[stylesContainerSection, { width: 780, marginTop: 0 }]}>
-      <CssBaseline />
+    <Container component='section' disableGutters sx={[stylesContainerSection, stylesWidthHeightModal]}>
       <TitlePage titlePage='Actualización de Mantenimiento' />
-      <Box component='form' sx={{ display: 'flex', flexDirection: 'column' }}>
-        <Box sx={{ display: 'flex', justifyContent: 'space-between' }}>
-          <Box component='div' sx={[stylesContainerInput, { width: 352 }]}>
+      <Box component='form' sx={stylesBoxModal}>
+        <Box sx={stylesBoxInputs}>
+          <Box component='div' sx={[stylesContainerInput, stylesWidthInput]}>
             <TitleInput titleInput='Motivo del Mantenimiento' />
             <TextField
               defaultValue={dataMantenimiento.motivo}
@@ -111,13 +115,12 @@ const ModalMantenimiento = ({
               type='text'
               margin='none'
               size='small'
-              placeholder='construcción'
               disabled={disabledModal}
               required
               fullWidth
             />
           </Box>
-          <Box component='div' sx={[stylesContainerInput, { width: 352 }]}>
+          <Box component='div' sx={[stylesContainerInput, stylesWidthInput]}>
             <TitleInput titleInput='Fecha de Inicio' />
             <TextField
               defaultValue={dataMantenimiento.f_inicio}
@@ -133,8 +136,8 @@ const ModalMantenimiento = ({
             />
           </Box>
         </Box>
-        <Box sx={{ display: 'flex', justifyContent: 'space-between' }}>
-          <Box component='div' sx={[stylesContainerInput, { width: 352 }]}>
+        <Box sx={stylesBoxInputs}>
+          <Box component='div' sx={[stylesContainerInput, stylesWidthInput]}>
             <TitleInput titleInput='Fecha de Termino' />
             <TextField
               defaultValue={dataMantenimiento.f_fin}
@@ -149,7 +152,7 @@ const ModalMantenimiento = ({
               fullWidth
             />
           </Box>
-          <Box component='div' sx={[stylesContainerInput, { width: 352 }]}>
+          <Box component='div' sx={[stylesContainerInput, stylesWidthInput]}>
             <TitleInput titleInput='Precio' />
             <TextField
               defaultValue={dataMantenimiento.costo}
@@ -166,13 +169,14 @@ const ModalMantenimiento = ({
             />
           </Box>
         </Box>
-        <Box sx={{ display: 'flex', justifyContent: 'space-between' }}>
-          <Box component='div' sx={[stylesContainerInput, { width: 352 }]}>
-            <TitleInput titleInput='Habitacion' />
+        <Box sx={stylesBoxInputs}>
+          <Box component='div' sx={[stylesContainerInput, stylesWidthInput]}>
+            <TitleInput titleInput='Habitación' />
             <FormControl fullWidth disabled={disabledModal}>
               <Select size='small' value={idHabitacion} onChange={handleHabitacion}>
                 {habitacion.map(item => {
                   const { num_hab, id } = item;
+
                   return (
                     <MenuItem key={id} value={id}>
                       {num_hab}
@@ -182,7 +186,7 @@ const ModalMantenimiento = ({
               </Select>
             </FormControl>
           </Box>
-          <Box component='div' sx={[stylesContainerInput, { width: 352 }]}>
+          <Box component='div' sx={[stylesContainerInput, stylesWidthInput]}>
             <TitleInput titleInput='Estado' />
             <TextField
               defaultValue={dataMantenimiento.estado}
@@ -197,8 +201,8 @@ const ModalMantenimiento = ({
             />
           </Box>
         </Box>
-        <Box sx={{ display: 'flex', justifyContent: 'space-between' }}>
-          <Box component='div' sx={[stylesContainerInput, { width: 352 }]}>
+        <Box sx={stylesBoxInputs}>
+          <Box component='div' sx={[stylesContainerInput, stylesWidthInput]}>
             <TitleInput titleInput='Realizado por:' />
             <TextField
               defaultValue={dataMantenimiento.trabajador}
@@ -214,7 +218,7 @@ const ModalMantenimiento = ({
               fullWidth
             />
           </Box>
-          <Box component='div' sx={[stylesContainerInput, { width: 352 }]}>
+          <Box component='div' sx={[stylesContainerInput, stylesWidthInput]}>
             <TitleInput titleInput='Reportado por:' />
             <TextField
               defaultValue={dataMantenimiento.reporta}
@@ -231,9 +235,9 @@ const ModalMantenimiento = ({
             />
           </Box>
         </Box>
-        <Box sx={{ display: 'flex', justifyContent: 'space-between' }}>
-          <Box component='div' sx={[stylesContainerInput, { width: 352 }]}>
-            <TitleInput titleInput='Categoria' />
+        <Box sx={stylesBoxInputs}>
+          <Box component='div' sx={[stylesContainerInput, stylesWidthInput]}>
+            <TitleInput titleInput='Categoría' />
             <FormControl fullWidth disabled={disabledModal}>
               <Select size='small' value={idSubcategoria} onChange={handleSubcategoria}>
                 {subcategoria.map(item => {
@@ -248,7 +252,7 @@ const ModalMantenimiento = ({
               </Select>
             </FormControl>
           </Box>
-          <Box component='div' sx={[stylesContainerInput, { width: 352 }]}>
+          <Box component='div' sx={[stylesContainerInput, stylesWidthInput]}>
             <TitleInput titleInput='Usuario' />
             <TextField
               defaultValue={dataMantenimiento.users_permissions_user.username}
@@ -262,8 +266,8 @@ const ModalMantenimiento = ({
             />
           </Box>
         </Box>
-        <Box sx={{ display: 'flex', justifyContent: 'space-between', marginTop: 2 }}>
-          <Box component='div' sx={[stylesContainerBoxButtonAlign, { width: 352 }]}>
+        <Box sx={stylesBoxButtons}>
+          <Box component='div' sx={[stylesContainerBoxButtonAlign, stylesWidthInput]}>
             <Button
               variant='contained'
               disabled={disableView}
@@ -274,7 +278,7 @@ const ModalMantenimiento = ({
               Modificar
             </Button>
           </Box>
-          <Box component='div' sx={{ width: 352 }}>
+          <Box component='div' sx={stylesWidthInput}>
             <Button
               variant='contained'
               disabled={disabledModal}

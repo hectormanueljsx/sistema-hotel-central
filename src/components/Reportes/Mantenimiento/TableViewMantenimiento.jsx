@@ -2,7 +2,6 @@ import React, { useState } from 'react';
 import {
   Box,
   Container,
-  CssBaseline,
   IconButton,
   Modal,
   Table,
@@ -15,13 +14,18 @@ import {
 } from '@mui/material';
 import VisibilityIcon from '@mui/icons-material/Visibility';
 
-import TitlePage from '@/components/TitlePage';
-import Loader from '@/components/Loader';
-import AlertGlobalTables from '@/components/AlertGlobalTables';
+import TitlePage from '@/components/Title/TitlePage';
+import Loader from '@/components/Loader/Loader';
+import AlertGlobalTables from '@/components/Alert/AlertGlobalTables';
 import ModalMantenimiento from '@/components/Reportes/Mantenimiento/ModalMantenimiento';
 import useGetGeneralTable from '@/hooks/useGetGeneralTable';
 import { generalEndpoints } from '@/utilities/endpoints';
-import { stylesContainerSection, stylesModal, stylesTableCell } from '@/components/Reportes/stylesReportes';
+import {
+  stylesContainerSection,
+  stylesModal,
+  stylesTableCell,
+  stylesWidthHeightTable,
+} from '@/components/Reportes/Mantenimiento/MantenimientoStyles';
 
 const columns = [
   { id: 'fechaReporte', label: 'Fecha de Reporte', width: 170 },
@@ -58,8 +62,7 @@ const TableViewMantenimiento = ({ setOpenAlert, setMessageInfo, setMessageSeveri
   const { list, loading, error } = useGetGeneralTable(identifier, password, endpointMantenimiento);
 
   return (
-    <Container component='section' disableGutters sx={[stylesContainerSection, { width: 1000, height: 711 }]}>
-      <CssBaseline />
+    <Container component='section' disableGutters sx={[stylesContainerSection, stylesWidthHeightTable]}>
       <TitlePage titlePage='Lista de Mantenimientos' />
       <Box component='div'>
         {loading && <Loader />}

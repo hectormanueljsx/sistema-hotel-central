@@ -1,12 +1,13 @@
 import React, { useEffect, useState } from 'react';
-import { Box, Container, CssBaseline } from '@mui/material';
+import { Box, Container } from '@mui/material';
 
-import AlertGlobalForms from '@/components/AlertGlobalForms';
+import AlertGlobalForms from '@/components/Alert/AlertGlobalForms';
 import FormCreateMantenimiento from '@/components/Reportes/Mantenimiento/FormCreateMantenimiento';
 import TableViewMantenimiento from '@/components/Reportes/Mantenimiento/TableViewMantenimiento';
 import getGeneralSelect from '@/services/getGeneralSelect';
 import getSpecificSelect from '@/services/getSpecificSelect';
 import { generalEndpoints } from '@/utilities/endpoints';
+import { stylesBoxMantenimiento } from '@/components/Reportes/Mantenimiento/MantenimientoStyles';
 
 const Mantenimiento = () => {
   const [messageInfo, setMessageInfo] = useState('');
@@ -40,7 +41,6 @@ const Mantenimiento = () => {
 
   return (
     <Container component='section' disableGutters maxWidth='xl'>
-      <CssBaseline />
       {messageInfo && (
         <AlertGlobalForms
           open={openAlert}
@@ -49,7 +49,7 @@ const Mantenimiento = () => {
           messageSeverity={messageSeverity || 'info'}
         />
       )}
-      <Box sx={{ display: 'flex' }}>
+      <Box sx={stylesBoxMantenimiento}>
         <FormCreateMantenimiento
           setOpenAlert={setOpenAlert}
           setMessageInfo={setMessageInfo}
