@@ -12,6 +12,7 @@ import {
 } from '@mui/material';
 import UpdateIcon from '@mui/icons-material/Update';
 import EditIcon from '@mui/icons-material/Edit';
+import CloseIcon from '@mui/icons-material/Close';
 import moment from 'moment';
 
 import TitlePage from '@/components/Title/TitlePage';
@@ -27,6 +28,7 @@ import {
   stylesContainerBoxButtonAlign,
   stylesContainerInput,
   stylesContainerSection,
+  stylesModalClose,
   stylesWidthHeightModal,
   stylesWidthInput,
 } from '@/components/Caja/Egresos/EgresosStyles';
@@ -36,6 +38,7 @@ const ModalEgreso = ({
   pago,
   categoria,
   dataCategoria,
+  handleCloseModal,
   setOpenAlert,
   setMessageInfo,
   setMessageSeverity,
@@ -119,6 +122,9 @@ const ModalEgreso = ({
     <Container component='section' sx={[stylesContainerSection, stylesWidthHeightModal]}>
       <TitlePage titlePage='Actualización de Gasto' />
       <Box component='form' sx={stylesBoxModal}>
+        <Button variant='text' color='error' size='large' onClick={handleCloseModal} sx={stylesModalClose}>
+          <CloseIcon />
+        </Button>
         <Box sx={stylesBoxInputs}>
           <Box component='div' sx={[stylesContainerInput, stylesWidthInput]}>
             <TitleInput titleInput='Concepto' />

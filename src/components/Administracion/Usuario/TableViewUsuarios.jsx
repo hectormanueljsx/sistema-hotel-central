@@ -51,7 +51,7 @@ const TableViewUsuarios = ({ setOpenAlert, setMessageInfo, setMessageSeverity })
     setDataUsuario(item);
   };
 
-  const handleClose = () => setOpenModal(false);
+  const handleCloseModal = () => setOpenModal(false);
   const handleChangePage = (event, newPage) => setPage(newPage);
 
   const handleChangeRowsPerPage = event => {
@@ -126,10 +126,11 @@ const TableViewUsuarios = ({ setOpenAlert, setMessageInfo, setMessageSeverity })
           />
         )}
       </Box>
-      <Modal open={openModal} onClose={handleClose}>
+      <Modal open={openModal}>
         <Box sx={stylesModal}>
           <ModalUsuario
             dataUsuario={dataUsuario}
+            handleCloseModal={handleCloseModal}
             setOpenAlert={setOpenAlert}
             setMessageInfo={setMessageInfo}
             setMessageSeverity={setMessageSeverity}

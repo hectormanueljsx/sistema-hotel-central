@@ -2,6 +2,7 @@ import React, { useState } from 'react';
 import { Box, Button, Container, TextField } from '@mui/material';
 import UpdateIcon from '@mui/icons-material/Update';
 import EditIcon from '@mui/icons-material/Edit';
+import CloseIcon from '@mui/icons-material/Close';
 
 import TitlePage from '@/components/Title/TitlePage';
 import TitleInput from '@/components/Title/TitleInput';
@@ -14,11 +15,12 @@ import {
   stylesContainerBoxButtonAlign,
   stylesContainerInput,
   stylesContainerSection,
+  stylesModalClose,
   stylesWidthHeightModal,
   stylesWidthInput,
 } from '@/components/Habitaciones/Tarifa/TarifaStyles';
 
-const ModalTarifa = ({ dataTarifa, setOpenAlert, setMessageInfo, setMessageSeverity }) => {
+const ModalTarifa = ({ dataTarifa, handleCloseModal, setOpenAlert, setMessageInfo, setMessageSeverity }) => {
   const [data, setData] = useState({
     id: dataTarifa.id,
     descripcion: dataTarifa.descripcion,
@@ -76,6 +78,9 @@ const ModalTarifa = ({ dataTarifa, setOpenAlert, setMessageInfo, setMessageSever
     <Container component='section' disableGutters sx={[stylesContainerSection, stylesWidthHeightModal]}>
       <TitlePage titlePage='Actualización de Tarifa' />
       <Box component='form' sx={stylesBoxModal}>
+        <Button variant='text' color='error' size='large' onClick={handleCloseModal} sx={stylesModalClose}>
+          <CloseIcon />
+        </Button>
         <Box sx={stylesBoxInputs}>
           <Box component='div' sx={[stylesContainerInput, stylesWidthInput]}>
             <TitleInput titleInput='Descripción de la tarifa' />

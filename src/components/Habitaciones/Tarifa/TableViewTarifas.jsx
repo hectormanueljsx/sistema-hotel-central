@@ -51,7 +51,7 @@ const TableViewTarifas = ({ setOpenAlert, setMessageInfo, setMessageSeverity }) 
     setDataTarifa(item);
   };
 
-  const handleClose = () => setOpenModal(false);
+  const handleCloseModal = () => setOpenModal(false);
   const handleChangePage = (event, newPage) => setPage(newPage);
 
   const handleChangeRowsPerPage = event => {
@@ -127,10 +127,11 @@ const TableViewTarifas = ({ setOpenAlert, setMessageInfo, setMessageSeverity }) 
           />
         )}
       </Box>
-      <Modal open={openModal} onClose={handleClose}>
+      <Modal open={openModal}>
         <Box sx={stylesModal}>
           <ModalTarifa
             dataTarifa={dataTarifa}
+            handleCloseModal={handleCloseModal}
             setOpenAlert={setOpenAlert}
             setMessageInfo={setMessageInfo}
             setMessageSeverity={setMessageSeverity}

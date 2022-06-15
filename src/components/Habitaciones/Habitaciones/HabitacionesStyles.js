@@ -64,6 +64,19 @@ export const stylesModal = css`
   transform: translate(-50%, -50%);
 `;
 
+export const stylesModalClose = css`
+  position: absolute;
+  top: 0;
+  right: 0;
+  border-radius: 0;
+  border-top-right-radius: 4px;
+
+  &:hover {
+    background-color: #d32f2f;
+    color: #ffffff;
+  }
+`;
+
 export const stylesBoxModal = css`
   display: flex;
   flex-direction: column;

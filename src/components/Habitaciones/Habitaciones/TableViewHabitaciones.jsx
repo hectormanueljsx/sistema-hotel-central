@@ -64,7 +64,7 @@ const TableViewHabitaciones = ({ setOpenAlert, setMessageInfo, setMessageSeverit
     setDataHabitaciones(item);
   };
 
-  const handleClose = () => {
+  const handleCloseModal = () => {
     dataServices = [];
     setOpenModal(false);
   };
@@ -145,12 +145,13 @@ const TableViewHabitaciones = ({ setOpenAlert, setMessageInfo, setMessageSeverit
           />
         )}
       </Box>
-      <Modal open={openModal} onClose={handleClose}>
+      <Modal open={openModal}>
         <Box sx={stylesModal}>
           <ModalHabitaciones
             dataHabitaciones={dataHabitaciones}
             dataServices={dataServices}
             dataSelectTarifas={dataSelectTarifas}
+            handleCloseModal={handleCloseModal}
             setOpenAlert={setOpenAlert}
             setMessageInfo={setMessageInfo}
             setMessageSeverity={setMessageSeverity}

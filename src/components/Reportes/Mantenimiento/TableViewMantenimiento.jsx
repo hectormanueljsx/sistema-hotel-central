@@ -51,7 +51,7 @@ const TableViewMantenimiento = ({ setOpenAlert, setMessageInfo, setMessageSeveri
     setDataMantenimiento(item);
   };
 
-  const handleClose = () => setOpenModal(false);
+  const handleCloseModal = () => setOpenModal(false);
   const handleChangePage = (event, newPage) => setPage(newPage);
 
   const handleChangeRowsPerPage = event => {
@@ -122,10 +122,11 @@ const TableViewMantenimiento = ({ setOpenAlert, setMessageInfo, setMessageSeveri
           />
         )}
       </Box>
-      <Modal open={openModal} onClose={handleClose}>
+      <Modal open={openModal}>
         <Box sx={stylesModal}>
           <ModalMantenimiento
             dataMantenimiento={dataMantenimiento}
+            handleCloseModal={handleCloseModal}
             setOpenAlert={setOpenAlert}
             setMessageInfo={setMessageInfo}
             setMessageSeverity={setMessageSeverity}

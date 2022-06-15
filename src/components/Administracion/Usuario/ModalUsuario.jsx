@@ -2,6 +2,7 @@ import React, { useState } from 'react';
 import { Box, Button, Checkbox, Container, FormControlLabel, TextField } from '@mui/material';
 import UpdateIcon from '@mui/icons-material/Update';
 import EditIcon from '@mui/icons-material/Edit';
+import CloseIcon from '@mui/icons-material/Close';
 
 import TitlePage from '@/components/Title/TitlePage';
 import TitleInput from '@/components/Title/TitleInput';
@@ -14,11 +15,12 @@ import {
   stylesContainerBoxButtonAlign,
   stylesContainerInput,
   stylesContainerSection,
+  stylesModalClose,
   stylesWidthHeightModal,
   stylesWidthInput,
 } from '@/components/Administracion/Usuario/UsuarioStyles';
 
-const ModalUsuario = ({ dataUsuario, setOpenAlert, setMessageInfo, setMessageSeverity }) => {
+const ModalUsuario = ({ dataUsuario, handleCloseModal, setOpenAlert, setMessageInfo, setMessageSeverity }) => {
   const [data, setData] = useState({
     username: dataUsuario.username,
     password: dataUsuario.identifier,
@@ -103,6 +105,9 @@ const ModalUsuario = ({ dataUsuario, setOpenAlert, setMessageInfo, setMessageSev
     <Container component='section' disableGutters sx={[stylesContainerSection, stylesWidthHeightModal]}>
       <TitlePage titlePage='Actualización de Usuario' />
       <Box component='form' sx={stylesBoxModal}>
+        <Button variant='text' color='error' size='large' onClick={handleCloseModal} sx={stylesModalClose}>
+          <CloseIcon />
+        </Button>
         <Box sx={stylesBoxInputs}>
           <Box component='div' sx={[stylesContainerInput, stylesWidthInput]}>
             <TitleInput titleInput='Nombre de usuario' />

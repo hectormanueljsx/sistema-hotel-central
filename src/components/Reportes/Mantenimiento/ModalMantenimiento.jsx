@@ -2,6 +2,7 @@ import React, { useState } from 'react';
 import { Box, Button, Container, FormControl, MenuItem, Select, TextField } from '@mui/material';
 import UpdateIcon from '@mui/icons-material/Update';
 import EditIcon from '@mui/icons-material/Edit';
+import CloseIcon from '@mui/icons-material/Close';
 
 import TitlePage from '@/components/Title/TitlePage';
 import TitleInput from '@/components/Title/TitleInput';
@@ -14,6 +15,7 @@ import {
   stylesContainerBoxButtonAlign,
   stylesContainerInput,
   stylesContainerSection,
+  stylesModalClose,
   stylesWidthHeightModal,
   stylesWidthInput,
 } from '@/components/Reportes/Mantenimiento/MantenimientoStyles';
@@ -22,6 +24,7 @@ const ModalMantenimiento = ({
   habitacion,
   subcategoria,
   dataMantenimiento,
+  handleCloseModal,
   setOpenAlert,
   setMessageInfo,
   setMessageSeverity,
@@ -104,6 +107,9 @@ const ModalMantenimiento = ({
     <Container component='section' disableGutters sx={[stylesContainerSection, stylesWidthHeightModal]}>
       <TitlePage titlePage='Actualización de Mantenimiento' />
       <Box component='form' sx={stylesBoxModal}>
+        <Button variant='text' color='error' size='large' onClick={handleCloseModal} sx={stylesModalClose}>
+          <CloseIcon />
+        </Button>
         <Box sx={stylesBoxInputs}>
           <Box component='div' sx={[stylesContainerInput, stylesWidthInput]}>
             <TitleInput titleInput='Motivo del mantenimiento' />

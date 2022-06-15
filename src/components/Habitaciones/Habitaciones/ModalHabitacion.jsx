@@ -12,6 +12,7 @@ import {
 } from '@mui/material';
 import UpdateIcon from '@mui/icons-material/Update';
 import EditIcon from '@mui/icons-material/Edit';
+import CloseIcon from '@mui/icons-material/Close';
 
 import TitlePage from '@/components/Title/TitlePage';
 import TitleInput from '@/components/Title/TitleInput';
@@ -26,6 +27,7 @@ import {
   stylesContainerBoxButtonAlign,
   stylesContainerInput,
   stylesContainerSection,
+  stylesModalClose,
   stylesWidthHeightModal,
   stylesWidthInput,
 } from '@/components/Habitaciones/Habitaciones/HabitacionesStyles';
@@ -36,6 +38,7 @@ const ModalHabitaciones = ({
   dataHabitaciones,
   dataSelectTarifas,
   dataServices,
+  handleCloseModal,
   setOpenAlert,
   setMessageInfo,
   setMessageSeverity,
@@ -121,6 +124,9 @@ const ModalHabitaciones = ({
     <Container component='section' disableGutters sx={[stylesContainerSection, stylesWidthHeightModal]}>
       <TitlePage titlePage='Actualización de habitación' />
       <Box component='form' sx={stylesBoxModal}>
+        <Button variant='text' color='error' size='large' onClick={handleCloseModal} sx={stylesModalClose}>
+          <CloseIcon />
+        </Button>
         <Box sx={stylesBoxInputs}>
           <Box component='div' sx={[stylesContainerInput, stylesWidthInput]}>
             <TitleInput titleInput='Numero de habitación' />

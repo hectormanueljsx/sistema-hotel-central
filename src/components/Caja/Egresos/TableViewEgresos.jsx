@@ -61,7 +61,7 @@ const TableViewEgresos = ({ setOpenAlert, setMessageInfo, setMessageSeverity, pa
     setOpenModal(true);
   };
 
-  const handleClose = () => setOpenModal(false);
+  const handleCloseModal = () => setOpenModal(false);
   const handleChangePage = (event, newPage) => setPage(newPage);
 
   const handleChangeRowsPerPage = event => {
@@ -143,13 +143,14 @@ const TableViewEgresos = ({ setOpenAlert, setMessageInfo, setMessageSeverity, pa
           />
         )}
       </Box>
-      <Modal open={openModal} onClose={handleClose}>
+      <Modal open={openModal}>
         <Box sx={stylesModal}>
           <ModalEgreso
             dataEgreso={dataEgreso}
             pago={pago}
             categoria={categoria}
             dataCategoria={dataCategoria}
+            handleCloseModal={handleCloseModal}
             setOpenAlert={setOpenAlert}
             setMessageInfo={setMessageInfo}
             setMessageSeverity={setMessageSeverity}
