@@ -115,7 +115,7 @@ const ModalTarifa = ({ dataTarifa, handleCloseModal, setOpenAlert, setMessageInf
         </Box>
         <Box sx={stylesBoxInputs}>
           <Box component='div' sx={[stylesContainerInput, stylesWidthInput]}>
-            <TitleInput titleInput='Nº de personas' />
+            <TitleInput titleInput='No. de personas' />
             <TextField
               disabled={disabledModal}
               defaultValue={dataTarifa.no_personas}
