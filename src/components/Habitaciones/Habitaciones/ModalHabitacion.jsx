@@ -94,8 +94,6 @@ const ModalHabitaciones = ({
         tarifas: tarifaId,
       };
 
-      console.log(habitacionData);
-
       const res = await putGeneralTable(identifier, password, endpointHabitacion, dataHabitaciones.id, habitacionData);
 
       if (res.status >= 200 && res.status <= 299) {
@@ -136,12 +134,11 @@ const ModalHabitaciones = ({
               onChange={handleInputChangeNumHabitacion}
               name='num_hab'
               variant='outlined'
-              type='text'
+              type='number'
               margin='none'
               size='small'
               required
               fullWidth
-              autoFocus
             />
           </Box>
           <Box component='div' sx={[stylesContainerInput, stylesWidthInput]}>

@@ -31,7 +31,7 @@ import {
 
 const columns = [
   { id: 'desc_tarifa', label: 'Descripción de la Tarifa', width: 482 },
-  { id: 'num_personas', label: 'Nº de Personas', width: 185 },
+  { id: 'num_personas', label: 'No. de Personas', width: 185 },
   { id: 'precio_aplicado', label: 'Precio Aplicado', width: 185 },
   { id: 'acciones', label: 'Acciones', width: 100 },
 ];

@@ -81,14 +81,13 @@ const FormCreateMantenimiento = ({ setOpenAlert, setMessageInfo, setMessageSever
             type='text'
             margin='none'
             size='small'
-            placeholder='Construcción'
             required
             fullWidth
             autoFocus
           />
         </Box>
         <Box component='div' sx={stylesContainerInput}>
-          <TitleInput titleInput='Nombre de quién reporta' />
+          <TitleInput titleInput='Reportado por' />
           <TextField
             onChange={handleInputChange}
             name='reporta'
@@ -96,7 +95,6 @@ const FormCreateMantenimiento = ({ setOpenAlert, setMessageInfo, setMessageSever
             type='text'
             margin='none'
             size='small'
-            placeholder='Nombre'
             required
             fullWidth
           />

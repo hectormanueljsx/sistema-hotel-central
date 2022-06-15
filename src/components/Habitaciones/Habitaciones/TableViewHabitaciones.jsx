@@ -30,7 +30,7 @@ import {
 } from '@/components/Habitaciones/Habitaciones/HabitacionesStyles';
 
 const columns = [
-  { id: 'num', label: 'N° Habitación', width: 300 },
+  { id: 'num', label: 'No. de Habitación', width: 300 },
   { id: 'servicios', label: 'Servicios', width: 552 },
   { id: 'acciones', label: 'Acciones', width: 100 },
 ];

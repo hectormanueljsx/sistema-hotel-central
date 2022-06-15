@@ -72,7 +72,6 @@ const FormCreateTarifa = ({ setOpenAlert, setMessageInfo, setMessageSeverity }) 
             type='text'
             margin='none'
             size='small'
-            placeholder='Doble 1 cama'
             required
             fullWidth
             autoFocus
@@ -87,13 +86,12 @@ const FormCreateTarifa = ({ setOpenAlert, setMessageInfo, setMessageSeverity }) 
             type='number'
             margin='none'
             size='small'
-            placeholder='500'
             required
             fullWidth
           />
         </Box>
         <Box component='div' sx={stylesContainerInput}>
-          <TitleInput titleInput='N° de personas' />
+          <TitleInput titleInput='No. de personas' />
           <TextField
             onChange={handleInputChange}
             name='numPersonas'
@@ -101,7 +99,6 @@ const FormCreateTarifa = ({ setOpenAlert, setMessageInfo, setMessageSeverity }) 
             type='number'
             margin='none'
             size='small'
-            placeholder='1'
             required
             fullWidth
           />

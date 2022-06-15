@@ -112,7 +112,7 @@ const ModalMantenimiento = ({
         </Button>
         <Box sx={stylesBoxInputs}>
           <Box component='div' sx={[stylesContainerInput, stylesWidthInput]}>
-            <TitleInput titleInput='Motivo del mantenimiento' />
+            <TitleInput titleInput='Motivo' />
             <TextField
               defaultValue={dataMantenimiento.motivo}
               onChange={handleInputChange}
@@ -168,7 +168,6 @@ const ModalMantenimiento = ({
               type='number'
               margin='none'
               size='small'
-              placeholder='$0.00'
               disabled={disabledModal}
               required
               fullWidth
@@ -218,7 +217,6 @@ const ModalMantenimiento = ({
               type='text'
               margin='none'
               size='small'
-              placeholder='nombre'
               disabled={disabledModal}
               required
               fullWidth
@@ -234,7 +232,6 @@ const ModalMantenimiento = ({
               type='text'
               margin='none'
               size='small'
-              placeholder='Nombre'
               disabled={disabledModal}
               required
               fullWidth

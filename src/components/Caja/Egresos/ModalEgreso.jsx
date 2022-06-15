@@ -136,11 +136,9 @@ const ModalEgreso = ({
               type='text'
               margin='none'
               size='small'
-              placeholder='Concepto'
               required
               fullWidth
               disabled={disabledModal}
-              autoFocus
             />
           </Box>
           <Box component='div' sx={[stylesContainerInput, stylesWidthInput]}>
@@ -153,7 +151,6 @@ const ModalEgreso = ({
               type='number'
               margin='none'
               size='small'
-              placeholder='$0.00'
               required
               fullWidth
               disabled={disabledModal}
@@ -177,11 +174,9 @@ const ModalEgreso = ({
               type='number'
               margin='none'
               size='small'
-              placeholder='subtotal'
               required
               fullWidth
               disabled={true}
-              autoFocus
             />
           </Box>
         </Box>
@@ -247,11 +242,9 @@ const ModalEgreso = ({
               type='datetime'
               margin='none'
               size='small'
-              placeholder='fecha'
               required
               fullWidth
               disabled={true}
-              autoFocus
             />
           </Box>
         </Box>
@@ -265,11 +258,9 @@ const ModalEgreso = ({
               type='text'
               margin='none'
               size='small'
-              placeholder='usuario'
               required
               fullWidth
               disabled={true}
-              autoFocus
             />
           </Box>
         </Box>

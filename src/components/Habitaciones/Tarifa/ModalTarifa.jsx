@@ -95,7 +95,6 @@ const ModalTarifa = ({ dataTarifa, handleCloseModal, setOpenAlert, setMessageInf
               size='small'
               required
               fullWidth
-              autoFocus
             />
           </Box>
           <Box component='div' sx={[stylesContainerInput, stylesWidthInput]}>

@@ -106,7 +106,6 @@ const FormCreateCategoriaEgresos = ({ setOpenAlert, setMessageInfo, setMessageSe
               type='text'
               margin='none'
               size='small'
-              placeholder='Salarios'
               required
               fullWidth
               autoFocus
@@ -151,7 +150,6 @@ const FormCreateCategoriaEgresos = ({ setOpenAlert, setMessageInfo, setMessageSe
               type='text'
               margin='none'
               size='small'
-              placeholder='Recepcionista'
               required
               fullWidth
             />

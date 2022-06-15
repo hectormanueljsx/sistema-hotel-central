@@ -101,7 +101,6 @@ const FormCreateEgresos = ({ setOpenAlert, setMessageInfo, setMessageSeverity, p
             type='text'
             margin='none'
             size='small'
-            placeholder='Concepto'
             required
             fullWidth
             autoFocus
@@ -116,7 +115,6 @@ const FormCreateEgresos = ({ setOpenAlert, setMessageInfo, setMessageSeverity, p
             type='number'
             margin='none'
             size='small'
-            placeholder='$0.00'
             required
             fullWidth
           />

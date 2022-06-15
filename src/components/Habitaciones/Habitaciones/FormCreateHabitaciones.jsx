@@ -106,10 +106,9 @@ const FormCreateHabitaciones = ({ setOpenAlert, setMessageInfo, setMessageSeveri
             onChange={handleInputChangeNumHabitacion}
             variant='outlined'
             name='Habitacion'
-            type='text'
+            type='number'
             margin='none'
             size='small'
-            placeholder='1'
             required
             fullWidth
             autoFocus
