@@ -85,15 +85,14 @@ const Login = () => {
       </Box>
       <Box component='form' sx={stylesContainerBox}>
         <Box component='div' sx={stylesContainerInput}>
-          <TitleInput titleInput='Nombre de usuario' />
+          <TitleInput titleInput='Correo electrónico' />
           <TextField
             onChange={handleInputChange}
             name='username'
             variant='outlined'
-            type='text'
+            type='email'
             margin='none'
             size='small'
-            placeholder='Nombre'
             required
             fullWidth
             autoFocus
@@ -108,7 +107,6 @@ const Login = () => {
             type='password'
             margin='none'
             size='small'
-            placeholder='Contraseña'
             required
             fullWidth
           />
