@@ -12,6 +12,7 @@ import Navbar from '@/components/Navbar/Navbar';
 import ProtectedRoute from '@/components/ProtectedRoute/ProtectedRoute';
 import Login from '@/components/Login/Login';
 import NotFound from '@/components/NotFound/NotFound';
+import 'sweetalert2/dist/sweetalert2.min.css';
 
 const theme = createTheme({
   palette: {

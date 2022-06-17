@@ -2,10 +2,10 @@ import React, { useEffect, useState } from 'react';
 import { Box, Button, CardMedia, Container, TextField } from '@mui/material';
 import LoginIcon from '@mui/icons-material/Login';
 import { useNavigate } from 'react-router-dom';
+import Swal from 'sweetalert2';
 
 import TitlePage from '@/components/Title/TitlePage';
 import TitleInput from '@/components/Title/TitleInput';
-import AlertGlobalForms from '@/components/Alert/AlertGlobalForms';
 import postLogin from '@/services/postLogin';
 import {
   stylesButtonSend,
@@ -19,9 +19,6 @@ import {
 import LogoIcon from '@/assets/favicon.png';
 
 const Login = () => {
-  const [messageInfo, setMessageInfo] = useState('');
-  const [messageSeverity, setMessageSeverity] = useState('');
-  const [openAlert, setOpenAlert] = useState(true);
   const [datosLogin, setDatosLogin] = useState({
     username: '',
     password: '',
@@ -49,36 +46,45 @@ const Login = () => {
         localStorage.setItem('password', datosLogin.password);
         localStorage.setItem('username', res.username);
         localStorage.setItem('role', res.name);
-        setOpenAlert(true);
-        setMessageInfo('Inicio de sesión correcto');
-        setMessageSeverity('success');
-        setTimeout(() => {
-          navigate('/');
-          location.reload();
-        }, 1500);
+        Swal.fire({
+          icon: 'success',
+          text: 'Inicio de sesión correcto',
+          allowOutsideClick: false,
+          confirmButtonColor: '#1976d2',
+          confirmButtonText: 'Aceptar',
+        }).then(result => {
+          if (result.isConfirmed) {
+            navigate('/');
+            location.reload();
+          }
+        });
       } else {
-        setOpenAlert(true);
-        setMessageInfo('Error al iniciar sesión, verifique sus datos');
-        setMessageSeverity('error');
+        Swal.fire({
+          icon: 'error',
+          text: 'Error al iniciar sesión, verifique sus datos',
+          allowOutsideClick: false,
+          confirmButtonColor: '#1976d2',
+          confirmButtonText: 'Aceptar',
+        }).then(result => {
+          if (result.isConfirmed) setDatosLogin({ username: '', password: '' });
+        });
         return;
       }
     } else {
-      setOpenAlert(true);
-      setMessageInfo('Por favor, rellene todos los campos');
-      setMessageSeverity('error');
+      Swal.fire({
+        icon: 'error',
+        text: 'Por favor, rellene todos los campos',
+        allowOutsideClick: false,
+        confirmButtonColor: '#1976d2',
+        confirmButtonText: 'Aceptar',
+      }).then(result => {
+        if (result.isConfirmed) setDatosLogin({ username: '', password: '' });
+      });
     }
   };
 
   return (
     <Container component='section' disableGutters sx={[stylesContainerSection, stylesWidthHeightForm]}>
-      {messageInfo && (
-        <AlertGlobalForms
-          open={openAlert}
-          setOpen={setOpenAlert}
-          messageInfo={messageInfo}
-          messageSeverity={messageSeverity || 'info'}
-        />
-      )}
       <Box component='section' sx={stylesContainerImage}>
         <CardMedia component='img' image={LogoIcon} alt='Logo Icon' sx={stylesIconImage} />
         <TitlePage titlePage='Iniciar Sesión' />
@@ -88,6 +94,7 @@ const Login = () => {
           <TitleInput titleInput='Correo electrónico' />
           <TextField
             onChange={handleInputChange}
+            value={datosLogin.username}
             name='username'
             variant='outlined'
             type='email'
@@ -102,6 +109,7 @@ const Login = () => {
           <TitleInput titleInput='Contraseña' />
           <TextField
             onChange={handleInputChange}
+            value={datosLogin.password}
             name='password'
             variant='outlined'
             type='password'
