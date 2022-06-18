@@ -7,9 +7,8 @@ import Swal from 'sweetalert2';
 import TitlePage from '@/components/Title/TitlePage';
 import TitleInput from '@/components/Title/TitleInput';
 import { generalEndpoints } from '@/utilities/endpoints';
-import putGeneralTable from '@/services/putGeneralTable';
-
 import postLogin from '@/services/postLogin';
+import putGeneralTable from '@/services/putGeneralTable';
 import {
   stylesButtonSend,
   stylesContainerBox,
@@ -46,17 +45,16 @@ const Login = () => {
 
       if (res.status >= 200 && res.status <= 299) {
         const endpointUsuario = generalEndpoints.usuario;
-        const generalData = {
-          ult_ingreso: dateTime.toISOString(),
-        };
+        const generalData = { ult_ingreso: dateTime.toISOString() };
 
-        const result = await putGeneralTable(res.email, datosLogin.password, endpointUsuario, res.id, generalData);
+        await putGeneralTable(res.email, datosLogin.password, endpointUsuario, res.id, generalData);
 
         localStorage.setItem('id', res.id);
         localStorage.setItem('identifier', res.email);
         localStorage.setItem('password', datosLogin.password);
         localStorage.setItem('username', res.username);
         localStorage.setItem('role', res.name);
+
         Swal.fire({
           icon: 'success',
           text: 'Inicio de sesión correcto',
@@ -64,10 +62,8 @@ const Login = () => {
           confirmButtonColor: '#1976d2',
           confirmButtonText: 'Aceptar',
         }).then(result => {
-          if (result.isConfirmed) {
-            navigate('/');
-            location.reload();
-          }
+          navigate('/');
+          location.reload();
         });
       } else {
         Swal.fire({
@@ -76,8 +72,6 @@ const Login = () => {
           allowOutsideClick: false,
           confirmButtonColor: '#1976d2',
           confirmButtonText: 'Aceptar',
-        }).then(result => {
-          if (result.isConfirmed) setDatosLogin({ username: '', password: '' });
         });
         return;
       }
@@ -88,8 +82,6 @@ const Login = () => {
         allowOutsideClick: false,
         confirmButtonColor: '#1976d2',
         confirmButtonText: 'Aceptar',
-      }).then(result => {
-        if (result.isConfirmed) setDatosLogin({ username: '', password: '' });
       });
     }
   };
@@ -105,7 +97,6 @@ const Login = () => {
           <TitleInput titleInput='Correo electrónico' />
           <TextField
             onChange={handleInputChange}
-            value={datosLogin.username}
             name='username'
             variant='outlined'
             type='email'
@@ -120,7 +111,6 @@ const Login = () => {
           <TitleInput titleInput='Contraseña' />
           <TextField
             onChange={handleInputChange}
-            value={datosLogin.password}
             name='password'
             variant='outlined'
             type='password'
