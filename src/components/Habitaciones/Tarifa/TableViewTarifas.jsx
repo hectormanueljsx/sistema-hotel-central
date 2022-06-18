@@ -14,6 +14,7 @@ import {
 } from '@mui/material';
 import VisibilityIcon from '@mui/icons-material/Visibility';
 import DeleteIcon from '@mui/icons-material/Delete';
+import Swal from 'sweetalert2';
 
 import TitlePage from '@/components/Title/TitlePage';
 import Loader from '@/components/Loader/Loader';
@@ -36,7 +37,7 @@ const columns = [
   { id: 'acciones', label: 'Acciones', width: 100 },
 ];
 
-const TableViewTarifas = ({ setOpenAlert, setMessageInfo, setMessageSeverity }) => {
+const TableViewTarifas = () => {
   const [page, setPage] = useState(0);
   const [rowsPerPage, setRowsPerPage] = useState(10);
   const [openModal, setOpenModal] = useState(false);
@@ -59,9 +60,48 @@ const TableViewTarifas = ({ setOpenAlert, setMessageInfo, setMessageSeverity }) 
     setPage(0);
   };
 
-  const deleteRegistro = async id => {
-    await deleteGeneralTable(identifier, password, endpointTarifa, id);
-    location.reload();
+  const deleteByIdTarifa = async id => {
+    const { status } = await deleteGeneralTable(identifier, password, endpointTarifa, id);
+    return status;
+  };
+
+  const deleteTarifa = async id => {
+    Swal.fire({
+      icon: 'warning',
+      text: '¿Estás seguro de eliminar esta tarifa?',
+      showCancelButton: true,
+      allowOutsideClick: false,
+      confirmButtonColor: '#1976d2',
+      cancelButtonColor: '#d32f2f',
+      confirmButtonText: 'Aceptar',
+      cancelButtonText: 'Cancelar',
+    }).then(result => {
+      if (result.isConfirmed) {
+        deleteByIdTarifa(id).then(res => {
+          if (res >= 200 && res <= 299) {
+            Swal.fire({
+              icon: 'success',
+              text: 'Tarifa eliminada correctamente',
+              allowOutsideClick: false,
+              confirmButtonColor: '#1976d2',
+              confirmButtonText: 'Aceptar',
+            }).then(result => {
+              if (result.isConfirmed) {
+                location.reload();
+              }
+            });
+          } else {
+            Swal.fire({
+              icon: 'error',
+              text: 'Error al eliminar tarifa',
+              allowOutsideClick: false,
+              confirmButtonColor: '#1976d2',
+              confirmButtonText: 'Aceptar',
+            });
+          }
+        });
+      }
+    });
   };
 
   const { list, loading, error } = useGetGeneralTable(identifier, password, endpointTarifa);
@@ -104,7 +144,7 @@ const TableViewTarifas = ({ setOpenAlert, setMessageInfo, setMessageSeverity }) 
                       <IconButton color='info' size='small' onClick={() => handleOpen(item)}>
                         <VisibilityIcon />
                       </IconButton>
-                      <IconButton color='error' size='small' onClick={() => deleteRegistro(id)}>
+                      <IconButton color='error' size='small' onClick={() => deleteTarifa(id)}>
                         <DeleteIcon />
                       </IconButton>
                     </TableCell>
@@ -129,13 +169,7 @@ const TableViewTarifas = ({ setOpenAlert, setMessageInfo, setMessageSeverity }) 
       </Box>
       <Modal open={openModal}>
         <Box sx={stylesModal}>
-          <ModalTarifa
-            dataTarifa={dataTarifa}
-            handleCloseModal={handleCloseModal}
-            setOpenAlert={setOpenAlert}
-            setMessageInfo={setMessageInfo}
-            setMessageSeverity={setMessageSeverity}
-          />
+          <ModalTarifa dataTarifa={dataTarifa} handleCloseModal={handleCloseModal} />
         </Box>
       </Modal>
     </Container>

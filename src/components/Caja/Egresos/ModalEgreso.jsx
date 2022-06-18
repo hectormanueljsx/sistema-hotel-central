@@ -14,6 +14,7 @@ import UpdateIcon from '@mui/icons-material/Update';
 import EditIcon from '@mui/icons-material/Edit';
 import CloseIcon from '@mui/icons-material/Close';
 import moment from 'moment';
+import Swal from 'sweetalert2';
 
 import TitlePage from '@/components/Title/TitlePage';
 import TitleInput from '@/components/Title/TitleInput';
@@ -33,16 +34,7 @@ import {
   stylesWidthInput,
 } from '@/components/Caja/Egresos/EgresosStyles';
 
-const ModalEgreso = ({
-  dataEgreso,
-  pago,
-  categoria,
-  dataCategoria,
-  handleCloseModal,
-  setOpenAlert,
-  setMessageInfo,
-  setMessageSeverity,
-}) => {
+const ModalEgreso = ({ dataEgreso, pago, categoria, dataCategoria, handleCloseModal }) => {
   const [datos, setDatos] = useState({
     importe: dataEgreso.importe,
     concepto: dataEgreso.concepto,
@@ -99,22 +91,45 @@ const ModalEgreso = ({
       const res = await putGeneralTable(identifier, password, endpointEgreso, dataEgreso.id, generalData);
 
       if (res.status >= 200 && res.status <= 299) {
-        setOpenAlert(true);
-        setMessageInfo('Egreso actualizado correctamente');
-        setMessageSeverity('success');
-        setTimeout(() => {
-          location.reload();
-        }, 1500);
+        Swal.fire({
+          icon: 'success',
+          text: 'Egreso actualizado correctamente',
+          allowOutsideClick: false,
+          confirmButtonColor: '#1976d2',
+          confirmButtonText: 'Aceptar',
+          customClass: {
+            container: 'swal-container',
+          },
+        }).then(result => {
+          if (result.isConfirmed) {
+            handleCloseModal();
+            location.reload();
+          }
+        });
       } else {
-        setOpenAlert(true);
-        setMessageInfo('Error al actualizar egreso');
-        setMessageSeverity('error');
+        Swal.fire({
+          icon: 'error',
+          text: 'Error al registrar egreso',
+          allowOutsideClick: false,
+          confirmButtonColor: '#1976d2',
+          confirmButtonText: 'Aceptar',
+          customClass: {
+            container: 'swal-container',
+          },
+        });
         return;
       }
     } else {
-      setOpenAlert(true);
-      setMessageInfo('Por favor, rellene todos los campos');
-      setMessageSeverity('error');
+      Swal.fire({
+        icon: 'error',
+        text: 'Por favor, rellene todos los campos',
+        allowOutsideClick: false,
+        confirmButtonColor: '#1976d2',
+        confirmButtonText: 'Aceptar',
+        customClass: {
+          container: 'swal-container',
+        },
+      });
     }
   };
 

@@ -3,6 +3,7 @@ import { Box, Button, Container, TextField } from '@mui/material';
 import UpdateIcon from '@mui/icons-material/Update';
 import EditIcon from '@mui/icons-material/Edit';
 import CloseIcon from '@mui/icons-material/Close';
+import Swal from 'sweetalert2';
 
 import TitlePage from '@/components/Title/TitlePage';
 import TitleInput from '@/components/Title/TitleInput';
@@ -20,7 +21,7 @@ import {
   stylesWidthInput,
 } from '@/components/Habitaciones/Tarifa/TarifaStyles';
 
-const ModalTarifa = ({ dataTarifa, handleCloseModal, setOpenAlert, setMessageInfo, setMessageSeverity }) => {
+const ModalTarifa = ({ dataTarifa, handleCloseModal }) => {
   const [data, setData] = useState({
     id: dataTarifa.id,
     descripcion: dataTarifa.descripcion,
@@ -55,22 +56,45 @@ const ModalTarifa = ({ dataTarifa, handleCloseModal, setOpenAlert, setMessageInf
       const res = await putGeneralTable(identifier, password, endpointTarifa, dataTarifa.id, generalData);
 
       if (res.status >= 200 && res.status <= 299) {
-        setOpenAlert(true);
-        setMessageInfo('Tarifa actualizada correctamente');
-        setMessageSeverity('success');
-        setTimeout(() => {
-          location.reload();
-        }, 1500);
+        Swal.fire({
+          icon: 'success',
+          text: 'Tarifa actualizada correctamente',
+          allowOutsideClick: false,
+          confirmButtonColor: '#1976d2',
+          confirmButtonText: 'Aceptar',
+          customClass: {
+            container: 'swal-container',
+          },
+        }).then(result => {
+          if (result.isConfirmed) {
+            handleCloseModal();
+            location.reload();
+          }
+        });
       } else {
-        setOpenAlert(true);
-        setMessageInfo('Error al actualizar tarifa');
-        setMessageSeverity('error');
+        Swal.fire({
+          icon: 'error',
+          text: 'Error al actualizar tarifa',
+          allowOutsideClick: false,
+          confirmButtonColor: '#1976d2',
+          confirmButtonText: 'Aceptar',
+          customClass: {
+            container: 'swal-container',
+          },
+        });
         return;
       }
     } else {
-      setOpenAlert(true);
-      setMessageInfo('Por favor, rellene todos los campos');
-      setMessageSeverity('error');
+      Swal.fire({
+        icon: 'error',
+        text: 'Por favor, rellene todos los campos',
+        allowOutsideClick: false,
+        confirmButtonColor: '#1976d2',
+        confirmButtonText: 'Aceptar',
+        customClass: {
+          container: 'swal-container',
+        },
+      });
     }
   };
 

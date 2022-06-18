@@ -38,7 +38,7 @@ const columns = [
   { id: 'acciones', label: 'Acciones', width: 100 },
 ];
 
-const TableViewEgresos = ({ setOpenAlert, setMessageInfo, setMessageSeverity, pago, categoria }) => {
+const TableViewEgresos = ({ pago, categoria }) => {
   const [page, setPage] = useState(0);
   const [rowsPerPage, setRowsPerPage] = useState(10);
   const [openModal, setOpenModal] = useState(false);
@@ -109,7 +109,7 @@ const TableViewEgresos = ({ setOpenAlert, setMessageInfo, setMessageSeverity, pa
                 return (
                   <TableRow key={id}>
                     <TableCell sx={stylesTableCell}>{id}</TableCell>
-                    <TableCell sx={stylesTableCell}>{moment(fecha).format('YYYY-MM-DD hh:mm:ss')}</TableCell>
+                    <TableCell sx={stylesTableCell}>{moment(fecha).format('YYYY-MM-DD hh:mm:ss a')}</TableCell>
                     <TableCell sx={stylesTableCell}>{concepto}</TableCell>
                     <TableCell sx={stylesTableCell}>{descripcion}</TableCell>
                     <TableCell sx={stylesTableCell}>
@@ -151,9 +151,6 @@ const TableViewEgresos = ({ setOpenAlert, setMessageInfo, setMessageSeverity, pa
             categoria={categoria}
             dataCategoria={dataCategoria}
             handleCloseModal={handleCloseModal}
-            setOpenAlert={setOpenAlert}
-            setMessageInfo={setMessageInfo}
-            setMessageSeverity={setMessageSeverity}
           />
         </Box>
       </Modal>

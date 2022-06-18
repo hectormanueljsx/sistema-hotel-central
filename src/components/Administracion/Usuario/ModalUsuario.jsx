@@ -3,6 +3,7 @@ import { Box, Button, Checkbox, Container, FormControlLabel, TextField } from '@
 import UpdateIcon from '@mui/icons-material/Update';
 import EditIcon from '@mui/icons-material/Edit';
 import CloseIcon from '@mui/icons-material/Close';
+import Swal from 'sweetalert2';
 
 import TitlePage from '@/components/Title/TitlePage';
 import TitleInput from '@/components/Title/TitleInput';
@@ -20,7 +21,7 @@ import {
   stylesWidthInput,
 } from '@/components/Administracion/Usuario/UsuarioStyles';
 
-const ModalUsuario = ({ dataUsuario, handleCloseModal, setOpenAlert, setMessageInfo, setMessageSeverity }) => {
+const ModalUsuario = ({ dataUsuario, handleCloseModal }) => {
   const [data, setData] = useState({
     username: dataUsuario.username,
     password: dataUsuario.identifier,
@@ -52,16 +53,30 @@ const ModalUsuario = ({ dataUsuario, handleCloseModal, setOpenAlert, setMessageI
     let dataRole = '';
 
     if (data.username === '' || data.email === '') {
-      setOpenAlert(true);
-      setMessageInfo('Por favor, rellene todos los campos');
-      setMessageSeverity('error');
+      Swal.fire({
+        icon: 'error',
+        text: 'Por favor, rellene todos los campos',
+        allowOutsideClick: false,
+        confirmButtonColor: '#1976d2',
+        confirmButtonText: 'Aceptar',
+        customClass: {
+          container: 'swal-container',
+        },
+      });
       return;
     }
 
     if (data.password !== data.confirm) {
-      setOpenAlert(true);
-      setMessageInfo('Las contraseñas no coinciden');
-      setMessageSeverity('error');
+      Swal.fire({
+        icon: 'error',
+        text: 'Las contraseñas no coinciden',
+        allowOutsideClick: false,
+        confirmButtonColor: '#1976d2',
+        confirmButtonText: 'Aceptar',
+        customClass: {
+          container: 'swal-container',
+        },
+      });
       return;
     }
 
@@ -87,16 +102,32 @@ const ModalUsuario = ({ dataUsuario, handleCloseModal, setOpenAlert, setMessageI
     const res = await putUsers(identifier, password, endpointUsuario, dataUsuario.id, dataUser, dataRole);
 
     if (res.status >= 200 && res.status <= 299) {
-      setOpenAlert(true);
-      setMessageInfo('Usuario actualizado correctamente');
-      setMessageSeverity('success');
-      setTimeout(() => {
-        location.reload();
-      }, 1500);
+      Swal.fire({
+        icon: 'success',
+        text: 'Usuario actualizado correctamente',
+        allowOutsideClick: false,
+        confirmButtonColor: '#1976d2',
+        confirmButtonText: 'Aceptar',
+        customClass: {
+          container: 'swal-container',
+        },
+      }).then(result => {
+        if (result.isConfirmed) {
+          handleCloseModal();
+          location.reload();
+        }
+      });
     } else {
-      setOpenAlert(true);
-      setMessageInfo('Error al actualizar usuario');
-      setMessageSeverity('error');
+      Swal.fire({
+        icon: 'error',
+        text: 'Error al actualizar usuario',
+        allowOutsideClick: false,
+        confirmButtonColor: '#1976d2',
+        confirmButtonText: 'Aceptar',
+        customClass: {
+          container: 'swal-container',
+        },
+      });
       return;
     }
   };
@@ -120,10 +151,8 @@ const ModalUsuario = ({ dataUsuario, handleCloseModal, setOpenAlert, setMessageI
               type='text'
               margin='none'
               size='small'
-              placeholder='Nombre'
               required
               fullWidth
-              autoFocus
             />
           </Box>
           <Box component='div' sx={[stylesContainerInput, stylesWidthInput]}>
@@ -137,7 +166,6 @@ const ModalUsuario = ({ dataUsuario, handleCloseModal, setOpenAlert, setMessageI
               type='email'
               margin='none'
               size='small'
-              placeholder='Email'
               required
               fullWidth
             />
@@ -154,7 +182,6 @@ const ModalUsuario = ({ dataUsuario, handleCloseModal, setOpenAlert, setMessageI
               type='password'
               margin='none'
               size='small'
-              placeholder='Contraseña'
               required
               fullWidth
             />
@@ -169,7 +196,6 @@ const ModalUsuario = ({ dataUsuario, handleCloseModal, setOpenAlert, setMessageI
               type='password'
               margin='none'
               size='small'
-              placeholder='Contraseña'
               required
               fullWidth
             />

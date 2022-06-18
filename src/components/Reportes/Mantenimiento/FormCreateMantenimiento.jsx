@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import { Box, Button, Container, FormControl, MenuItem, Select, TextField } from '@mui/material';
 import SaveIcon from '@mui/icons-material/Save';
+import Swal from 'sweetalert2';
 
 import TitlePage from '@/components/Title/TitlePage';
 import TitleInput from '@/components/Title/TitleInput';
@@ -14,7 +15,7 @@ import {
   stylesWidthHeightForm,
 } from '@/components/Reportes/Mantenimiento/MantenimientoStyles';
 
-const FormCreateMantenimiento = ({ setOpenAlert, setMessageInfo, setMessageSeverity, habitacion, subcategoria }) => {
+const FormCreateMantenimiento = ({ habitacion, subcategoria }) => {
   const [datos, setDatos] = useState({
     reporta: '',
     motivo: '',
@@ -49,22 +50,31 @@ const FormCreateMantenimiento = ({ setOpenAlert, setMessageInfo, setMessageSever
       const res = await postGeneralTable(identifier, password, endpointMantenimiento, generalData);
 
       if (res.status >= 200 && res.status <= 299) {
-        setOpenAlert(true);
-        setMessageInfo('Mantenimiento registrado correctamente');
-        setMessageSeverity('success');
-        setTimeout(() => {
-          location.reload();
-        }, 1500);
+        Swal.fire({
+          icon: 'success',
+          text: 'Mantenimiento registrado correctamente',
+          allowOutsideClick: false,
+          confirmButtonColor: '#1976d2',
+          confirmButtonText: 'Aceptar',
+        }).then(result => result.isConfirmed && location.reload());
       } else {
-        setOpenAlert(true);
-        setMessageInfo('Error al registrar mantenimiento');
-        setMessageSeverity('error');
+        Swal.fire({
+          icon: 'error',
+          text: 'Error al registrar mantenimiento',
+          allowOutsideClick: false,
+          confirmButtonColor: '#1976d2',
+          confirmButtonText: 'Aceptar',
+        });
         return;
       }
     } else {
-      setOpenAlert(true);
-      setMessageInfo('Por favor, rellene todos los campos');
-      setMessageSeverity('error');
+      Swal.fire({
+        icon: 'error',
+        text: 'Por favor, rellene todos los campos',
+        allowOutsideClick: false,
+        confirmButtonColor: '#1976d2',
+        confirmButtonText: 'Aceptar',
+      });
     }
   };
 

@@ -11,6 +11,7 @@ import {
   TextField,
 } from '@mui/material';
 import SaveIcon from '@mui/icons-material/Save';
+import Swal from 'sweetalert2';
 
 import TitlePage from '@/components/Title/TitlePage';
 import TitleInput from '@/components/Title/TitleInput';
@@ -28,7 +29,7 @@ import {
 
 const services = ['CLIMA', 'TV'];
 
-const FormCreateHabitaciones = ({ setOpenAlert, setMessageInfo, setMessageSeverity }) => {
+const FormCreateHabitaciones = () => {
   const [optionServices, setOptionServices] = useState([]);
   const [optionTarifas, setOptionTarifas] = useState([]);
   const [numHabitacion, setNumHabitacion] = useState('');
@@ -75,22 +76,31 @@ const FormCreateHabitaciones = ({ setOpenAlert, setMessageInfo, setMessageSeveri
       const res = await postGeneralTable(identifier, password, endpointHabitacion, HabitacionData);
 
       if (res.status >= 200 && res.status <= 299) {
-        setOpenAlert(true);
-        setMessageInfo('Habitación registrada correctamente');
-        setMessageSeverity('success');
-        setTimeout(() => {
-          location.reload();
-        }, 1500);
+        Swal.fire({
+          icon: 'success',
+          text: 'Habitación registrada correctamente',
+          allowOutsideClick: false,
+          confirmButtonColor: '#1976d2',
+          confirmButtonText: 'Aceptar',
+        }).then(result => result.isConfirmed && location.reload());
       } else {
-        setOpenAlert(true);
-        setMessageInfo('Error al registrar habitación');
-        setMessageSeverity('error');
+        Swal.fire({
+          icon: 'error',
+          text: 'Error al registrar habitación',
+          allowOutsideClick: false,
+          confirmButtonColor: '#1976d2',
+          confirmButtonText: 'Aceptar',
+        });
         return;
       }
     } else {
-      setOpenAlert(true);
-      setMessageInfo('Por favor, rellene todos los campos');
-      setMessageSeverity('error');
+      Swal.fire({
+        icon: 'error',
+        text: 'Por favor, rellene todos los campos',
+        allowOutsideClick: false,
+        confirmButtonColor: '#1976d2',
+        confirmButtonText: 'Aceptar',
+      });
     }
   };
 

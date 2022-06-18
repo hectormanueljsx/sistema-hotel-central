@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import { Box, Button, Container, FormControl, MenuItem, Select, TextField } from '@mui/material';
 import SaveIcon from '@mui/icons-material/Save';
+import Swal from 'sweetalert2';
 
 import TitlePage from '@/components/Title/TitlePage';
 import TitleInput from '@/components/Title/TitleInput';
@@ -17,7 +18,7 @@ import {
   stylesButtonSend,
 } from '@/components/Caja/CategoriaEgresos/CategoriaEgresosStyles';
 
-const FormCreateCategoriaEgresos = ({ setOpenAlert, setMessageInfo, setMessageSeverity }) => {
+const FormCreateCategoriaEgresos = () => {
   const [categoria, setCategoria] = useState('');
   const [options, setOptions] = useState('');
   const [subcategoria, setSubcategoria] = useState('');
@@ -40,22 +41,31 @@ const FormCreateCategoriaEgresos = ({ setOpenAlert, setMessageInfo, setMessageSe
       const res = await postGeneralTable(identifier, password, endpointCategoria, categoryData);
 
       if (res.status >= 200 && res.status <= 299) {
-        setOpenAlert(true);
-        setMessageInfo('Categoría registrada correctamente');
-        setMessageSeverity('success');
-        setTimeout(() => {
-          location.reload();
-        }, 1500);
+        Swal.fire({
+          icon: 'success',
+          text: 'Categoría registrada correctamente',
+          allowOutsideClick: false,
+          confirmButtonColor: '#1976d2',
+          confirmButtonText: 'Aceptar',
+        }).then(result => result.isConfirmed && location.reload());
       } else {
-        setOpenAlert(true);
-        setMessageInfo('Error al registrar categoría');
-        setMessageSeverity('error');
+        Swal.fire({
+          icon: 'error',
+          text: 'Error al registrar categoría',
+          allowOutsideClick: false,
+          confirmButtonColor: '#1976d2',
+          confirmButtonText: 'Aceptar',
+        });
         return;
       }
     } else {
-      setOpenAlert(true);
-      setMessageInfo('Por favor, rellene todos los campos');
-      setMessageSeverity('error');
+      Swal.fire({
+        icon: 'error',
+        text: 'Por favor, rellene todos los campos',
+        allowOutsideClick: false,
+        confirmButtonColor: '#1976d2',
+        confirmButtonText: 'Aceptar',
+      });
     }
   };
 
@@ -71,22 +81,31 @@ const FormCreateCategoriaEgresos = ({ setOpenAlert, setMessageInfo, setMessageSe
       const res = await postGeneralTable(identifier, password, endpointSubcategoria, subcategoryData);
 
       if (res.status >= 200 && res.status <= 299) {
-        setOpenAlert(true);
-        setMessageInfo('Subcategoría registrada correctamente');
-        setMessageSeverity('success');
-        setTimeout(() => {
-          location.reload();
-        }, 1500);
+        Swal.fire({
+          icon: 'success',
+          text: 'Subcategoría registrada correctamente',
+          allowOutsideClick: false,
+          confirmButtonColor: '#1976d2',
+          confirmButtonText: 'Aceptar',
+        }).then(result => result.isConfirmed && location.reload());
       } else {
-        setOpenAlert(true);
-        setMessageInfo('Error al registrar subcategoría');
-        setMessageSeverity('error');
+        Swal.fire({
+          icon: 'error',
+          text: 'Error al registrar subcategoría',
+          allowOutsideClick: false,
+          confirmButtonColor: '#1976d2',
+          confirmButtonText: 'Aceptar',
+        });
         return;
       }
     } else {
-      setOpenAlert(true);
-      setMessageInfo('Por favor, seleccione una categoría y/o rellene el campo de subcategoría');
-      setMessageSeverity('error');
+      Swal.fire({
+        icon: 'error',
+        text: 'Por favor, seleccione una categoría y/o rellene el campo de subcategoría',
+        allowOutsideClick: false,
+        confirmButtonColor: '#1976d2',
+        confirmButtonText: 'Aceptar',
+      });
     }
   };
 

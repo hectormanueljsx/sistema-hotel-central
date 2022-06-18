@@ -13,6 +13,7 @@ import {
 import UpdateIcon from '@mui/icons-material/Update';
 import EditIcon from '@mui/icons-material/Edit';
 import CloseIcon from '@mui/icons-material/Close';
+import Swal from 'sweetalert2';
 
 import TitlePage from '@/components/Title/TitlePage';
 import TitleInput from '@/components/Title/TitleInput';
@@ -34,15 +35,7 @@ import {
 
 const services = ['CLIMA', 'TV'];
 
-const ModalHabitaciones = ({
-  dataHabitaciones,
-  dataSelectTarifas,
-  dataServices,
-  handleCloseModal,
-  setOpenAlert,
-  setMessageInfo,
-  setMessageSeverity,
-}) => {
+const ModalHabitaciones = ({ dataHabitaciones, dataSelectTarifas, dataServices, handleCloseModal }) => {
   const [optionServices, setOptionServices] = useState(dataServices);
   const [optionTarifas, setOptionTarifas] = useState(dataSelectTarifas);
   const [numHabitacion, setNumHabitacion] = useState(dataHabitaciones.num_hab);
@@ -97,22 +90,45 @@ const ModalHabitaciones = ({
       const res = await putGeneralTable(identifier, password, endpointHabitacion, dataHabitaciones.id, habitacionData);
 
       if (res.status >= 200 && res.status <= 299) {
-        setOpenAlert(true);
-        setMessageInfo('Habitación actualizada correctamente');
-        setMessageSeverity('success');
-        setTimeout(() => {
-          location.reload();
-        }, 1500);
+        Swal.fire({
+          icon: 'success',
+          text: 'Habitación actualizada correctamente',
+          allowOutsideClick: false,
+          confirmButtonColor: '#1976d2',
+          confirmButtonText: 'Aceptar',
+          customClass: {
+            container: 'swal-container',
+          },
+        }).then(result => {
+          if (result.isConfirmed) {
+            handleCloseModal();
+            location.reload();
+          }
+        });
       } else {
-        setOpenAlert(true);
-        setMessageInfo('Error al actualizar habitación');
-        setMessageSeverity('error');
+        Swal.fire({
+          icon: 'error',
+          text: 'Error al actualizar habitación',
+          allowOutsideClick: false,
+          confirmButtonColor: '#1976d2',
+          confirmButtonText: 'Aceptar',
+          customClass: {
+            container: 'swal-container',
+          },
+        });
         return;
       }
     } else {
-      setOpenAlert(true);
-      setMessageInfo('Por favor, rellene todos los campos');
-      setMessageSeverity('error');
+      Swal.fire({
+        icon: 'error',
+        text: 'Por favor, rellene todos los campos',
+        allowOutsideClick: false,
+        confirmButtonColor: '#1976d2',
+        confirmButtonText: 'Aceptar',
+        customClass: {
+          container: 'swal-container',
+        },
+      });
     }
   };
 

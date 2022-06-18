@@ -12,6 +12,7 @@ import {
 import ExpandMore from '@mui/icons-material/ExpandMore';
 import ArrowRightIcon from '@mui/icons-material/ArrowRight';
 import DeleteIcon from '@mui/icons-material/Delete';
+import Swal from 'sweetalert2';
 
 import TitlePage from '@/components/Title/TitlePage';
 import Loader from '@/components/Loader/Loader';
@@ -40,14 +41,92 @@ const TableViewCategoriaEgresos = () => {
 
   const handleChange = panel => (event, isExpanded) => setExpanded(isExpanded ? panel : false);
 
+  const deleteByIdCategoria = async id => {
+    const { status } = await deleteGeneralTable(identifier, password, endpointCategoria, id);
+    return status;
+  };
+
+  const deleteByIdSubcategoria = async id => {
+    const { status } = await deleteGeneralTable(identifier, password, endpointSubategoria, id);
+    return status;
+  };
+
   const deleteCategoria = async id => {
-    await deleteGeneralTable(identifier, password, endpointCategoria, id);
-    location.reload();
+    Swal.fire({
+      icon: 'warning',
+      text: '¿Estás seguro de eliminar esta categoría?',
+      showCancelButton: true,
+      allowOutsideClick: false,
+      confirmButtonColor: '#1976d2',
+      cancelButtonColor: '#d32f2f',
+      confirmButtonText: 'Aceptar',
+      cancelButtonText: 'Cancelar',
+    }).then(result => {
+      if (result.isConfirmed) {
+        deleteByIdCategoria(id).then(res => {
+          if (res >= 200 && res <= 299) {
+            Swal.fire({
+              icon: 'success',
+              text: 'Categoría eliminada correctamente',
+              allowOutsideClick: false,
+              confirmButtonColor: '#1976d2',
+              confirmButtonText: 'Aceptar',
+            }).then(result => {
+              if (result.isConfirmed) {
+                location.reload();
+              }
+            });
+          } else {
+            Swal.fire({
+              icon: 'error',
+              text: 'Error al eliminar categoría',
+              allowOutsideClick: false,
+              confirmButtonColor: '#1976d2',
+              confirmButtonText: 'Aceptar',
+            });
+          }
+        });
+      }
+    });
   };
 
   const deleteSubcategoria = async id => {
-    await deleteGeneralTable(identifier, password, endpointSubategoria, id);
-    location.reload();
+    Swal.fire({
+      icon: 'warning',
+      text: '¿Estás seguro de eliminar esta subcategoría?',
+      showCancelButton: true,
+      allowOutsideClick: false,
+      confirmButtonColor: '#1976d2',
+      cancelButtonColor: '#d32f2f',
+      confirmButtonText: 'Aceptar',
+      cancelButtonText: 'Cancelar',
+    }).then(result => {
+      if (result.isConfirmed) {
+        deleteByIdSubcategoria(id).then(res => {
+          if (res >= 200 && res <= 299) {
+            Swal.fire({
+              icon: 'success',
+              text: 'Subcategoría eliminada correctamente',
+              allowOutsideClick: false,
+              confirmButtonColor: '#1976d2',
+              confirmButtonText: 'Aceptar',
+            }).then(result => {
+              if (result.isConfirmed) {
+                location.reload();
+              }
+            });
+          } else {
+            Swal.fire({
+              icon: 'error',
+              text: 'Error al eliminar subcategoría',
+              allowOutsideClick: false,
+              confirmButtonColor: '#1976d2',
+              confirmButtonText: 'Aceptar',
+            });
+          }
+        });
+      }
+    });
   };
 
   const { list, loading, error } = useGetGeneralTable(identifier, password, endpointCategoria);

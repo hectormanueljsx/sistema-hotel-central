@@ -14,6 +14,7 @@ import {
 } from '@mui/material';
 import VisibilityIcon from '@mui/icons-material/Visibility';
 import DeleteIcon from '@mui/icons-material/Delete';
+import Swal from 'sweetalert2';
 
 import TitlePage from '@/components/Title/TitlePage';
 import Loader from '@/components/Loader/Loader';
@@ -38,7 +39,7 @@ const columns = [
 let dataServices = [];
 let dataSelectTarifas = [];
 
-const TableViewHabitaciones = ({ setOpenAlert, setMessageInfo, setMessageSeverity }) => {
+const TableViewHabitaciones = () => {
   const [page, setPage] = useState(0);
   const [rowsPerPage, setRowsPerPage] = useState(10);
   const [openModal, setOpenModal] = useState(false);
@@ -76,9 +77,48 @@ const TableViewHabitaciones = ({ setOpenAlert, setMessageInfo, setMessageSeverit
     setPage(0);
   };
 
+  const deleteByIdHabitacion = async id => {
+    const { status } = await deleteGeneralTable(identifier, password, endpointHabitacion, id);
+    return status;
+  };
+
   const deleteHabitacion = async id => {
-    await deleteGeneralTable(identifier, password, endpointHabitacion, id);
-    location.reload();
+    Swal.fire({
+      icon: 'warning',
+      text: '¿Estás seguro de eliminar esta habitación?',
+      showCancelButton: true,
+      allowOutsideClick: false,
+      confirmButtonColor: '#1976d2',
+      cancelButtonColor: '#d32f2f',
+      confirmButtonText: 'Aceptar',
+      cancelButtonText: 'Cancelar',
+    }).then(result => {
+      if (result.isConfirmed) {
+        deleteByIdHabitacion(id).then(res => {
+          if (res >= 200 && res <= 299) {
+            Swal.fire({
+              icon: 'success',
+              text: 'Habitación eliminada correctamente',
+              allowOutsideClick: false,
+              confirmButtonColor: '#1976d2',
+              confirmButtonText: 'Aceptar',
+            }).then(result => {
+              if (result.isConfirmed) {
+                location.reload();
+              }
+            });
+          } else {
+            Swal.fire({
+              icon: 'error',
+              text: 'Error al eliminar habitación',
+              allowOutsideClick: false,
+              confirmButtonColor: '#1976d2',
+              confirmButtonText: 'Aceptar',
+            });
+          }
+        });
+      }
+    });
   };
 
   const { list, loading, error } = useGetGeneralTable(identifier, password, endpointHabitacion);
@@ -152,9 +192,6 @@ const TableViewHabitaciones = ({ setOpenAlert, setMessageInfo, setMessageSeverit
             dataServices={dataServices}
             dataSelectTarifas={dataSelectTarifas}
             handleCloseModal={handleCloseModal}
-            setOpenAlert={setOpenAlert}
-            setMessageInfo={setMessageInfo}
-            setMessageSeverity={setMessageSeverity}
           />
         </Box>
       </Modal>

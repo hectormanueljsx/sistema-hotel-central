@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import { Box, Button, Checkbox, Container, FormControlLabel, TextField } from '@mui/material';
 import SaveIcon from '@mui/icons-material/Save';
+import Swal from 'sweetalert2';
 
 import TitlePage from '@/components/Title/TitlePage';
 import TitleInput from '@/components/Title/TitleInput';
@@ -14,7 +15,7 @@ import {
   stylesWidthHeightForm,
 } from '@/components/Administracion/Usuario/UsuarioStyles';
 
-const FormCreateUsuario = ({ setOpenAlert, setMessageInfo, setMessageSeverity }) => {
+const FormCreateUsuario = () => {
   const [datos, setDatos] = useState({
     username: '',
     password: '',
@@ -54,27 +55,40 @@ const FormCreateUsuario = ({ setOpenAlert, setMessageInfo, setMessageSeverity })
         const res = await postUsers(identifier, password, endpointUsuario, dataUser, dataRole);
 
         if (res.status >= 200 && res.status <= 299) {
-          setOpenAlert(true);
-          setMessageInfo('Usuario registrado correctamente');
-          setMessageSeverity('success');
-          setTimeout(() => {
-            location.reload();
-          }, 1500);
+          Swal.fire({
+            icon: 'success',
+            text: 'Usuario registrado correctamente',
+            allowOutsideClick: false,
+            confirmButtonColor: '#1976d2',
+            confirmButtonText: 'Aceptar',
+          }).then(result => result.isConfirmed && location.reload());
         } else {
-          setOpenAlert(true);
-          setMessageInfo('Error al registrar usuario');
-          setMessageSeverity('error');
+          Swal.fire({
+            icon: 'error',
+            text: 'Error al registrar usuario',
+            allowOutsideClick: false,
+            confirmButtonColor: '#1976d2',
+            confirmButtonText: 'Aceptar',
+          });
           return;
         }
       } else {
-        setOpenAlert(true);
-        setMessageInfo('Por favor, rellene todos los campos');
-        setMessageSeverity('error');
+        Swal.fire({
+          icon: 'error',
+          text: 'Por favor, rellene todos los campos',
+          allowOutsideClick: false,
+          confirmButtonColor: '#1976d2',
+          confirmButtonText: 'Aceptar',
+        });
       }
     } else {
-      setOpenAlert(true);
-      setMessageInfo('Las contraseñas no coinciden');
-      setMessageSeverity('error');
+      Swal.fire({
+        icon: 'error',
+        text: 'Las contraseñas no coinciden',
+        allowOutsideClick: false,
+        confirmButtonColor: '#1976d2',
+        confirmButtonText: 'Aceptar',
+      });
     }
   };
 
@@ -91,7 +105,6 @@ const FormCreateUsuario = ({ setOpenAlert, setMessageInfo, setMessageSeverity })
             type='text'
             margin='none'
             size='small'
-            placeholder='Nombre'
             required
             fullWidth
             autoFocus
@@ -106,7 +119,6 @@ const FormCreateUsuario = ({ setOpenAlert, setMessageInfo, setMessageSeverity })
             type='email'
             margin='none'
             size='small'
-            placeholder='Email'
             required
             fullWidth
           />
@@ -120,7 +132,6 @@ const FormCreateUsuario = ({ setOpenAlert, setMessageInfo, setMessageSeverity })
             type='password'
             margin='none'
             size='small'
-            placeholder='Contraseña'
             required
             fullWidth
           />
@@ -134,7 +145,6 @@ const FormCreateUsuario = ({ setOpenAlert, setMessageInfo, setMessageSeverity })
             type='password'
             margin='none'
             size='small'
-            placeholder='Contraseña'
             required
             fullWidth
           />

@@ -36,7 +36,7 @@ const columns = [
   { id: 'acciones', label: 'Acciones', width: 100 },
 ];
 
-const TableViewMantenimiento = ({ setOpenAlert, setMessageInfo, setMessageSeverity, habitacion, subcategoria }) => {
+const TableViewMantenimiento = ({ habitacion, subcategoria }) => {
   const [page, setPage] = useState(0);
   const [rowsPerPage, setRowsPerPage] = useState(10);
   const [openModal, setOpenModal] = useState(false);
@@ -127,9 +127,6 @@ const TableViewMantenimiento = ({ setOpenAlert, setMessageInfo, setMessageSeveri
           <ModalMantenimiento
             dataMantenimiento={dataMantenimiento}
             handleCloseModal={handleCloseModal}
-            setOpenAlert={setOpenAlert}
-            setMessageInfo={setMessageInfo}
-            setMessageSeverity={setMessageSeverity}
             habitacion={habitacion}
             subcategoria={subcategoria}
           />

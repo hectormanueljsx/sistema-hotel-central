@@ -11,6 +11,7 @@ import {
   MenuItem,
 } from '@mui/material';
 import SaveIcon from '@mui/icons-material/Save';
+import Swal from 'sweetalert2';
 
 import TitlePage from '@/components/Title/TitlePage';
 import TitleInput from '@/components/Title/TitleInput';
@@ -25,7 +26,7 @@ import {
   stylesWidthHeightForm,
 } from '@/components/Caja/Egresos/EgresosStyles';
 
-const FormCreateEgresos = ({ setOpenAlert, setMessageInfo, setMessageSeverity, pago, categoria }) => {
+const FormCreateEgresos = ({ pago, categoria }) => {
   const [datos, setDatos] = useState({
     fecha: '',
     importe: '',
@@ -69,22 +70,31 @@ const FormCreateEgresos = ({ setOpenAlert, setMessageInfo, setMessageSeverity, p
       const res = await postGeneralTable(identifier, password, endpointEgreso, generalData);
 
       if (res.status >= 200 && res.status <= 299) {
-        setOpenAlert(true);
-        setMessageInfo('Gasto registrado correctamente');
-        setMessageSeverity('success');
-        setTimeout(() => {
-          location.reload();
-        }, 1500);
+        Swal.fire({
+          icon: 'success',
+          text: 'Gasto registrado correctamente',
+          allowOutsideClick: false,
+          confirmButtonColor: '#1976d2',
+          confirmButtonText: 'Aceptar',
+        }).then(result => result.isConfirmed && location.reload());
       } else {
-        setOpenAlert(true);
-        setMessageInfo('Error al registrar gasto');
-        setMessageSeverity('error');
+        Swal.fire({
+          icon: 'error',
+          text: 'Error al registrar gasto',
+          allowOutsideClick: false,
+          confirmButtonColor: '#1976d2',
+          confirmButtonText: 'Aceptar',
+        });
         return;
       }
     } else {
-      setOpenAlert(true);
-      setMessageInfo('Por favor, rellene todos los campos');
-      setMessageSeverity('error');
+      Swal.fire({
+        icon: 'error',
+        text: 'Por favor, rellene todos los campos',
+        allowOutsideClick: false,
+        confirmButtonColor: '#1976d2',
+        confirmButtonText: 'Aceptar',
+      });
     }
   };
 

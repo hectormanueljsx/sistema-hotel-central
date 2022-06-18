@@ -1,7 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import { Box, Container } from '@mui/material';
 
-import AlertGlobalForms from '@/components/Alert/AlertGlobalForms';
 import FormCreateMantenimiento from '@/components/Reportes/Mantenimiento/FormCreateMantenimiento';
 import TableViewMantenimiento from '@/components/Reportes/Mantenimiento/TableViewMantenimiento';
 import getGeneralSelect from '@/services/getGeneralSelect';
@@ -10,9 +9,6 @@ import { generalEndpoints } from '@/utilities/endpoints';
 import { stylesBoxMantenimiento } from '@/components/Reportes/Mantenimiento/MantenimientoStyles';
 
 const Mantenimiento = () => {
-  const [messageInfo, setMessageInfo] = useState('');
-  const [messageSeverity, setMessageSeverity] = useState('');
-  const [openAlert, setOpenAlert] = useState(true);
   const [habitacion, setHabitacion] = useState([]);
   const [subcategoria, setSubcategoria] = useState([]);
 
@@ -41,29 +37,9 @@ const Mantenimiento = () => {
 
   return (
     <Container component='section' disableGutters maxWidth='xl'>
-      {messageInfo && (
-        <AlertGlobalForms
-          open={openAlert}
-          setOpen={setOpenAlert}
-          messageInfo={messageInfo}
-          messageSeverity={messageSeverity || 'info'}
-        />
-      )}
       <Box sx={stylesBoxMantenimiento}>
-        <FormCreateMantenimiento
-          setOpenAlert={setOpenAlert}
-          setMessageInfo={setMessageInfo}
-          setMessageSeverity={setMessageSeverity}
-          habitacion={habitacion}
-          subcategoria={subcategoria}
-        />
-        <TableViewMantenimiento
-          setOpenAlert={setOpenAlert}
-          setMessageInfo={setMessageInfo}
-          setMessageSeverity={setMessageSeverity}
-          habitacion={habitacion}
-          subcategoria={subcategoria}
-        />
+        <FormCreateMantenimiento habitacion={habitacion} subcategoria={subcategoria} />
+        <TableViewMantenimiento habitacion={habitacion} subcategoria={subcategoria} />
       </Box>
     </Container>
   );

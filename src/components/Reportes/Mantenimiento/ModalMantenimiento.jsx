@@ -3,6 +3,7 @@ import { Box, Button, Container, FormControl, MenuItem, Select, TextField } from
 import UpdateIcon from '@mui/icons-material/Update';
 import EditIcon from '@mui/icons-material/Edit';
 import CloseIcon from '@mui/icons-material/Close';
+import Swal from 'sweetalert2';
 
 import TitlePage from '@/components/Title/TitlePage';
 import TitleInput from '@/components/Title/TitleInput';
@@ -20,15 +21,7 @@ import {
   stylesWidthInput,
 } from '@/components/Reportes/Mantenimiento/MantenimientoStyles';
 
-const ModalMantenimiento = ({
-  habitacion,
-  subcategoria,
-  dataMantenimiento,
-  handleCloseModal,
-  setOpenAlert,
-  setMessageInfo,
-  setMessageSeverity,
-}) => {
+const ModalMantenimiento = ({ habitacion, subcategoria, dataMantenimiento, handleCloseModal }) => {
   const [datos, setDatos] = useState({
     fechaInicio: dataMantenimiento.f_inicio,
     fechafin: dataMantenimiento.f_fin,
@@ -63,6 +56,7 @@ const ModalMantenimiento = ({
 
     if (datos.motivo && idHabitacion && idSubcategoria) {
       let status = 'NO REALIZADO';
+
       if (datos.fechaInicio && !datos.fechafin) {
         status = 'EN PROCESO';
       } else if (datos.fechaInicio && datos.fechafin) {
@@ -81,25 +75,49 @@ const ModalMantenimiento = ({
         habitacion: { id: idHabitacion },
         subcategoria: { id: idSubcategoria },
       };
+
       const res = await putGeneralTable(identifier, password, endpointMantenimiento, dataMantenimiento.id, generalData);
 
       if (res.status >= 200 && res.status <= 299) {
-        setOpenAlert(true);
-        setMessageInfo('Mantenimiento registrado correctamente');
-        setMessageSeverity('success');
-        setTimeout(() => {
-          location.reload();
-        }, 1500);
+        Swal.fire({
+          icon: 'success',
+          text: 'Mantenimiento actualizado correctamente',
+          allowOutsideClick: false,
+          confirmButtonColor: '#1976d2',
+          confirmButtonText: 'Aceptar',
+          customClass: {
+            container: 'swal-container',
+          },
+        }).then(result => {
+          if (result.isConfirmed) {
+            handleCloseModal();
+            location.reload();
+          }
+        });
       } else {
-        setOpenAlert(true);
-        setMessageInfo('Error al registrar mantenimiento');
-        setMessageSeverity('error');
+        Swal.fire({
+          icon: 'error',
+          text: 'Error al registrar mantenimiento',
+          allowOutsideClick: false,
+          confirmButtonColor: '#1976d2',
+          confirmButtonText: 'Aceptar',
+          customClass: {
+            container: 'swal-container',
+          },
+        });
         return;
       }
     } else {
-      setOpenAlert(true);
-      setMessageInfo('Por favor, rellene todos los campos');
-      setMessageSeverity('error');
+      Swal.fire({
+        icon: 'error',
+        text: 'Por favor, rellene todos los campos',
+        allowOutsideClick: false,
+        confirmButtonColor: '#1976d2',
+        confirmButtonText: 'Aceptar',
+        customClass: {
+          container: 'swal-container',
+        },
+      });
     }
   };
 
