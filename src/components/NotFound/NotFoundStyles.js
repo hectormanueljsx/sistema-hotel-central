@@ -18,13 +18,22 @@ export const stylesSectionText = css`
 export const stylesErrorNumber = css`
   font-size: 120px;
   font-weight: 700;
+  line-height: 1;
   color: #51bab3;
   margin: 0;
+  margin-bottom: 50px;
 `;
 
 export const stylesErrorText = css`
   font-size: 60px;
   font-weight: 500;
+  line-height: 1;
   color: #000000;
   margin: 0;
+  margin-bottom: 100px;
+`;
+
+export const stylesButtonHome = css`
+  font-size: 24px;
+  text-transform: inherit;
 `;

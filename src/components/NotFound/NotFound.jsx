@@ -1,7 +1,8 @@
 import React from 'react';
-import { Box, Container, Typography } from '@mui/material';
+import { Box, Button, Container, Typography } from '@mui/material';
 
 import {
+  stylesButtonHome,
   stylesErrorNumber,
   stylesErrorText,
   stylesSectionContainer,
@@ -18,6 +19,9 @@ const NotFound = () => {
         <Typography component='h2' sx={stylesErrorText}>
           Página no encontrada
         </Typography>
+        <Button variant='contained' color='primary' href='/' sx={stylesButtonHome}>
+          Volver al inicio
+        </Button>
       </Box>
     </Container>
   );
