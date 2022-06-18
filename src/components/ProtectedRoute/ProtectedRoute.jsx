@@ -1,5 +1,7 @@
 import { Navigate } from 'react-router-dom';
 
+import Unauthorized from '@/components/Unauthorized/Unauthorized';
+
 const ProtectedRoute = ({ children, allowedRoles }) => {
   const user = localStorage.getItem('identifier');
   const role = localStorage.getItem('role');
@@ -8,7 +10,7 @@ const ProtectedRoute = ({ children, allowedRoles }) => {
 
   if (allowedRoles.includes(role)) return children;
 
-  return <Navigate to='/' />;
+  return <Unauthorized />;
 };
 
 export default ProtectedRoute;
