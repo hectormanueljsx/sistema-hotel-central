@@ -23,6 +23,8 @@ const theme = createTheme({
 
 const ROLES = {
   ADMINISTRADOR: 'Administrador',
+  RECEPCIONISTA: 'Recepcionista',
+  ENCARGADO: 'Encargado',
 };
 
 const App = () => {
