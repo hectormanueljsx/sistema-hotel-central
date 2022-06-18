@@ -6,6 +6,9 @@ import Swal from 'sweetalert2';
 
 import TitlePage from '@/components/Title/TitlePage';
 import TitleInput from '@/components/Title/TitleInput';
+import { generalEndpoints } from '@/utilities/endpoints';
+import putGeneralTable from '@/services/putGeneralTable';
+
 import postLogin from '@/services/postLogin';
 import {
   stylesButtonSend,
@@ -39,8 +42,16 @@ const Login = () => {
 
     if (datosLogin.username.trim().length > 0 && datosLogin.password.trim().length > 0) {
       const res = await postLogin(datosLogin.username, datosLogin.password);
+      const dateTime = new Date();
 
       if (res.status >= 200 && res.status <= 299) {
+        const endpointUsuario = generalEndpoints.usuario;
+        const generalData = {
+          ult_ingreso: dateTime.toISOString(),
+        };
+
+        const result = await putGeneralTable(res.email, datosLogin.password, endpointUsuario, res.id, generalData);
+
         localStorage.setItem('id', res.id);
         localStorage.setItem('identifier', res.email);
         localStorage.setItem('password', datosLogin.password);
