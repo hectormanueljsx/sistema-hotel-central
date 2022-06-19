@@ -97,7 +97,7 @@ const ModalMantenimiento = ({ habitacion, subcategoria, dataMantenimiento, handl
       } else {
         Swal.fire({
           icon: 'error',
-          text: 'Error al registrar mantenimiento',
+          text: 'Error al actualizar mantenimiento',
           allowOutsideClick: false,
           confirmButtonColor: '#1976d2',
           confirmButtonText: 'Aceptar',
