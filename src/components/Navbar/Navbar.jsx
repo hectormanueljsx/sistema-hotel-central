@@ -1,14 +1,9 @@
 import React, { useState } from 'react';
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
+import Swal from 'sweetalert2';
 
 import Dropdown from '@/components/Navbar/Dropdown';
-import {
-  navItems,
-  cajaDropdown,
-  habitacionesDropdown,
-  reportesDropdown,
-  userDropdown,
-} from '@/components/Navbar/NavItems';
+import { navItems, cajaDropdown, habitacionesDropdown, reportesDropdown } from '@/components/Navbar/NavItems';
 import Logotipo from '@/assets/logotipo-hc.png';
 import '@/components/Navbar/Navbar.css';
 
@@ -18,9 +13,12 @@ const Navbar = () => {
   const [dropdownCaja, setDropdownCaja] = useState(false);
   const [dropdownReportes, setDropdownReportes] = useState(false);
   const [dropdownHabitaciones, setDropdownHabitaciones] = useState(false);
+  const [dropdownMantenimiento, setDropdownMantenimiento] = useState(false);
   const [dropdownUser, setDropdownUser] = useState(false);
 
   const user = localStorage.getItem('username');
+
+  const navigate = useNavigate();
 
   return (
     <section className='navbar-fluid'>
@@ -103,21 +101,35 @@ const Navbar = () => {
               })}
             </ul>
             <ul className='navbar-items'>
-              <li
-                key={0}
-                className='navbar-item'
-                onMouseEnter={() => setDropdownUser(true)}
-                onMouseLeave={() => setDropdownUser(false)}
-              >
-                <button>{user}</button>
-                {dropdownUser && <Dropdown dropdownItem={userDropdown} />}
+              <li className='navbar-item'>
+                <button
+                  onClick={() => {
+                    Swal.fire({
+                      icon: 'warning',
+                      text: '¿Estás seguro que deseas cerrar sesión?',
+                      showCancelButton: true,
+                      allowOutsideClick: false,
+                      confirmButtonColor: '#1976d2',
+                      cancelButtonColor: '#d32f2f',
+                      confirmButtonText: 'Aceptar',
+                      cancelButtonText: 'Cancelar',
+                    }).then(result => {
+                      if (result.isConfirmed) {
+                        localStorage.clear();
+                        navigate('/login');
+                      }
+                    });
+                  }}
+                >
+                  Cerrar Sesión
+                </button>
               </li>
             </ul>
           </>
         ) : (
           <ul className='navbar-items'>
-            <li key='login' className='navbar-item'>
-              <button style={{ padding: 0 }}>
+            <li className='navbar-item'>
+              <button className='btn-login'>
                 <Link to='/login'>Iniciar Sesión</Link>
               </button>
             </li>

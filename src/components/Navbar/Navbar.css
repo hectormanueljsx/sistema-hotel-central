@@ -15,7 +15,7 @@
   flex-direction: row;
   justify-content: space-between;
   align-items: center;
-  width: 1536px;
+  width: 1432px;
   height: 100%;
   margin-left: auto;
   margin-right: auto;
@@ -34,7 +34,6 @@
   display: flex;
   list-style: none;
   text-align: center;
-  gap: 20px;
   padding: 0;
   margin: 0;
 }
@@ -53,7 +52,7 @@
   font-family: 'Roboto', sans-serif;
   font-size: 20px;
   font-weight: 500;
-  padding: 8px 16px;
+  padding: 8px 14px;
   text-decoration: none;
   color: #ffffff;
 }
@@ -62,4 +61,8 @@
 .navbar-item a:hover {
   border-radius: 4px;
   background-color: #51bab3;
+}
+
+.btn-login {
+  padding: 0 !important;
 }
