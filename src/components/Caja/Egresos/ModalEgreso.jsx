@@ -93,7 +93,7 @@ const ModalEgreso = ({ dataEgreso, pago, categoria, dataCategoria, handleCloseMo
       if (res.status >= 200 && res.status <= 299) {
         Swal.fire({
           icon: 'success',
-          text: 'Egreso actualizado correctamente',
+          text: 'Gasto actualizado correctamente',
           allowOutsideClick: false,
           confirmButtonColor: '#1976d2',
           confirmButtonText: 'Aceptar',
@@ -109,7 +109,7 @@ const ModalEgreso = ({ dataEgreso, pago, categoria, dataCategoria, handleCloseMo
       } else {
         Swal.fire({
           icon: 'error',
-          text: 'Error al registrar egreso',
+          text: 'Error al actualizar gasto',
           allowOutsideClick: false,
           confirmButtonColor: '#1976d2',
           confirmButtonText: 'Aceptar',
