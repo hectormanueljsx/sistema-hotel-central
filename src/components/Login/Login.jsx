@@ -61,10 +61,7 @@ const Login = () => {
           allowOutsideClick: false,
           confirmButtonColor: '#1976d2',
           confirmButtonText: 'Aceptar',
-        }).then(result => {
-          navigate('/');
-          location.reload();
-        });
+        }).then(result => navigate('/'));
       } else {
         Swal.fire({
           icon: 'error',
