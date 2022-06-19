@@ -101,7 +101,7 @@ const FormCreateCategoriaEgresos = () => {
     } else {
       Swal.fire({
         icon: 'error',
-        text: 'Por favor, seleccione una categoría y/o rellene el campo de subcategoría',
+        text: 'Por favor, rellene todos los campos',
         allowOutsideClick: false,
         confirmButtonColor: '#1976d2',
         confirmButtonText: 'Aceptar',
