@@ -1,3 +1,24 @@
 .swal-container {
   z-index: 3000;
 }
+
+.swal2-icon {
+  margin-top: 20px;
+  margin-bottom: 0;
+}
+
+.swal2-html-container {
+  font-size: 18px;
+  font-weight: 500;
+  margin: 25px 25px;
+}
+
+.swal2-actions {
+  display: flex;
+  gap: 20px;
+  margin: 0;
+}
+
+.swal2-styled {
+  margin: 0;
+}
