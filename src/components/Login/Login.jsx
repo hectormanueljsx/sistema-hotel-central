@@ -6,6 +6,7 @@ import Swal from 'sweetalert2';
 
 import TitlePage from '@/components/Title/TitlePage';
 import TitleInput from '@/components/Title/TitleInput';
+import Loader from '@/components/Loader/Loader';
 import { generalEndpoints } from '@/utilities/endpoints';
 import postLogin from '@/services/postLogin';
 import putGeneralTable from '@/services/putGeneralTable';
@@ -21,6 +22,7 @@ import {
 import LogoIcon from '@/assets/favicon.png';
 
 const Login = () => {
+  const [loading, setLoading] = useState(false);
   const [datosLogin, setDatosLogin] = useState({
     username: '',
     password: '',
@@ -40,37 +42,43 @@ const Login = () => {
     e.preventDefault();
 
     if (datosLogin.username.trim().length > 0 && datosLogin.password.trim().length > 0) {
-      const res = await postLogin(datosLogin.username, datosLogin.password);
-      const dateTime = new Date();
+      try {
+        setLoading(true);
 
-      if (res.status >= 200 && res.status <= 299) {
-        const endpointUsuario = generalEndpoints.usuario;
-        const generalData = { ult_ingreso: dateTime.toISOString() };
+        const res = await postLogin(datosLogin.username, datosLogin.password);
+        const dateTime = new Date();
 
-        await putGeneralTable(res.email, datosLogin.password, endpointUsuario, res.id, generalData);
+        if (res.status >= 200 && res.status <= 299) {
+          const endpointUsuario = generalEndpoints.usuario;
+          const generalData = { ult_ingreso: dateTime.toISOString() };
 
-        localStorage.setItem('id', res.id);
-        localStorage.setItem('identifier', res.email);
-        localStorage.setItem('password', datosLogin.password);
-        localStorage.setItem('username', res.username);
-        localStorage.setItem('role', res.name);
+          await putGeneralTable(res.email, datosLogin.password, endpointUsuario, res.id, generalData);
 
-        Swal.fire({
-          icon: 'success',
-          text: 'Inicio de sesión correcto',
-          allowOutsideClick: false,
-          confirmButtonColor: '#1976d2',
-          confirmButtonText: 'Aceptar',
-        }).then(result => navigate('/'));
-      } else {
-        Swal.fire({
-          icon: 'error',
-          text: 'Error al iniciar sesión, verifique sus datos',
-          allowOutsideClick: false,
-          confirmButtonColor: '#1976d2',
-          confirmButtonText: 'Aceptar',
-        });
-        return;
+          localStorage.setItem('id', res.id);
+          localStorage.setItem('identifier', res.email);
+          localStorage.setItem('password', datosLogin.password);
+          localStorage.setItem('username', res.username);
+          localStorage.setItem('role', res.name);
+
+          Swal.fire({
+            icon: 'success',
+            text: 'Inicio de sesión correcto',
+            allowOutsideClick: false,
+            confirmButtonColor: '#1976d2',
+            confirmButtonText: 'Aceptar',
+          }).then(result => navigate('/'));
+        } else {
+          Swal.fire({
+            icon: 'error',
+            text: 'Error al iniciar sesión, verifique sus datos',
+            allowOutsideClick: false,
+            confirmButtonColor: '#1976d2',
+            confirmButtonText: 'Aceptar',
+          });
+        }
+      } catch (error) {
+      } finally {
+        setLoading(false);
       }
     } else {
       Swal.fire({
@@ -121,6 +129,7 @@ const Login = () => {
           Iniciar Sesión
         </Button>
       </Box>
+      {loading && <Loader />}
     </Container>
   );
 };
