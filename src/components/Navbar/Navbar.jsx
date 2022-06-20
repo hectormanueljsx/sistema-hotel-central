@@ -3,7 +3,14 @@ import { Link, useNavigate } from 'react-router-dom';
 import Swal from 'sweetalert2';
 
 import Dropdown from '@/components/Navbar/Dropdown';
-import { navItems, cajaDropdown, habitacionesDropdown, reportesDropdown } from '@/components/Navbar/NavItems';
+import {
+  navItems,
+  cajaDropdown,
+  habitacionesDropdown,
+  reportesDropdown,
+  mantenimientoDropdown,
+  userDropdown,
+} from '@/components/Navbar/NavItems';
 import Logotipo from '@/assets/logotipo-hc.png';
 import '@/components/Navbar/Navbar.css';
 
@@ -95,6 +102,33 @@ const Navbar = () => {
                     >
                       <button>{item.title}</button>
                       {dropdownHabitaciones && <Dropdown dropdownItem={habitacionesDropdown} />}
+                    </li>
+                  );
+                }
+
+                if (item.title === 'Mantenimiento') {
+                  return (
+                    <li
+                      key={item.id}
+                      className={item.cName}
+                      onMouseEnter={() => setDropdownMantenimiento(true)}
+                      onMouseLeave={() => setDropdownMantenimiento(false)}
+                    >
+                      <button>{item.title}</button>
+                    </li>
+                  );
+                }
+
+                if (item.title === 'Administración') {
+                  return (
+                    <li
+                      key={item.id}
+                      className={item.cName}
+                      onMouseEnter={() => setDropdownUser(true)}
+                      onMouseLeave={() => setDropdownUser(false)}
+                    >
+                      <button>{item.title}</button>
+                      {dropdownUser && <Dropdown dropdownItem={userDropdown} />}
                     </li>
                   );
                 }
