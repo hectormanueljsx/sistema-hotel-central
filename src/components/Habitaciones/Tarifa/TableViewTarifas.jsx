@@ -17,7 +17,7 @@ import DeleteIcon from '@mui/icons-material/Delete';
 import Swal from 'sweetalert2';
 
 import TitlePage from '@/components/Title/TitlePage';
-import Loader from '@/components/Loader/Loader';
+import SleketonLoader from '@/components/Loader/SleketonLoader';
 import AlertGlobalTables from '@/components/Alert/AlertGlobalTables';
 import ModalTarifa from '@/components/Habitaciones/Tarifa/ModalTarifa';
 import useGetGeneralTable from '@/hooks/useGetGeneralTable';
@@ -110,22 +110,32 @@ const TableViewTarifas = () => {
     <Container component='section' disableGutters sx={[stylesContainerSection, stylesWidthHeightTable]}>
       <TitlePage titlePage='Lista de Tarifas' />
       <Box component='div'>
-        {loading && <Loader />}
-        {error && <AlertGlobalTables messageError='Ah ocurrido un error al obtener los datos' />}
         <TableContainer>
           <Table>
             <TableHead>
               <TableRow>
-                {loading || error
-                  ? null
-                  : columns.map((column, index) => (
-                      <TableCell key={index} sx={[stylesTableCell, { width: column.width }]}>
-                        {column.label}
-                      </TableCell>
-                    ))}
+                {columns.map((column, index) => (
+                  <TableCell key={index} sx={[stylesTableCell, { width: column.width }]}>
+                    {column.label}
+                  </TableCell>
+                ))}
               </TableRow>
             </TableHead>
             <TableBody>
+              {loading && (
+                <TableRow>
+                  <TableCell align='center' colSpan={columns.length} sx={stylesTableCell}>
+                    <SleketonLoader />
+                  </TableCell>
+                </TableRow>
+              )}
+              {error && (
+                <TableRow>
+                  <TableCell align='center' colSpan={columns.length} sx={stylesTableCell}>
+                    <AlertGlobalTables messageError='Ah ocurrido un error al obtener los datos' />
+                  </TableCell>
+                </TableRow>
+              )}
               {list.slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage).map(item => {
                 const { id, descripcion, no_personas, precio } = item;
 
