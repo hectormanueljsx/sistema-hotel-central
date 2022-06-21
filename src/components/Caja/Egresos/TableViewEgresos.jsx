@@ -16,7 +16,7 @@ import VisibilityIcon from '@mui/icons-material/Visibility';
 import moment from 'moment';
 
 import TitlePage from '@/components/Title/TitlePage';
-import Loader from '@/components/Loader/Loader';
+import SleketonLoader from '@/components/Loader/SleketonLoader';
 import AlertGlobalTables from '@/components/Alert/AlertGlobalTables';
 import ModalEgreso from '@/components/Caja/Egresos/ModalEgreso';
 import useGetSpecific from '@/hooks/useGetSpecific';
@@ -81,22 +81,28 @@ const TableViewEgresos = ({ pago, categoria }) => {
     <Container component='section' disableGutters sx={[stylesContainerSection, stylesWidthHeightTable]}>
       <TitlePage titlePage='Gastos no Incluidos en un Corte de Caja' />
       <Box component='div'>
-        {loadingGetSpecific && <Loader />}
         {errorGetSpecific && <AlertGlobalTables messageError='Ah ocurrido un error al obtener los datos' />}
         <TableContainer>
           <Table>
             <TableHead>
               <TableRow>
-                {loadingGetSpecific || errorGetSpecific
-                  ? null
-                  : columns.map((column, index) => (
-                      <TableCell key={index} sx={[stylesTableCell, { width: column.width }]}>
-                        {column.label}
-                      </TableCell>
-                    ))}
+                {columns.map((column, index) => (
+                  <TableCell key={index} sx={[stylesTableCell, { width: column.width }]}>
+                    {column.label}
+                  </TableCell>
+                ))}
               </TableRow>
             </TableHead>
             <TableBody>
+              {loadingGetSpecific && (
+                <TableRow>
+                  {columns.map((column, idx) => (
+                    <TableCell key={idx} sx={[stylesTableCell, { width: column.width }]}>
+                      <SleketonLoader />
+                    </TableCell>
+                  ))}
+                </TableRow>
+              )}
               {listGetSpecific.slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage).map(item => {
                 const {
                   id,

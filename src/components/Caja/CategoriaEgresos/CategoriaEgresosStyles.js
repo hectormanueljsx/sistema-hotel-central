@@ -66,6 +66,7 @@ export const stylesAccordionDetails = css`
 
 export const stylesWidthAcordion = css`
   width: 1000px;
+  height: max-content;
 `;
 
 export const stylesBoxCategoria = css`

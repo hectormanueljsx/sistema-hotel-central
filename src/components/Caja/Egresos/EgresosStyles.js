@@ -24,7 +24,7 @@ export const stylesWidthHeightForm = css`
 
 export const stylesWidthHeightTable = css`
   width: 1000px;
-  height: 711px;
+  height: max-content;
 `;
 
 export const stylesWidthHeightModal = css`

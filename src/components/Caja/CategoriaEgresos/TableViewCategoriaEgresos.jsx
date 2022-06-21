@@ -15,7 +15,7 @@ import DeleteIcon from '@mui/icons-material/Delete';
 import Swal from 'sweetalert2';
 
 import TitlePage from '@/components/Title/TitlePage';
-import Loader from '@/components/Loader/Loader';
+import SleketonLoader from '@/components/Loader/SleketonLoader';
 import AlertGlobalTables from '@/components/Alert/AlertGlobalTables';
 import useGetGeneralTable from '@/hooks/useGetGeneralTable';
 import deleteGeneralTable from '@/services/deleteGeneralTable';
@@ -135,7 +135,7 @@ const TableViewCategoriaEgresos = () => {
     <Container component='section' disableGutters sx={[stylesContainerSection, stylesWidthAcordion]}>
       <TitlePage titlePage='Lista de Categorías Registradas' />
       <Box component='div'>
-        {loading && <Loader />}
+        {loading && <SleketonLoader />}
         {error && <AlertGlobalTables messageError='Ah ocurrido un error al obtener los datos' />}
         {list.map(item => {
           const { categoria, subcategorias, id } = item;
