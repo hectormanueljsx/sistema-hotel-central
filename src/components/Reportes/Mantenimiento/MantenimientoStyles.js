@@ -30,18 +30,19 @@ export const stylesContainerInput = css`
 
 export const stylesWidthHeightForm = css`
   width: 400px;
-  height: 502.25px;
+  height: max-content;
 `;
 
 export const stylesWidthHeightTable = css`
   width: 1000px;
-  height: 711px;
+  height: max-content;
 `;
 
 export const stylesWidthHeightModal = css`
   margin-top: 0;
   margin-bottom: 0;
   width: 780px;
+  height: max-content;
 `;
 
 export const stylesButtonSend = css`

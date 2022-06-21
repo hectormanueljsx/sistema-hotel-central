@@ -19,7 +19,7 @@ export const stylesContainerSection = css`
 
 export const stylesWidthHeightForm = css`
   width: 400px;
-  height: 655.02px;
+  height: max-content;
 `;
 
 export const stylesWidthHeightTable = css`
@@ -31,6 +31,7 @@ export const stylesWidthHeightModal = css`
   margin-top: 0;
   margin-bottom: 0;
   width: 780px;
+  height: max-content;
 `;
 
 export const stylesContainerBox = css`

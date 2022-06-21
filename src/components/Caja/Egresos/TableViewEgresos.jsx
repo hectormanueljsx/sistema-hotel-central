@@ -81,7 +81,6 @@ const TableViewEgresos = ({ pago, categoria }) => {
     <Container component='section' disableGutters sx={[stylesContainerSection, stylesWidthHeightTable]}>
       <TitlePage titlePage='Gastos no Incluidos en un Corte de Caja' />
       <Box component='div'>
-        {errorGetSpecific && <AlertGlobalTables messageError='Ah ocurrido un error al obtener los datos' />}
         <TableContainer>
           <Table>
             <TableHead>
@@ -96,11 +95,16 @@ const TableViewEgresos = ({ pago, categoria }) => {
             <TableBody>
               {loadingGetSpecific && (
                 <TableRow>
-                  {columns.map((column, idx) => (
-                    <TableCell key={idx} sx={[stylesTableCell, { width: column.width }]}>
-                      <SleketonLoader />
-                    </TableCell>
-                  ))}
+                  <TableCell align='center' colSpan={columns.length} sx={stylesTableCell}>
+                    <SleketonLoader />
+                  </TableCell>
+                </TableRow>
+              )}
+              {errorGetSpecific && (
+                <TableRow>
+                  <TableCell align='center' colSpan={columns.length} sx={stylesTableCell}>
+                    <AlertGlobalTables messageError='Ah ocurrido un error al obtener los datos' />
+                  </TableCell>
                 </TableRow>
               )}
               {listGetSpecific.slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage).map(item => {

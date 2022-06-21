@@ -28,14 +28,14 @@ export const stylesContainerSection = css`
 export const stylesWidthHeightFormCategoria = css`
   margin-bottom: 0;
   width: 400px;
-  height: 250.25px;
+  height: max-content;
 `;
 
 export const stylesWidthHeightFormSubcategoria = css`
   margin-top: 40px;
   margin-bottom: 48px;
   width: 400px;
-  height: 334.25px;
+  height: max-content;
 `;
 
 export const stylesContainerBox = css`
