@@ -4,5 +4,5 @@ export const stylesErrorTable = css`
   display: flex;
   justify-content: center;
   align-items: center;
-  margin-top: 80px;
+  margin-top: 40px;
 `;

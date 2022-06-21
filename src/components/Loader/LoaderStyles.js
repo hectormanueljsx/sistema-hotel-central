@@ -10,3 +10,7 @@ export const stylesLoader = css`
 export const stylesCircle = css`
   color: #00b8b2;
 `;
+
+export const stylesHeightSkeleton = css`
+  height: 34px;
+`;
