@@ -2,8 +2,10 @@ import React from 'react';
 import { createTheme, CssBaseline, ThemeProvider } from '@mui/material';
 import { Routes, Route } from 'react-router-dom';
 
+import HomeDashboard from '@/components/Dashboard/HomeDashboard/HomeDashboard';
 import CategoriaEgresos from '@/components/Caja/CategoriaEgresos/CategoriaEgresos';
 import Egresos from '@/components/Caja/Egresos/Egresos';
+import IngresoBruto from '@/components/Reportes/IngresoBruto/IngresoBruto';
 import Mantenimiento from '@/components/Reportes/Mantenimiento/Mantenimiento';
 import Tarifas from '@/components/Habitaciones/Tarifa/Tarifas';
 import Habitaciones from '@/components/Habitaciones/Habitaciones/Habitaciones';
@@ -37,7 +39,7 @@ const App = () => {
           path='/'
           element={
             <ProtectedRoute allowedRoles={[ROLES.ADMINISTRADOR]}>
-              <CategoriaEgresos />
+              <HomeDashboard />
             </ProtectedRoute>
           }
         />
@@ -55,6 +57,14 @@ const App = () => {
           element={
             <ProtectedRoute allowedRoles={[ROLES.ADMINISTRADOR]}>
               <Egresos />
+            </ProtectedRoute>
+          }
+        />
+        <Route
+          path='/reportes/ingreso-bruto'
+          element={
+            <ProtectedRoute allowedRoles={[ROLES.ADMINISTRADOR]}>
+              <IngresoBruto />
             </ProtectedRoute>
           }
         />
