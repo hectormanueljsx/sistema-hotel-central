@@ -43,7 +43,7 @@ export const cotizarDropdown = [{}];
 export const cajaDropdown = [
   {
     id: '58a00670-49cd-402a-8f05-321835f75518',
-    title: 'Categorias de Egresos',
+    title: 'Categorías de Egresos',
     path: './caja/categorias-de-egresos',
     cName: 'submenu-item',
   },
@@ -53,19 +53,25 @@ export const cajaDropdown = [
     path: './caja/egresos',
     cName: 'submenu-item',
   },
+  {
+    id: 'ef46e6ef-9ca0-4c24-bdd4-faf20fbb9b11',
+    title: 'Histórico de Egresos',
+    path: './caja/historico-de-egresos',
+    cName: 'submenu-item',
+  },
 ];
 
 export const reportesDropdown = [
   {
     id: '5162a280-9b71-4641-b23f-6dcd126a9b1b',
-    title: 'Anticipo',
-    path: './reportes/anticipo',
+    title: 'Anticipos por Periodo',
+    path: './reportes/anticipos-por-periodo',
     cName: 'submenu-item',
   },
   {
     id: '89d56ad3-f89a-44e4-a05d-83c30013e10b',
-    title: 'Ingreso Bruto',
-    path: './reportes/ingreso-bruto',
+    title: 'Ingresos Brutos',
+    path: './reportes/ingresos-brutos',
     cName: 'submenu-item',
   },
   {

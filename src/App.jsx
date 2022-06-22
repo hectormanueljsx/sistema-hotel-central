@@ -5,6 +5,7 @@ import { Routes, Route } from 'react-router-dom';
 import HomeDashboard from '@/components/Dashboard/HomeDashboard/HomeDashboard';
 import CategoriaEgresos from '@/components/Caja/CategoriaEgresos/CategoriaEgresos';
 import Egresos from '@/components/Caja/Egresos/Egresos';
+import HistoricoEgresos from '@/components/Caja/HistoricoEgresos/HistoricoEgresos';
 import IngresoBruto from '@/components/Reportes/IngresoBruto/IngresoBruto';
 import Mantenimiento from '@/components/Reportes/Mantenimiento/Mantenimiento';
 import Tarifas from '@/components/Habitaciones/Tarifa/Tarifas';
@@ -61,7 +62,15 @@ const App = () => {
           }
         />
         <Route
-          path='/reportes/ingreso-bruto'
+          path='/caja/historico-de-egresos'
+          element={
+            <ProtectedRoute allowedRoles={[ROLES.ADMINISTRADOR]}>
+              <HistoricoEgresos />
+            </ProtectedRoute>
+          }
+        />
+        <Route
+          path='/reportes/ingresos-brutos'
           element={
             <ProtectedRoute allowedRoles={[ROLES.ADMINISTRADOR]}>
               <IngresoBruto />
