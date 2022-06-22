@@ -1,35 +1,39 @@
 import React, { useState } from 'react';
-import { Box, Container, CssBaseline } from '@mui/material';
+import { Box, Container } from '@mui/material';
 
 import FormIngresoBruto from '@/components/Reportes/IngresoBruto/FormIngresoBruto';
 import TableViewIngresoBruto from '@/components/Reportes/IngresoBruto/TableViewIngresoBruto';
+import { stylesBoxIngresoBruto } from '@/components/Reportes/IngresoBruto/IngresoBrutoStyles';
 
 const IngresoBruto = () => {
+  const [data, setData] = useState({ fechaInicio: '', fechaFin: '' });
+  const [dateTable, setDateTable] = useState('');
   const [dataSearch, setDataSearch] = useState([]);
   const [dataPago, setDataPago] = useState([]);
   const [dataRegistro, setDataRegistro] = useState([]);
-  const [status, setStatus] = useState(false);
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState(false);
 
   return (
-    <Container maxWidth='xl'>
-      <Box sx={{ display: 'flex' }}>
+    <Container component='section' disableGutters maxWidth='xl'>
+      <Box sx={stylesBoxIngresoBruto}>
         <FormIngresoBruto
+          data={data}
+          setDateTable={setDateTable}
+          setData={setData}
           setDataSearch={setDataSearch}
-          setStatus={setStatus}
-          setLoading={setLoading}
-          setError={setError}
           setDataPago={setDataPago}
           setDataRegistro={setDataRegistro}
+          setLoading={setLoading}
+          setError={setError}
         />
         <TableViewIngresoBruto
+          dateTable={dateTable}
           dataSearch={dataSearch}
-          status={status}
-          loading={loading}
-          error={error}
           dataPago={dataPago}
           dataRegistro={dataRegistro}
+          loading={loading}
+          error={error}
         />
       </Box>
     </Container>
