@@ -1,5 +1,5 @@
-import React, { useState } from 'react';
-import { Box, Container, CssBaseline, TextField, Button } from '@mui/material';
+import React, { useEffect, useState } from 'react';
+import { Box, Container, TextField, Button } from '@mui/material';
 import VisibilityIcon from '@mui/icons-material/Visibility';
 
 import TitlePage from '@/components/Title/TitlePage';
@@ -7,33 +7,33 @@ import TitleInput from '@/components/Title/TitleInput';
 import { historicalEndpoints } from '@/utilities/endpoints';
 import getGeneralSelect from '@/services/getGeneralSelect';
 import {
+  stylesBoxButtons,
   stylesContainerBox,
   stylesContainerInput,
   stylesContainerSection,
   stylesWidthHeightForm,
 } from '@/components/Caja/HistoricoEgresos/HistoricoEgresosStyles';
 
-const FormSearchHistoricoEgresos = ({ setSearch, setDataEgreso, setLoading, setError, dataEgreso }) => {
+const FormSearchHistoricoEgresos = ({ setSearch, dataEgreso, setDataEgreso, setLoading, setError }) => {
   const [start, setStart] = useState(0);
   const [end, setEnd] = useState(100);
-  const [visible, setVisible] = useState(false);
   const [visibleButton, setVisibleButton] = useState(true);
 
   const identifier = localStorage.getItem('identifier');
   const password = localStorage.getItem('password');
-  const endpointEgreso = historicalEndpoints.historicoEgresos;
+  const endpointEgresos = historicalEndpoints.historicoEgresos;
+
+  useEffect(() => {
+    getData();
+  }, []);
 
   const getMoreData = async () => {
-    if (dataEgreso.length > end) {
-      setVisibleButton(false);
-
-      const resultado = await getGeneralSelect(identifier, password, `${endpointEgreso}${start}`);
+    if (dataEgreso.length >= end) {
+      const resultado = await getGeneralSelect(identifier, password, `${endpointEgresos}${start}`);
 
       setDataEgreso(prevData => [...prevData, ...resultado.data]);
       setEnd(end + 100);
       setStart(start + 100);
-    } else {
-      setVisibleButton(true);
     }
   };
 
@@ -41,16 +41,14 @@ const FormSearchHistoricoEgresos = ({ setSearch, setDataEgreso, setLoading, setE
     try {
       setLoading(true);
 
-      const result = await getGeneralSelect(identifier, password, `${endpointEgreso}${start}`);
+      const result = await getGeneralSelect(identifier, password, `${endpointEgresos}${start}`);
       setDataEgreso(result.data);
 
-      if (result.data.length > end) {
+      if (result.data.length >= end) {
         setStart(start + 100);
         setVisibleButton(false);
-        setVisible(true);
       } else {
         setVisibleButton(true);
-        setVisible(true);
       }
     } catch (error) {
       setError(error);
@@ -61,11 +59,10 @@ const FormSearchHistoricoEgresos = ({ setSearch, setDataEgreso, setLoading, setE
 
   return (
     <Container component='section' sx={[stylesContainerSection, stylesWidthHeightForm]}>
-      <CssBaseline />
       <TitlePage titlePage='Buscar Registro' />
       <Box component='form' sx={stylesContainerBox}>
         <Box component='div' sx={stylesContainerInput}>
-          <TitleInput titleInput='Buscar/Encontrar' />
+          <TitleInput titleInput='Buscar' />
           <TextField
             onChange={e => setSearch(e.target.value)}
             name='concepto'
@@ -73,32 +70,22 @@ const FormSearchHistoricoEgresos = ({ setSearch, setDataEgreso, setLoading, setE
             type='text'
             margin='none'
             size='small'
-            placeholder='Concepto'
             required
             fullWidth
             autoFocus
           />
         </Box>
-        <Button
-          variant='contained'
-          disabled={visible}
-          onClick={getData}
-          size='large'
-          startIcon={<VisibilityIcon />}
-          sx={{ marginTop: 2 }}
-        >
-          {`ver Registros`}
-        </Button>
-        <Button
-          variant='contained'
-          disabled={visibleButton}
-          onClick={getMoreData}
-          size='large'
-          startIcon={<VisibilityIcon />}
-          sx={{ marginTop: 2 }}
-        >
-          {`Mas de ${start} Registros`}
-        </Button>
+        <Box component='div' sx={stylesBoxButtons}>
+          <Button
+            variant='contained'
+            disabled={visibleButton}
+            onClick={getMoreData}
+            size='large'
+            startIcon={<VisibilityIcon />}
+          >
+            {`Mas de ${start} registros`}
+          </Button>
+        </Box>
       </Box>
     </Container>
   );
