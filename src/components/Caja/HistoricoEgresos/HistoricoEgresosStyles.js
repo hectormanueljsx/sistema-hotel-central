@@ -1,6 +1,6 @@
 import { css } from '@emotion/react';
 
-export const stylesBoxEgresos = css`
+export const stylesBoxHistoricoEgreso = css`
   display: flex;
   justify-content: center;
   gap: 32px;
@@ -19,18 +19,19 @@ export const stylesContainerSection = css`
 
 export const stylesWidthHeightForm = css`
   width: 400px;
-  height:  250.25px;
+  height: max-content;
 `;
 
 export const stylesWidthHeightTable = css`
   width: 1000px;
-  height: 711px;
+  height: max-content;
 `;
 
 export const stylesWidthHeightModal = css`
   margin-top: 0;
   margin-bottom: 0;
   width: 780px;
+  height: max-content;
 `;
 
 export const stylesContainerBox = css`

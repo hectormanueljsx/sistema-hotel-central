@@ -53,7 +53,7 @@ const FormIngresoBruto = ({
 
         if (res.status && resHistorial.status >= 200 && res.status && resHistorial.status <= 299) {
           const dateIngresoBruto = `${moment(data.fechaInicio).format('DD/MM/YYYY')} - ${moment(data.fechaFin).format(
-            'DD/MM/YYY',
+            'DD/MM/YYYY',
           )}`;
 
           setDateTable(dateIngresoBruto);

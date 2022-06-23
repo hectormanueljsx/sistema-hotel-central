@@ -1,8 +1,9 @@
 import React, { useState } from 'react';
-import { Box, Container, CssBaseline } from '@mui/material';
+import { Box, Container } from '@mui/material';
 
 import FormSearchHistoricoEgresos from '@/components/Caja/HistoricoEgresos/FormSearchHistoricoEgresos';
 import TableViewHistoricoEgresos from '@/components/Caja/HistoricoEgresos/TableViewHistoricoEgresos';
+import { stylesBoxHistoricoEgreso } from '@/components/Caja/HistoricoEgresos/HistoricoEgresosStyles';
 
 const HistoricoEgresos = () => {
   const [search, setSearch] = useState('');
@@ -11,15 +12,14 @@ const HistoricoEgresos = () => {
   const [error, setError] = useState(false);
 
   return (
-    <Container maxWidth='xl'>
-      <CssBaseline />
-      <Box sx={{ display: 'flex' }}>
+    <Container component='section' disableGutters maxWidth='xl'>
+      <Box sx={stylesBoxHistoricoEgreso}>
         <FormSearchHistoricoEgresos
           setSearch={setSearch}
+          dataEgreso={dataEgreso}
           setDataEgreso={setDataEgreso}
           setLoading={setLoading}
           setError={setError}
-          dataEgreso={dataEgreso}
         />
         <TableViewHistoricoEgresos search={search} dataEgreso={dataEgreso} loading={loading} error={error} />
       </Box>
