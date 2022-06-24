@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import { Box, Container, TextField, Button } from '@mui/material';
-import VisibilityIcon from '@mui/icons-material/Visibility';
+import ControlPointIcon from '@mui/icons-material/ControlPoint';
 
 import TitlePage from '@/components/Title/TitlePage';
 import TitleInput from '@/components/Title/TitleInput';
@@ -81,9 +81,9 @@ const FormSearchHistoricoEgresos = ({ setSearch, dataEgreso, setDataEgreso, setL
             disabled={visibleButton}
             onClick={getMoreData}
             size='large'
-            startIcon={<VisibilityIcon />}
+            startIcon={<ControlPointIcon />}
           >
-            {`Mas de ${start} registros`}
+            {`Más de ${start} registros`}
           </Button>
         </Box>
       </Box>
