@@ -29,11 +29,15 @@ const FormSearchHistoricoEgresos = ({ setSearch, dataEgreso, setDataEgreso, setL
 
   const getMoreData = async () => {
     if (dataEgreso.length >= end) {
+      setVisibleButton(false);
+
       const resultado = await getGeneralSelect(identifier, password, `${endpointEgresos}${start}`);
 
       setDataEgreso(prevData => [...prevData, ...resultado.data]);
       setEnd(end + 100);
       setStart(start + 100);
+    } else {
+      setVisibleButton(true);
     }
   };
 
