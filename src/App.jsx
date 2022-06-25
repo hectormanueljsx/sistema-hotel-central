@@ -6,6 +6,7 @@ import HomeDashboard from '@/components/Dashboard/HomeDashboard/HomeDashboard';
 import CategoriaEgresos from '@/components/Caja/CategoriaEgresos/CategoriaEgresos';
 import Egresos from '@/components/Caja/Egresos/Egresos';
 import HistoricoEgresos from '@/components/Caja/HistoricoEgresos/HistoricoEgresos';
+import Anticipo from '@/components/Reportes/Anticipo/Anticipo';
 import IngresoBruto from '@/components/Reportes/IngresoBruto/IngresoBruto';
 import Mantenimiento from '@/components/Reportes/Mantenimiento/Mantenimiento';
 import Tarifas from '@/components/Habitaciones/Tarifa/Tarifas';
@@ -66,6 +67,14 @@ const App = () => {
           element={
             <ProtectedRoute allowedRoles={[ROLES.ADMINISTRADOR]}>
               <HistoricoEgresos />
+            </ProtectedRoute>
+          }
+        />
+        <Route
+          path='/reportes/anticipos-por-periodo'
+          element={
+            <ProtectedRoute allowedRoles={[ROLES.ADMINISTRADOR]}>
+              <Anticipo />
             </ProtectedRoute>
           }
         />

@@ -60,6 +60,7 @@ const FormIngresoBruto = ({
           setData({ fechaInicio: '', fechaFin: '' });
 
           if (res.data.length === 0) {
+            setDateTable('');
             Swal.fire({
               icon: 'error',
               text: 'No se encontraron registros',
