@@ -69,15 +69,15 @@ export const reportesDropdown = [
     cName: 'submenu-item',
   },
   {
-    id: '89d56ad3-f89a-44e4-a05d-83c30013e10b',
-    title: 'Ingresos Brutos',
-    path: './reportes/ingresos-brutos',
+    id: '265124f0-00ff-4513-8ab3-687ad99844a1',
+    title: 'Gastos',
+    path: './reportes/gastos',
     cName: 'submenu-item',
   },
   {
-    id: '4d4a4c5f-4075-4a66-8ceb-316cb5adcf79',
-    title: 'Mantenimiento',
-    path: './reportes/mantenimiento',
+    id: '89d56ad3-f89a-44e4-a05d-83c30013e10b',
+    title: 'Ingresos Brutos',
+    path: './reportes/ingresos-brutos',
     cName: 'submenu-item',
   },
 ];
@@ -97,7 +97,14 @@ export const habitacionesDropdown = [
   },
 ];
 
-export const mantenimientoDropdown = [{}];
+export const mantenimientoDropdown = [
+  {
+    id: '4d4a4c5f-4075-4a66-8ceb-316cb5adcf79',
+    title: 'Mantenimiento',
+    path: './mantenimiento/mantenimiento',
+    cName: 'submenu-item',
+  },
+];
 
 export const userDropdown = [
   {

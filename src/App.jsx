@@ -7,10 +7,11 @@ import CategoriaEgresos from '@/components/Caja/CategoriaEgresos/CategoriaEgreso
 import Egresos from '@/components/Caja/Egresos/Egresos';
 import HistoricoEgresos from '@/components/Caja/HistoricoEgresos/HistoricoEgresos';
 import Anticipo from '@/components/Reportes/Anticipo/Anticipo';
+import Gastos from '@/components/Reportes/Egresos/Egresos';
 import IngresoBruto from '@/components/Reportes/IngresoBruto/IngresoBruto';
-import Mantenimiento from '@/components/Reportes/Mantenimiento/Mantenimiento';
 import Tarifas from '@/components/Habitaciones/Tarifa/Tarifas';
 import Habitaciones from '@/components/Habitaciones/Habitaciones/Habitaciones';
+import Mantenimiento from '@/components/Mantenimiento/Mantenimiento/Mantenimiento';
 import Usuarios from '@/components/Administracion/Usuario/Usuarios';
 import Navbar from '@/components/Navbar/Navbar';
 import ProtectedRoute from '@/components/ProtectedRoute/ProtectedRoute';
@@ -79,18 +80,18 @@ const App = () => {
           }
         />
         <Route
-          path='/reportes/ingresos-brutos'
+          path='/reportes/gastos'
           element={
             <ProtectedRoute allowedRoles={[ROLES.ADMINISTRADOR]}>
-              <IngresoBruto />
+              <Gastos />
             </ProtectedRoute>
           }
         />
         <Route
-          path='/reportes/mantenimiento'
+          path='/reportes/ingresos-brutos'
           element={
             <ProtectedRoute allowedRoles={[ROLES.ADMINISTRADOR]}>
-              <Mantenimiento />
+              <IngresoBruto />
             </ProtectedRoute>
           }
         />
@@ -107,6 +108,14 @@ const App = () => {
           element={
             <ProtectedRoute allowedRoles={[ROLES.ADMINISTRADOR]}>
               <Habitaciones />
+            </ProtectedRoute>
+          }
+        />
+        <Route
+          path='/mantenimiento/mantenimiento'
+          element={
+            <ProtectedRoute allowedRoles={[ROLES.ADMINISTRADOR]}>
+              <Mantenimiento />
             </ProtectedRoute>
           }
         />
