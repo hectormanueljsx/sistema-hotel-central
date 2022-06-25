@@ -17,7 +17,7 @@ import VisibilityIcon from '@mui/icons-material/Visibility';
 import TitlePage from '@/components/Title/TitlePage';
 import SleketonLoader from '@/components/Loader/SleketonLoader';
 import AlertGlobalTables from '@/components/Alert/AlertGlobalTables';
-import ModalMantenimiento from '@/components/Reportes/Mantenimiento/ModalMantenimiento';
+import ModalMantenimiento from '@/components/Mantenimiento/Mantenimiento/ModalMantenimiento';
 import useGetGeneralTable from '@/hooks/useGetGeneralTable';
 import { generalEndpoints } from '@/utilities/endpoints';
 import {
@@ -25,7 +25,7 @@ import {
   stylesModal,
   stylesTableCell,
   stylesWidthHeightTable,
-} from '@/components/Reportes/Mantenimiento/MantenimientoStyles';
+} from '@/components/Mantenimiento/Mantenimiento/MantenimientoStyles';
 
 const columns = [
   { id: 'fechaReporte', label: 'Fecha de Reporte', width: 130 },

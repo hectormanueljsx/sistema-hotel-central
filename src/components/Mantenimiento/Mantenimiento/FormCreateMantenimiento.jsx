@@ -13,7 +13,7 @@ import {
   stylesContainerInput,
   stylesContainerSection,
   stylesWidthHeightForm,
-} from '@/components/Reportes/Mantenimiento/MantenimientoStyles';
+} from '@/components/Mantenimiento/Mantenimiento/MantenimientoStyles';
 
 const FormCreateMantenimiento = ({ habitacion, subcategoria }) => {
   const [datos, setDatos] = useState({

@@ -1,12 +1,12 @@
 import React, { useEffect, useState } from 'react';
 import { Box, Container } from '@mui/material';
 
-import FormCreateMantenimiento from '@/components/Reportes/Mantenimiento/FormCreateMantenimiento';
-import TableViewMantenimiento from '@/components/Reportes/Mantenimiento/TableViewMantenimiento';
+import FormCreateMantenimiento from '@/components/Mantenimiento/Mantenimiento/FormCreateMantenimiento';
+import TableViewMantenimiento from '@/components/Mantenimiento/Mantenimiento/TableViewMantenimiento';
 import getGeneralSelect from '@/services/getGeneralSelect';
 import getSpecificSelect from '@/services/getSpecificSelect';
 import { generalEndpoints } from '@/utilities/endpoints';
-import { stylesBoxMantenimiento } from '@/components/Reportes/Mantenimiento/MantenimientoStyles';
+import { stylesBoxMantenimiento } from '@/components/Mantenimiento/Mantenimiento/MantenimientoStyles';
 
 const Mantenimiento = () => {
   const [habitacion, setHabitacion] = useState([]);

@@ -19,7 +19,7 @@ import {
   stylesModalClose,
   stylesWidthHeightModal,
   stylesWidthInput,
-} from '@/components/Reportes/Mantenimiento/MantenimientoStyles';
+} from '@/components/Mantenimiento/Mantenimiento/MantenimientoStyles';
 
 const ModalMantenimiento = ({ habitacion, subcategoria, dataMantenimiento, handleCloseModal }) => {
   const [datos, setDatos] = useState({
