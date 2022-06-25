@@ -115,6 +115,7 @@ const Navbar = () => {
                       onMouseLeave={() => setDropdownMantenimiento(false)}
                     >
                       <button>{item.title}</button>
+                      {dropdownMantenimiento && <Dropdown dropdownItem={mantenimientoDropdown} />}
                     </li>
                   );
                 }
