@@ -128,7 +128,7 @@ const FormEgresos = ({ dataSearch, setDataSearch, setDateTable, setLoading, setE
       <TitlePage titlePage='Reporte de Egresos' />
       <Box component='form' sx={stylesContainerBox}>
         <Box component='div' sx={stylesContainerInput}>
-          <TitleInput titleInput='De fecha:' />
+          <TitleInput titleInput='De fecha' />
           <TextField
             name='fechaInicio'
             value={data.fechaInicio}
@@ -143,7 +143,7 @@ const FormEgresos = ({ dataSearch, setDataSearch, setDateTable, setLoading, setE
           />
         </Box>
         <Box component='div' sx={stylesContainerInput}>
-          <TitleInput titleInput='A fecha:' />
+          <TitleInput titleInput='A fecha' />
           <TextField
             name='fechaFin'
             value={data.fechaFin}

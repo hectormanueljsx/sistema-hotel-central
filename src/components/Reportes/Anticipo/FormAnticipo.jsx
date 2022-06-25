@@ -117,7 +117,7 @@ const FormAnticipo = ({ setDataSearch, dataSearch, setDateTable, setLoading, set
       <TitlePage titlePage='Anticipos por Periodo' />
       <Box component='form' sx={stylesContainerBox}>
         <Box component='div' sx={stylesContainerInput}>
-          <TitleInput titleInput='De fecha:' />
+          <TitleInput titleInput='De fecha' />
           <TextField
             name='fechaInicio'
             value={data.fechaInicio}
@@ -132,7 +132,7 @@ const FormAnticipo = ({ setDataSearch, dataSearch, setDateTable, setLoading, set
           />
         </Box>
         <Box component='div' sx={stylesContainerInput}>
-          <TitleInput titleInput='A fecha:' />
+          <TitleInput titleInput='A fecha' />
           <TextField
             name='fechaFin'
             value={data.fechaFin}

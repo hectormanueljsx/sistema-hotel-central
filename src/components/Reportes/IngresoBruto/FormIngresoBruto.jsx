@@ -101,7 +101,7 @@ const FormIngresoBruto = ({
       <TitlePage titlePage='Selecciona el Periodo' />
       <Box component='form' sx={stylesContainerBox}>
         <Box component='div' sx={stylesContainerInput}>
-          <TitleInput titleInput='De fecha:' />
+          <TitleInput titleInput='De fecha' />
           <TextField
             name='fechaInicio'
             value={data.fechaInicio}
@@ -116,7 +116,7 @@ const FormIngresoBruto = ({
           />
         </Box>
         <Box component='div' sx={stylesContainerInput}>
-          <TitleInput titleInput='A fecha:' />
+          <TitleInput titleInput='A fecha' />
           <TextField
             name='fechaFin'
             value={data.fechaFin}

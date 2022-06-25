@@ -1,9 +1,7 @@
 import React, { useState } from 'react';
-
 import {
   Box,
   Container,
-  CssBaseline,
   IconButton,
   Modal,
   Table,
@@ -19,7 +17,7 @@ import VisibilityIcon from '@mui/icons-material/Visibility';
 
 import TitlePage from '@/components/Title/TitlePage';
 import SleketonLoader from '@/components/Loader/SleketonLoader';
-import ModalMantenimiento from './ModalMantenimiento';
+import ModalFallas from '@/components/Reportes/Fallas/ModalFallas';
 import AlertGlobalTables from '@/components/Alert/AlertGlobalTables';
 import {
   stylesContainerSection,
@@ -27,7 +25,7 @@ import {
   stylesTableCell,
   stylesWidthHeightTable,
   stylesDateTable,
-} from '@/components/Reportes/Fallas/MantenimientoStyles';
+} from '@/components/Reportes/Fallas/FallasStyles';
 
 const columns = [
   { id: 'fechaReporte', label: 'Fecha de Reporte', width: 130 },
@@ -45,20 +43,21 @@ const TableViewMantenimiento = ({ dataSearch, dateTable, loading, error }) => {
   const [dataMantenimiento, setDataMantenimiento] = useState('');
 
   const handleChangePage = (event, newPage) => setPage(newPage);
+  const handleCloseModal = () => setOpenModal(false);
+
   const handleChangeRowsPerPage = event => {
     setRowsPerPage(parseInt(event.target.value, 10));
     setPage(0);
   };
+
   const handleOpen = item => {
     setOpenModal(true);
     setDataMantenimiento(item);
   };
 
-  const handleCloseModal = () => setOpenModal(false);
-
   return (
     <Container component='section' disableGutters sx={[stylesContainerSection, stylesWidthHeightTable]}>
-      <TitlePage titlePage='Lista de Mantenimientos' />
+      <TitlePage titlePage='Histórico de Fallas' />
       <Typography sx={stylesDateTable}>{dateTable}</Typography>
       <Box component='div'>
         <TableContainer>
@@ -96,6 +95,7 @@ const TableViewMantenimiento = ({ dataSearch, dateTable, loading, error }) => {
                   subcategoria: { descripcion },
                   f_reporte,
                 } = item;
+
                 return (
                   <TableRow key={id}>
                     <TableCell sx={stylesTableCell}>{f_reporte}</TableCell>
@@ -129,7 +129,7 @@ const TableViewMantenimiento = ({ dataSearch, dateTable, loading, error }) => {
       </Box>
       <Modal open={openModal}>
         <Box sx={stylesModal}>
-          <ModalMantenimiento dataMantenimiento={dataMantenimiento} handleCloseModal={handleCloseModal} />
+          <ModalFallas dataMantenimiento={dataMantenimiento} handleCloseModal={handleCloseModal} />
         </Box>
       </Modal>
     </Container>

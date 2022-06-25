@@ -1,19 +1,22 @@
 import React, { useState, useEffect } from 'react';
-import { Box, Button, Container, CssBaseline, FormControl, MenuItem, Select, TextField } from '@mui/material';
-import SearchRoundedIcon from '@mui/icons-material/SearchRounded';
-import moment from 'moment';
+import { Box, Button, Container, FormControl, MenuItem, Select, TextField } from '@mui/material';
+import SearchIcon from '@mui/icons-material/Search';
+import ControlPointIcon from '@mui/icons-material/ControlPoint';
 import Swal from 'sweetalert2';
+import moment from 'moment';
 
 import TitlePage from '@/components/Title/TitlePage';
 import TitleInput from '@/components/Title/TitleInput';
 import getGeneralSelect from '@/services/getGeneralSelect';
 import { generalEndpoints } from '@/utilities/endpoints';
 import {
+  stylesBoxButtons,
   stylesContainerBox,
   stylesContainerInput,
   stylesContainerSection,
+  stylesWidthButton,
   stylesWidthHeightForm,
-} from '@/components/Reportes/Egresos/EgresosStyles';
+} from '@/components/Reportes/Fallas/FallasStyles';
 
 const FormSearchMantenimiento = ({ setDataSearch, setDateTable, setLoading, setError, dataSearch }) => {
   const [data, setData] = useState({ firstReport: '', lastReport: '' });
@@ -28,33 +31,37 @@ const FormSearchMantenimiento = ({ setDataSearch, setDateTable, setLoading, setE
   const endpointCategoria = generalEndpoints.categoria;
 
   const handleInputChange = event => setData({ ...data, [event.target.name]: event.target.value });
-  const handleSubCategoria = event => setIdSubcategoria(event.target.value);
+  const handleSubcategoria = event => setIdSubcategoria(event.target.value);
+
+  useEffect(() => {
+    getSubcategoria();
+  }, []);
 
   const getSubcategoria = async () => {
     const res = await getGeneralSelect(identifier, password, `${endpointCategoria}?categoria=MANTENIMIENTO`);
     setIdCategoria(res.data[0]);
   };
 
-  useEffect(() => {
-    getSubcategoria();
-  }, []);
-
   const getData = async () => {
-    try {
-      setLoading(true);
-      if (data.firstReport.trim().length > 0 && data.lastReport.trim().length > 0 && idSubcategoria) {
+    if (data.firstReport.trim().length > 0 && data.lastReport.trim().length > 0 && idSubcategoria) {
+      try {
+        setLoading(true);
+
         const endpointMantenimiento = `mantenimientos?f_reporte_gte=${data.firstReport}T00:00:00.000Z&f_reporte_lte=${data.lastReport}T23:59:59.000Z&subcategoria=${idSubcategoria}:DESC&_start=${start}`;
 
         const result = await getGeneralSelect(identifier, password, endpointMantenimiento);
         setDataSearch(result.data);
 
         if (result.status >= 200 && result.status <= 299) {
-          const dateIngresoBruto = `${moment(data.fechaInicio).format('DD/MM/YYYY')} - ${moment(data.fechaFin).format(
+          const dateAnticipo = `${moment(data.firstReport).format('DD/MM/YYYY')} - ${moment(data.lastReport).format(
             'DD/MM/YYYY',
           )}`;
 
-          setDateTable(dateIngresoBruto);
-          if (result.data.length < 1) {
+          setDateTable(dateAnticipo);
+          setData({ firstReport: '', lastReport: '' });
+          setIdSubcategoria('');
+
+          if (result.data.length === 0) {
             setDateTable('');
             Swal.fire({
               icon: 'error',
@@ -64,22 +71,16 @@ const FormSearchMantenimiento = ({ setDataSearch, setDateTable, setLoading, setE
               confirmButtonText: 'Aceptar',
             });
             return;
+          }
+
+          if (res.data.length >= end) {
+            setStart(start + 100);
+            setVisibleButton(false);
           } else {
-            if (result.data.length >= end) {
-              setStart(start + 100);
-              setVisibleButton(false);
-            } else {
-              setVisibleButton(true);
-            }
-            Swal.fire({
-              icon: 'success',
-              text: 'Registro encontrado correctamente',
-              allowOutsideClick: false,
-              confirmButtonColor: '#1976d2',
-              confirmButtonText: 'Aceptar',
-            }).then(result => result.isConfirmed);
+            setVisibleButton(true);
           }
         } else {
+          setError(true);
           Swal.fire({
             icon: 'error',
             text: 'Error al buscar registros',
@@ -89,27 +90,28 @@ const FormSearchMantenimiento = ({ setDataSearch, setDateTable, setLoading, setE
           });
           return;
         }
-      } else {
-        Swal.fire({
-          icon: 'error',
-          text: 'Por favor, rellene todos los campos',
-          allowOutsideClick: false,
-          confirmButtonColor: '#1976d2',
-          confirmButtonText: 'Aceptar',
-        });
+      } catch (error) {
+      } finally {
+        setLoading(false);
       }
-    } catch (error) {
-      setError(error);
-    } finally {
-      setLoading(false);
+    } else {
+      Swal.fire({
+        icon: 'error',
+        text: 'Por favor, rellene todos los campos',
+        allowOutsideClick: false,
+        confirmButtonColor: '#1976d2',
+        confirmButtonText: 'Aceptar',
+      });
     }
   };
 
-  const moreData = async () => {
+  const getMoreData = async () => {
     if (dataSearch.length >= end) {
       setVisibleButton(false);
+
       const endpointMantenimiento = `mantenimientos?f_reporte_gte=${data.firstReport}T00:00:00.000Z&f_reporte_lte=${data.lastReport}T23:59:59.000Z&subcategoria=${idSubcategoria}:DESC&_start=${start}`;
       const resultado = await getGeneralSelect(identifier, password, endpointMantenimiento);
+
       setDataSearch(prevData => [...prevData, ...resultado.data]);
       setEnd(end + 100);
       setStart(start + 100);
@@ -120,11 +122,10 @@ const FormSearchMantenimiento = ({ setDataSearch, setDateTable, setLoading, setE
 
   return (
     <Container component='section' sx={[stylesContainerSection, stylesWidthHeightForm]}>
-      <CssBaseline />
-      <TitlePage titlePage='Reporte de Egresos' />
+      <TitlePage titlePage='Reporte de Fallas' />
       <Box component='form' sx={stylesContainerBox}>
         <Box component='div' sx={stylesContainerInput}>
-          <TitleInput titleInput='De fecha:' />
+          <TitleInput titleInput='De fecha' />
           <TextField
             onChange={handleInputChange}
             value={data.firstReport}
@@ -139,7 +140,7 @@ const FormSearchMantenimiento = ({ setDataSearch, setDateTable, setLoading, setE
           />
         </Box>
         <Box component='div' sx={stylesContainerInput}>
-          <TitleInput titleInput='A fecha:' />
+          <TitleInput titleInput='A fecha' />
           <TextField
             onChange={handleInputChange}
             value={data.lastReport}
@@ -155,10 +156,11 @@ const FormSearchMantenimiento = ({ setDataSearch, setDateTable, setLoading, setE
         <Box component='div' sx={stylesContainerInput}>
           <TitleInput titleInput='Subcategoría' />
           <FormControl fullWidth>
-            <Select size='small' value={idSubcategoria} onChange={handleSubCategoria}>
+            <Select size='small' value={idSubcategoria} onChange={handleSubcategoria}>
               {idCategoria
                 ? idCategoria.subcategorias.map(subitem => {
                     const { descripcion, id } = subitem;
+
                     return (
                       <MenuItem key={id} value={id}>
                         {descripcion}
@@ -169,18 +171,19 @@ const FormSearchMantenimiento = ({ setDataSearch, setDateTable, setLoading, setE
             </Select>
           </FormControl>
         </Box>
-        <Box component='div' sx={stylesContainerInput}>
-          <Button variant='contained' onClick={getData} size='large' startIcon={<SearchRoundedIcon />}>
+        <Box component='div' sx={stylesBoxButtons}>
+          <Button variant='contained' size='large' onClick={getData} sx={stylesWidthButton} startIcon={<SearchIcon />}>
             Buscar
           </Button>
           <Button
             variant='contained'
-            disabled={visibleButton}
-            onClick={moreData}
             size='large'
-            startIcon={<SearchRoundedIcon />}
+            disabled={visibleButton}
+            onClick={getMoreData}
+            sx={stylesWidthButton}
+            startIcon={<ControlPointIcon />}
           >
-            {`Mas de ${start} Registros`}
+            {`Más de ${start} registros`}
           </Button>
         </Box>
       </Box>
