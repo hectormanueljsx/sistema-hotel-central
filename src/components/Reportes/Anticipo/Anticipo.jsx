@@ -3,24 +3,25 @@ import { Box, Container } from '@mui/material';
 
 import FormAnticipo from '@/components/Reportes/Anticipo/FormAnticipo';
 import TableViewAnticipo from '@/components/Reportes/Anticipo/TableViewAnticipo';
+import { stylesBoxAnticipo } from '@/components/Reportes/Anticipo/AnticipoStyles';
 
 const Anticipo = () => {
   const [dataSearch, setDataSearch] = useState([]);
-  const [status, setStatus] = useState(false);
+  const [dateTable, setDateTable] = useState('');
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState(false);
 
   return (
-    <Container maxWidth='xl'>
-      <Box sx={{ display: 'flex' }}>
+    <Container component='section' disableGutters maxWidth='xl'>
+      <Box sx={stylesBoxAnticipo}>
         <FormAnticipo
           dataSearch={dataSearch}
           setDataSearch={setDataSearch}
-          setStatus={setStatus}
+          setDateTable={setDateTable}
           setLoading={setLoading}
           setError={setError}
         />
-        <TableViewAnticipo dataSearch={dataSearch} status={status} loading={loading} error={error} />
+        <TableViewAnticipo dataSearch={dataSearch} dateTable={dateTable} loading={loading} error={error} />
       </Box>
     </Container>
   );
