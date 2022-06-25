@@ -9,6 +9,7 @@ import HistoricoEgresos from '@/components/Caja/HistoricoEgresos/HistoricoEgreso
 import Anticipo from '@/components/Reportes/Anticipo/Anticipo';
 import Gastos from '@/components/Reportes/Egresos/Egresos';
 import IngresoBruto from '@/components/Reportes/IngresoBruto/IngresoBruto';
+import Fallas from '@/components/Reportes/Fallas/Fallas';
 import Tarifas from '@/components/Habitaciones/Tarifa/Tarifas';
 import Habitaciones from '@/components/Habitaciones/Habitaciones/Habitaciones';
 import Mantenimiento from '@/components/Mantenimiento/Mantenimiento/Mantenimiento';
@@ -92,6 +93,14 @@ const App = () => {
           element={
             <ProtectedRoute allowedRoles={[ROLES.ADMINISTRADOR]}>
               <IngresoBruto />
+            </ProtectedRoute>
+          }
+        />
+        <Route
+          path='/reportes/fallas'
+          element={
+            <ProtectedRoute allowedRoles={[ROLES.ADMINISTRADOR]}>
+              <Fallas />
             </ProtectedRoute>
           }
         />

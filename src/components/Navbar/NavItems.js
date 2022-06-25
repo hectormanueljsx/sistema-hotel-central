@@ -80,6 +80,12 @@ export const reportesDropdown = [
     path: './reportes/ingresos-brutos',
     cName: 'submenu-item',
   },
+  {
+    id: 'aa5a562a-9a9a-4cab-b809-112a27ad613a',
+    title: 'Fallas',
+    path: './reportes/fallas',
+    cName: 'submenu-item',
+  },
 ];
 
 export const habitacionesDropdown = [
