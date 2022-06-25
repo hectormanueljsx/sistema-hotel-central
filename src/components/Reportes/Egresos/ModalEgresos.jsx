@@ -1,7 +1,7 @@
 import React from 'react';
 import { Box, Checkbox, Container, FormControlLabel, TextField, Button } from '@mui/material';
-import moment from 'moment';
 import CloseIcon from '@mui/icons-material/Close';
+import moment from 'moment';
 
 import TitlePage from '@/components/Title/TitlePage';
 import TitleInput from '@/components/Title/TitleInput';
@@ -14,47 +14,45 @@ import {
   stylesModalClose,
   stylesWidthHeightModal,
   stylesWidthInput,
-} from '@/components/Caja/Egresos/EgresosStyles';
+} from '@/components/Reportes/Egresos/EgresosStyles';
 
 const ModalEgresos = ({ dataEgreso, handleCloseModal }) => {
   return (
     <Container component='section' sx={[stylesContainerSection, stylesWidthHeightModal]}>
-      <TitlePage titlePage='Detalle de Egreso' />
+      <TitlePage titlePage='Detalles de Egreso' />
       <Box component='form' sx={stylesBoxModal}>
         <Button variant='text' color='error' size='large' onClick={handleCloseModal} sx={stylesModalClose}>
           <CloseIcon />
         </Button>
         <Box sx={stylesBoxInputs}>
           <Box component='div' sx={[stylesContainerInput, stylesWidthInput]}>
-            <TitleInput titleInput='id' />
+            <TitleInput titleInput='Id' />
             <TextField
               defaultValue={dataEgreso.id}
+              disabled={true}
               variant='outlined'
-              type='text'
+              type='number'
               margin='none'
               size='small'
               required
               fullWidth
-              disabled={true}
-              autoFocus
             />
           </Box>
           <Box component='div' sx={[stylesContainerInput, stylesWidthInput]}>
             <TitleInput titleInput='Concepto' />
             <TextField
               defaultValue={dataEgreso.concepto}
+              disabled={true}
               variant='outlined'
               type='text'
               margin='none'
               size='small'
               required
               fullWidth
-              disabled={true}
-              autoFocus
             />
           </Box>
         </Box>
-        <Box sx={{ display: 'flex', justifyContent: 'space-between' }}>
+        <Box sx={stylesBoxInputs}>
           <Box component='div' sx={[stylesContainerInput, stylesWidthInput]}>
             <TitleInput titleInput='Con factura' />
             <FormControlLabel
@@ -66,89 +64,82 @@ const ModalEgresos = ({ dataEgreso, handleCloseModal }) => {
             <TitleInput titleInput='Importe' />
             <TextField
               defaultValue={dataEgreso.importe}
+              disabled={true}
               variant='outlined'
               type='number'
               margin='none'
               size='small'
               required
               fullWidth
-              disabled={true}
             />
           </Box>
         </Box>
-        <Box sx={{ display: 'flex', justifyContent: 'space-between' }}>
+        <Box sx={stylesBoxInputs}>
           <Box component='div' sx={[stylesContainerInput, stylesWidthInput]}>
             <TitleInput titleInput='Iva' />
             <TextField
               value={dataEgreso.iva}
+              disabled={true}
               variant='outlined'
               type='number'
               margin='none'
               size='small'
-              disabled={true}
               fullWidth
               required
-              autoFocus
             />
           </Box>
           <Box component='div' sx={[stylesContainerInput, stylesWidthInput]}>
             <TitleInput titleInput='Subtotal' />
             <TextField
               value={dataEgreso.subtotal}
+              disabled={true}
               variant='outlined'
               type='number'
               margin='none'
               size='small'
               required
               fullWidth
-              disabled={true}
-              autoFocus
             />
           </Box>
         </Box>
-        <Box sx={{ display: 'flex', justifyContent: 'space-between' }}>
+        <Box sx={stylesBoxInputs}>
           <Box component='div' sx={[stylesContainerInput, stylesWidthInput]}>
-            <TitleInput titleInput='Forma de Pago' />
+            <TitleInput titleInput='Forma de pago' />
             <TextField
               value={dataEgreso.pago.f_pago}
+              disabled={true}
               variant='outlined'
               type='text'
               margin='none'
               size='small'
-              disabled={true}
               fullWidth
               required
-              autoFocus
             />
           </Box>
-          <Box sx={{ display: 'flex', justifyContent: 'space-between' }}>
-            <Box component='div' sx={[stylesContainerInput, stylesWidthInput]}>
-              <TitleInput titleInput='Subcategoria' />
-              <TextField
-                value={dataEgreso.subcategoria.descripcion}
-                variant='outlined'
-                type='text'
-                margin='none'
-                size='small'
-                disabled={true}
-                fullWidth
-                required
-                autoFocus
-              />
-            </Box>
+          <Box component='div' sx={[stylesContainerInput, stylesWidthInput]}>
+            <TitleInput titleInput='Subcategoría' />
+            <TextField
+              value={dataEgreso.subcategoria.descripcion}
+              disabled={true}
+              variant='outlined'
+              type='text'
+              margin='none'
+              size='small'
+              fullWidth
+              required
+            />
           </Box>
         </Box>
-        <Box sx={{ display: 'flex', justifyContent: 'space-between' }}>
+        <Box sx={stylesBoxInputs}>
           <Box component='div' sx={[stylesContainerInput, stylesWidthInput]}>
             <TitleInput titleInput='Fecha' />
             <TextField
-              value={moment(dataEgreso.fecha).format('YYYY-MM-DD hh:mm:ss')}
+              value={moment(dataEgreso.fecha).format('YYYY-MM-DD hh:mm:ss a')}
               name='fecha'
               variant='outlined'
               type='datetime'
               margin='none'
               size='small'
-              placeholder='fecha'
               required
               fullWidth
               disabled={true}
@@ -159,20 +150,17 @@ const ModalEgresos = ({ dataEgreso, handleCloseModal }) => {
             <TitleInput titleInput='Usuario' />
             <TextField
               value={dataEgreso.users_permissions_user.username}
+              disabled={true}
               name='usuario'
               variant='outlined'
               type='text'
               margin='none'
               size='small'
-              placeholder='usuario'
               required
               fullWidth
-              disabled={true}
-              autoFocus
             />
           </Box>
         </Box>
-        <Box sx={{ display: 'flex', justifyContent: 'space-between', marginTop: 2 }}></Box>
       </Box>
     </Container>
   );

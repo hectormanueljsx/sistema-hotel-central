@@ -1,10 +1,7 @@
 import React, { useState } from 'react';
-import ReactHtmlTableToExcel from 'react-html-table-to-excel';
-
 import {
   Box,
   Container,
-  CssBaseline,
   IconButton,
   Modal,
   Table,
@@ -14,83 +11,91 @@ import {
   TableHead,
   TableRow,
   TablePagination,
+  Typography,
 } from '@mui/material';
 import VisibilityIcon from '@mui/icons-material/Visibility';
+import moment from 'moment';
 
 import TitlePage from '@/components/Title/TitlePage';
-import Loader from '@/components/Loader/Loader';
+import SleketonLoader from '@/components/Loader/SleketonLoader';
 import AlertGlobalTables from '@/components/Alert/AlertGlobalTables';
+import ModalEgresos from '@/components/Reportes/Egresos/ModalEgresos';
 import {
   stylesContainerSection,
+  stylesDateTable,
   stylesModal,
   stylesTableCell,
   stylesWidthHeightTable,
 } from '@/components/Reportes/Egresos/EgresosStyles';
-import ModalEgresos from './ModalEgresos';
 
 const columns = [
-  { id: 'fecha', label: 'Fecha', width: 200 },
-  { id: 'formaPago', label: 'Forma de Pago', width: 200 },
-  { id: 'subcategoria', label: 'Subcategoria', width: 200 },
-  { id: 'importe', label: 'Importe', width: 112 },
-  { id: 'concepto', label: 'Concepto', width: 200 },
-  { id: 'user', label: 'Usuario', width: 200 },
-  { id: 'detalle', label: 'Detalles', width: 200 },
+  { id: 'fecha', label: 'Fecha', width: 164.95 },
+  { id: 'concepto', label: 'Concepto', width: 242.917 },
+  { id: 'subcategoria', label: 'Subcategoría', width: 184.95 },
+  { id: 'formaPago', label: 'Forma de Pago', width: 173.933 },
+  { id: 'importe', label: 'Importe', width: 109.983 },
+  { id: 'acciones', label: 'Acciones', width: 75.2667 },
 ];
 
-const TableViewEgresos = ({ dataSearch, loading, error }) => {
+const TableViewEgresos = ({ dataSearch, dateTable, loading, error }) => {
   const [page, setPage] = useState(0);
   const [rowsPerPage, setRowsPerPage] = useState(10);
   const [openModal, setOpenModal] = useState(false);
   const [dataEgreso, setDataEgreso] = useState([]);
 
   const handleChangePage = (event, newPage) => setPage(newPage);
-  const handleChangeRowsPerPage = event => {
-    setRowsPerPage(parseInt(event.target.value, 10));
-    setPage(0);
-  };
+  const handleCloseModal = () => setOpenModal(false);
+
   const handleOpen = item => {
     setOpenModal(true);
     setDataEgreso(item);
   };
 
-  const handleCloseModal = () => setOpenModal(false);
+  const handleChangeRowsPerPage = event => {
+    setRowsPerPage(parseInt(event.target.value, 10));
+    setPage(0);
+  };
 
   return (
     <Container component='section' disableGutters sx={[stylesContainerSection, stylesWidthHeightTable]}>
-      <CssBaseline />
-      <TitlePage titlePage='Historico de Egresos' />
-      <ReactHtmlTableToExcel
-        id='botton'
-        table='tableEgreso'
-        filename='Reporte de Egresos'
-        sheet='pagina1'
-        buttonText='Exportar'
-      />
+      <TitlePage titlePage='Histórico de Egresos' />
+      <Typography sx={stylesDateTable}>{dateTable}</Typography>
       <Box component='div'>
-        {loading && <Loader />}
-        {error && <AlertGlobalTables messageError='Ah ocurrido un error al obtener los datos' />}
         <TableContainer>
-          <Table id='tableEgreso'>
+          <Table>
             <TableHead>
               <TableRow>
-                {loading || error
-                  ? null
-                  : columns.map((column, index) => (
-                      <TableCell key={index} sx={[stylesTableCell, { width: column.width }]}>
-                        {column.label}
-                      </TableCell>
-                    ))}
+                {columns.map((column, index) => (
+                  <TableCell key={index} sx={[stylesTableCell, { width: column.width }]}>
+                    {column.label}
+                  </TableCell>
+                ))}
               </TableRow>
             </TableHead>
             <TableBody>
+              {loading && (
+                <TableRow>
+                  <TableCell align='center' colSpan={columns.length} sx={stylesTableCell}>
+                    <SleketonLoader />
+                  </TableCell>
+                </TableRow>
+              )}
+              {error && (
+                <TableRow>
+                  <TableCell align='center' colSpan={columns.length} sx={stylesTableCell}>
+                    <AlertGlobalTables messageError='Ah ocurrido un error al obtener los datos' />
+                  </TableCell>
+                </TableRow>
+              )}
               {dataSearch.slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage).map(item => {
-                const { id, fecha, concepto, subcategoria, importe, pago, users_permissions_user } = item;
+                const { id, fecha, concepto, subcategoria, importe, pago } = item;
+
                 return (
                   <TableRow key={id}>
-                    <TableCell sx={stylesTableCell}>{fecha}</TableCell>
-                    <TableCell sx={stylesTableCell}>{pago.f_pago}</TableCell>
+                    <TableCell sx={stylesTableCell}>{moment(fecha).format('YYYY-MM-DD hh:mm:ss')}</TableCell>
+                    <TableCell sx={stylesTableCell}>{concepto}</TableCell>
                     <TableCell sx={stylesTableCell}>{subcategoria.descripcion}</TableCell>
+                    <TableCell sx={stylesTableCell}>{pago.f_pago}</TableCell>
                     <TableCell sx={stylesTableCell}>
                       {importe.toLocaleString('es-MX', {
                         style: 'currency',
@@ -98,8 +103,6 @@ const TableViewEgresos = ({ dataSearch, loading, error }) => {
                         minimumFractionDigits: 2,
                       })}
                     </TableCell>
-                    <TableCell sx={stylesTableCell}>{concepto}</TableCell>
-                    <TableCell sx={stylesTableCell}>{users_permissions_user.username}</TableCell>
                     <TableCell sx={stylesTableCell}>
                       <IconButton color='info' size='small' onClick={() => handleOpen(item)}>
                         <VisibilityIcon />

@@ -1,29 +1,30 @@
 import React, { useState, useEffect } from 'react';
-import { Box, Button, Container, CssBaseline, FormControl, MenuItem, Select, TextField } from '@mui/material';
-import SearchRoundedIcon from '@mui/icons-material/SearchRounded';
-import BackspaceRoundedIcon from '@mui/icons-material/BackspaceRounded';
+import { Box, Button, Container, FormControl, MenuItem, Select, TextField } from '@mui/material';
+import SearchIcon from '@mui/icons-material/Search';
+import ControlPointIcon from '@mui/icons-material/ControlPoint';
 import Swal from 'sweetalert2';
+import moment from 'moment';
 
 import TitlePage from '@/components/Title/TitlePage';
 import TitleInput from '@/components/Title/TitleInput';
 import getGeneralSelect from '@/services/getGeneralSelect';
 import { generalEndpoints } from '@/utilities/endpoints';
 import {
+  stylesBoxButtons,
   stylesContainerBox,
   stylesContainerInput,
   stylesContainerSection,
+  stylesWidthButton,
   stylesWidthHeightForm,
 } from '@/components/Reportes/Egresos/EgresosStyles';
-// pendiente la condicion si viene mas de 100 datos
 
-const FormEgresos = ({ setDataSearch, setLoading, setError, dataSearch }) => {
+const FormEgresos = ({ dataSearch, setDataSearch, setDateTable, setLoading, setError }) => {
   const [data, setData] = useState({ fechaInicio: '', fechaFin: '' });
   const [categoria, setCategoria] = useState([]);
   const [idCategoria, setIdCategoria] = useState('');
   const [idSubcategoria, setIdSubcategoria] = useState('');
   const [start, setStart] = useState(0);
   const [end, setEnd] = useState(100);
-  const [visible, setVisible] = useState(false);
   const [visibleButton, setVisibleButton] = useState(true);
 
   const identifier = localStorage.getItem('identifier');
@@ -34,31 +35,37 @@ const FormEgresos = ({ setDataSearch, setLoading, setError, dataSearch }) => {
   const handleCategoria = event => setIdCategoria(event.target.value);
   const handleSubCategoria = event => setIdSubcategoria(event.target.value);
 
+  useEffect(() => {
+    getCategoria();
+  }, []);
+
   const getCategoria = async () => {
     const res = await getGeneralSelect(identifier, password, endpointCategoria);
     setCategoria(res.data);
   };
 
-  useEffect(() => {
-    getCategoria();
-  }, []);
-
-  const cleanForm = () => {
-    Array.from(document.querySelectorAll('input')).forEach(input => (input.value = ''));
-    setData({ fechaInicio: '', fechaFin: '' });
-    setIdCategoria('');
-  };
-
   const getData = async () => {
-    try {
-      setLoading(true);
-      if (data.fechaInicio.trim().length > 0 && data.fechaFin.trim().length && idCategoria && idSubcategoria) {
+    if (data.fechaInicio.trim().length > 0 && data.fechaFin.trim().length && idCategoria && idSubcategoria) {
+      try {
+        setLoading(true);
+
         const endpointEgreso = `egresos?fecha_gte=${data.fechaInicio}T00:00:00.000Z&fecha_lte=${data.fechaFin}T23:59:59.000Z&subcategoria=${idSubcategoria}:DESC&_start=${start}`;
 
         const res = await getGeneralSelect(identifier, password, endpointEgreso);
         setDataSearch(res.data);
+
         if (res.status >= 200 && res.status <= 299) {
-          if (res.data.length < 1) {
+          const dateAnticipo = `${moment(data.fechaInicio).format('DD/MM/YYYY')} - ${moment(data.fechaFin).format(
+            'DD/MM/YYYY',
+          )}`;
+
+          setDateTable(dateAnticipo);
+          setData({ fechaInicio: '', fechaFin: '' });
+          setIdCategoria('');
+          setIdSubcategoria('');
+
+          if (res.data.length === 0) {
+            setDateTable('');
             Swal.fire({
               icon: 'error',
               text: 'No se encontraron registros',
@@ -67,24 +74,16 @@ const FormEgresos = ({ setDataSearch, setLoading, setError, dataSearch }) => {
               confirmButtonText: 'Aceptar',
             });
             return;
+          }
+
+          if (res.data.length >= end) {
+            setStart(start + 100);
+            setVisibleButton(false);
           } else {
-            if (res.data.length >= end) {
-              setStart(start + 100);
-              setVisibleButton(false);
-              setVisible(true);
-            } else {
-              setVisibleButton(true);
-              setVisible(true);
-            }
-            Swal.fire({
-              icon: 'success',
-              text: 'Registro encontrado correctamente',
-              allowOutsideClick: false,
-              confirmButtonColor: '#1976d2',
-              confirmButtonText: 'Aceptar',
-            }).then(result => result.isConfirmed);
+            setVisibleButton(true);
           }
         } else {
+          setError(true);
           Swal.fire({
             icon: 'error',
             text: 'Error al buscar registros',
@@ -94,27 +93,28 @@ const FormEgresos = ({ setDataSearch, setLoading, setError, dataSearch }) => {
           });
           return;
         }
-      } else {
-        Swal.fire({
-          icon: 'error',
-          text: 'Por favor, rellene todos los campos',
-          allowOutsideClick: false,
-          confirmButtonColor: '#1976d2',
-          confirmButtonText: 'Aceptar',
-        });
+      } catch (error) {
+      } finally {
+        setLoading(false);
       }
-    } catch (error) {
-      setError(error);
-    } finally {
-      setLoading(false);
+    } else {
+      Swal.fire({
+        icon: 'error',
+        text: 'Por favor, rellene todos los campos',
+        allowOutsideClick: false,
+        confirmButtonColor: '#1976d2',
+        confirmButtonText: 'Aceptar',
+      });
     }
   };
 
-  const moreData = async () => {
+  const getMoreData = async () => {
     if (dataSearch.length >= end) {
       setVisibleButton(false);
+
       const endpointEgreso = `egresos?fecha_gte=${data.fechaInicio}T00:00:00.000Z&fecha_lte=${data.fechaFin}T23:59:59.000Z&subcategoria=${idSubcategoria}:DESC&_start=${start}`;
       const resultado = await getGeneralSelect(identifier, password, endpointEgreso);
+
       setDataSearch(prevData => [...prevData, ...resultado.data]);
       setEnd(end + 100);
       setStart(start + 100);
@@ -125,14 +125,14 @@ const FormEgresos = ({ setDataSearch, setLoading, setError, dataSearch }) => {
 
   return (
     <Container component='section' sx={[stylesContainerSection, stylesWidthHeightForm]}>
-      <CssBaseline />
       <TitlePage titlePage='Reporte de Egresos' />
       <Box component='form' sx={stylesContainerBox}>
         <Box component='div' sx={stylesContainerInput}>
           <TitleInput titleInput='De fecha:' />
           <TextField
-            onChange={handleInputChange}
             name='fechaInicio'
+            value={data.fechaInicio}
+            onChange={handleInputChange}
             variant='outlined'
             type='date'
             margin='none'
@@ -145,8 +145,9 @@ const FormEgresos = ({ setDataSearch, setLoading, setError, dataSearch }) => {
         <Box component='div' sx={stylesContainerInput}>
           <TitleInput titleInput='A fecha:' />
           <TextField
-            onChange={handleInputChange}
             name='fechaFin'
+            value={data.fechaFin}
+            onChange={handleInputChange}
             variant='outlined'
             type='date'
             margin='none'
@@ -161,6 +162,7 @@ const FormEgresos = ({ setDataSearch, setLoading, setError, dataSearch }) => {
             <Select size='small' value={idCategoria} onChange={handleCategoria}>
               {categoria.map(item => {
                 const { categoria, id } = item;
+
                 return (
                   <MenuItem key={id} value={item}>
                     {categoria}
@@ -177,6 +179,7 @@ const FormEgresos = ({ setDataSearch, setLoading, setError, dataSearch }) => {
               {idCategoria
                 ? idCategoria.subcategorias.map(subitem => {
                     const { descripcion, id } = subitem;
+
                     return (
                       <MenuItem key={id} value={id}>
                         {descripcion}
@@ -187,33 +190,19 @@ const FormEgresos = ({ setDataSearch, setLoading, setError, dataSearch }) => {
             </Select>
           </FormControl>
         </Box>
-        <Box component='div' sx={stylesContainerInput}>
-          <Button
-            variant='contained'
-            onClick={cleanForm}
-            size='large'
-            startIcon={<BackspaceRoundedIcon />}
-            sx={{ marginRight: 2 }}
-          >
-            Limpiar
-          </Button>
-          <Button
-            variant='contained'
-            onClick={getData}
-            disabled={visible}
-            size='large'
-            startIcon={<SearchRoundedIcon />}
-          >
+        <Box component='div' sx={stylesBoxButtons}>
+          <Button onClick={getData} variant='contained' size='large' sx={stylesWidthButton} startIcon={<SearchIcon />}>
             Buscar
           </Button>
           <Button
             variant='contained'
             disabled={visibleButton}
-            onClick={moreData}
+            onClick={getMoreData}
             size='large'
-            startIcon={<SearchRoundedIcon />}
+            sx={stylesWidthButton}
+            startIcon={<ControlPointIcon />}
           >
-            {`Mas de ${start} Registros`}
+            {`Más de ${start} registros`}
           </Button>
         </Box>
       </Box>

@@ -19,18 +19,26 @@ export const stylesContainerSection = css`
 
 export const stylesWidthHeightForm = css`
   width: 400px;
-  height: 655.02px;
+  height: max-content;
 `;
 
 export const stylesWidthHeightTable = css`
   width: 1000px;
-  height: 711px;
+  height: max-content;
+`;
+
+export const stylesDateTable = css`
+  font-size: 20px;
+  font-weight: 500;
+  margin-bottom: 24px;
+  text-align: center;
 `;
 
 export const stylesWidthHeightModal = css`
   margin-top: 0;
   margin-bottom: 0;
   width: 780px;
+  height: max-content;
 `;
 
 export const stylesContainerBox = css`
@@ -47,10 +55,6 @@ export const stylesContainerInput = css`
 export const stylesCheckboxForm = css`
   padding: 0;
   padding-left: 8px;
-`;
-
-export const stylesButtonSend = css`
-  margin-top: 16px;
 `;
 
 export const stylesTableCell = css`
@@ -91,14 +95,14 @@ export const stylesWidthInput = css`
   width: 352px;
 `;
 
-export const stylesContainerBoxButtonAlign = css`
-  display: flex;
-  flex-direction: column;
-  align-items: flex-end;
+export const stylesWidthButton = css`
+  width: max-content;
 `;
 
 export const stylesBoxButtons = css`
   display: flex;
-  justify-content: space-between;
+  flex-direction: column;
+  align-items: center;
+  gap: 16px;
   margin-top: 16px;
 `;
