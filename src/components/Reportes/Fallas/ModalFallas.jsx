@@ -114,7 +114,7 @@ const ModalMantenimiento = ({ dataMantenimiento, handleCloseModal }) => {
         </Box>
         <Box sx={stylesBoxInputs}>
           <Box component='div' sx={[stylesContainerInput, stylesWidthInput]}>
-            <TitleInput titleInput='Realizado por:' />
+            <TitleInput titleInput='Realizado por' />
             <TextField
               defaultValue={dataMantenimiento.trabajador}
               disabled={true}
@@ -128,7 +128,7 @@ const ModalMantenimiento = ({ dataMantenimiento, handleCloseModal }) => {
             />
           </Box>
           <Box component='div' sx={[stylesContainerInput, stylesWidthInput]}>
-            <TitleInput titleInput='Reportado por:' />
+            <TitleInput titleInput='Reportado por' />
             <TextField
               defaultValue={dataMantenimiento.reporta}
               disabled={true}

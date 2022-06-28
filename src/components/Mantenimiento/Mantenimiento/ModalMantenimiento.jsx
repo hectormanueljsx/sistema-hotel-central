@@ -226,7 +226,7 @@ const ModalMantenimiento = ({ habitacion, subcategoria, dataMantenimiento, handl
         </Box>
         <Box sx={stylesBoxInputs}>
           <Box component='div' sx={[stylesContainerInput, stylesWidthInput]}>
-            <TitleInput titleInput='Realizado por:' />
+            <TitleInput titleInput='Realizado por' />
             <TextField
               defaultValue={dataMantenimiento.trabajador}
               onChange={handleInputChange}
@@ -241,7 +241,7 @@ const ModalMantenimiento = ({ habitacion, subcategoria, dataMantenimiento, handl
             />
           </Box>
           <Box component='div' sx={[stylesContainerInput, stylesWidthInput]}>
-            <TitleInput titleInput='Reportado por:' />
+            <TitleInput titleInput='Reportado por' />
             <TextField
               defaultValue={dataMantenimiento.reporta}
               onChange={handleInputChange}
