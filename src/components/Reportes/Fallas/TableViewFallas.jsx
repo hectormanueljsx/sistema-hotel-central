@@ -57,7 +57,7 @@ const TableViewMantenimiento = ({ dataSearch, dateTable, loading, error }) => {
 
   return (
     <Container component='section' disableGutters sx={[stylesContainerSection, stylesWidthHeightTable]}>
-      <TitlePage titlePage='Histórico de Fallas' />
+      <TitlePage titlePage='Histórico de Mantenimientos' />
       <Typography sx={stylesDateTable}>{dateTable}</Typography>
       <Box component='div'>
         <TableContainer>
