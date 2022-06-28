@@ -3,6 +3,7 @@ import { createTheme, CssBaseline, ThemeProvider } from '@mui/material';
 import { Routes, Route } from 'react-router-dom';
 
 import HomeDashboard from '@/components/Dashboard/HomeDashboard/HomeDashboard';
+import Empresa from '@/components/Reservas/Empresa/Empresa';
 import CategoriaEgresos from '@/components/Caja/CategoriaEgresos/CategoriaEgresos';
 import Egresos from '@/components/Caja/Egresos/Egresos';
 import HistoricoEgresos from '@/components/Caja/HistoricoEgresos/HistoricoEgresos';
@@ -48,6 +49,14 @@ const App = () => {
           }
         />
         <Route path='/login' element={<Login />} />
+        <Route
+          path='/reservas/empresas'
+          element={
+            <ProtectedRoute allowedRoles={[ROLES.ADMINISTRADOR]}>
+              <Empresa />
+            </ProtectedRoute>
+          }
+        />
         <Route
           path='/caja/categorias-de-egresos'
           element={

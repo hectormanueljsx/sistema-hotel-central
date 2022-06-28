@@ -36,7 +36,14 @@ export const navItems = [
   },
 ];
 
-export const reservasDropdown = [{}];
+export const reservasDropdown = [
+  {
+    id: 'ca6fe174-5e88-4baf-8dd6-fa24985d8a3c',
+    title: 'Empresas',
+    path: './reservas/empresas',
+    cName: 'submenu-item',
+  },
+];
 
 export const cotizarDropdown = [{}];
 

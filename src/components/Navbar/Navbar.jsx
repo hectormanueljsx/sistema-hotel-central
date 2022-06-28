@@ -10,6 +10,7 @@ import {
   reportesDropdown,
   mantenimientoDropdown,
   userDropdown,
+  reservasDropdown,
 } from '@/components/Navbar/NavItems';
 import Logotipo from '@/assets/logotipo-hc.png';
 import '@/components/Navbar/Navbar.css';
@@ -47,6 +48,7 @@ const Navbar = () => {
                       onMouseLeave={() => setDropdownReservas(false)}
                     >
                       <button>{item.title}</button>
+                      {dropdownReservas && <Dropdown dropdownItem={reservasDropdown} />}
                     </li>
                   );
                 }
