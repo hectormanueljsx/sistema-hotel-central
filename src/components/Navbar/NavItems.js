@@ -62,8 +62,8 @@ export const cajaDropdown = [
   },
   {
     id: 'ef46e6ef-9ca0-4c24-bdd4-faf20fbb9b11',
-    title: 'Histórico de Egresos',
-    path: './caja/historico-de-egresos',
+    title: 'Histórico de Gastos',
+    path: './caja/historico-de-gastos',
     cName: 'submenu-item',
   },
 ];
@@ -89,8 +89,8 @@ export const reportesDropdown = [
   },
   {
     id: 'aa5a562a-9a9a-4cab-b809-112a27ad613a',
-    title: 'Fallas',
-    path: './reportes/fallas',
+    title: 'Mantenimiento',
+    path: './reportes/mantenimiento',
     cName: 'submenu-item',
   },
 ];

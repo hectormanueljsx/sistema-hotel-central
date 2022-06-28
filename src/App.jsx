@@ -6,11 +6,11 @@ import HomeDashboard from '@/components/Dashboard/HomeDashboard/HomeDashboard';
 import Empresa from '@/components/Reservas/Empresa/Empresa';
 import CategoriaEgresos from '@/components/Caja/CategoriaEgresos/CategoriaEgresos';
 import Egresos from '@/components/Caja/Egresos/Egresos';
-import HistoricoEgresos from '@/components/Caja/HistoricoEgresos/HistoricoEgresos';
+import HistoricoDeGastos from '@/components/Caja/HistoricoEgresos/HistoricoEgresos';
 import Anticipo from '@/components/Reportes/Anticipo/Anticipo';
 import Gastos from '@/components/Reportes/Egresos/Egresos';
 import IngresoBruto from '@/components/Reportes/IngresoBruto/IngresoBruto';
-import Fallas from '@/components/Reportes/Fallas/Fallas';
+import ReportesMantenimiento from '@/components/Reportes/Fallas/Fallas';
 import Tarifas from '@/components/Habitaciones/Tarifa/Tarifas';
 import Habitaciones from '@/components/Habitaciones/Habitaciones/Habitaciones';
 import Mantenimiento from '@/components/Mantenimiento/Mantenimiento/Mantenimiento';
@@ -74,10 +74,10 @@ const App = () => {
           }
         />
         <Route
-          path='/caja/historico-de-egresos'
+          path='/caja/historico-de-gastos'
           element={
             <ProtectedRoute allowedRoles={[ROLES.ADMINISTRADOR]}>
-              <HistoricoEgresos />
+              <HistoricoDeGastos />
             </ProtectedRoute>
           }
         />
@@ -106,10 +106,10 @@ const App = () => {
           }
         />
         <Route
-          path='/reportes/fallas'
+          path='/reportes/mantenimiento'
           element={
             <ProtectedRoute allowedRoles={[ROLES.ADMINISTRADOR]}>
-              <Fallas />
+              <ReportesMantenimiento />
             </ProtectedRoute>
           }
         />
