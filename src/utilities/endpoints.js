@@ -32,4 +32,5 @@ export const historicalEndpoints = {
   historicoMantenimientos: 'mantenimientos?_sort=f_inicio:DESC&_start=',
   historicoRegistros: 'registros?_sort=fecha:DESC&_start=',
   historicoHistorial: 'historials?_sort=fecha_hosp:DESC&_start=',
+  historicoEmpresa: 'empresas?_sort=nombre:DESC&_start=',
 };
