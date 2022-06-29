@@ -2,7 +2,6 @@ import React, { useState } from 'react';
 import {
   Box,
   Container,
-  CssBaseline,
   IconButton,
   Table,
   TableBody,
@@ -48,7 +47,6 @@ const TableViewHistoricoEgresos = ({ search, dataEgreso, loading, error }) => {
 
   return (
     <Container component='section' disableGutters sx={[stylesContainerSection, stylesWidthHeightTable]}>
-      <CssBaseline />
       <TitlePage titlePage='Histórico de Egresos' />
       <Box component='div'>
         <TableContainer>
