@@ -2,7 +2,6 @@ import React, { useState } from 'react';
 import {
   Box,
   Container,
-  CssBaseline,
   IconButton,
   Modal,
   Table,
@@ -20,6 +19,7 @@ import ModalEmpresa from './ModalEmpresa';
 import SleketonLoader from '@/components/Loader/SleketonLoader';
 import AlertGlobalTables from '@/components/Alert/AlertGlobalTables';
 import {
+  stylesContainerNoMargin,
   stylesContainerSection,
   stylesModal,
   stylesTableCell,
@@ -27,11 +27,11 @@ import {
 } from '@/components/Reservas/Empresa/EmpresaStyle';
 
 const columns = [
-  { id: 'rfc', label: 'RFC de empresa', width: 140 },
-  { id: 'nombre', label: 'Nombre de la empresa', width: 200 },
-  { id: 'ciudad', label: 'ciudad', width: 270 },
-  { id: 'estado', label: 'estado', width: 112 },
-  { id: 'detalles', label: 'Detalles', width: 130 },
+  { id: 'rfc', label: 'RFC de la Empresa', width: 170 },
+  { id: 'nombre', label: 'Nombre de la Empresa', width: 250 },
+  { id: 'estado', label: 'Estado', width: 232 },
+  { id: 'ciudad', label: 'Ciudad', width: 200 },
+  { id: 'acciones', label: 'Acciones', width: 100 },
 ];
 
 const TableViewEmpresas = ({ search, dataEmpresa, loading, error }) => {
@@ -55,8 +55,11 @@ const TableViewEmpresas = ({ search, dataEmpresa, loading, error }) => {
   const filterName = dataEmpresa.filter(item => item.nombre.toUpperCase().includes(search.toUpperCase()));
 
   return (
-    <Container component='section' disableGutters sx={[stylesContainerSection, stylesWidthHeightTable]}>
-      <CssBaseline />
+    <Container
+      component='section'
+      disableGutters
+      sx={[stylesContainerSection, stylesContainerNoMargin, stylesWidthHeightTable]}
+    >
       <TitlePage titlePage='Histórico de Empresas' />
       <Box component='div'>
         <TableContainer>
@@ -92,8 +95,8 @@ const TableViewEmpresas = ({ search, dataEmpresa, loading, error }) => {
                   <TableRow key={id}>
                     <TableCell sx={stylesTableCell}>{rfc}</TableCell>
                     <TableCell sx={stylesTableCell}>{nombre}</TableCell>
-                    <TableCell sx={stylesTableCell}>{ciudad}</TableCell>
                     <TableCell sx={stylesTableCell}>{estado}</TableCell>
+                    <TableCell sx={stylesTableCell}>{ciudad}</TableCell>
                     <TableCell sx={stylesTableCell}>
                       <IconButton color='info' size='small' onClick={() => handleOpen(item)}>
                         <VisibilityIcon />

@@ -2,7 +2,13 @@ import { css } from '@emotion/react';
 
 export const stylesBoxEmpresa = css`
   display: flex;
+  flex-direction: column;
+  align-items: center;
   justify-content: center;
+`;
+
+export const stylesBoxSearchTable = css`
+  display: flex;
   gap: 32px;
 `;
 
@@ -31,31 +37,44 @@ export const stylesContainerSection = css`
   box-shadow: 0px 0px 5px rgba(0, 0, 0, 0.25);
   padding: 24px;
   margin-top: 48px;
-  margin-bottom: 48px;
+  margin-bottom: 40px;
   margin-left: 0;
   margin-right: 0;
 `;
 
-export const stylesWidthHeightFormEmpresa = css`
-  margin-top: 40px;
+export const stylesContainerNoMargin = css`
+  margin-top: 0;
   margin-bottom: 48px;
+`;
+
+export const stylesWidthHeightForm = css`
+  width: 1200px;
+  height: max-content;
+`;
+
+export const stylesWidthHeightSearchForm = css`
   width: 400px;
   height: max-content;
+`;
+
+export const stylesBoxForm = css`
+  display: flex;
+  flex-direction: column;
 `;
 
 export const stylesButtonSend = css`
   margin-top: 16px;
 `;
 
+export const stylesBoxButtonForm = css`
+  display: flex;
+  justify-content: center;
+`;
+
 export const stylesBoxButtons = css`
   display: flex;
   justify-content: space-between;
   margin-top: 16px;
-`;
-
-export const stylesWidthHeightForm = css`
-  width: 400px;
-  height: max-content;
 `;
 
 export const stylesTableCell = css`

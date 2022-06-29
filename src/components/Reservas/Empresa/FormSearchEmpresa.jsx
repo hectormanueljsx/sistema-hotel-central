@@ -10,8 +10,9 @@ import {
   stylesBoxButtons,
   stylesContainerBox,
   stylesContainerInput,
+  stylesContainerNoMargin,
   stylesContainerSection,
-  stylesWidthHeightForm,
+  stylesWidthHeightSearchForm,
 } from '@/components/Reservas/Empresa/EmpresaStyle';
 
 const FormSearchEmpresa = ({ setSearch, dataEmpresa, setDataEmpresa, setLoading, setError }) => {
@@ -62,7 +63,11 @@ const FormSearchEmpresa = ({ setSearch, dataEmpresa, setDataEmpresa, setLoading,
   };
 
   return (
-    <Container component='section' sx={[stylesContainerSection, stylesWidthHeightForm]}>
+    <Container
+      component='section'
+      disableGutters
+      sx={[stylesContainerSection, stylesContainerNoMargin, stylesWidthHeightSearchForm]}
+    >
       <TitlePage titlePage='Buscar Registro' />
       <Box component='form' sx={stylesContainerBox}>
         <Box component='div' sx={stylesContainerInput}>
@@ -76,7 +81,6 @@ const FormSearchEmpresa = ({ setSearch, dataEmpresa, setDataEmpresa, setLoading,
             size='small'
             required
             fullWidth
-            autoFocus
           />
         </Box>
         <Box component='div' sx={stylesBoxButtons}>
