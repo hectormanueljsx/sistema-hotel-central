@@ -6,7 +6,7 @@ import Swal from 'sweetalert2';
 
 import TitlePage from '@/components/Title/TitlePage';
 import TitleInput from '@/components/Title/TitleInput';
-import Loader from '@/components/Loader/Loader';
+import ButtonLoader from '@/components/Loader/ButtonLoader';
 import { generalEndpoints } from '@/utilities/endpoints';
 import postLogin from '@/services/postLogin';
 import putGeneralTable from '@/services/putGeneralTable';
@@ -22,11 +22,11 @@ import {
 import LogoIcon from '@/assets/favicon.png';
 
 const Login = () => {
-  const [loading, setLoading] = useState(false);
   const [datosLogin, setDatosLogin] = useState({
     username: '',
     password: '',
   });
+  const [loadingBtn, setLoadingBtn] = useState(false);
 
   const navigate = useNavigate();
 
@@ -43,8 +43,7 @@ const Login = () => {
 
     if (datosLogin.username.trim().length > 0 && datosLogin.password.trim().length > 0) {
       try {
-        setLoading(true);
-
+        setLoadingBtn(true);
         const res = await postLogin(datosLogin.username, datosLogin.password);
         const dateTime = new Date();
 
@@ -78,7 +77,7 @@ const Login = () => {
         }
       } catch (error) {
       } finally {
-        setLoading(false);
+        setLoadingBtn(false);
       }
     } else {
       Swal.fire({
@@ -125,11 +124,14 @@ const Login = () => {
             fullWidth
           />
         </Box>
-        <Button variant='contained' onClick={handleSubmit} size='large' endIcon={<LoginIcon />} sx={stylesButtonSend}>
-          Iniciar Sesión
-        </Button>
+        {loadingBtn ? (
+          <ButtonLoader />
+        ) : (
+          <Button variant='contained' onClick={handleSubmit} size='large' endIcon={<LoginIcon />} sx={stylesButtonSend}>
+            Iniciar Sesión
+          </Button>
+        )}
       </Box>
-      {loading && <Loader />}
     </Container>
   );
 };
