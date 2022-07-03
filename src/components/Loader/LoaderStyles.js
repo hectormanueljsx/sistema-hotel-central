@@ -1,14 +1,13 @@
 import { css } from '@emotion/react';
 
-export const stylesLoader = css`
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  margin-top: 80px;
+export const stylesButtonSend = css`
+  margin-top: 16px;
 `;
 
-export const stylesCircle = css`
+export const stylesCircularProgress = css`
   color: #00b8b2;
+  display: flex;
+  flex-direction: row;
 `;
 
 export const stylesHeightSkeleton = css`
