@@ -8,7 +8,8 @@
 }
 
 .swal2-html-container {
-  color: #000000;
+  color: rgba(0, 0, 0, 0.87);
+  font-family: 'Roboto', sans-serif;
   font-size: 18px;
   font-weight: 500;
   margin: 25px 25px;
