@@ -100,6 +100,6 @@ export const stylesContainerBoxButtonAlign = css`
 
 export const stylesBoxButtons = css`
   display: flex;
-  justify-content: space-between;
-  margin-top: 16px;
+  justify-content: center;
+  gap: 28px;
 `;

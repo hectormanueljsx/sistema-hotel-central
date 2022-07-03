@@ -5,6 +5,7 @@ import Swal from 'sweetalert2';
 
 import TitlePage from '@/components/Title/TitlePage';
 import TitleInput from '@/components/Title/TitleInput';
+import ButtonLoader from '@/components/Loader/ButtonLoader';
 import postUsers from '@/services/postUsers';
 import { generalEndpoints } from '@/utilities/endpoints';
 import {
@@ -23,6 +24,7 @@ const FormCreateUsuario = () => {
     confirm: '',
   });
   const [rol, setRol] = useState('');
+  const [loadingBtn, setLoadingBtn] = useState(false);
 
   const identifier = localStorage.getItem('identifier');
   const password = localStorage.getItem('password');
@@ -52,7 +54,9 @@ const FormCreateUsuario = () => {
         };
         const dataRole = { role: { id: rol } };
 
+        setLoadingBtn(true);
         const res = await postUsers(identifier, password, endpointUsuario, dataUser, dataRole);
+        setLoadingBtn(false);
 
         if (res.status >= 200 && res.status <= 299) {
           Swal.fire({
@@ -164,9 +168,13 @@ const FormCreateUsuario = () => {
             label='Encargado'
           />
         </Box>
-        <Button variant='contained' onClick={sendDatos} size='large' startIcon={<SaveIcon />} sx={stylesButtonSend}>
-          Registrar Usuario
-        </Button>
+        {loadingBtn ? (
+          <ButtonLoader />
+        ) : (
+          <Button variant='contained' onClick={sendDatos} size='large' startIcon={<SaveIcon />} sx={stylesButtonSend}>
+            Registrar Usuario
+          </Button>
+        )}
       </Box>
     </Container>
   );
