@@ -134,12 +134,14 @@ const FormCreateMantenimiento = ({ habitacion, subcategoria }) => {
           <FormControl fullWidth>
             <Select size='small' value={idSubcategoria} onChange={handleSubcategoria}>
               {subcategoria.map(item => {
-                const { descripcion, id } = item;
+                const { descripcion, id, status } = item;
 
-                return (
+                return status ? (
                   <MenuItem key={id} value={id}>
                     {descripcion}
                   </MenuItem>
+                ) : (
+                  false
                 );
               })}
             </Select>

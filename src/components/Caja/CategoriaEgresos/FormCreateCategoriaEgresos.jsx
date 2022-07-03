@@ -160,12 +160,14 @@ const FormCreateCategoriaEgresos = () => {
             <FormControl fullWidth>
               <Select size='small' value={options} onChange={handleChange}>
                 {list.map(item => {
-                  const { categoria, id } = item;
+                  const { categoria, id, status } = item;
 
-                  return (
+                  return status ? (
                     <MenuItem key={id} value={id}>
                       {categoria}
                     </MenuItem>
+                  ) : (
+                    false
                   );
                 })}
               </Select>

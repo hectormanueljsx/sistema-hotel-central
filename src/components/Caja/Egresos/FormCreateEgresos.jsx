@@ -160,12 +160,14 @@ const FormCreateEgresos = ({ pago, categoria }) => {
           <FormControl fullWidth>
             <Select size='small' value={idCategoria} onChange={handleCategoria}>
               {categoria.map(item => {
-                const { categoria, id } = item;
+                const { categoria, id, status } = item;
 
-                return (
+                return status ? (
                   <MenuItem key={id} value={item}>
                     {categoria}
                   </MenuItem>
+                ) : (
+                  false
                 );
               })}
             </Select>
@@ -177,12 +179,14 @@ const FormCreateEgresos = ({ pago, categoria }) => {
             <Select size='small' value={idSubcategoria} onChange={handleSubCategoria}>
               {idCategoria
                 ? idCategoria.subcategorias.map(subitem => {
-                    const { descripcion, id } = subitem;
+                    const { descripcion, id, status } = subitem;
 
-                    return (
+                    return status ? (
                       <MenuItem key={id} value={id}>
                         {descripcion}
                       </MenuItem>
+                    ) : (
+                      false
                     );
                   })
                 : null}
