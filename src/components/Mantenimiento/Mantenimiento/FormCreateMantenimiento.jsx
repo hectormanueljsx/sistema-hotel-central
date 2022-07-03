@@ -5,6 +5,7 @@ import Swal from 'sweetalert2';
 
 import TitlePage from '@/components/Title/TitlePage';
 import TitleInput from '@/components/Title/TitleInput';
+import ButtonLoader from '@/components/Loader/ButtonLoader';
 import postGeneralTable from '@/services/postGeneralTable';
 import { generalEndpoints } from '@/utilities/endpoints';
 import {
@@ -22,6 +23,7 @@ const FormCreateMantenimiento = ({ habitacion, subcategoria }) => {
   });
   const [idHabitacion, setIdHabitacion] = useState('');
   const [idSubcategoria, setIdSubcategoria] = useState('');
+  const [loadingBtn, setLoadingBtn] = useState(false);
 
   const identifier = localStorage.getItem('identifier');
   const password = localStorage.getItem('password');
@@ -47,7 +49,9 @@ const FormCreateMantenimiento = ({ habitacion, subcategoria }) => {
         subcategoria: { id: idSubcategoria },
       };
 
+      setLoadingBtn(true);
       const res = await postGeneralTable(identifier, password, endpointMantenimiento, generalData);
+      setLoadingBtn(false);
 
       if (res.status >= 200 && res.status <= 299) {
         Swal.fire({
@@ -141,9 +145,13 @@ const FormCreateMantenimiento = ({ habitacion, subcategoria }) => {
             </Select>
           </FormControl>
         </Box>
-        <Button variant='contained' onClick={sendDatos} size='large' startIcon={<SaveIcon />} sx={stylesButtonSend}>
-          Registrar Mantenimiento
-        </Button>
+        {loadingBtn ? (
+          <ButtonLoader />
+        ) : (
+          <Button variant='contained' onClick={sendDatos} size='large' startIcon={<SaveIcon />} sx={stylesButtonSend}>
+            Registrar Mantenimiento
+          </Button>
+        )}
       </Box>
     </Container>
   );
