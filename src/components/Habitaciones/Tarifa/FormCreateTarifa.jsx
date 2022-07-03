@@ -5,6 +5,7 @@ import Swal from 'sweetalert2';
 
 import TitlePage from '@/components/Title/TitlePage';
 import TitleInput from '@/components/Title/TitleInput';
+import ButtonLoader from '@/components/Loader/ButtonLoader';
 import postGeneralTable from '@/services/postGeneralTable';
 import { generalEndpoints } from '@/utilities/endpoints';
 import {
@@ -21,6 +22,7 @@ const FormCreateTarifa = () => {
     precio: '',
     numPersonas: '',
   });
+  const [loadingBtn, setLoadingBtn] = useState(false);
 
   const identifier = localStorage.getItem('identifier');
   const password = localStorage.getItem('password');
@@ -38,7 +40,9 @@ const FormCreateTarifa = () => {
         no_personas: datos.numPersonas,
       };
 
+      setLoadingBtn(true);
       const res = await postGeneralTable(identifier, password, endpointTarifa, generalData);
+      setLoadingBtn(false);
 
       if (res.status >= 200 && res.status <= 299) {
         Swal.fire({
@@ -113,9 +117,13 @@ const FormCreateTarifa = () => {
             fullWidth
           />
         </Box>
-        <Button variant='contained' onClick={sendDatos} size='large' startIcon={<SaveIcon />} sx={stylesButtonSend}>
-          Registrar Tarifa
-        </Button>
+        {loadingBtn ? (
+          <ButtonLoader />
+        ) : (
+          <Button variant='contained' onClick={sendDatos} size='large' startIcon={<SaveIcon />} sx={stylesButtonSend}>
+            Registrar Tarifa
+          </Button>
+        )}
       </Box>
     </Container>
   );

@@ -15,6 +15,7 @@ import Swal from 'sweetalert2';
 
 import TitlePage from '@/components/Title/TitlePage';
 import TitleInput from '@/components/Title/TitleInput';
+import ButtonLoader from '@/components/Loader/ButtonLoader';
 import useGetGeneralTable from '@/hooks/useGetGeneralTable';
 import postGeneralTable from '@/services/postGeneralTable';
 import { generalEndpoints } from '@/utilities/endpoints';
@@ -33,6 +34,7 @@ const FormCreateHabitaciones = () => {
   const [optionServices, setOptionServices] = useState([]);
   const [optionTarifas, setOptionTarifas] = useState([]);
   const [numHabitacion, setNumHabitacion] = useState('');
+  const [loadingBtn, setLoadingBtn] = useState(false);
 
   const identifier = localStorage.getItem('identifier');
   const password = localStorage.getItem('password');
@@ -73,7 +75,9 @@ const FormCreateHabitaciones = () => {
         tarifas: tarifaId,
       };
 
+      setLoadingBtn(true);
       const res = await postGeneralTable(identifier, password, endpointHabitacion, HabitacionData);
+      setLoadingBtn(false);
 
       if (res.status >= 200 && res.status <= 299) {
         Swal.fire({
@@ -168,9 +172,13 @@ const FormCreateHabitaciones = () => {
             </Select>
           </FormControl>
         </Box>
-        <Button variant='contained' onClick={sendDatos} size='large' startIcon={<SaveIcon />} sx={stylesButtonSend}>
-          Registrar Habitación
-        </Button>
+        {loadingBtn ? (
+          <ButtonLoader />
+        ) : (
+          <Button variant='contained' onClick={sendDatos} size='large' startIcon={<SaveIcon />} sx={stylesButtonSend}>
+            Registrar Habitación
+          </Button>
+        )}
       </Box>
     </Container>
   );
