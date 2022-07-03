@@ -5,6 +5,7 @@ import Swal from 'sweetalert2';
 
 import TitlePage from '@/components/Title/TitlePage';
 import TitleInput from '@/components/Title/TitleInput';
+import ButtonLoader from '@/components/Loader/ButtonLoader';
 import useGetGeneralTable from '@/hooks/useGetGeneralTable';
 import postGeneralTable from '@/services/postGeneralTable';
 import { generalEndpoints } from '@/utilities/endpoints';
@@ -22,6 +23,8 @@ const FormCreateCategoriaEgresos = () => {
   const [categoria, setCategoria] = useState('');
   const [options, setOptions] = useState('');
   const [subcategoria, setSubcategoria] = useState('');
+  const [loadingBtnCategoria, setLoadingBtnCategoria] = useState(false);
+  const [loadingBtnSubcategoria, setLoadingBtnSubcategoria] = useState(false);
 
   const identifier = localStorage.getItem('identifier');
   const password = localStorage.getItem('password');
@@ -38,7 +41,9 @@ const FormCreateCategoriaEgresos = () => {
     if (categoria.trim().length > 0) {
       const categoryData = { categoria: categoria.toUpperCase() };
 
+      setLoadingBtnCategoria(true);
       const res = await postGeneralTable(identifier, password, endpointCategoria, categoryData);
+      setLoadingBtnCategoria(false);
 
       if (res.status >= 200 && res.status <= 299) {
         Swal.fire({
@@ -78,7 +83,9 @@ const FormCreateCategoriaEgresos = () => {
         categoria: { id: options },
       };
 
+      setLoadingBtnSubcategoria(true);
       const res = await postGeneralTable(identifier, password, endpointSubcategoria, subcategoryData);
+      setLoadingBtnSubcategoria(false);
 
       if (res.status >= 200 && res.status <= 299) {
         Swal.fire({
@@ -109,7 +116,7 @@ const FormCreateCategoriaEgresos = () => {
     }
   };
 
-  const { list, loading, error } = useGetGeneralTable(identifier, password, endpointCategoria);
+  const { list } = useGetGeneralTable(identifier, password, endpointCategoria);
 
   return (
     <Container component='section' disableGutters sx={stylesContainerDoubleForm}>
@@ -130,15 +137,19 @@ const FormCreateCategoriaEgresos = () => {
               autoFocus
             />
           </Box>
-          <Button
-            variant='contained'
-            onClick={sendDatosCategoria}
-            size='large'
-            startIcon={<SaveIcon />}
-            sx={stylesButtonSend}
-          >
-            Registrar Categoría
-          </Button>
+          {loadingBtnCategoria ? (
+            <ButtonLoader />
+          ) : (
+            <Button
+              variant='contained'
+              onClick={sendDatosCategoria}
+              size='large'
+              startIcon={<SaveIcon />}
+              sx={stylesButtonSend}
+            >
+              Registrar Categoría
+            </Button>
+          )}
         </Box>
       </Container>
       <Container component='section' sx={[stylesContainerSection, stylesWidthHeightFormSubcategoria]}>
@@ -173,15 +184,19 @@ const FormCreateCategoriaEgresos = () => {
               fullWidth
             />
           </Box>
-          <Button
-            variant='contained'
-            onClick={sendDatosSubcategoria}
-            size='large'
-            startIcon={<SaveIcon />}
-            sx={stylesButtonSend}
-          >
-            Registrar Subcategoría
-          </Button>
+          {loadingBtnSubcategoria ? (
+            <ButtonLoader />
+          ) : (
+            <Button
+              variant='contained'
+              onClick={sendDatosSubcategoria}
+              size='large'
+              startIcon={<SaveIcon />}
+              sx={stylesButtonSend}
+            >
+              Registrar Subcategoría
+            </Button>
+          )}
         </Box>
       </Container>
     </Container>

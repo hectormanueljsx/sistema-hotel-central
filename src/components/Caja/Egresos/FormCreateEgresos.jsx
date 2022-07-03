@@ -15,6 +15,7 @@ import Swal from 'sweetalert2';
 
 import TitlePage from '@/components/Title/TitlePage';
 import TitleInput from '@/components/Title/TitleInput';
+import ButtonLoader from '@/components/Loader/ButtonLoader';
 import postGeneralTable from '@/services/postGeneralTable';
 import { generalEndpoints } from '@/utilities/endpoints';
 import {
@@ -39,6 +40,7 @@ const FormCreateEgresos = ({ pago, categoria }) => {
   const [idCategoria, setidCategoria] = useState('');
   const [idSubcategoria, setidSubcategoria] = useState('');
   const [facturado, setFacturado] = useState(false);
+  const [loadingBtn, setLoadingBtn] = useState(false);
 
   const identifier = localStorage.getItem('identifier');
   const password = localStorage.getItem('password');
@@ -67,7 +69,9 @@ const FormCreateEgresos = ({ pago, categoria }) => {
         subcategoria: { id: idSubcategoria },
       };
 
+      setLoadingBtn(true);
       const res = await postGeneralTable(identifier, password, endpointEgreso, generalData);
+      setLoadingBtn(false);
 
       if (res.status >= 200 && res.status <= 299) {
         Swal.fire({
@@ -185,9 +189,13 @@ const FormCreateEgresos = ({ pago, categoria }) => {
             </Select>
           </FormControl>
         </Box>
-        <Button variant='contained' onClick={postEgreso} size='large' startIcon={<SaveIcon />} sx={stylesButtonSend}>
-          Registrar Gasto
-        </Button>
+        {loadingBtn ? (
+          <ButtonLoader />
+        ) : (
+          <Button variant='contained' onClick={postEgreso} size='large' startIcon={<SaveIcon />} sx={stylesButtonSend}>
+            Registrar Gasto
+          </Button>
+        )}
       </Box>
     </Container>
   );
