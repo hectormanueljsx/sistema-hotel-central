@@ -22,7 +22,6 @@ import SleketonLoader from '@/components/Loader/SleketonLoader';
 import AlertGlobalTables from '@/components/Alert/AlertGlobalTables';
 import ModalUsuario from '@/components/Administracion/Usuario/ModalUsuario';
 import useGetGeneralTable from '@/hooks/useGetGeneralTable';
-import deleteGeneralTable from '@/services/deleteGeneralTable';
 import { generalEndpoints } from '@/utilities/endpoints';
 import {
   stylesContainerSection,
@@ -30,6 +29,7 @@ import {
   stylesTableCell,
   stylesWidthHeightTable,
 } from '@/components/Administracion/Usuario/UsuarioStyles';
+import putGeneralTable from '@/services/putGeneralTable';
 
 const columns = [
   { id: 'username', label: 'Nombre', width: 462 },
@@ -62,7 +62,10 @@ const TableViewUsuarios = () => {
   };
 
   const deleteByIdUsuario = async id => {
-    const { status } = await deleteGeneralTable(identifier, password, endpointUsuario, id);
+    const generalData = {
+      blocked: true,
+    };
+    const { status } = await putGeneralTable(identifier, password, endpointUsuario, id, generalData);
     return status;
   };
 
@@ -105,7 +108,7 @@ const TableViewUsuarios = () => {
     });
   };
 
-  const { list, loading, error } = useGetGeneralTable(identifier, password, endpointUsuario);
+  const { list, loading, error } = useGetGeneralTable(identifier, password, `${endpointUsuario}?blocked=false`);
 
   return (
     <Container component='section' disableGutters sx={[stylesContainerSection, stylesWidthHeightTable]}>

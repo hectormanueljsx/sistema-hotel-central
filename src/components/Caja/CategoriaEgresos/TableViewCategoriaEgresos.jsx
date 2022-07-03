@@ -18,7 +18,6 @@ import TitlePage from '@/components/Title/TitlePage';
 import SleketonLoader from '@/components/Loader/SleketonLoader';
 import AlertGlobalTables from '@/components/Alert/AlertGlobalTables';
 import useGetGeneralTable from '@/hooks/useGetGeneralTable';
-import deleteGeneralTable from '@/services/deleteGeneralTable';
 import { generalEndpoints } from '@/utilities/endpoints';
 import {
   stylesAccordion,
@@ -30,6 +29,7 @@ import {
   stylesFontSubcategoria,
   stylesWidthAcordion,
 } from '@/components/Caja/CategoriaEgresos/CategoriaEgresosStyles';
+import putGeneralTable from '@/services/putGeneralTable';
 
 const TableViewCategoriaEgresos = () => {
   const [expanded, setExpanded] = useState(false);
@@ -42,12 +42,18 @@ const TableViewCategoriaEgresos = () => {
   const handleChange = panel => (event, isExpanded) => setExpanded(isExpanded ? panel : false);
 
   const deleteByIdCategoria = async id => {
-    const { status } = await deleteGeneralTable(identifier, password, endpointCategoria, id);
+    const generalData = {
+      status: false,
+    };
+    const { status } = await putGeneralTable(identifier, password, endpointCategoria, id, generalData);
     return status;
   };
 
   const deleteByIdSubcategoria = async id => {
-    const { status } = await deleteGeneralTable(identifier, password, endpointSubategoria, id);
+    const generalData = {
+      status: false,
+    };
+    const { status } = await putGeneralTable(identifier, password, endpointSubategoria, id, generalData);
     return status;
   };
 
@@ -129,7 +135,7 @@ const TableViewCategoriaEgresos = () => {
     });
   };
 
-  const { list, loading, error } = useGetGeneralTable(identifier, password, endpointCategoria);
+  const { list, loading, error } = useGetGeneralTable(identifier, password, `${endpointCategoria}?status=true`);
 
   return (
     <Container component='section' disableGutters sx={[stylesContainerSection, stylesWidthAcordion]}>
@@ -155,23 +161,27 @@ const TableViewCategoriaEgresos = () => {
                 </Box>
               </AccordionSummary>
               {subcategorias.map(subitem => {
-                const { descripcion, id } = subitem;
+                const { descripcion, id, status } = subitem;
 
                 return (
                   <AccordionDetails key={id} sx={stylesAccordionDetails}>
-                    <Box sx={[stylesAccordion, stylesBoxSubcategoria]}>
-                      <Box sx={[stylesAccordion, { marginLeft: 5 }]}>
-                        <ListItemIcon sx={{ minWidth: 0 }}>
-                          <ArrowRightIcon />
-                        </ListItemIcon>
-                        <Typography key={id} sx={stylesFontSubcategoria}>
-                          {descripcion}
-                        </Typography>
+                    {status ? (
+                      <Box sx={[stylesAccordion, stylesBoxSubcategoria]}>
+                        <Box sx={[stylesAccordion, { marginLeft: 5 }]}>
+                          <ListItemIcon sx={{ minWidth: 0 }}>
+                            <ArrowRightIcon />
+                          </ListItemIcon>
+                          <Typography key={id} sx={stylesFontSubcategoria}>
+                            {descripcion}
+                          </Typography>
+                        </Box>
+                        <IconButton color='error' size='small' onClick={() => deleteSubcategoria(id)}>
+                          <DeleteIcon />
+                        </IconButton>
                       </Box>
-                      <IconButton color='error' size='small' onClick={() => deleteSubcategoria(id)}>
-                        <DeleteIcon />
-                      </IconButton>
-                    </Box>
+                    ) : (
+                      false
+                    )}
                   </AccordionDetails>
                 );
               })}

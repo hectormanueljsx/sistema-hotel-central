@@ -159,12 +159,14 @@ const FormSearchMantenimiento = ({ setDataSearch, setDateTable, setLoading, setE
             <Select size='small' value={idSubcategoria} onChange={handleSubcategoria}>
               {idCategoria
                 ? idCategoria.subcategorias.map(subitem => {
-                    const { descripcion, id } = subitem;
+                    const { descripcion, id, status } = subitem;
 
-                    return (
+                    return status ? (
                       <MenuItem key={id} value={id}>
                         {descripcion}
                       </MenuItem>
+                    ) : (
+                      false
                     );
                   })
                 : null}

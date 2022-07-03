@@ -37,6 +37,7 @@ const FormCreateUsuario = () => {
     event.preventDefault();
 
     const confirmed = true;
+    const blocked = false;
 
     if (datos.password.trim() === datos.confirm.trim()) {
       if (
@@ -51,6 +52,7 @@ const FormCreateUsuario = () => {
           password: datos.password,
           email: datos.email,
           confirmed,
+          blocked,
         };
         const dataRole = { role: { id: rol } };
 

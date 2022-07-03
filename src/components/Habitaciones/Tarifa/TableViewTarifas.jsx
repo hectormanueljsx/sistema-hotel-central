@@ -21,7 +21,6 @@ import SleketonLoader from '@/components/Loader/SleketonLoader';
 import AlertGlobalTables from '@/components/Alert/AlertGlobalTables';
 import ModalTarifa from '@/components/Habitaciones/Tarifa/ModalTarifa';
 import useGetGeneralTable from '@/hooks/useGetGeneralTable';
-import deleteGeneralTable from '@/services/deleteGeneralTable';
 import { generalEndpoints } from '@/utilities/endpoints';
 import {
   stylesContainerSection,
@@ -29,6 +28,7 @@ import {
   stylesTableCell,
   stylesWidthHeightTable,
 } from '@/components/Habitaciones/Tarifa/TarifaStyles';
+import putGeneralTable from '@/services/putGeneralTable';
 
 const columns = [
   { id: 'desc_tarifa', label: 'Descripción de la Tarifa', width: 482 },
@@ -61,7 +61,10 @@ const TableViewTarifas = () => {
   };
 
   const deleteByIdTarifa = async id => {
-    const { status } = await deleteGeneralTable(identifier, password, endpointTarifa, id);
+    const generalData = {
+      status: false,
+    };
+    const { status } = await putGeneralTable(identifier, password, endpointTarifa, id, generalData);
     return status;
   };
 
@@ -104,7 +107,7 @@ const TableViewTarifas = () => {
     });
   };
 
-  const { list, loading, error } = useGetGeneralTable(identifier, password, endpointTarifa);
+  const { list, loading, error } = useGetGeneralTable(identifier, password, `${endpointTarifa}?status=true`);
 
   return (
     <Container component='section' disableGutters sx={[stylesContainerSection, stylesWidthHeightTable]}>
