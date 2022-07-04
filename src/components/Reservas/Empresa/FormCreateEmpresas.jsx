@@ -94,7 +94,7 @@ const FormCreateEmpresas = () => {
       <TitlePage titlePage='Registro de Empresa' />
       <Box component='form' sx={stylesContainerBox}>
         <Box component='div' sx={stylesContainerInput}>
-          <TitleInput titleInput='RFC de la empresa' />
+          <TitleInput titleInput='RFC' />
           <TextField
             onChange={handleInputChange}
             variant='outlined'
@@ -108,7 +108,7 @@ const FormCreateEmpresas = () => {
           />
         </Box>
         <Box component='div' sx={stylesContainerInput}>
-          <TitleInput titleInput='Nombre de la empresa' />
+          <TitleInput titleInput='Nombre' />
           <TextField
             onChange={handleInputChange}
             variant='outlined'
