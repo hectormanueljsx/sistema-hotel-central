@@ -5,7 +5,7 @@ export const stylesContainerSection = css`
   border-radius: 4px;
   box-shadow: 0px 0px 5px rgba(0, 0, 0, 0.25);
   padding: 24px;
-  margin: 48px auto;
+  margin: 40px auto;
 `;
 
 export const stylesWidthHeightForm = css`

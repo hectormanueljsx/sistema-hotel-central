@@ -9,8 +9,10 @@ export const stylesBoxCategoriaEgresos = css`
 export const stylesContainerDoubleForm = css`
   display: flex;
   flex-direction: column;
+  gap: 32px;
   margin-left: 0;
   margin-right: 0;
+  margin-bottom: 40px;
   width: 400px;
 `;
 
@@ -19,8 +21,8 @@ export const stylesContainerSection = css`
   border-radius: 4px;
   box-shadow: 0px 0px 5px rgba(0, 0, 0, 0.25);
   padding: 24px;
-  margin-top: 48px;
-  margin-bottom: 48px;
+  margin-top: 40px;
+  margin-bottom: 40px;
   margin-left: 0;
   margin-right: 0;
 `;
@@ -32,8 +34,8 @@ export const stylesWidthHeightFormCategoria = css`
 `;
 
 export const stylesWidthHeightFormSubcategoria = css`
-  margin-top: 40px;
-  margin-bottom: 48px;
+  margin-top: 0;
+  margin-bottom: 0;
   width: 400px;
   height: max-content;
 `;
