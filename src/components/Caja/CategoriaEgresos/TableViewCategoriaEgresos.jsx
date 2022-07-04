@@ -18,6 +18,7 @@ import TitlePage from '@/components/Title/TitlePage';
 import SleketonLoader from '@/components/Loader/SleketonLoader';
 import AlertGlobalTables from '@/components/Alert/AlertGlobalTables';
 import useGetGeneralTable from '@/hooks/useGetGeneralTable';
+import putGeneralTable from '@/services/putGeneralTable';
 import { generalEndpoints } from '@/utilities/endpoints';
 import {
   stylesAccordion,
@@ -29,7 +30,6 @@ import {
   stylesFontSubcategoria,
   stylesWidthAcordion,
 } from '@/components/Caja/CategoriaEgresos/CategoriaEgresosStyles';
-import putGeneralTable from '@/services/putGeneralTable';
 
 const TableViewCategoriaEgresos = () => {
   const [expanded, setExpanded] = useState(false);

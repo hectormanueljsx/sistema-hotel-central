@@ -22,6 +22,7 @@ import SleketonLoader from '@/components/Loader/SleketonLoader';
 import AlertGlobalTables from '@/components/Alert/AlertGlobalTables';
 import ModalUsuario from '@/components/Administracion/Usuario/ModalUsuario';
 import useGetGeneralTable from '@/hooks/useGetGeneralTable';
+import putGeneralTable from '@/services/putGeneralTable';
 import { generalEndpoints } from '@/utilities/endpoints';
 import {
   stylesContainerSection,
@@ -29,7 +30,6 @@ import {
   stylesTableCell,
   stylesWidthHeightTable,
 } from '@/components/Administracion/Usuario/UsuarioStyles';
-import putGeneralTable from '@/services/putGeneralTable';
 
 const columns = [
   { id: 'username', label: 'Nombre', width: 462 },

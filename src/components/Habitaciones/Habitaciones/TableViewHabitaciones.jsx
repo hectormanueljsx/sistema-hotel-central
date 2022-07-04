@@ -21,6 +21,7 @@ import SleketonLoader from '@/components/Loader/SleketonLoader';
 import AlertGlobalTables from '@/components/Alert/AlertGlobalTables';
 import ModalHabitaciones from '@/components/Habitaciones/Habitaciones/ModalHabitacion';
 import useGetGeneralTable from '@/hooks/useGetGeneralTable';
+import putGeneralTable from '@/services/putGeneralTable';
 import { generalEndpoints } from '@/utilities/endpoints';
 import {
   stylesContainerSection,
@@ -28,7 +29,6 @@ import {
   stylesTableCell,
   stylesWidthHeightTable,
 } from '@/components/Habitaciones/Habitaciones/HabitacionesStyles';
-import putGeneralTable from '@/services/putGeneralTable';
 
 const columns = [
   { id: 'num', label: 'No. de Habitación', width: 300 },
@@ -40,7 +40,6 @@ let dataServices = [];
 let dataSelectTarifas = [];
 
 const TableViewHabitaciones = () => {
-
   const [page, setPage] = useState(0);
   const [rowsPerPage, setRowsPerPage] = useState(10);
   const [openModal, setOpenModal] = useState(false);
@@ -82,7 +81,7 @@ const TableViewHabitaciones = () => {
     const generalData = {
       status: false,
     };
-    const { status } = await putGeneralTable(identifier, password, endpointHabitacion, id,generalData);
+    const { status } = await putGeneralTable(identifier, password, endpointHabitacion, id, generalData);
     return status;
   };
 
