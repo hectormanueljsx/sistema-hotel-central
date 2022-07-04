@@ -7,9 +7,9 @@ import TitleInput from '@/components/Title/TitleInput';
 import { historicalEndpoints } from '@/utilities/endpoints';
 import getGeneralSelect from '@/services/getGeneralSelect';
 import {
-  stylesBoxButtons,
-  stylesContainerBox,
-  stylesContainerInput,
+  stylesButtonSearch,
+  stylesContainerBoxFormSearch,
+  stylesContainerInputSearch,
   stylesContainerNoMargin,
   stylesContainerSection,
   stylesWidthHeightSearchForm,
@@ -68,9 +68,9 @@ const FormSearchEmpresa = ({ setSearch, dataEmpresa, setDataEmpresa, setLoading,
       disableGutters
       sx={[stylesContainerSection, stylesContainerNoMargin, stylesWidthHeightSearchForm]}
     >
-      <TitlePage titlePage='Buscar Registro' />
-      <Box component='form' sx={stylesContainerBox}>
-        <Box component='div' sx={stylesContainerInput}>
+      <TitlePage titlePage='Buscar Empresa' />
+      <Box component='form' sx={stylesContainerBoxFormSearch}>
+        <Box component='div' sx={stylesContainerInputSearch}>
           <TitleInput titleInput='Buscar' />
           <TextField
             onChange={e => setSearch(e.target.value)}
@@ -83,13 +83,14 @@ const FormSearchEmpresa = ({ setSearch, dataEmpresa, setDataEmpresa, setLoading,
             fullWidth
           />
         </Box>
-        <Box component='div' sx={stylesBoxButtons}>
+        <Box>
           <Button
             variant='contained'
             disabled={visibleButton}
             onClick={getMoreData}
             size='large'
             startIcon={<ControlPointIcon />}
+            sx={stylesButtonSearch}
           >
             {`Más de ${start} registros`}
           </Button>

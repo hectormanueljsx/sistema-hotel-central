@@ -2,13 +2,13 @@ import { css } from '@emotion/react';
 
 export const stylesBoxEmpresa = css`
   display: flex;
-  flex-direction: column;
-  align-items: center;
+  gap: 32px;
   justify-content: center;
 `;
 
 export const stylesBoxSearchTable = css`
   display: flex;
+  flex-direction: column;
   gap: 32px;
 `;
 
@@ -24,6 +24,18 @@ export const stylesContainerBox = css`
   display: flex;
   flex-direction: column;
   align-items: center;
+`;
+
+export const stylesContainerBoxFormSearch = css`
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-end;
+  gap: 32px;
+`;
+
+export const stylesContainerInputSearch = css`
+  width: 100%;
+  margin-bottom: 0;
 `;
 
 export const stylesContainerInput = css`
@@ -43,17 +55,20 @@ export const stylesContainerSection = css`
 `;
 
 export const stylesContainerNoMargin = css`
+  margin-bottom: 0;
+`;
+
+export const stylesContainerNoMarginTop = css`
   margin-top: 0;
-  margin-bottom: 48px;
 `;
 
 export const stylesWidthHeightForm = css`
-  width: 1200px;
+  width: 400px;
   height: max-content;
 `;
 
 export const stylesWidthHeightSearchForm = css`
-  width: 400px;
+  width: 1000px;
   height: max-content;
 `;
 
@@ -66,6 +81,10 @@ export const stylesButtonSend = css`
   margin-top: 16px;
 `;
 
+export const stylesButtonSearch = css`
+  width: max-content;
+`;
+
 export const stylesBoxButtonForm = css`
   display: flex;
   justify-content: center;
@@ -73,8 +92,8 @@ export const stylesBoxButtonForm = css`
 
 export const stylesBoxButtons = css`
   display: flex;
-  justify-content: space-between;
-  margin-top: 16px;
+  justify-content: center;
+  gap: 28px;
 `;
 
 export const stylesTableCell = css`

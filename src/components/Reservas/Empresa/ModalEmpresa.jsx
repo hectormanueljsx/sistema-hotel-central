@@ -7,12 +7,14 @@ import Swal from 'sweetalert2';
 
 import TitlePage from '@/components/Title/TitlePage';
 import TitleInput from '@/components/Title/TitleInput';
+import ButtonLoader from '@/components/Loader/ButtonLoader';
 import putGeneralTable from '@/services/putGeneralTable';
 import { generalEndpoints } from '@/utilities/endpoints';
 import {
   stylesBoxButtons,
   stylesBoxInputs,
   stylesBoxModal,
+  stylesButtonSend,
   stylesContainerBoxButtonAlign,
   stylesContainerInput,
   stylesContainerSection,
@@ -33,6 +35,7 @@ const ModalEmpresa = ({ selectEmpresa, handleCloseModal }) => {
   });
   const [disabledModal, setDisabledModal] = useState(true);
   const [disableView, setDisableView] = useState(false);
+  const [loadingBtn, setLoadingBtn] = useState(false);
 
   const identifier = localStorage.getItem('identifier');
   const password = localStorage.getItem('password');
@@ -68,7 +71,9 @@ const ModalEmpresa = ({ selectEmpresa, handleCloseModal }) => {
         cod_p: datos.CP,
       };
 
+      setLoadingBtn(true);
       const resul = await putGeneralTable(identifier, password, endpointEmpresa, selectEmpresa.id, generalData);
+      setLoadingBtn(false);
 
       if (resul.status >= 200 && resul.status <= 299) {
         Swal.fire({
@@ -234,28 +239,36 @@ const ModalEmpresa = ({ selectEmpresa, handleCloseModal }) => {
           </Box>
         </Box>
         <Box sx={stylesBoxButtons}>
-          <Box component='div' sx={[stylesContainerBoxButtonAlign, stylesWidthInput]}>
-            <Button
-              variant='contained'
-              disabled={disableView}
-              onClick={viewDisabled}
-              size='large'
-              startIcon={<EditIcon />}
-            >
-              Modificar
-            </Button>
-          </Box>
-          <Box component='div' sx={stylesWidthInput}>
-            <Button
-              variant='contained'
-              disabled={disabledModal}
-              onClick={updateEmpresa}
-              size='large'
-              startIcon={<UpdateIcon />}
-            >
-              Actualizar
-            </Button>
-          </Box>
+          {loadingBtn ? (
+            <ButtonLoader />
+          ) : (
+            <>
+              <Box component='div' sx={[stylesContainerBoxButtonAlign, stylesWidthInput]}>
+                <Button
+                  variant='contained'
+                  disabled={disableView}
+                  onClick={viewDisabled}
+                  size='large'
+                  startIcon={<EditIcon />}
+                  sx={stylesButtonSend}
+                >
+                  Modificar
+                </Button>
+              </Box>
+              <Box component='div' sx={stylesWidthInput}>
+                <Button
+                  variant='contained'
+                  disabled={disabledModal}
+                  onClick={updateEmpresa}
+                  size='large'
+                  startIcon={<UpdateIcon />}
+                  sx={stylesButtonSend}
+                >
+                  Actualizar
+                </Button>
+              </Box>
+            </>
+          )}
         </Box>
       </Box>
     </Container>

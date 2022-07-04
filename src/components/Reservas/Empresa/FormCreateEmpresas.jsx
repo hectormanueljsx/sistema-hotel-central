@@ -5,16 +5,15 @@ import Swal from 'sweetalert2';
 
 import TitlePage from '@/components/Title/TitlePage';
 import TitleInput from '@/components/Title/TitleInput';
+import ButtonLoader from '@/components/Loader/ButtonLoader';
 import postGeneralTable from '@/services/postGeneralTable';
 import { generalEndpoints } from '@/utilities/endpoints';
 import {
   stylesContainerInput,
   stylesContainerSection,
   stylesWidthHeightForm,
-  stylesBoxForm,
-  stylesBoxInputs,
-  stylesWidthInput,
-  stylesBoxButtonForm,
+  stylesContainerBox,
+  stylesButtonSend,
 } from '@/components/Reservas/Empresa/EmpresaStyle';
 
 const FormCreateEmpresas = () => {
@@ -27,6 +26,7 @@ const FormCreateEmpresas = () => {
     estado: '',
     CP: '',
   });
+  const [loadingBtn, setLoadingBtn] = useState(false);
 
   const identifier = localStorage.getItem('identifier');
   const password = localStorage.getItem('password');
@@ -56,7 +56,9 @@ const FormCreateEmpresas = () => {
         cod_p: datos.CP,
       };
 
+      setLoadingBtn(true);
       const result = await postGeneralTable(identifier, password, endpointEmpresa, generalData);
+      setLoadingBtn(false);
 
       if (result.status >= 200 && result.status <= 299) {
         Swal.fire({
@@ -90,110 +92,112 @@ const FormCreateEmpresas = () => {
   return (
     <Container component='section' sx={[stylesContainerSection, stylesWidthHeightForm]}>
       <TitlePage titlePage='Registro de Empresa' />
-      <Box component='form' sx={stylesBoxForm}>
-        <Box sx={stylesBoxInputs}>
-          <Box component='div' sx={[stylesContainerInput, stylesWidthInput]}>
-            <TitleInput titleInput='RFC de la empresa' />
-            <TextField
-              onChange={handleInputChange}
-              variant='outlined'
-              name='RFC'
-              type='text'
-              margin='none'
-              size='small'
-              required
-              fullWidth
-              autoFocus
-            />
-          </Box>
-          <Box component='div' sx={[stylesContainerInput, stylesWidthInput]}>
-            <TitleInput titleInput='Nombre de la empresa' />
-            <TextField
-              onChange={handleInputChange}
-              variant='outlined'
-              name='nombre'
-              type='text'
-              margin='none'
-              size='small'
-              required
-              fullWidth
-            />
-          </Box>
-          <Box component='div' sx={[stylesContainerInput, stylesWidthInput]}>
-            <TitleInput titleInput='Dirección' />
-            <TextField
-              onChange={handleInputChange}
-              variant='outlined'
-              name='direccion'
-              type='text'
-              margin='none'
-              size='small'
-              required
-              fullWidth
-            />
-          </Box>
+      <Box component='form' sx={stylesContainerBox}>
+        <Box component='div' sx={stylesContainerInput}>
+          <TitleInput titleInput='RFC de la empresa' />
+          <TextField
+            onChange={handleInputChange}
+            variant='outlined'
+            name='RFC'
+            type='text'
+            margin='none'
+            size='small'
+            required
+            fullWidth
+            autoFocus
+          />
         </Box>
-        <Box sx={stylesBoxInputs}>
-          <Box component='div' sx={[stylesContainerInput, stylesWidthInput]}>
-            <TitleInput titleInput='Estado' />
-            <TextField
-              onChange={handleInputChange}
-              variant='outlined'
-              name='estado'
-              type='text'
-              margin='none'
-              size='small'
-              required
-              fullWidth
-            />
-          </Box>
-          <Box component='div' sx={[stylesContainerInput, stylesWidthInput]}>
-            <TitleInput titleInput='Ciudad' />
-            <TextField
-              onChange={handleInputChange}
-              variant='outlined'
-              name='ciudad'
-              type='text'
-              margin='none'
-              size='small'
-              required
-              fullWidth
-            />
-          </Box>
-          <Box component='div' sx={[stylesContainerInput, stylesWidthInput]}>
-            <TitleInput titleInput='Colonia' />
-            <TextField
-              onChange={handleInputChange}
-              variant='outlined'
-              name='colonia'
-              type='text'
-              margin='none'
-              size='small'
-              required
-              fullWidth
-            />
-          </Box>
+        <Box component='div' sx={stylesContainerInput}>
+          <TitleInput titleInput='Nombre de la empresa' />
+          <TextField
+            onChange={handleInputChange}
+            variant='outlined'
+            name='nombre'
+            type='text'
+            margin='none'
+            size='small'
+            required
+            fullWidth
+          />
         </Box>
-        <Box sx={stylesBoxInputs}>
-          <Box component='div' sx={[stylesContainerInput, stylesWidthInput]}>
-            <TitleInput titleInput='Código postal' />
-            <TextField
-              onChange={handleInputChange}
-              variant='outlined'
-              name='CP'
-              type='number'
-              margin='none'
-              size='small'
-              required
-              fullWidth
-            />
-          </Box>
+        <Box component='div' sx={stylesContainerInput}>
+          <TitleInput titleInput='Dirección' />
+          <TextField
+            onChange={handleInputChange}
+            variant='outlined'
+            name='direccion'
+            type='text'
+            margin='none'
+            size='small'
+            required
+            fullWidth
+          />
         </Box>
-        <Box component='div' sx={stylesBoxButtonForm}>
-          <Button variant='contained' onClick={sendDatosEmpresa} size='large' startIcon={<SaveIcon />}>
+        <Box component='div' sx={stylesContainerInput}>
+          <TitleInput titleInput='Estado' />
+          <TextField
+            onChange={handleInputChange}
+            variant='outlined'
+            name='estado'
+            type='text'
+            margin='none'
+            size='small'
+            required
+            fullWidth
+          />
+        </Box>
+        <Box component='div' sx={stylesContainerInput}>
+          <TitleInput titleInput='Ciudad' />
+          <TextField
+            onChange={handleInputChange}
+            variant='outlined'
+            name='ciudad'
+            type='text'
+            margin='none'
+            size='small'
+            required
+            fullWidth
+          />
+        </Box>
+        <Box component='div' sx={stylesContainerInput}>
+          <TitleInput titleInput='Colonia' />
+          <TextField
+            onChange={handleInputChange}
+            variant='outlined'
+            name='colonia'
+            type='text'
+            margin='none'
+            size='small'
+            required
+            fullWidth
+          />
+        </Box>
+        <Box component='div' sx={stylesContainerInput}>
+          <TitleInput titleInput='Código postal' />
+          <TextField
+            onChange={handleInputChange}
+            variant='outlined'
+            name='CP'
+            type='number'
+            margin='none'
+            size='small'
+            required
+            fullWidth
+          />
+        </Box>
+        {loadingBtn ? (
+          <ButtonLoader />
+        ) : (
+          <Button
+            variant='contained'
+            onClick={sendDatosEmpresa}
+            size='large'
+            startIcon={<SaveIcon />}
+            sx={stylesButtonSend}
+          >
             Registrar Empresa
           </Button>
-        </Box>
+        )}
       </Box>
     </Container>
   );

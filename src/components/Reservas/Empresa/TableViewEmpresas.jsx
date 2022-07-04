@@ -19,7 +19,7 @@ import ModalEmpresa from './ModalEmpresa';
 import SleketonLoader from '@/components/Loader/SleketonLoader';
 import AlertGlobalTables from '@/components/Alert/AlertGlobalTables';
 import {
-  stylesContainerNoMargin,
+  stylesContainerNoMarginTop,
   stylesContainerSection,
   stylesModal,
   stylesTableCell,
@@ -58,7 +58,7 @@ const TableViewEmpresas = ({ search, dataEmpresa, loading, error }) => {
     <Container
       component='section'
       disableGutters
-      sx={[stylesContainerSection, stylesContainerNoMargin, stylesWidthHeightTable]}
+      sx={[stylesContainerSection, stylesContainerNoMarginTop, stylesWidthHeightTable]}
     >
       <TitlePage titlePage='Histórico de Empresas' />
       <Box component='div'>

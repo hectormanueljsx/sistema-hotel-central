@@ -15,9 +15,7 @@ const Empresa = () => {
   return (
     <Container component='section' disableGutters maxWidth='xl'>
       <Box sx={stylesBoxEmpresa}>
-        <Box>
-          <FormCreateEmpresas />
-        </Box>
+        <FormCreateEmpresas />
         <Box sx={stylesBoxSearchTable}>
           <FormSearchEmpresa
             setSearch={setSearch}
