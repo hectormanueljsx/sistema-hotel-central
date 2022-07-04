@@ -68,7 +68,7 @@ const FormSearchEmpresa = ({ setSearch, dataEmpresa, setDataEmpresa, setLoading,
       disableGutters
       sx={[stylesContainerSection, stylesContainerNoMargin, stylesWidthHeightSearchForm]}
     >
-      <TitlePage titlePage='Buscar Empresa' />
+      <TitlePage titlePage='Buscar Registro' />
       <Box component='form' sx={stylesContainerBoxFormSearch}>
         <Box component='div' sx={stylesContainerInputSearch}>
           <TitleInput titleInput='Buscar' />
