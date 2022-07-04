@@ -127,7 +127,7 @@ const ModalEmpresa = ({ selectEmpresa, handleCloseModal }) => {
         </Button>
         <Box sx={stylesBoxInputs}>
           <Box component='div' sx={[stylesContainerInput, stylesWidthInput]}>
-            <TitleInput titleInput='RFC de la empresa' />
+            <TitleInput titleInput='RFC' />
             <TextField
               disabled={disabledModal}
               onChange={handleInputChange}
@@ -142,7 +142,7 @@ const ModalEmpresa = ({ selectEmpresa, handleCloseModal }) => {
             />
           </Box>
           <Box component='div' sx={[stylesContainerInput, stylesWidthInput]}>
-            <TitleInput titleInput='Nombre de la empresa' />
+            <TitleInput titleInput='Nombre' />
             <TextField
               disabled={disabledModal}
               onChange={handleInputChange}

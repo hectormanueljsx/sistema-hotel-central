@@ -186,22 +186,6 @@ const ModalEgreso = ({ dataEgreso, pago, categoria, dataCategoria, handleCloseMo
             />
           </Box>
           <Box component='div' sx={[stylesContainerInput, stylesWidthInput]}>
-            <TitleInput titleInput='Subtotal' />
-            <TextField
-              value={dataEgreso.subtotal}
-              name='subtotal'
-              variant='outlined'
-              type='number'
-              margin='none'
-              size='small'
-              required
-              fullWidth
-              disabled={true}
-            />
-          </Box>
-        </Box>
-        <Box sx={stylesBoxInputs}>
-          <Box component='div' sx={[stylesContainerInput, stylesWidthInput]}>
             <TitleInput titleInput='Forma de pago' />
             <FormControl disabled={disabledModal} fullWidth>
               <Select size='small' value={idPago} onChange={handlePago}>
@@ -217,6 +201,8 @@ const ModalEgreso = ({ dataEgreso, pago, categoria, dataCategoria, handleCloseMo
               </Select>
             </FormControl>
           </Box>
+        </Box>
+        <Box sx={stylesBoxInputs}>
           <Box component='div' sx={[stylesContainerInput, stylesWidthInput]}>
             <TitleInput titleInput='Categoría' />
             <FormControl disabled={disabledModal} fullWidth>
@@ -233,8 +219,6 @@ const ModalEgreso = ({ dataEgreso, pago, categoria, dataCategoria, handleCloseMo
               </Select>
             </FormControl>
           </Box>
-        </Box>
-        <Box sx={stylesBoxInputs}>
           <Box component='div' sx={[stylesContainerInput, stylesWidthInput]}>
             <TitleInput titleInput='Subcategoría' />
             <FormControl disabled={disabledModal} fullWidth>
@@ -253,6 +237,8 @@ const ModalEgreso = ({ dataEgreso, pago, categoria, dataCategoria, handleCloseMo
               </Select>
             </FormControl>
           </Box>
+        </Box>
+        <Box sx={stylesBoxInputs}>
           <Box component='div' sx={[stylesContainerInput, stylesWidthInput]}>
             <TitleInput titleInput='Fecha' />
             <TextField
@@ -267,8 +253,6 @@ const ModalEgreso = ({ dataEgreso, pago, categoria, dataCategoria, handleCloseMo
               disabled={true}
             />
           </Box>
-        </Box>
-        <Box sx={stylesBoxInputs}>
           <Box component='div' sx={[stylesContainerInput, stylesWidthInput]}>
             <TitleInput titleInput='Usuario' />
             <TextField

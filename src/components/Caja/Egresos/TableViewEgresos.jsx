@@ -50,7 +50,7 @@ const TableViewEgresos = ({ pago, categoria }) => {
   const endpointEgreso = generalEndpoints.egreso;
   const endpointCategoria = generalEndpoints.categoria;
 
-  const attribute = 'facturado';
+  const attribute = 'p_caja';
   const valueAttribute = false;
   const attributeCategoria = 'id';
 
