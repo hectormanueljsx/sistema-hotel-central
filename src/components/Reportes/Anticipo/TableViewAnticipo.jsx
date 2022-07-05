@@ -34,6 +34,7 @@ const columns = [
 const TableViewAnticipo = ({ dataSearch, dateTable, loading, error }) => {
   const [page, setPage] = useState(0);
   const [rowsPerPage, setRowsPerPage] = useState(10);
+  let totalCantidad = 0;
 
   const handleChangePage = (event, newPage) => setPage(newPage);
   const handleChangeRowsPerPage = event => {
@@ -80,7 +81,7 @@ const TableViewAnticipo = ({ dataSearch, dateTable, loading, error }) => {
                   pago: { f_pago },
                   reservacion,
                 } = item;
-
+                totalCantidad += cantidad;
                 return (
                   <TableRow key={id}>
                     <TableCell sx={stylesTableCell}>{id}</TableCell>
@@ -91,6 +92,20 @@ const TableViewAnticipo = ({ dataSearch, dateTable, loading, error }) => {
                   </TableRow>
                 );
               })}
+              {totalCantidad === 0 ? null : (
+                <TableRow>
+                  <TableCell sx={stylesTableCell}>Total</TableCell>
+                  <TableCell sx={stylesTableCell}></TableCell>
+                  <TableCell sx={stylesTableCell}></TableCell>
+                  <TableCell sx={stylesTableCell}>
+                    {totalCantidad.toLocaleString('es-MX', {
+                      style: 'currency',
+                      currency: 'MXN',
+                      minimumFractionDigits: 2,
+                    })}
+                  </TableCell>
+                </TableRow>
+              )}
             </TableBody>
           </Table>
         </TableContainer>
