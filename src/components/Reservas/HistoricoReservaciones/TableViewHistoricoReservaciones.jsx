@@ -12,7 +12,6 @@ import {
   TableRow,
 } from '@mui/material';
 import VisibilityIcon from '@mui/icons-material/Visibility';
-import moment from 'moment';
 
 import TitlePage from '@/components/Title/TitlePage';
 import SleketonLoader from '@/components/Loader/SleketonLoader';
