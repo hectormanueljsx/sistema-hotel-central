@@ -49,6 +49,11 @@ export const stylesButtonSend = css`
   margin-top: 16px;
 `;
 
+export const stylesCheckboxForm = css`
+  padding: 0;
+  padding-right: 9px;
+`;
+
 export const stylesTableCell = css`
   padding: 8px;
 `;

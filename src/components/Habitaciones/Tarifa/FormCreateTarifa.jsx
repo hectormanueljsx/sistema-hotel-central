@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
-import { Box, Button, Container, TextField } from '@mui/material';
+import { Box, Button, Container, TextField, MenuItem,
+FormControl, ListItemText, Select, Checkbox} from '@mui/material';
 import SaveIcon from '@mui/icons-material/Save';
 import Swal from 'sweetalert2';
 
@@ -7,37 +8,54 @@ import TitlePage from '@/components/Title/TitlePage';
 import TitleInput from '@/components/Title/TitleInput';
 import ButtonLoader from '@/components/Loader/ButtonLoader';
 import postGeneralTable from '@/services/postGeneralTable';
+import useGetGeneralTable from '@/hooks/useGetGeneralTable';
 import { generalEndpoints } from '@/utilities/endpoints';
 import {
   stylesButtonSend,
   stylesContainerBox,
+  stylesCheckboxForm,
   stylesContainerInput,
   stylesContainerSection,
   stylesWidthHeightForm,
 } from '@/components/Habitaciones/Tarifa/TarifaStyles';
 
+
 const FormCreateTarifa = () => {
+  const [numPersonas, setNumPersonas] = useState([]);
   const [datos, setDatos] = useState({
     descripcion: '',
     precio: '',
-    numPersonas: '',
+    numPersonas: [],
   });
   const [loadingBtn, setLoadingBtn] = useState(false);
 
   const identifier = localStorage.getItem('identifier');
   const password = localStorage.getItem('password');
   const endpointTarifa = generalEndpoints.tarifa;
+  const endpointPersona = generalEndpoints.persona;
 
   const handleInputChange = event => setDatos({ ...datos, [event.target.name]: event.target.value });
+
+  const handleChangeNumPersonas = event => {
+    const {
+      target: { value },
+    } = event;
+    setNumPersonas(typeof value === 'string' ? value.split(',') : value,);
+  };
 
   const sendDatos = async event => {
     event.preventDefault();
 
-    if (datos.descripcion.trim().length > 0 && datos.precio.trim().length > 0 && datos.numPersonas.trim().length > 0) {
+    if (datos.descripcion.trim().length > 0 && datos.precio.trim().length > 0 && numPersonas.length > 0) {
+      for (let i = 0; i < list.length; i++) {
+        if (numPersonas.includes(list[i].num_persona)) {
+            datos.numPersonas.push(list[i].id);
+        }
+      }
       const generalData = {
         descripcion: datos.descripcion.toUpperCase(),
         precio: datos.precio,
-        no_personas: datos.numPersonas,
+        personas : datos.numPersonas,
       };
 
       setLoadingBtn(true);
@@ -73,6 +91,8 @@ const FormCreateTarifa = () => {
     }
   };
 
+  const { list } = useGetGeneralTable(identifier, password, endpointPersona);
+
   return (
     <Container component='section' disableGutters sx={[stylesContainerSection, stylesWidthHeightForm]}>
       <TitlePage titlePage='Registro de Nueva Tarifa' />
@@ -106,16 +126,25 @@ const FormCreateTarifa = () => {
         </Box>
         <Box component='div' sx={stylesContainerInput}>
           <TitleInput titleInput='No. de personas' />
-          <TextField
-            onChange={handleInputChange}
-            name='numPersonas'
-            variant='outlined'
-            type='number'
-            margin='none'
-            size='small'
-            required
-            fullWidth
-          />
+          <FormControl fullWidth>
+            <Select
+              multiple
+              value={numPersonas}
+              onChange={handleChangeNumPersonas}
+              renderValue={selected => selected.join(', ')}
+            >
+              {list.map(name => (
+                <MenuItem key={name.id} value={name.num_persona}>
+                  <Checkbox
+                    checked={numPersonas.indexOf(name.num_persona) > -1}
+                    disableRipple
+                    sx={stylesCheckboxForm}
+                  />
+                  <ListItemText primary={name.num_persona} />
+                </MenuItem>
+              ))}
+            </Select>
+          </FormControl>
         </Box>
         {loadingBtn ? (
           <ButtonLoader />
