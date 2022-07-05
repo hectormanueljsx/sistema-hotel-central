@@ -31,11 +31,13 @@ import {
 } from '@/components/Habitaciones/Tarifa/TarifaStyles';
 
 const columns = [
-  { id: 'desc_tarifa', label: 'Descripción de la Tarifa', width: 482 },
-  { id: 'num_personas', label: 'No. de Personas', width: 185 },
+  { id: 'desc_tarifa', label: 'Descripción de la Tarifa', width: 400 },
+  { id: 'num_personas', label: 'No. de Personas', width: 250},
   { id: 'precio_aplicado', label: 'Precio Aplicado', width: 185 },
   { id: 'acciones', label: 'Acciones', width: 100 },
 ];
+
+let dataSelectPersonas = [];
 
 const TableViewTarifas = () => {
   const [page, setPage] = useState(0);
@@ -48,8 +50,12 @@ const TableViewTarifas = () => {
   const endpointTarifa = generalEndpoints.tarifa;
 
   const handleOpen = item => {
+    const {personas} = item;
     setOpenModal(true);
     setDataTarifa(item);
+     dataSelectPersonas = personas.map(element => {
+       return element.num_persona;
+     });
   };
 
   const handleCloseModal = () => setOpenModal(false);
@@ -140,12 +146,15 @@ const TableViewTarifas = () => {
                 </TableRow>
               )}
               {list.slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage).map(item => {
-                const { id, descripcion, no_personas, precio } = item;
+                const { id, descripcion, personas, precio } = item;
 
+                let no_personas = personas.map(persona => { 
+                  return `${persona.num_persona}`;
+                });
                 return (
                   <TableRow key={id}>
                     <TableCell sx={stylesTableCell}>{descripcion}</TableCell>
-                    <TableCell sx={stylesTableCell}>{no_personas}</TableCell>
+                    <TableCell sx={stylesTableCell}>{no_personas.join('-')}</TableCell>
                     <TableCell sx={stylesTableCell}>
                       {precio.toLocaleString('es-MX', {
                         style: 'currency',
@@ -182,7 +191,7 @@ const TableViewTarifas = () => {
       </Box>
       <Modal open={openModal}>
         <Box sx={stylesModal}>
-          <ModalTarifa dataTarifa={dataTarifa} handleCloseModal={handleCloseModal} />
+          <ModalTarifa dataPersonas={dataSelectPersonas} dataTarifa={dataTarifa} handleCloseModal={handleCloseModal} />
         </Box>
       </Modal>
     </Container>
