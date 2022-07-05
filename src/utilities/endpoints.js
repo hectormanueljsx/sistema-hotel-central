@@ -19,6 +19,7 @@ export const generalEndpoints = {
   registro: 'registros',
   reservacion: 'reservacions',
   transferencia: 'transferencias',
+  persona: 'personas',
 };
 
 export const historicalEndpoints = {
