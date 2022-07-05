@@ -30,11 +30,12 @@ import {
 
 const columns = [
   { id: 'fecha', label: 'Fecha', width: 164.95 },
-  { id: 'concepto', label: 'Concepto', width: 242.917 },
-  { id: 'subcategoria', label: 'Subcategoría', width: 184.95 },
   { id: 'formaPago', label: 'Forma de Pago', width: 173.933 },
+  { id: 'subcategoria', label: 'Subcategoría', width: 184.95 },
   { id: 'importe', label: 'Importe', width: 109.983 },
-  { id: 'acciones', label: 'Acciones', width: 75.2667 },
+  { id: 'concepto', label: 'Concepto', width: 242.917 },
+  { id: 'user', label: 'Usuario', width: 100 },
+  { id: 'acciones', label: 'Acciones', width: 50 },
 ];
 
 const TableViewEgresos = ({ dataSearch, dateTable, loading, error }) => {
@@ -42,6 +43,7 @@ const TableViewEgresos = ({ dataSearch, dateTable, loading, error }) => {
   const [rowsPerPage, setRowsPerPage] = useState(10);
   const [openModal, setOpenModal] = useState(false);
   const [dataEgreso, setDataEgreso] = useState([]);
+  let totalImporte = 0;
 
   const handleChangePage = (event, newPage) => setPage(newPage);
   const handleCloseModal = () => setOpenModal(false);
@@ -88,14 +90,13 @@ const TableViewEgresos = ({ dataSearch, dateTable, loading, error }) => {
                 </TableRow>
               )}
               {dataSearch.slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage).map(item => {
-                const { id, fecha, concepto, subcategoria, importe, pago } = item;
-
+                const { id, fecha, concepto, subcategoria, importe, pago, users_permissions_user } = item;
+                totalImporte += importe;
                 return (
                   <TableRow key={id}>
                     <TableCell sx={stylesTableCell}>{moment(fecha).format('YYYY-MM-DD hh:mm:ss')}</TableCell>
-                    <TableCell sx={stylesTableCell}>{concepto}</TableCell>
-                    <TableCell sx={stylesTableCell}>{subcategoria.descripcion}</TableCell>
                     <TableCell sx={stylesTableCell}>{pago.f_pago}</TableCell>
+                    <TableCell sx={stylesTableCell}>{subcategoria.descripcion}</TableCell>
                     <TableCell sx={stylesTableCell}>
                       {importe.toLocaleString('es-MX', {
                         style: 'currency',
@@ -103,6 +104,8 @@ const TableViewEgresos = ({ dataSearch, dateTable, loading, error }) => {
                         minimumFractionDigits: 2,
                       })}
                     </TableCell>
+                    <TableCell sx={stylesTableCell}>{concepto}</TableCell>
+                    <TableCell sx={stylesTableCell}>{users_permissions_user.username}</TableCell>
                     <TableCell sx={stylesTableCell}>
                       <IconButton color='info' size='small' onClick={() => handleOpen(item)}>
                         <VisibilityIcon />
@@ -111,6 +114,20 @@ const TableViewEgresos = ({ dataSearch, dateTable, loading, error }) => {
                   </TableRow>
                 );
               })}
+              {totalImporte === 0 ? null : (
+                <TableRow>
+                  <TableCell sx={stylesTableCell}>Total</TableCell>
+                  <TableCell sx={stylesTableCell}></TableCell>
+                  <TableCell sx={stylesTableCell}></TableCell>
+                  <TableCell sx={stylesTableCell}>
+                    {totalImporte.toLocaleString('es-MX', {
+                      style: 'currency',
+                      currency: 'MXN',
+                      minimumFractionDigits: 2,
+                    })}
+                  </TableCell>
+                </TableRow>
+              )}
             </TableBody>
           </Table>
         </TableContainer>
