@@ -34,6 +34,7 @@ const columns = [
 const TableViewAnticipo = ({ dataSearch, dateTable, loading, error }) => {
   const [page, setPage] = useState(0);
   const [rowsPerPage, setRowsPerPage] = useState(10);
+
   let totalCantidad = 0;
 
   const handleChangePage = (event, newPage) => setPage(newPage);
@@ -81,30 +82,45 @@ const TableViewAnticipo = ({ dataSearch, dateTable, loading, error }) => {
                   pago: { f_pago },
                   reservacion,
                 } = item;
+
                 totalCantidad += cantidad;
+
                 return (
                   <TableRow key={id}>
                     <TableCell sx={stylesTableCell}>{id}</TableCell>
                     <TableCell sx={stylesTableCell}>{moment(fecha).format('YYYY-MM-DD hh:mm:ss a')}</TableCell>
                     <TableCell sx={stylesTableCell}>{f_pago}</TableCell>
-                    <TableCell sx={stylesTableCell}>{cantidad}</TableCell>
+                    <TableCell sx={stylesTableCell}>
+                      {cantidad.toLocaleString('es-MX', {
+                        style: 'currency',
+                        currency: 'MXN',
+                        minimumFractionDigits: 2,
+                      })}
+                    </TableCell>
                     <TableCell sx={stylesTableCell}>{reservacion.id}</TableCell>
                   </TableRow>
                 );
               })}
+
               {totalCantidad === 0 ? null : (
-                <TableRow>
-                  <TableCell sx={stylesTableCell}>Total</TableCell>
-                  <TableCell sx={stylesTableCell}></TableCell>
-                  <TableCell sx={stylesTableCell}></TableCell>
-                  <TableCell sx={stylesTableCell}>
-                    {totalCantidad.toLocaleString('es-MX', {
-                      style: 'currency',
-                      currency: 'MXN',
-                      minimumFractionDigits: 2,
-                    })}
-                  </TableCell>
-                </TableRow>
+                <>
+                  <TableRow>
+                    <TableCell colSpan={columns.length} sx={stylesTableCell}></TableCell>
+                  </TableRow>
+                  <TableRow>
+                    <TableCell sx={[stylesTableCell, { fontWeight: '500' }]}>Total</TableCell>
+                    <TableCell sx={stylesTableCell}></TableCell>
+                    <TableCell sx={stylesTableCell}></TableCell>
+                    <TableCell sx={stylesTableCell}>
+                      {totalCantidad.toLocaleString('es-MX', {
+                        style: 'currency',
+                        currency: 'MXN',
+                        minimumFractionDigits: 2,
+                      })}
+                    </TableCell>
+                    <TableCell sx={stylesTableCell}></TableCell>
+                  </TableRow>
+                </>
               )}
             </TableBody>
           </Table>

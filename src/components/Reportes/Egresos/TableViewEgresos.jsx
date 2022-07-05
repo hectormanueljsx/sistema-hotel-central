@@ -29,13 +29,13 @@ import {
 } from '@/components/Reportes/Egresos/EgresosStyles';
 
 const columns = [
-  { id: 'fecha', label: 'Fecha', width: 164.95 },
-  { id: 'formaPago', label: 'Forma de Pago', width: 173.933 },
-  { id: 'subcategoria', label: 'Subcategoría', width: 184.95 },
-  { id: 'importe', label: 'Importe', width: 109.983 },
-  { id: 'concepto', label: 'Concepto', width: 242.917 },
-  { id: 'user', label: 'Usuario', width: 100 },
-  { id: 'acciones', label: 'Acciones', width: 50 },
+  { id: 'fecha', label: 'Fecha', width: 94.98 },
+  { id: 'formaPago', label: 'Forma de Pago', width: 173.94 },
+  { id: 'subcategoria', label: 'Subcategoría', width: 179.95 },
+  { id: 'importe', label: 'Importe', width: 99.98 },
+  { id: 'concepto', label: 'Concepto', width: 227.9 },
+  { id: 'user', label: 'Usuario', width: 99.98 },
+  { id: 'acciones', label: 'Acciones', width: 75.29 },
 ];
 
 const TableViewEgresos = ({ dataSearch, dateTable, loading, error }) => {
@@ -43,6 +43,7 @@ const TableViewEgresos = ({ dataSearch, dateTable, loading, error }) => {
   const [rowsPerPage, setRowsPerPage] = useState(10);
   const [openModal, setOpenModal] = useState(false);
   const [dataEgreso, setDataEgreso] = useState([]);
+
   let totalImporte = 0;
 
   const handleChangePage = (event, newPage) => setPage(newPage);
@@ -91,7 +92,9 @@ const TableViewEgresos = ({ dataSearch, dateTable, loading, error }) => {
               )}
               {dataSearch.slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage).map(item => {
                 const { id, fecha, concepto, subcategoria, importe, pago, users_permissions_user } = item;
+
                 totalImporte += importe;
+
                 return (
                   <TableRow key={id}>
                     <TableCell sx={stylesTableCell}>{moment(fecha).format('YYYY-MM-DD hh:mm:ss')}</TableCell>
@@ -115,18 +118,26 @@ const TableViewEgresos = ({ dataSearch, dateTable, loading, error }) => {
                 );
               })}
               {totalImporte === 0 ? null : (
-                <TableRow>
-                  <TableCell sx={stylesTableCell}>Total</TableCell>
-                  <TableCell sx={stylesTableCell}></TableCell>
-                  <TableCell sx={stylesTableCell}></TableCell>
-                  <TableCell sx={stylesTableCell}>
-                    {totalImporte.toLocaleString('es-MX', {
-                      style: 'currency',
-                      currency: 'MXN',
-                      minimumFractionDigits: 2,
-                    })}
-                  </TableCell>
-                </TableRow>
+                <>
+                  <TableRow>
+                    <TableCell colSpan={columns.length} sx={stylesTableCell}></TableCell>
+                  </TableRow>
+                  <TableRow>
+                    <TableCell sx={stylesTableCell}>Total</TableCell>
+                    <TableCell sx={stylesTableCell}></TableCell>
+                    <TableCell sx={stylesTableCell}></TableCell>
+                    <TableCell sx={stylesTableCell}>
+                      {totalImporte.toLocaleString('es-MX', {
+                        style: 'currency',
+                        currency: 'MXN',
+                        minimumFractionDigits: 2,
+                      })}
+                    </TableCell>
+                    <TableCell sx={stylesTableCell}></TableCell>
+                    <TableCell sx={stylesTableCell}></TableCell>
+                    <TableCell sx={stylesTableCell}></TableCell>
+                  </TableRow>
+                </>
               )}
             </TableBody>
           </Table>
