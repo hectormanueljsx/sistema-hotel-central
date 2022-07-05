@@ -35,10 +35,8 @@ import {
   stylesWidthInput,
 } from '@/components/Habitaciones/Habitaciones/HabitacionesStyles';
 
-const services = ['CLIMA', 'TV'];
-
-const ModalHabitaciones = ({ dataHabitaciones, dataSelectTarifas, dataServices, handleCloseModal }) => {
-  const [optionServices, setOptionServices] = useState(dataServices);
+const ModalHabitaciones = ({ dataHabitaciones, dataSelectTarifas, dataDescription, handleCloseModal }) => {
+  const [description, setDescriptions] = useState(dataDescription);
   const [optionTarifas, setOptionTarifas] = useState(dataSelectTarifas);
   const [numHabitacion, setNumHabitacion] = useState(dataHabitaciones.num_hab);
   const [disabledModal, setDisabledModal] = useState(true);
@@ -53,12 +51,7 @@ const ModalHabitaciones = ({ dataHabitaciones, dataSelectTarifas, dataServices, 
 
   const handleInputChangeNumHabitacion = event => setNumHabitacion(event.target.value);
 
-  const handleChangeServices = event => {
-    const {
-      target: { value },
-    } = event;
-    setOptionServices(typeof value === 'string' ? value.split(',') : value);
-  };
+  const handleChangeDescription = event => setDescriptions(event.target.value);
 
   const handleChangeTarifas = event => {
     const {
@@ -76,7 +69,7 @@ const ModalHabitaciones = ({ dataHabitaciones, dataSelectTarifas, dataServices, 
   const updateDatos = async event => {
     event.preventDefault();
 
-    if (optionServices && optionTarifas && numHabitacion) {
+    if (description && optionTarifas && numHabitacion) {
       for (let i = 0; i < list.length; i++) {
         if (optionTarifas.includes(list[i].descripcion)) {
           tarifaId.push(list[i].id);
@@ -84,10 +77,9 @@ const ModalHabitaciones = ({ dataHabitaciones, dataSelectTarifas, dataServices, 
       }
 
       const habitacionData = {
-        clima: optionServices.includes('CLIMA') ? true : false,
-        tv: optionServices.includes('TV') ? true : false,
         num_hab: numHabitacion,
         tarifas: tarifaId,
+        descripcion: description,
       };
 
       setLoadingBtn(true);
@@ -137,7 +129,7 @@ const ModalHabitaciones = ({ dataHabitaciones, dataSelectTarifas, dataServices, 
     }
   };
 
-  const { list, loading, error } = useGetGeneralTable(identifier, password, endpointTarifa);
+  const { list } = useGetGeneralTable(identifier, password, endpointTarifa);
 
   return (
     <Container component='section' disableGutters sx={[stylesContainerSection, stylesWidthHeightModal]}>
@@ -163,33 +155,29 @@ const ModalHabitaciones = ({ dataHabitaciones, dataSelectTarifas, dataServices, 
             />
           </Box>
           <Box component='div' sx={[stylesContainerInput, stylesWidthInput]}>
-            <TitleInput titleInput='Servicios' />
-            <FormControl disabled={disabledModal} fullWidth>
-              <Select
-                multiple
-                value={optionServices}
-                onChange={handleChangeServices}
-                renderValue={selected => selected.join(', ')}
+            <TitleInput titleInput='Descripción de la Habitacion' />
+              <TextField
+                disabled={disabledModal}
+                defaultValue={dataHabitaciones.descripcion}
+                onChange={handleChangeDescription}
+                name='descripcion'
+                variant='outlined'
+                type='text'
+                margin='none'
                 size='small'
-              >
-                {services.map(item => {
-                  return (
-                    <MenuItem key={item} value={item}>
-                      <Checkbox checked={optionServices.indexOf(item) > -1} disableRipple sx={stylesCheckboxForm} />
-                      <ListItemText primary={item} />
-                    </MenuItem>
-                  );
-                })}
-              </Select>
-            </FormControl>
+                required
+                fullWidth
+                autoFocus
+              />
           </Box>
         </Box>
         <Box sx={stylesBoxInputs}>
-          <Box component='div' sx={[stylesContainerInput, stylesWidthInput]}>
+          <Box component='div' sx={[stylesContainerInput]}>
             <TitleInput titleInput='Tarifas permitidas' />
             <FormControl disabled={disabledModal} fullWidth>
               <Select
                 multiple
+                multiline
                 value={optionTarifas}
                 onChange={handleChangeTarifas}
                 renderValue={selected => selected.join(', ')}

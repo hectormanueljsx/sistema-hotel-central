@@ -13,15 +13,12 @@ import {
   TableRow,
 } from '@mui/material';
 import VisibilityIcon from '@mui/icons-material/Visibility';
-import DeleteIcon from '@mui/icons-material/Delete';
-import Swal from 'sweetalert2';
 
 import TitlePage from '@/components/Title/TitlePage';
 import SleketonLoader from '@/components/Loader/SleketonLoader';
 import AlertGlobalTables from '@/components/Alert/AlertGlobalTables';
 import ModalHabitaciones from '@/components/Habitaciones/Habitaciones/ModalHabitacion';
 import useGetGeneralTable from '@/hooks/useGetGeneralTable';
-import putGeneralTable from '@/services/putGeneralTable';
 import { generalEndpoints } from '@/utilities/endpoints';
 import {
   stylesContainerSection,
@@ -32,11 +29,10 @@ import {
 
 const columns = [
   { id: 'num', label: 'No. de Habitación', width: 300 },
-  { id: 'servicios', label: 'Servicios', width: 552 },
+  { id: 'descrip', label: 'Descripcion', width: 552 },
   { id: 'acciones', label: 'Acciones', width: 100 },
 ];
-
-let dataServices = [];
+let dataDescriptions = '';
 let dataSelectTarifas = [];
 
 const TableViewHabitaciones = () => {
@@ -49,14 +45,10 @@ const TableViewHabitaciones = () => {
   const password = localStorage.getItem('password');
   const endpointHabitacion = generalEndpoints.habitacion;
 
-  const services = {
-    clima: '',
-    tv: '',
-  };
+
 
   const handleOpen = item => {
-    item.tv === true ? dataServices.push('TV') : null;
-    item.clima === true ? dataServices.push('CLIMA') : null;
+    dataDescriptions = item.descripcion;
     dataSelectTarifas = item.tarifas.map(element => {
       return element.descripcion;
     });
@@ -66,7 +58,6 @@ const TableViewHabitaciones = () => {
   };
 
   const handleCloseModal = () => {
-    dataServices = [];
     setOpenModal(false);
   };
 
@@ -77,52 +68,6 @@ const TableViewHabitaciones = () => {
     setPage(0);
   };
 
-  const deleteByIdHabitacion = async id => {
-    const generalData = {
-      status: false,
-    };
-    const { status } = await putGeneralTable(identifier, password, endpointHabitacion, id, generalData);
-    return status;
-  };
-
-  const deleteHabitacion = async id => {
-    Swal.fire({
-      icon: 'warning',
-      text: '¿Estás seguro de eliminar esta habitación?',
-      showCancelButton: true,
-      allowOutsideClick: false,
-      confirmButtonColor: '#1976d2',
-      cancelButtonColor: '#d32f2f',
-      confirmButtonText: 'Aceptar',
-      cancelButtonText: 'Cancelar',
-    }).then(result => {
-      if (result.isConfirmed) {
-        deleteByIdHabitacion(id).then(res => {
-          if (res >= 200 && res <= 299) {
-            Swal.fire({
-              icon: 'success',
-              text: 'Habitación eliminada correctamente',
-              allowOutsideClick: false,
-              confirmButtonColor: '#1976d2',
-              confirmButtonText: 'Aceptar',
-            }).then(result => {
-              if (result.isConfirmed) {
-                location.reload();
-              }
-            });
-          } else {
-            Swal.fire({
-              icon: 'error',
-              text: 'Error al eliminar habitación',
-              allowOutsideClick: false,
-              confirmButtonColor: '#1976d2',
-              confirmButtonText: 'Aceptar',
-            });
-          }
-        });
-      }
-    });
-  };
 
   const { list, loading, error } = useGetGeneralTable(identifier, password, endpointHabitacion);
 
@@ -157,26 +102,15 @@ const TableViewHabitaciones = () => {
                 </TableRow>
               )}
               {list.slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage).map(item => {
-                const { id, clima, tv, num_hab } = item;
-
-                let arrayServices = [];
-
-                clima === true ? (services.clima = 'Clima') : (services.clima = '');
-                tv === true ? (services.tv = 'TV') : (services.tv = '');
-
-                services.clima !== '' ? arrayServices.push(services.clima) : null;
-                services.tv !== '' ? arrayServices.push(services.tv) : null;
+                const { id, num_hab, descripcion } = item;
 
                 return (
                   <TableRow key={id}>
                     <TableCell sx={stylesTableCell}>{num_hab}</TableCell>
-                    <TableCell sx={stylesTableCell}>{arrayServices.join(', ')}</TableCell>
+                    <TableCell sx={stylesTableCell}>{descripcion}</TableCell>
                     <TableCell sx={stylesTableCell}>
                       <IconButton color='info' size='small' onClick={() => handleOpen(item)}>
                         <VisibilityIcon />
-                      </IconButton>
-                      <IconButton color='error' size='small' onClick={() => deleteHabitacion(id)}>
-                        <DeleteIcon />
                       </IconButton>
                     </TableCell>
                   </TableRow>
@@ -202,7 +136,7 @@ const TableViewHabitaciones = () => {
         <Box sx={stylesModal}>
           <ModalHabitaciones
             dataHabitaciones={dataHabitaciones}
-            dataServices={dataServices}
+            dataDescriptions={dataDescriptions}
             dataSelectTarifas={dataSelectTarifas}
             handleCloseModal={handleCloseModal}
           />

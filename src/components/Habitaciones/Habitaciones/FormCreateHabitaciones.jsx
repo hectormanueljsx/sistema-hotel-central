@@ -28,10 +28,9 @@ import {
   stylesWidthHeightForm,
 } from '@/components/Habitaciones/Habitaciones/HabitacionesStyles';
 
-const services = ['CLIMA', 'TV'];
 
 const FormCreateHabitaciones = () => {
-  const [optionServices, setOptionServices] = useState([]);
+  const [description, setDescription] = useState('');
   const [optionTarifas, setOptionTarifas] = useState([]);
   const [numHabitacion, setNumHabitacion] = useState('');
   const [loadingBtn, setLoadingBtn] = useState(false);
@@ -44,12 +43,7 @@ const FormCreateHabitaciones = () => {
 
   const handleInputChangeNumHabitacion = event => setNumHabitacion(event.target.value);
 
-  const handleChangeServices = event => {
-    const {
-      target: { value },
-    } = event;
-    setOptionServices(typeof value === 'string' ? value.split(',') : value);
-  };
+  const handleChangeServices = event => setDescription(event.target.value);
 
   const handleChangeTarifas = event => {
     const {
@@ -61,7 +55,7 @@ const FormCreateHabitaciones = () => {
   const sendDatos = async event => {
     event.preventDefault();
 
-    if (optionServices.length > 0 && optionTarifas.length > 0 && numHabitacion.trim().length > 0) {
+    if (description.length > 0 && optionTarifas.length > 0 && numHabitacion.trim().length > 0) {
       for (let i = 0; i < list.length; i++) {
         if (optionTarifas.includes(list[i].descripcion)) {
           tarifaId.push(list[i].id);
@@ -69,10 +63,9 @@ const FormCreateHabitaciones = () => {
       }
 
       const HabitacionData = {
-        clima: optionServices.includes('CLIMA') ? true : false,
-        tv: optionServices.includes('TV') ? true : false,
         num_hab: numHabitacion,
         tarifas: tarifaId,
+        descripcion: description,
       };
 
       setLoadingBtn(true);
@@ -108,7 +101,7 @@ const FormCreateHabitaciones = () => {
     }
   };
 
-  const { list, loading, error } = useGetGeneralTable(identifier, password, endpointTarifa);
+  const { list } = useGetGeneralTable(identifier, password, endpointTarifa);
 
   return (
     <Container component='section' sx={[stylesContainerSection, stylesWidthHeightForm]}>
@@ -129,25 +122,18 @@ const FormCreateHabitaciones = () => {
           />
         </Box>
         <Box component='div' sx={stylesContainerInput}>
-          <TitleInput titleInput='Seleccione servicios' />
-          <FormControl fullWidth>
-            <Select
-              multiple
-              value={optionServices}
+            <TitleInput titleInput='Descripción de la Habitacion' />
+            <TextField
               onChange={handleChangeServices}
-              renderValue={selected => selected.join(', ')}
+              name='descripcion'
+              variant='outlined'
+              type='text'
+              margin='none'
               size='small'
-            >
-              {services.map(item => {
-                return (
-                  <MenuItem key={item} value={item}>
-                    <Checkbox checked={optionServices.indexOf(item) > -1} disableRipple sx={stylesCheckboxForm} />
-                    <ListItemText primary={item} />
-                  </MenuItem>
-                );
-              })}
-            </Select>
-          </FormControl>
+              required
+              fullWidth
+              autoFocus
+            />
         </Box>
         <Box component='div' sx={stylesContainerInput}>
           <TitleInput titleInput='Seleccione las tarifas permitidas' />
