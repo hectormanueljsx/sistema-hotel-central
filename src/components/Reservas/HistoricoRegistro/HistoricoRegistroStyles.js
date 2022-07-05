@@ -11,8 +11,8 @@ export const stylesContainerSection = css`
   border-radius: 4px;
   box-shadow: 0px 0px 5px rgba(0, 0, 0, 0.25);
   padding: 24px;
-  margin-top: 48px;
-  margin-bottom: 48px;
+  margin-top: 40px;
+  margin-bottom: 40px;
   margin-left: 0;
   margin-right: 0;
 `;
@@ -100,6 +100,6 @@ export const stylesContainerBoxButtonAlign = css`
 
 export const stylesBoxButtons = css`
   display: flex;
-  justify-content: space-between;
-  margin-top: 16px;
+  justify-content: center;
+  gap: 28px;
 `;

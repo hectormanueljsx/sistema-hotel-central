@@ -8,11 +8,12 @@ import { historicalEndpoints } from '@/utilities/endpoints';
 import getGeneralSelect from '@/services/getGeneralSelect';
 import {
   stylesBoxButtons,
+  stylesButtonSend,
   stylesContainerBox,
   stylesContainerInput,
   stylesContainerSection,
   stylesWidthHeightForm,
-} from '@/components/Reservas/HistoricoRegistro/HistoricoRegistroStyle';
+} from '@/components/Reservas/HistoricoRegistro/HistoricoRegistroStyles';
 
 const FormSearchRegistro = ({ setSearch, dataRegistro, setDataRegistro, setLoading, setError }) => {
   const [start, setStart] = useState(0);
@@ -21,7 +22,7 @@ const FormSearchRegistro = ({ setSearch, dataRegistro, setDataRegistro, setLoadi
 
   const identifier = localStorage.getItem('identifier');
   const password = localStorage.getItem('password');
-  const endpointRegistro = historicalEndpoints.historicoRegistros;
+  const endpointRegistros = historicalEndpoints.historicoRegistros;
 
   useEffect(() => {
     getData();
@@ -31,7 +32,7 @@ const FormSearchRegistro = ({ setSearch, dataRegistro, setDataRegistro, setLoadi
     if (dataRegistro.length >= end) {
       setVisibleButton(false);
 
-      const resultado = await getGeneralSelect(identifier, password, `${endpointRegistro}${start}`);
+      const resultado = await getGeneralSelect(identifier, password, `${endpointRegistros}${start}`);
 
       setDataRegistro(prevData => [...prevData, ...resultado.data]);
       setEnd(end + 100);
@@ -45,8 +46,9 @@ const FormSearchRegistro = ({ setSearch, dataRegistro, setDataRegistro, setLoadi
     try {
       setLoading(true);
 
-      const result = await getGeneralSelect(identifier, password, `${endpointRegistro}${start}`);
+      const result = await getGeneralSelect(identifier, password, `${endpointRegistros}${start}`);
       setDataRegistro(result.data);
+
       if (result.data.length >= end) {
         setStart(start + 100);
         setVisibleButton(false);
@@ -85,6 +87,7 @@ const FormSearchRegistro = ({ setSearch, dataRegistro, setDataRegistro, setLoadi
             onClick={getMoreData}
             size='large'
             startIcon={<ControlPointIcon />}
+            sx={stylesButtonSend}
           >
             {`Más de ${start} registros`}
           </Button>

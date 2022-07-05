@@ -3,7 +3,7 @@ import { Box, Container } from '@mui/material';
 
 import FormSearchRegistro from '@/components/Reservas/HistoricoRegistro/FormSearchRegistro';
 import TableViewHistoricoRegistro from '@/components/Reservas/HistoricoRegistro/TableViewHistoricoRegistro';
-import { stylesBoxHistoricoRegistro } from '@/components/Reservas/HistoricoRegistro/HistoricoRegistroStyle';
+import { stylesBoxHistoricoRegistro } from '@/components/Reservas/HistoricoRegistro/HistoricoRegistroStyles';
 
 const HistoricoRegistro = () => {
   const [search, setSearch] = useState('');
