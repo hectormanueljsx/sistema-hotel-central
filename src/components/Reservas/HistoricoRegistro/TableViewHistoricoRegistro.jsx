@@ -87,7 +87,7 @@ const TableViewHistoricoEgresos = ({ search, dataRegistro, loading, error }) => 
                 } = item;
 
                 return (
-                  <TableRow key={id}>
+                  <TableRow key={id} sx={estado ? { backgroundColor: '#d4edda' } : { backgroundColor: '#fff3cd' }}>
                     <TableCell sx={stylesTableCell}>{id}</TableCell>
                     <TableCell sx={stylesTableCell}>{`${fecha} ${moment(hora_llegada, 'hh:mm:ss').format(
                       'hh:mm:ss a',
