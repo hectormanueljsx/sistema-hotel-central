@@ -18,7 +18,7 @@ import {
   stylesHeightBoxColor,
   stylesTitleAvailable,
   stylesWidthHeightPaletteColors,
-} from '@/components/Dashboard/HomeDashboard/HomeDashboardStyles';
+} from '@/pages/Dashboard/HomeDashboard/HomeDashboardStyles';
 
 const ColorBarAvailables = () => {
   return (

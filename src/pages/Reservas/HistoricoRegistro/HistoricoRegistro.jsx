@@ -1,9 +1,9 @@
 import React, { useState } from 'react';
 import { Box, Container } from '@mui/material';
 
-import FormSearchRegistro from '@/components/Reservas/HistoricoRegistro/FormSearchRegistro';
-import TableViewHistoricoRegistro from '@/components/Reservas/HistoricoRegistro/TableViewHistoricoRegistro';
-import { stylesBoxHistoricoRegistro } from '@/components/Reservas/HistoricoRegistro/HistoricoRegistroStyles';
+import FormSearchRegistro from '@/pages/Reservas/HistoricoRegistro/FormSearchRegistro';
+import TableViewHistoricoRegistro from '@/pages/Reservas/HistoricoRegistro/TableViewHistoricoRegistro';
+import { stylesBoxHistoricoRegistro } from '@/pages/Reservas/HistoricoRegistro/HistoricoRegistroStyles';
 
 const HistoricoRegistro = () => {
   const [search, setSearch] = useState('');

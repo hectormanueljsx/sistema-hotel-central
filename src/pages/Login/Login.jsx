@@ -18,7 +18,7 @@ import {
   stylesContainerSection,
   stylesIconImage,
   stylesWidthHeightForm,
-} from '@/components/Login/LoginStyles';
+} from '@/pages/Login/LoginStyles';
 import LogoIcon from '@/assets/favicon.png';
 
 const Login = () => {

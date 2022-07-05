@@ -12,7 +12,6 @@ import {
   TableRow,
 } from '@mui/material';
 import VisibilityIcon from '@mui/icons-material/Visibility';
-import moment from 'moment';
 
 import TitlePage from '@/components/Title/TitlePage';
 import SleketonLoader from '@/components/Loader/SleketonLoader';
@@ -21,7 +20,7 @@ import {
   stylesContainerSection,
   stylesTableCell,
   stylesWidthHeightTable,
-} from '@/components/Reservas/HistoricoRegistro/HistoricoRegistroStyles';
+} from '@/pages/Reservas/HistoricoReservaciones/HistoricoReservacionStyles';
 
 const columns = [
   { id: 'num_registro', label: 'No. de Registro', width: 120 },
@@ -32,7 +31,7 @@ const columns = [
   { id: 'acciones', label: 'Acciones', width: 100 },
 ];
 
-const TableViewHistoricoEgresos = ({ search, dataRegistro, loading, error }) => {
+const TableViewHistoricoReservaciones = ({ search, dataReservacion, loading, error }) => {
   const [page, setPage] = useState(0);
   const [rowsPerPage, setRowsPerPage] = useState(10);
 
@@ -43,11 +42,13 @@ const TableViewHistoricoEgresos = ({ search, dataRegistro, loading, error }) => 
     setPage(0);
   };
 
-  const filterConcepto = dataRegistro.filter(item => item.cliente.nombre.toUpperCase().includes(search.toUpperCase()));
+  const filterCliente = dataReservacion.filter(item =>
+    item.cliente.nombre.toUpperCase().includes(search.toUpperCase()),
+  );
 
   return (
     <Container component='section' disableGutters sx={[stylesContainerSection, stylesWidthHeightTable]}>
-      <TitlePage titlePage='Histórico de Registros' />
+      <TitlePage titlePage='Histórico de Reservaciones' />
       <Box component='div'>
         <TableContainer>
           <Table>
@@ -75,28 +76,31 @@ const TableViewHistoricoEgresos = ({ search, dataRegistro, loading, error }) => 
                   </TableCell>
                 </TableRow>
               )}
-              {filterConcepto.slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage).map(item => {
+              {filterCliente.slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage).map(item => {
                 const {
                   id,
                   fecha,
                   fecha_salida,
                   cliente: { nombre },
-                  estado,
-                  hora_llegada,
-                  hora_salida,
+                  est,
                 } = item;
 
                 return (
-                  <TableRow key={id} sx={estado ? { backgroundColor: '#d4edda' } : { backgroundColor: '#fff3cd' }}>
+                  <TableRow
+                    key={id}
+                    sx={
+                      est === 'CHECK-OUT'
+                        ? { backgroundColor: '#d4edda' }
+                        : est === 'SIN CHECK-OUT'
+                        ? { backgroundColor: '#fff3cd' }
+                        : { backgroundColor: '#f8d7da' }
+                    }
+                  >
                     <TableCell sx={stylesTableCell}>{id}</TableCell>
-                    <TableCell sx={stylesTableCell}>{`${fecha} ${moment(hora_llegada, 'hh:mm:ss').format(
-                      'hh:mm:ss a',
-                    )}`}</TableCell>
-                    <TableCell sx={stylesTableCell}>{`${fecha_salida} ${moment(hora_salida, 'hh:mm:ss').format(
-                      'hh:mm:ss a',
-                    )}`}</TableCell>
+                    <TableCell sx={stylesTableCell}>{fecha}</TableCell>
+                    <TableCell sx={stylesTableCell}>{fecha_salida}</TableCell>
                     <TableCell sx={stylesTableCell}>{nombre}</TableCell>
-                    <TableCell sx={stylesTableCell}>{estado ? 'CHECK-OUT' : 'SIN CHECK-OUT'}</TableCell>
+                    <TableCell sx={stylesTableCell}>{est}</TableCell>
                     <TableCell sx={stylesTableCell}>
                       <IconButton color='info' size='small'>
                         <VisibilityIcon />
@@ -112,7 +116,7 @@ const TableViewHistoricoEgresos = ({ search, dataRegistro, loading, error }) => 
           <TablePagination
             rowsPerPageOptions={[]}
             component='div'
-            count={filterConcepto.length}
+            count={filterCliente.length}
             rowsPerPage={rowsPerPage}
             page={page}
             onPageChange={handleChangePage}
@@ -125,4 +129,4 @@ const TableViewHistoricoEgresos = ({ search, dataRegistro, loading, error }) => 
   );
 };
 
-export default TableViewHistoricoEgresos;
+export default TableViewHistoricoReservaciones;

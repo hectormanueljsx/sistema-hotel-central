@@ -3,7 +3,6 @@ import {
   Box,
   Container,
   IconButton,
-  Modal,
   Table,
   TableBody,
   TableCell,
@@ -13,38 +12,30 @@ import {
   TableRow,
 } from '@mui/material';
 import VisibilityIcon from '@mui/icons-material/Visibility';
+import moment from 'moment';
 
 import TitlePage from '@/components/Title/TitlePage';
-import ModalEmpresa from './ModalEmpresa';
 import SleketonLoader from '@/components/Loader/SleketonLoader';
 import AlertGlobalTables from '@/components/Alert/AlertGlobalTables';
 import {
-  stylesContainerNoMarginTop,
   stylesContainerSection,
-  stylesModal,
   stylesTableCell,
   stylesWidthHeightTable,
-} from '@/components/Reservas/Empresa/EmpresaStyle';
+} from '@/pages/Reservas/HistoricoRegistro/HistoricoRegistroStyles';
 
 const columns = [
-  { id: 'rfc', label: 'RFC de la Empresa', width: 170 },
-  { id: 'nombre', label: 'Nombre de la Empresa', width: 250 },
-  { id: 'estado', label: 'Estado', width: 232 },
-  { id: 'ciudad', label: 'Ciudad', width: 200 },
+  { id: 'num_registro', label: 'No. de Registro', width: 120 },
+  { id: 'llegada', label: 'Llegada', width: 175 },
+  { id: 'salida', label: 'Salida', width: 175 },
+  { id: 'cliente', label: 'Cliente', width: 262 },
+  { id: 'estado', label: 'Estado', width: 120 },
   { id: 'acciones', label: 'Acciones', width: 100 },
 ];
 
-const TableViewEmpresas = ({ search, dataEmpresa, loading, error }) => {
+const TableViewHistoricoEgresos = ({ search, dataRegistro, loading, error }) => {
   const [page, setPage] = useState(0);
   const [rowsPerPage, setRowsPerPage] = useState(10);
-  const [openModal, setOpenModal] = useState(false);
-  const [selectEmpresa, setSelectEmpresa] = useState('');
 
-  const handleOpen = item => {
-    setOpenModal(true);
-    setSelectEmpresa(item);
-  };
-  const handleCloseModal = () => setOpenModal(false);
   const handleChangePage = (event, newPage) => setPage(newPage);
 
   const handleChangeRowsPerPage = event => {
@@ -52,15 +43,11 @@ const TableViewEmpresas = ({ search, dataEmpresa, loading, error }) => {
     setPage(0);
   };
 
-  const filterName = dataEmpresa.filter(item => item.nombre.toUpperCase().includes(search.toUpperCase()));
+  const filterConcepto = dataRegistro.filter(item => item.cliente.nombre.toUpperCase().includes(search.toUpperCase()));
 
   return (
-    <Container
-      component='section'
-      disableGutters
-      sx={[stylesContainerSection, stylesContainerNoMarginTop, stylesWidthHeightTable]}
-    >
-      <TitlePage titlePage='Histórico de Empresas' />
+    <Container component='section' disableGutters sx={[stylesContainerSection, stylesWidthHeightTable]}>
+      <TitlePage titlePage='Histórico de Registros' />
       <Box component='div'>
         <TableContainer>
           <Table>
@@ -88,17 +75,30 @@ const TableViewEmpresas = ({ search, dataEmpresa, loading, error }) => {
                   </TableCell>
                 </TableRow>
               )}
-              {filterName.slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage).map(item => {
-                const { id, rfc, nombre, ciudad, estado } = item;
+              {filterConcepto.slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage).map(item => {
+                const {
+                  id,
+                  fecha,
+                  fecha_salida,
+                  cliente: { nombre },
+                  estado,
+                  hora_llegada,
+                  hora_salida,
+                } = item;
 
                 return (
-                  <TableRow key={id}>
-                    <TableCell sx={stylesTableCell}>{rfc}</TableCell>
+                  <TableRow key={id} sx={estado ? { backgroundColor: '#d4edda' } : { backgroundColor: '#fff3cd' }}>
+                    <TableCell sx={stylesTableCell}>{id}</TableCell>
+                    <TableCell sx={stylesTableCell}>{`${fecha} ${moment(hora_llegada, 'hh:mm:ss').format(
+                      'hh:mm:ss a',
+                    )}`}</TableCell>
+                    <TableCell sx={stylesTableCell}>{`${fecha_salida} ${moment(hora_salida, 'hh:mm:ss').format(
+                      'hh:mm:ss a',
+                    )}`}</TableCell>
                     <TableCell sx={stylesTableCell}>{nombre}</TableCell>
-                    <TableCell sx={stylesTableCell}>{estado}</TableCell>
-                    <TableCell sx={stylesTableCell}>{ciudad}</TableCell>
+                    <TableCell sx={stylesTableCell}>{estado ? 'CHECK-OUT' : 'SIN CHECK-OUT'}</TableCell>
                     <TableCell sx={stylesTableCell}>
-                      <IconButton color='info' size='small' onClick={() => handleOpen(item)}>
+                      <IconButton color='info' size='small'>
                         <VisibilityIcon />
                       </IconButton>
                     </TableCell>
@@ -112,7 +112,7 @@ const TableViewEmpresas = ({ search, dataEmpresa, loading, error }) => {
           <TablePagination
             rowsPerPageOptions={[]}
             component='div'
-            count={filterName.length}
+            count={filterConcepto.length}
             rowsPerPage={rowsPerPage}
             page={page}
             onPageChange={handleChangePage}
@@ -121,13 +121,8 @@ const TableViewEmpresas = ({ search, dataEmpresa, loading, error }) => {
           />
         )}
       </Box>
-      <Modal open={openModal}>
-        <Box sx={stylesModal}>
-          <ModalEmpresa selectEmpresa={selectEmpresa} handleCloseModal={handleCloseModal} />
-        </Box>
-      </Modal>
     </Container>
   );
 };
 
-export default TableViewEmpresas;
+export default TableViewHistoricoEgresos;

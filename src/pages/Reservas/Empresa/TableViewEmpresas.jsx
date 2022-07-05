@@ -3,6 +3,7 @@ import {
   Box,
   Container,
   IconButton,
+  Modal,
   Table,
   TableBody,
   TableCell,
@@ -14,27 +15,36 @@ import {
 import VisibilityIcon from '@mui/icons-material/Visibility';
 
 import TitlePage from '@/components/Title/TitlePage';
+import ModalEmpresa from '@/pages/Reservas/Empresa/ModalEmpresa';
 import SleketonLoader from '@/components/Loader/SleketonLoader';
 import AlertGlobalTables from '@/components/Alert/AlertGlobalTables';
 import {
+  stylesContainerNoMarginTop,
   stylesContainerSection,
+  stylesModal,
   stylesTableCell,
   stylesWidthHeightTable,
-} from '@/components/Reservas/HistoricoReservaciones/HistoricoReservacionStyles';
+} from '@/pages/Reservas/Empresa/EmpresaStyle';
 
 const columns = [
-  { id: 'num_registro', label: 'No. de Registro', width: 120 },
-  { id: 'llegada', label: 'Llegada', width: 175 },
-  { id: 'salida', label: 'Salida', width: 175 },
-  { id: 'cliente', label: 'Cliente', width: 262 },
-  { id: 'estado', label: 'Estado', width: 120 },
+  { id: 'rfc', label: 'RFC de la Empresa', width: 170 },
+  { id: 'nombre', label: 'Nombre de la Empresa', width: 250 },
+  { id: 'estado', label: 'Estado', width: 232 },
+  { id: 'ciudad', label: 'Ciudad', width: 200 },
   { id: 'acciones', label: 'Acciones', width: 100 },
 ];
 
-const TableViewHistoricoReservaciones = ({ search, dataReservacion, loading, error }) => {
+const TableViewEmpresas = ({ search, dataEmpresa, loading, error }) => {
   const [page, setPage] = useState(0);
   const [rowsPerPage, setRowsPerPage] = useState(10);
+  const [openModal, setOpenModal] = useState(false);
+  const [selectEmpresa, setSelectEmpresa] = useState('');
 
+  const handleOpen = item => {
+    setOpenModal(true);
+    setSelectEmpresa(item);
+  };
+  const handleCloseModal = () => setOpenModal(false);
   const handleChangePage = (event, newPage) => setPage(newPage);
 
   const handleChangeRowsPerPage = event => {
@@ -42,13 +52,15 @@ const TableViewHistoricoReservaciones = ({ search, dataReservacion, loading, err
     setPage(0);
   };
 
-  const filterCliente = dataReservacion.filter(item =>
-    item.cliente.nombre.toUpperCase().includes(search.toUpperCase()),
-  );
+  const filterName = dataEmpresa.filter(item => item.nombre.toUpperCase().includes(search.toUpperCase()));
 
   return (
-    <Container component='section' disableGutters sx={[stylesContainerSection, stylesWidthHeightTable]}>
-      <TitlePage titlePage='Histórico de Reservaciones' />
+    <Container
+      component='section'
+      disableGutters
+      sx={[stylesContainerSection, stylesContainerNoMarginTop, stylesWidthHeightTable]}
+    >
+      <TitlePage titlePage='Histórico de Empresas' />
       <Box component='div'>
         <TableContainer>
           <Table>
@@ -76,33 +88,17 @@ const TableViewHistoricoReservaciones = ({ search, dataReservacion, loading, err
                   </TableCell>
                 </TableRow>
               )}
-              {filterCliente.slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage).map(item => {
-                const {
-                  id,
-                  fecha,
-                  fecha_salida,
-                  cliente: { nombre },
-                  est,
-                } = item;
+              {filterName.slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage).map(item => {
+                const { id, rfc, nombre, ciudad, estado } = item;
 
                 return (
-                  <TableRow
-                    key={id}
-                    sx={
-                      est === 'CHECK-OUT'
-                        ? { backgroundColor: '#d4edda' }
-                        : est === 'SIN CHECK-OUT'
-                        ? { backgroundColor: '#fff3cd' }
-                        : { backgroundColor: '#f8d7da' }
-                    }
-                  >
-                    <TableCell sx={stylesTableCell}>{id}</TableCell>
-                    <TableCell sx={stylesTableCell}>{fecha}</TableCell>
-                    <TableCell sx={stylesTableCell}>{fecha_salida}</TableCell>
+                  <TableRow key={id}>
+                    <TableCell sx={stylesTableCell}>{rfc}</TableCell>
                     <TableCell sx={stylesTableCell}>{nombre}</TableCell>
-                    <TableCell sx={stylesTableCell}>{est}</TableCell>
+                    <TableCell sx={stylesTableCell}>{estado}</TableCell>
+                    <TableCell sx={stylesTableCell}>{ciudad}</TableCell>
                     <TableCell sx={stylesTableCell}>
-                      <IconButton color='info' size='small'>
+                      <IconButton color='info' size='small' onClick={() => handleOpen(item)}>
                         <VisibilityIcon />
                       </IconButton>
                     </TableCell>
@@ -116,7 +112,7 @@ const TableViewHistoricoReservaciones = ({ search, dataReservacion, loading, err
           <TablePagination
             rowsPerPageOptions={[]}
             component='div'
-            count={filterCliente.length}
+            count={filterName.length}
             rowsPerPage={rowsPerPage}
             page={page}
             onPageChange={handleChangePage}
@@ -125,8 +121,13 @@ const TableViewHistoricoReservaciones = ({ search, dataReservacion, loading, err
           />
         )}
       </Box>
+      <Modal open={openModal}>
+        <Box sx={stylesModal}>
+          <ModalEmpresa selectEmpresa={selectEmpresa} handleCloseModal={handleCloseModal} />
+        </Box>
+      </Modal>
     </Container>
   );
 };
 
-export default TableViewHistoricoReservaciones;
+export default TableViewEmpresas;

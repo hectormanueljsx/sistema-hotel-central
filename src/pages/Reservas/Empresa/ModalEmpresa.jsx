@@ -21,7 +21,7 @@ import {
   stylesModalClose,
   stylesWidthHeightModal,
   stylesWidthInput,
-} from '@/components/Reservas/Empresa/EmpresaStyle';
+} from '@/pages/Reservas/Empresa/EmpresaStyle';
 
 const ModalEmpresa = ({ selectEmpresa, handleCloseModal }) => {
   const [datos, setDatos] = useState({

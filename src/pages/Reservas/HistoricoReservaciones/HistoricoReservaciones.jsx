@@ -1,9 +1,9 @@
 import React, { useState } from 'react';
 import { Box, Container } from '@mui/material';
 
-import FormSearchReservaciones from '@/components/Reservas/HistoricoReservaciones/FormSearchReservaciones';
-import TableViewHistoricoReservaciones from '@/components/Reservas/HistoricoReservaciones/TableViewHistoricoReservaciones';
-import { stylesBoxHistoricoReservacion } from '@/components/Reservas/HistoricoReservaciones/HistoricoReservacionStyles';
+import FormSearchReservaciones from '@/pages/Reservas/HistoricoReservaciones/FormSearchReservaciones';
+import TableViewHistoricoReservaciones from '@/pages/Reservas/HistoricoReservaciones/TableViewHistoricoReservaciones';
+import { stylesBoxHistoricoReservacion } from '@/pages/Reservas/HistoricoReservaciones/HistoricoReservacionStyles';
 
 const HistoricoReservaciones = () => {
   const [search, setSearch] = useState('');

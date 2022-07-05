@@ -13,7 +13,7 @@ import {
   stylesContainerInput,
   stylesContainerSection,
   stylesWidthHeightForm,
-} from '@/components/Reservas/HistoricoRegistro/HistoricoRegistroStyles';
+} from '@/pages/Reservas/HistoricoRegistro/HistoricoRegistroStyles';
 
 const FormSearchRegistro = ({ setSearch, dataRegistro, setDataRegistro, setLoading, setError }) => {
   const [start, setStart] = useState(0);

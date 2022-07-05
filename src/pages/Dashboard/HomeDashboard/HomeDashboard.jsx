@@ -1,8 +1,8 @@
 import React from 'react';
 import { Box, Container } from '@mui/material';
 
-import ColorBarAvailables from '@/components/Dashboard/HomeDashboard/ColorBarAvailables';
-import { stylesBoxHomeDashboard } from '@/components/Dashboard/HomeDashboard/HomeDashboardStyles';
+import ColorBarAvailables from '@/pages/Dashboard/HomeDashboard/ColorBarAvailables';
+import { stylesBoxHomeDashboard } from '@/pages/Dashboard/HomeDashboard/HomeDashboardStyles';
 
 const HomeDashboard = () => {
   return (

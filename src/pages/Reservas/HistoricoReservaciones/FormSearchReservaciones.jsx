@@ -7,34 +7,34 @@ import TitleInput from '@/components/Title/TitleInput';
 import { historicalEndpoints } from '@/utilities/endpoints';
 import getGeneralSelect from '@/services/getGeneralSelect';
 import {
-  stylesButtonSearch,
-  stylesContainerBoxFormSearch,
-  stylesContainerInputSearch,
-  stylesContainerNoMargin,
+  stylesBoxButtons,
+  stylesButtonSend,
+  stylesContainerBox,
+  stylesContainerInput,
   stylesContainerSection,
-  stylesWidthHeightSearchForm,
-} from '@/components/Reservas/Empresa/EmpresaStyle';
+  stylesWidthHeightForm,
+} from '@/pages/Reservas/HistoricoReservaciones/HistoricoReservacionStyles';
 
-const FormSearchEmpresa = ({ setSearch, dataEmpresa, setDataEmpresa, setLoading, setError }) => {
+const FormSearchReservaciones = ({ setSearch, dataReservacion, setDataReservacion, setLoading, setError }) => {
   const [start, setStart] = useState(0);
   const [end, setEnd] = useState(100);
   const [visibleButton, setVisibleButton] = useState(true);
 
   const identifier = localStorage.getItem('identifier');
   const password = localStorage.getItem('password');
-  const endpointEmpresa = historicalEndpoints.historicoEmpresa;
+  const endpointReservas = historicalEndpoints.historicoReservaciones;
 
   useEffect(() => {
     getData();
   }, []);
 
   const getMoreData = async () => {
-    if (dataEmpresa.length >= end) {
+    if (dataReservacion.length >= end) {
       setVisibleButton(false);
 
-      const resultado = await getGeneralSelect(identifier, password, `${endpointEmpresa}${start}`);
+      const resultado = await getGeneralSelect(identifier, password, `${endpointReservas}${start}`);
 
-      setDataEmpresa(prevData => [...prevData, ...resultado.data]);
+      setDataReservacion(prevData => [...prevData, ...resultado.data]);
       setEnd(end + 100);
       setStart(start + 100);
     } else {
@@ -46,8 +46,8 @@ const FormSearchEmpresa = ({ setSearch, dataEmpresa, setDataEmpresa, setLoading,
     try {
       setLoading(true);
 
-      const result = await getGeneralSelect(identifier, password, `${endpointEmpresa}${start}`);
-      setDataEmpresa(result.data);
+      const result = await getGeneralSelect(identifier, password, `${endpointReservas}${start}`);
+      setDataReservacion(result.data);
 
       if (result.data.length >= end) {
         setStart(start + 100);
@@ -63,34 +63,31 @@ const FormSearchEmpresa = ({ setSearch, dataEmpresa, setDataEmpresa, setLoading,
   };
 
   return (
-    <Container
-      component='section'
-      disableGutters
-      sx={[stylesContainerSection, stylesContainerNoMargin, stylesWidthHeightSearchForm]}
-    >
-      <TitlePage titlePage='Buscar Registro' />
-      <Box component='form' sx={stylesContainerBoxFormSearch}>
-        <Box component='div' sx={stylesContainerInputSearch}>
+    <Container component='section' sx={[stylesContainerSection, stylesWidthHeightForm]}>
+      <TitlePage titlePage='Buscar Reservación' />
+      <Box component='form' sx={stylesContainerBox}>
+        <Box component='div' sx={stylesContainerInput}>
           <TitleInput titleInput='Buscar' />
           <TextField
             onChange={e => setSearch(e.target.value)}
-            name='nombre'
+            name='concepto'
             variant='outlined'
             type='text'
             margin='none'
             size='small'
             required
             fullWidth
+            autoFocus
           />
         </Box>
-        <Box>
+        <Box component='div' sx={stylesBoxButtons}>
           <Button
             variant='contained'
             disabled={visibleButton}
             onClick={getMoreData}
             size='large'
             startIcon={<ControlPointIcon />}
-            sx={stylesButtonSearch}
+            sx={stylesButtonSend}
           >
             {`Más de ${start} registros`}
           </Button>
@@ -100,4 +97,4 @@ const FormSearchEmpresa = ({ setSearch, dataEmpresa, setDataEmpresa, setLoading,
   );
 };
 
-export default FormSearchEmpresa;
+export default FormSearchReservaciones;

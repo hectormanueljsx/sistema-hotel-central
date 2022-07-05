@@ -14,7 +14,7 @@ import {
   stylesWidthHeightForm,
   stylesContainerBox,
   stylesButtonSend,
-} from '@/components/Reservas/Empresa/EmpresaStyle';
+} from '@/pages/Reservas/Empresa/EmpresaStyle';
 
 const FormCreateEmpresas = () => {
   const [datos, setDatos] = useState({

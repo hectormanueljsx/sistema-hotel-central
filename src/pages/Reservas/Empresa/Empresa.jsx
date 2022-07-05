@@ -1,10 +1,10 @@
 import React, { useState } from 'react';
 import { Box, Container } from '@mui/material';
 
-import FormCreateEmpresas from '@/components/Reservas/Empresa/FormCreateEmpresas';
-import FormSearchEmpresa from '@/components/Reservas/Empresa/FormSearchEmpresa';
-import TableViewEmpresas from '@/components/Reservas/Empresa/TableViewEmpresas';
-import { stylesBoxEmpresa, stylesBoxSearchTable } from '@/components/Reservas/Empresa/EmpresaStyle';
+import FormCreateEmpresas from '@/pages/Reservas/Empresa/FormCreateEmpresas';
+import FormSearchEmpresa from '@/pages/Reservas/Empresa/FormSearchEmpresa';
+import TableViewEmpresas from '@/pages/Reservas/Empresa/TableViewEmpresas';
+import { stylesBoxEmpresa, stylesBoxSearchTable } from '@/pages/Reservas/Empresa/EmpresaStyle';
 
 const Empresa = () => {
   const [search, setSearch] = useState('');
