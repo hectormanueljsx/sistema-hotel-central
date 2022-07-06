@@ -62,7 +62,7 @@ const FormSearchHistoricoEgresos = ({ setSearch, dataEgreso, setDataEgreso, setL
   };
 
   return (
-    <Container component='section' sx={[stylesContainerSection, stylesWidthHeightForm]}>
+    <Container component='section' disableGutters sx={[stylesContainerSection, stylesWidthHeightForm]}>
       <TitlePage titlePage='Buscar Registro' />
       <Box component='form' sx={stylesContainerBox}>
         <Box component='div' sx={stylesContainerInput}>

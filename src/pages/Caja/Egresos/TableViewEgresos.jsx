@@ -25,17 +25,18 @@ import { generalEndpoints } from '@/utilities/endpoints';
 import {
   stylesContainerSection,
   stylesModal,
-  stylesTableCell,
+  stylesTableCellHeader,
+  stylesTableCellBody,
   stylesWidthHeightTable,
 } from '@/pages/Caja/Egresos/EgresosStyles';
 
 const columns = [
-  { id: 'num_gasto', label: 'No. de Gasto', width: 140 },
-  { id: 'fecha', label: 'Fecha', width: 200 },
-  { id: 'concepto', label: 'Concepto', width: 200 },
-  { id: 'categoria', label: 'Categoría', width: 200 },
+  { id: 'num_gasto', label: 'No. de Gasto', width: 95 },
+  { id: 'fecha', label: 'Fecha', width: 180 },
+  { id: 'concepto', label: 'Concepto', width: 245 },
+  { id: 'categoria', label: 'Categoría', width: 245 },
   { id: 'importe', label: 'Importe', width: 112 },
-  { id: 'acciones', label: 'Acciones', width: 100 },
+  { id: 'acciones', label: 'Acciones', width: 75 },
 ];
 
 const TableViewEgresos = ({ pago, categoria }) => {
@@ -86,7 +87,7 @@ const TableViewEgresos = ({ pago, categoria }) => {
             <TableHead>
               <TableRow>
                 {columns.map((column, index) => (
-                  <TableCell key={index} sx={[stylesTableCell, { width: column.width }]}>
+                  <TableCell key={index} sx={[stylesTableCellHeader, { width: column.width }]}>
                     {column.label}
                   </TableCell>
                 ))}
@@ -95,14 +96,14 @@ const TableViewEgresos = ({ pago, categoria }) => {
             <TableBody>
               {loadingGetSpecific && (
                 <TableRow>
-                  <TableCell align='center' colSpan={columns.length} sx={stylesTableCell}>
+                  <TableCell align='center' colSpan={columns.length} sx={stylesTableCellBody}>
                     <SleketonLoader />
                   </TableCell>
                 </TableRow>
               )}
               {errorGetSpecific && (
                 <TableRow>
-                  <TableCell align='center' colSpan={columns.length} sx={stylesTableCell}>
+                  <TableCell align='center' colSpan={columns.length} sx={stylesTableCellBody}>
                     <AlertGlobalTables messageError='Ah ocurrido un error al obtener los datos' />
                   </TableCell>
                 </TableRow>
@@ -118,18 +119,18 @@ const TableViewEgresos = ({ pago, categoria }) => {
 
                 return (
                   <TableRow key={id}>
-                    <TableCell sx={stylesTableCell}>{id}</TableCell>
-                    <TableCell sx={stylesTableCell}>{moment(fecha).format('YYYY-MM-DD hh:mm:ss a')}</TableCell>
-                    <TableCell sx={stylesTableCell}>{concepto}</TableCell>
-                    <TableCell sx={stylesTableCell}>{descripcion}</TableCell>
-                    <TableCell sx={stylesTableCell}>
+                    <TableCell sx={stylesTableCellBody}>{id}</TableCell>
+                    <TableCell sx={stylesTableCellBody}>{moment(fecha).format('YYYY-MM-DD hh:mm:ss a')}</TableCell>
+                    <TableCell sx={stylesTableCellBody}>{concepto}</TableCell>
+                    <TableCell sx={stylesTableCellBody}>{descripcion}</TableCell>
+                    <TableCell sx={stylesTableCellBody}>
                       {importe.toLocaleString('es-MX', {
                         style: 'currency',
                         currency: 'MXN',
                         minimumFractionDigits: 2,
                       })}
                     </TableCell>
-                    <TableCell sx={stylesTableCell}>
+                    <TableCell sx={stylesTableCellBody}>
                       <IconButton color='info' size='small' onClick={() => handleOpen(item, categoria)}>
                         <VisibilityIcon />
                       </IconButton>

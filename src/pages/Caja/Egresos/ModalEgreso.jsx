@@ -139,7 +139,7 @@ const ModalEgreso = ({ dataEgreso, pago, categoria, dataCategoria, handleCloseMo
   };
 
   return (
-    <Container component='section' sx={[stylesContainerSection, stylesWidthHeightModal]}>
+    <Container component='section' disableGutters sx={[stylesContainerSection, stylesWidthHeightModal]}>
       <TitlePage titlePage='Actualización de Gasto' />
       <Box component='form' sx={stylesBoxModal}>
         <Button variant='text' color='error' size='large' onClick={handleCloseModal} sx={stylesModalClose}>

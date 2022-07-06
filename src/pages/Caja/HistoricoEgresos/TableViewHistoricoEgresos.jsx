@@ -19,17 +19,18 @@ import SleketonLoader from '@/components/Loader/SleketonLoader';
 import AlertGlobalTables from '@/components/Alert/AlertGlobalTables';
 import {
   stylesContainerSection,
-  stylesTableCell,
+  stylesTableCellHeader,
+  stylesTableCellBody,
   stylesWidthHeightTable,
 } from '@/pages/Caja/HistoricoEgresos/HistoricoEgresosStyles';
 
 const columns = [
-  { id: 'num_gasto', label: 'No. de Gasto', width: 140 },
-  { id: 'fecha', label: 'Fecha', width: 200 },
-  { id: 'concepto', label: 'Concepto', width: 270 },
+  { id: 'num_gasto', label: 'No. de Gasto', width: 95 },
+  { id: 'fecha', label: 'Fecha', width: 180 },
+  { id: 'concepto', label: 'Concepto', width: 350 },
   { id: 'importe', label: 'Importe', width: 112 },
-  { id: 'detalles', label: 'Detalles', width: 130 },
-  { id: 'acciones', label: 'Acciones', width: 100 },
+  { id: 'detalles', label: 'Detalles', width: 140 },
+  { id: 'acciones', label: 'Acciones', width: 75 },
 ];
 
 const TableViewHistoricoEgresos = ({ search, dataEgreso, loading, error }) => {
@@ -54,7 +55,7 @@ const TableViewHistoricoEgresos = ({ search, dataEgreso, loading, error }) => {
             <TableHead>
               <TableRow>
                 {columns.map((column, index) => (
-                  <TableCell key={index} sx={[stylesTableCell, { width: column.width }]}>
+                  <TableCell key={index} sx={[stylesTableCellHeader, { width: column.width }]}>
                     {column.label}
                   </TableCell>
                 ))}
@@ -63,14 +64,14 @@ const TableViewHistoricoEgresos = ({ search, dataEgreso, loading, error }) => {
             <TableBody>
               {loading && (
                 <TableRow>
-                  <TableCell align='center' colSpan={columns.length} sx={stylesTableCell}>
+                  <TableCell align='center' colSpan={columns.length} sx={stylesTableCellBody}>
                     <SleketonLoader />
                   </TableCell>
                 </TableRow>
               )}
               {error && (
                 <TableRow>
-                  <TableCell align='center' colSpan={columns.length} sx={stylesTableCell}>
+                  <TableCell align='center' colSpan={columns.length} sx={stylesTableCellBody}>
                     <AlertGlobalTables messageError='Ah ocurrido un error al obtener los datos' />
                   </TableCell>
                 </TableRow>
@@ -80,18 +81,18 @@ const TableViewHistoricoEgresos = ({ search, dataEgreso, loading, error }) => {
 
                 return (
                   <TableRow key={id}>
-                    <TableCell sx={stylesTableCell}>{id}</TableCell>
-                    <TableCell sx={stylesTableCell}>{moment(fecha).format('YYYY-MM-DD hh:mm:ss a')}</TableCell>
-                    <TableCell sx={stylesTableCell}>{concepto}</TableCell>
-                    <TableCell sx={stylesTableCell}>
+                    <TableCell sx={stylesTableCellBody}>{id}</TableCell>
+                    <TableCell sx={stylesTableCellBody}>{moment(fecha).format('YYYY-MM-DD hh:mm:ss a')}</TableCell>
+                    <TableCell sx={stylesTableCellBody}>{concepto}</TableCell>
+                    <TableCell sx={stylesTableCellBody}>
                       {importe.toLocaleString('es-MX', {
                         style: 'currency',
                         currency: 'MXN',
                         minimumFractionDigits: 2,
                       })}
                     </TableCell>
-                    <TableCell sx={stylesTableCell}>{p_caja ? 'EN CAJA' : 'CORTE DE CAJA'}</TableCell>
-                    <TableCell sx={stylesTableCell}>
+                    <TableCell sx={stylesTableCellBody}>{p_caja ? 'EN CAJA' : 'CORTE DE CAJA'}</TableCell>
+                    <TableCell sx={stylesTableCellBody}>
                       <IconButton color='info' size='small'>
                         <VisibilityIcon />
                       </IconButton>
