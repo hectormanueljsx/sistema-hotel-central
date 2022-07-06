@@ -119,7 +119,7 @@ const ModalEmpresa = ({ selectEmpresa, handleCloseModal }) => {
   };
 
   return (
-    <Container component='section' sx={[stylesContainerSection, stylesWidthHeightModal]}>
+    <Container component='section' disableGutters sx={[stylesContainerSection, stylesWidthHeightModal]}>
       <TitlePage titlePage='Actualización de Empresa' />
       <Box component='form' sx={stylesBoxModal}>
         <Button variant='text' color='error' size='large' onClick={handleCloseModal} sx={stylesModalClose}>

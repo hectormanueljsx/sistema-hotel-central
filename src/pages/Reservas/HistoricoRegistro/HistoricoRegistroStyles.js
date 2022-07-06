@@ -54,8 +54,14 @@ export const stylesButtonSend = css`
   margin-top: 16px;
 `;
 
-export const stylesTableCell = css`
-  padding: 8px;
+export const stylesTableCellHeader = css`
+  padding: 8px 4px;
+  border-bottom: 2px solid #dee2e6;
+`;
+
+export const stylesTableCellBody = css`
+  padding: 2px 4px;
+  border-bottom: 1.5px solid #dee2e6;
 `;
 
 export const stylesModal = css`

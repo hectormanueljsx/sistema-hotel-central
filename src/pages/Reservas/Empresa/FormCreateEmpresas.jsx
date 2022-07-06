@@ -90,7 +90,7 @@ const FormCreateEmpresas = () => {
   };
 
   return (
-    <Container component='section' sx={[stylesContainerSection, stylesWidthHeightForm]}>
+    <Container component='section' disableGutters sx={[stylesContainerSection, stylesWidthHeightForm]}>
       <TitlePage titlePage='Registro de Empresa' />
       <Box component='form' sx={stylesContainerBox}>
         <Box component='div' sx={stylesContainerInput}>

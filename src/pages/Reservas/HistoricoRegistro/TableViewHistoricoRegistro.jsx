@@ -19,17 +19,18 @@ import SleketonLoader from '@/components/Loader/SleketonLoader';
 import AlertGlobalTables from '@/components/Alert/AlertGlobalTables';
 import {
   stylesContainerSection,
-  stylesTableCell,
+  stylesTableCellHeader,
+  stylesTableCellBody,
   stylesWidthHeightTable,
 } from '@/pages/Reservas/HistoricoRegistro/HistoricoRegistroStyles';
 
 const columns = [
   { id: 'num_registro', label: 'No. de Registro', width: 120 },
-  { id: 'llegada', label: 'Llegada', width: 175 },
-  { id: 'salida', label: 'Salida', width: 175 },
-  { id: 'cliente', label: 'Cliente', width: 262 },
-  { id: 'estado', label: 'Estado', width: 120 },
-  { id: 'acciones', label: 'Acciones', width: 100 },
+  { id: 'llegada', label: 'Fecha de Llegada', width: 175 },
+  { id: 'salida', label: 'Fecha de Salida', width: 175 },
+  { id: 'cliente', label: 'Nombre del Cliente', width: 277 },
+  { id: 'estado', label: 'Estado', width: 130 },
+  { id: 'acciones', label: 'Acciones', width: 75 },
 ];
 
 const TableViewHistoricoEgresos = ({ search, dataRegistro, loading, error }) => {
@@ -54,7 +55,7 @@ const TableViewHistoricoEgresos = ({ search, dataRegistro, loading, error }) => 
             <TableHead>
               <TableRow>
                 {columns.map((column, index) => (
-                  <TableCell key={index} sx={[stylesTableCell, { width: column.width }]}>
+                  <TableCell key={index} sx={[stylesTableCellHeader, { width: column.width }]}>
                     {column.label}
                   </TableCell>
                 ))}
@@ -63,14 +64,14 @@ const TableViewHistoricoEgresos = ({ search, dataRegistro, loading, error }) => 
             <TableBody>
               {loading && (
                 <TableRow>
-                  <TableCell align='center' colSpan={columns.length} sx={stylesTableCell}>
+                  <TableCell align='center' colSpan={columns.length} sx={stylesTableCellBody}>
                     <SleketonLoader />
                   </TableCell>
                 </TableRow>
               )}
               {error && (
                 <TableRow>
-                  <TableCell align='center' colSpan={columns.length} sx={stylesTableCell}>
+                  <TableCell align='center' colSpan={columns.length} sx={stylesTableCellBody}>
                     <AlertGlobalTables messageError='Ah ocurrido un error al obtener los datos' />
                   </TableCell>
                 </TableRow>
@@ -88,16 +89,16 @@ const TableViewHistoricoEgresos = ({ search, dataRegistro, loading, error }) => 
 
                 return (
                   <TableRow key={id} sx={estado ? { backgroundColor: '#d4edda' } : { backgroundColor: '#fff3cd' }}>
-                    <TableCell sx={stylesTableCell}>{id}</TableCell>
-                    <TableCell sx={stylesTableCell}>{`${fecha} ${moment(hora_llegada, 'hh:mm:ss').format(
+                    <TableCell sx={stylesTableCellBody}>{id}</TableCell>
+                    <TableCell sx={stylesTableCellBody}>{`${fecha} ${moment(hora_llegada, 'hh:mm:ss').format(
                       'hh:mm:ss a',
                     )}`}</TableCell>
-                    <TableCell sx={stylesTableCell}>{`${fecha_salida} ${moment(hora_salida, 'hh:mm:ss').format(
+                    <TableCell sx={stylesTableCellBody}>{`${fecha_salida} ${moment(hora_salida, 'hh:mm:ss').format(
                       'hh:mm:ss a',
                     )}`}</TableCell>
-                    <TableCell sx={stylesTableCell}>{nombre}</TableCell>
-                    <TableCell sx={stylesTableCell}>{estado ? 'CHECK-OUT' : 'SIN CHECK-OUT'}</TableCell>
-                    <TableCell sx={stylesTableCell}>
+                    <TableCell sx={stylesTableCellBody}>{nombre}</TableCell>
+                    <TableCell sx={stylesTableCellBody}>{estado ? 'CHECK-OUT' : 'SIN CHECK-OUT'}</TableCell>
+                    <TableCell sx={stylesTableCellBody}>
                       <IconButton color='info' size='small'>
                         <VisibilityIcon />
                       </IconButton>

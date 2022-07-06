@@ -18,17 +18,18 @@ import SleketonLoader from '@/components/Loader/SleketonLoader';
 import AlertGlobalTables from '@/components/Alert/AlertGlobalTables';
 import {
   stylesContainerSection,
-  stylesTableCell,
+  stylesTableCellHeader,
+  stylesTableCellBody,
   stylesWidthHeightTable,
 } from '@/pages/Reservas/HistoricoReservaciones/HistoricoReservacionStyles';
 
 const columns = [
   { id: 'num_registro', label: 'No. de Registro', width: 120 },
-  { id: 'llegada', label: 'Llegada', width: 175 },
-  { id: 'salida', label: 'Salida', width: 175 },
-  { id: 'cliente', label: 'Cliente', width: 262 },
-  { id: 'estado', label: 'Estado', width: 120 },
-  { id: 'acciones', label: 'Acciones', width: 100 },
+  { id: 'llegada', label: 'Fecha de Llegada', width: 175 },
+  { id: 'salida', label: 'Fecha de Salida', width: 175 },
+  { id: 'cliente', label: 'Nombre del Cliente', width: 277 },
+  { id: 'estado', label: 'Estado', width: 130 },
+  { id: 'acciones', label: 'Acciones', width: 75 },
 ];
 
 const TableViewHistoricoReservaciones = ({ search, dataReservacion, loading, error }) => {
@@ -55,7 +56,7 @@ const TableViewHistoricoReservaciones = ({ search, dataReservacion, loading, err
             <TableHead>
               <TableRow>
                 {columns.map((column, index) => (
-                  <TableCell key={index} sx={[stylesTableCell, { width: column.width }]}>
+                  <TableCell key={index} sx={[stylesTableCellHeader, { width: column.width }]}>
                     {column.label}
                   </TableCell>
                 ))}
@@ -64,14 +65,14 @@ const TableViewHistoricoReservaciones = ({ search, dataReservacion, loading, err
             <TableBody>
               {loading && (
                 <TableRow>
-                  <TableCell align='center' colSpan={columns.length} sx={stylesTableCell}>
+                  <TableCell align='center' colSpan={columns.length} sx={stylesTableCellBody}>
                     <SleketonLoader />
                   </TableCell>
                 </TableRow>
               )}
               {error && (
                 <TableRow>
-                  <TableCell align='center' colSpan={columns.length} sx={stylesTableCell}>
+                  <TableCell align='center' colSpan={columns.length} sx={stylesTableCellBody}>
                     <AlertGlobalTables messageError='Ah ocurrido un error al obtener los datos' />
                   </TableCell>
                 </TableRow>
@@ -96,12 +97,12 @@ const TableViewHistoricoReservaciones = ({ search, dataReservacion, loading, err
                         : { backgroundColor: '#f8d7da' }
                     }
                   >
-                    <TableCell sx={stylesTableCell}>{id}</TableCell>
-                    <TableCell sx={stylesTableCell}>{fecha}</TableCell>
-                    <TableCell sx={stylesTableCell}>{fecha_salida}</TableCell>
-                    <TableCell sx={stylesTableCell}>{nombre}</TableCell>
-                    <TableCell sx={stylesTableCell}>{est}</TableCell>
-                    <TableCell sx={stylesTableCell}>
+                    <TableCell sx={stylesTableCellBody}>{id}</TableCell>
+                    <TableCell sx={stylesTableCellBody}>{fecha}</TableCell>
+                    <TableCell sx={stylesTableCellBody}>{fecha_salida}</TableCell>
+                    <TableCell sx={stylesTableCellBody}>{nombre}</TableCell>
+                    <TableCell sx={stylesTableCellBody}>{est}</TableCell>
+                    <TableCell sx={stylesTableCellBody}>
                       <IconButton color='info' size='small'>
                         <VisibilityIcon />
                       </IconButton>

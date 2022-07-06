@@ -22,16 +22,17 @@ import {
   stylesContainerNoMarginTop,
   stylesContainerSection,
   stylesModal,
-  stylesTableCell,
+  stylesTableCellHeader,
+  stylesTableCellBody,
   stylesWidthHeightTable,
 } from '@/pages/Reservas/Empresa/EmpresaStyle';
 
 const columns = [
-  { id: 'rfc', label: 'RFC de la Empresa', width: 170 },
-  { id: 'nombre', label: 'Nombre de la Empresa', width: 250 },
-  { id: 'estado', label: 'Estado', width: 232 },
-  { id: 'ciudad', label: 'Ciudad', width: 200 },
-  { id: 'acciones', label: 'Acciones', width: 100 },
+  { id: 'rfc', label: 'RFC de la Empresa', width: 130 },
+  { id: 'nombre', label: 'Nombre de la Empresa', width: 280 },
+  { id: 'estado', label: 'Estado', width: 160 },
+  { id: 'ciudad', label: 'Ciudad', width: 307 },
+  { id: 'acciones', label: 'Acciones', width: 75 },
 ];
 
 const TableViewEmpresas = ({ search, dataEmpresa, loading, error }) => {
@@ -67,7 +68,7 @@ const TableViewEmpresas = ({ search, dataEmpresa, loading, error }) => {
             <TableHead>
               <TableRow>
                 {columns.map((column, index) => (
-                  <TableCell key={index} sx={[stylesTableCell, { width: column.width }]}>
+                  <TableCell key={index} sx={[stylesTableCellHeader, { width: column.width }]}>
                     {column.label}
                   </TableCell>
                 ))}
@@ -76,14 +77,14 @@ const TableViewEmpresas = ({ search, dataEmpresa, loading, error }) => {
             <TableBody>
               {loading && (
                 <TableRow>
-                  <TableCell align='center' colSpan={columns.length} sx={stylesTableCell}>
+                  <TableCell align='center' colSpan={columns.length} sx={stylesTableCellBody}>
                     <SleketonLoader />
                   </TableCell>
                 </TableRow>
               )}
               {error && (
                 <TableRow>
-                  <TableCell align='center' colSpan={columns.length} sx={stylesTableCell}>
+                  <TableCell align='center' colSpan={columns.length} sx={stylesTableCellBody}>
                     <AlertGlobalTables messageError='Ah ocurrido un error al obtener los datos' />
                   </TableCell>
                 </TableRow>
@@ -93,11 +94,11 @@ const TableViewEmpresas = ({ search, dataEmpresa, loading, error }) => {
 
                 return (
                   <TableRow key={id}>
-                    <TableCell sx={stylesTableCell}>{rfc}</TableCell>
-                    <TableCell sx={stylesTableCell}>{nombre}</TableCell>
-                    <TableCell sx={stylesTableCell}>{estado}</TableCell>
-                    <TableCell sx={stylesTableCell}>{ciudad}</TableCell>
-                    <TableCell sx={stylesTableCell}>
+                    <TableCell sx={stylesTableCellBody}>{rfc}</TableCell>
+                    <TableCell sx={stylesTableCellBody}>{nombre}</TableCell>
+                    <TableCell sx={stylesTableCellBody}>{estado}</TableCell>
+                    <TableCell sx={stylesTableCellBody}>{ciudad}</TableCell>
+                    <TableCell sx={stylesTableCellBody}>
                       <IconButton color='info' size='small' onClick={() => handleOpen(item)}>
                         <VisibilityIcon />
                       </IconButton>
