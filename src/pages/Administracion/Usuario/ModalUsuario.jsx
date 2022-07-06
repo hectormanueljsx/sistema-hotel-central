@@ -21,6 +21,9 @@ import {
   stylesModalClose,
   stylesWidthHeightModal,
   stylesWidthInput,
+  stylesCheckboxForm,
+  stylesBoxCheckboxs,
+  stylesCheckboxFlex,
 } from '@/pages/Administracion/Usuario/UsuarioStyles';
 
 const ModalUsuario = ({ dataUsuario, handleCloseModal }) => {
@@ -209,42 +212,53 @@ const ModalUsuario = ({ dataUsuario, handleCloseModal }) => {
         <Box sx={stylesBoxInputs}>
           <Box component='div' sx={stylesContainerInput}>
             <TitleInput titleInput='Selecciona un rol' />
-            <FormControlLabel
-              control={
-                <Checkbox
-                  name='admin'
-                  defaultChecked={dataUsuario.role.id === 4 ? true : false}
-                  value={'4'}
-                  onChange={handleCheckbox}
-                />
-              }
-              label='Administrador'
-              disabled={disabledModal}
-            />
-            <FormControlLabel
-              control={
-                <Checkbox
-                  name='recepcion'
-                  defaultChecked={dataUsuario.role.id === 3 ? true : false}
-                  value={'3'}
-                  onChange={handleCheckbox}
-                />
-              }
-              label='Recepcionista'
-              disabled={disabledModal}
-            />
-            <FormControlLabel
-              control={
-                <Checkbox
-                  name='encargado'
-                  defaultChecked={dataUsuario.role.id === 5 ? true : false}
-                  value={'5'}
-                  onChange={handleCheckbox}
-                />
-              }
-              label='Encargado'
-              disabled={disabledModal}
-            />
+            <Box sx={stylesBoxCheckboxs}>
+              <FormControlLabel
+                control={
+                  <Checkbox
+                    name='admin'
+                    defaultChecked={dataUsuario.role.id === 4 ? true : false}
+                    value={'4'}
+                    onChange={handleCheckbox}
+                    disableRipple
+                    sx={stylesCheckboxForm}
+                  />
+                }
+                label='Administrador'
+                sx={stylesCheckboxFlex}
+                disabled={disabledModal}
+              />
+              <FormControlLabel
+                control={
+                  <Checkbox
+                    name='recepcion'
+                    defaultChecked={dataUsuario.role.id === 3 ? true : false}
+                    value={'3'}
+                    onChange={handleCheckbox}
+                    disableRipple
+                    sx={stylesCheckboxForm}
+                  />
+                }
+                label='Recepcionista'
+                sx={stylesCheckboxFlex}
+                disabled={disabledModal}
+              />
+              <FormControlLabel
+                control={
+                  <Checkbox
+                    name='encargado'
+                    defaultChecked={dataUsuario.role.id === 5 ? true : false}
+                    value={'5'}
+                    onChange={handleCheckbox}
+                    disableRipple
+                    sx={stylesCheckboxForm}
+                  />
+                }
+                label='Encargado'
+                sx={stylesCheckboxFlex}
+                disabled={disabledModal}
+              />
+            </Box>
           </Box>
         </Box>
         <Box sx={stylesBoxButtons}>

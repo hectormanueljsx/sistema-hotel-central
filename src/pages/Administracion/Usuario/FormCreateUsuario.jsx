@@ -9,10 +9,14 @@ import ButtonLoader from '@/components/Loader/ButtonLoader';
 import postUsers from '@/services/postUsers';
 import { generalEndpoints } from '@/utilities/endpoints';
 import {
+  stylesBoxCheckboxs,
   stylesButtonSend,
+  stylesCheckboxFlex,
+  stylesCheckboxForm,
   stylesContainerBox,
   stylesContainerInput,
   stylesContainerSection,
+  stylesMarginTopCheckbox,
   stylesWidthHeightForm,
 } from '@/pages/Administracion/Usuario/UsuarioStyles';
 
@@ -157,18 +161,41 @@ const FormCreateUsuario = () => {
         </Box>
         <Box component='div' sx={stylesContainerInput}>
           <TitleInput titleInput='Selecciona un rol' />
-          <FormControlLabel
-            control={<Checkbox name='admin' value={'4'} onChange={handleCheckbox} disableRipple />}
-            label='Administrador'
-          />
-          <FormControlLabel
-            control={<Checkbox name='recepcion' value={'3'} onChange={handleCheckbox} disableRipple />}
-            label='Recepcionista'
-          />
-          <FormControlLabel
-            control={<Checkbox name='encargado' value={'5'} onChange={handleCheckbox} disableRipple />}
-            label='Encargado'
-          />
+          <Box sx={stylesBoxCheckboxs}>
+            <FormControlLabel
+              control={
+                <Checkbox name='admin' value={'4'} onChange={handleCheckbox} disableRipple sx={stylesCheckboxForm} />
+              }
+              label='Administrador'
+              sx={stylesCheckboxFlex}
+            />
+            <FormControlLabel
+              control={
+                <Checkbox
+                  name='recepcion'
+                  value={'3'}
+                  onChange={handleCheckbox}
+                  disableRipple
+                  sx={stylesCheckboxForm}
+                />
+              }
+              label='Recepcionista'
+              sx={stylesCheckboxFlex}
+            />
+            <FormControlLabel
+              control={
+                <Checkbox
+                  name='encargado'
+                  value={'5'}
+                  onChange={handleCheckbox}
+                  disableRipple
+                  sx={stylesCheckboxForm}
+                />
+              }
+              label='Encargado'
+              sx={[stylesCheckboxFlex, stylesMarginTopCheckbox]}
+            />
+          </Box>
         </Box>
         {loadingBtn ? (
           <ButtonLoader />

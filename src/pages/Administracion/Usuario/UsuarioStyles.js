@@ -22,6 +22,27 @@ export const stylesWidthHeightForm = css`
   height: max-content;
 `;
 
+export const stylesBoxCheckboxs = css`
+  display: flex;
+  flex-wrap: wrap;
+`;
+
+export const stylesCheckboxFlex = css`
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: start;
+  margin-left: 0;
+`;
+
+export const stylesMarginTopCheckbox = css`
+  margin-top: 8px;
+`;
+
+export const stylesCheckboxForm = css`
+  padding: 0 4px 0 0;
+`;
+
 export const stylesWidthHeightTable = css`
   width: 1000px;
   height: max-content;
@@ -49,8 +70,14 @@ export const stylesButtonSend = css`
   margin-top: 16px;
 `;
 
-export const stylesTableCell = css`
-  padding: 8px;
+export const stylesTableCellHeader = css`
+  padding: 8px 4px;
+  border-bottom: 2px solid #dee2e6;
+`;
+
+export const stylesTableCellBody = css`
+  padding: 2px 4px;
+  border-bottom: 1.5px solid #dee2e6;
 `;
 
 export const stylesModal = css`

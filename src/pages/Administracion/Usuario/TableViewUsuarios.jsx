@@ -27,15 +27,16 @@ import { generalEndpoints } from '@/utilities/endpoints';
 import {
   stylesContainerSection,
   stylesModal,
-  stylesTableCell,
+  stylesTableCellHeader,
+  stylesTableCellBody,
   stylesWidthHeightTable,
 } from '@/pages/Administracion/Usuario/UsuarioStyles';
 
 const columns = [
-  { id: 'username', label: 'Nombre', width: 462 },
+  { id: 'username', label: 'Nombre', width: 482 },
   { id: 'role', label: 'Rol', width: 165 },
   { id: 'ult_ingreso', label: 'Último Ingreso', width: 225 },
-  { id: 'acciones', label: 'Acciones', width: 100 },
+  { id: 'acciones', label: 'Acciones', width: 80 },
 ];
 
 const TableViewUsuarios = () => {
@@ -119,7 +120,7 @@ const TableViewUsuarios = () => {
             <TableHead>
               <TableRow>
                 {columns.map((column, index) => (
-                  <TableCell key={index} sx={[stylesTableCell, { width: column.width }]}>
+                  <TableCell key={index} sx={[stylesTableCellHeader, { width: column.width }]}>
                     {column.label}
                   </TableCell>
                 ))}
@@ -128,14 +129,14 @@ const TableViewUsuarios = () => {
             <TableBody>
               {loading && (
                 <TableRow>
-                  <TableCell align='center' colSpan={columns.length} sx={stylesTableCell}>
+                  <TableCell align='center' colSpan={columns.length} sx={stylesTableCellBody}>
                     <SleketonLoader />
                   </TableCell>
                 </TableRow>
               )}
               {error && (
                 <TableRow>
-                  <TableCell align='center' colSpan={columns.length} sx={stylesTableCell}>
+                  <TableCell align='center' colSpan={columns.length} sx={stylesTableCellBody}>
                     <AlertGlobalTables messageError='Ah ocurrido un error al obtener los datos' />
                   </TableCell>
                 </TableRow>
@@ -150,10 +151,12 @@ const TableViewUsuarios = () => {
 
                 return (
                   <TableRow key={id}>
-                    <TableCell sx={stylesTableCell}>{username}</TableCell>
-                    <TableCell sx={stylesTableCell}>{name}</TableCell>
-                    <TableCell sx={stylesTableCell}>{moment(ult_ingreso).format('YYYY-MM-DD hh:mm:ss a')}</TableCell>
-                    <TableCell sx={stylesTableCell}>
+                    <TableCell sx={stylesTableCellBody}>{username}</TableCell>
+                    <TableCell sx={stylesTableCellBody}>{name}</TableCell>
+                    <TableCell sx={stylesTableCellBody}>
+                      {moment(ult_ingreso).format('YYYY-MM-DD hh:mm:ss a')}
+                    </TableCell>
+                    <TableCell sx={stylesTableCellBody}>
                       <IconButton color='info' size='small' onClick={() => handleOpen(item)}>
                         <VisibilityIcon />
                       </IconButton>
