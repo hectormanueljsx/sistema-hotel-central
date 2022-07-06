@@ -45,6 +45,7 @@ const TableViewEmpresas = ({ search, dataEmpresa, loading, error }) => {
     setOpenModal(true);
     setSelectEmpresa(item);
   };
+
   const handleCloseModal = () => setOpenModal(false);
   const handleChangePage = (event, newPage) => setPage(newPage);
 

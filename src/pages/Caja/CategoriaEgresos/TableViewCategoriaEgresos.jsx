@@ -42,17 +42,13 @@ const TableViewCategoriaEgresos = () => {
   const handleChange = panel => (event, isExpanded) => setExpanded(isExpanded ? panel : false);
 
   const deleteByIdCategoria = async id => {
-    const generalData = {
-      status: false,
-    };
+    const generalData = { status: false };
     const { status } = await putGeneralTable(identifier, password, endpointCategoria, id, generalData);
     return status;
   };
 
   const deleteByIdSubcategoria = async id => {
-    const generalData = {
-      status: false,
-    };
+    const generalData = { status: false };
     const { status } = await putGeneralTable(identifier, password, endpointSubategoria, id, generalData);
     return status;
   };

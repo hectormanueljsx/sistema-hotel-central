@@ -63,9 +63,7 @@ const TableViewUsuarios = () => {
   };
 
   const deleteByIdUsuario = async id => {
-    const generalData = {
-      blocked: true,
-    };
+    const generalData = { blocked: true };
     const { status } = await putGeneralTable(identifier, password, endpointUsuario, id, generalData);
     return status;
   };
