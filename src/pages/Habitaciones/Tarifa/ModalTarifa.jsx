@@ -33,7 +33,7 @@ import {
   stylesModalClose,
   stylesWidthHeightModal,
   stylesWidthInput,
-} from '@/components/Habitaciones/Tarifa/TarifaStyles';
+} from '@/pages/Habitaciones/Tarifa/TarifaStyles';
 
 const ModalTarifa = ({ dataTarifa, handleCloseModal, dataPersonas }) => {
   const [data, setData] = useState({
@@ -122,7 +122,7 @@ const ModalTarifa = ({ dataTarifa, handleCloseModal, dataPersonas }) => {
     }
   };
 
-   const { list } = useGetGeneralTable(identifier, password, endpointPersona);
+  const { list } = useGetGeneralTable(identifier, password, endpointPersona);
 
   return (
     <Container component='section' disableGutters sx={[stylesContainerSection, stylesWidthHeightModal]}>

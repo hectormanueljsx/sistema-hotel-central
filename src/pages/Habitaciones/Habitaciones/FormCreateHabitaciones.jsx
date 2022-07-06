@@ -26,8 +26,7 @@ import {
   stylesContainerInput,
   stylesContainerSection,
   stylesWidthHeightForm,
-} from '@/components/Habitaciones/Habitaciones/HabitacionesStyles';
-
+} from '@/pages/Habitaciones/Habitaciones/HabitacionesStyles';
 
 const FormCreateHabitaciones = () => {
   const [description, setDescription] = useState('');
@@ -42,7 +41,6 @@ const FormCreateHabitaciones = () => {
   const tarifaId = [];
 
   const handleInputChangeNumHabitacion = event => setNumHabitacion(event.target.value);
-
   const handleChangeServices = event => setDescription(event.target.value);
 
   const handleChangeTarifas = event => {
@@ -104,11 +102,11 @@ const FormCreateHabitaciones = () => {
   const { list } = useGetGeneralTable(identifier, password, endpointTarifa);
 
   return (
-    <Container component='section' sx={[stylesContainerSection, stylesWidthHeightForm]}>
+    <Container component='section' disableGutters sx={[stylesContainerSection, stylesWidthHeightForm]}>
       <TitlePage titlePage='Registro de Habitación' />
       <Box component='form' sx={stylesContainerBox}>
         <Box component='div' sx={stylesContainerInput}>
-          <TitleInput titleInput='Numero de habitación' />
+          <TitleInput titleInput='No. de habitación' />
           <TextField
             onChange={handleInputChangeNumHabitacion}
             variant='outlined'
@@ -122,18 +120,18 @@ const FormCreateHabitaciones = () => {
           />
         </Box>
         <Box component='div' sx={stylesContainerInput}>
-            <TitleInput titleInput='Descripción de la Habitacion' />
-            <TextField
-              onChange={handleChangeServices}
-              name='descripcion'
-              variant='outlined'
-              type='text'
-              margin='none'
-              size='small'
-              required
-              fullWidth
-              autoFocus
-            />
+          <TitleInput titleInput='Descripción de la habitación' />
+          <TextField
+            onChange={handleChangeServices}
+            name='descripcion'
+            variant='outlined'
+            type='text'
+            multiline
+            margin='none'
+            size='small'
+            required
+            fullWidth
+          />
         </Box>
         <Box component='div' sx={stylesContainerInput}>
           <TitleInput titleInput='Seleccione las tarifas permitidas' />

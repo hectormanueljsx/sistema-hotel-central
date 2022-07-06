@@ -1,6 +1,6 @@
 import { css } from '@emotion/react';
 
-export const stylesBoxTarifas = css`
+export const stylesBoxHabitaciones = css`
   display: flex;
   justify-content: center;
   gap: 32px;
@@ -45,17 +45,23 @@ export const stylesWidthHeightModal = css`
   height: max-content;
 `;
 
-export const stylesButtonSend = css`
-  margin-top: 16px;
-`;
-
 export const stylesCheckboxForm = css`
   padding: 0;
   padding-right: 9px;
 `;
 
-export const stylesTableCell = css`
-  padding: 8px;
+export const stylesButtonSend = css`
+  margin-top: 16px;
+`;
+
+export const stylesTableCellHeader = css`
+  padding: 8px 4px;
+  border-bottom: 2px solid #dee2e6;
+`;
+
+export const stylesTableCellBody = css`
+  padding: 2px 4px;
+  border-bottom: 1.5px solid #dee2e6;
 `;
 
 export const stylesModal = css`

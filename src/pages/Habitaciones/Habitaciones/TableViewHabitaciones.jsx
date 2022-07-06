@@ -17,20 +17,21 @@ import VisibilityIcon from '@mui/icons-material/Visibility';
 import TitlePage from '@/components/Title/TitlePage';
 import SleketonLoader from '@/components/Loader/SleketonLoader';
 import AlertGlobalTables from '@/components/Alert/AlertGlobalTables';
-import ModalHabitaciones from '@/components/Habitaciones/Habitaciones/ModalHabitacion';
+import ModalHabitaciones from '@/pages/Habitaciones/Habitaciones/ModalHabitacion';
 import useGetGeneralTable from '@/hooks/useGetGeneralTable';
 import { generalEndpoints } from '@/utilities/endpoints';
 import {
   stylesContainerSection,
   stylesModal,
-  stylesTableCell,
+  stylesTableCellHeader,
+  stylesTableCellBody,
   stylesWidthHeightTable,
-} from '@/components/Habitaciones/Habitaciones/HabitacionesStyles';
+} from '@/pages/Habitaciones/Habitaciones/HabitacionesStyles';
 
 const columns = [
-  { id: 'num', label: 'No. de Habitación', width: 300 },
-  { id: 'descrip', label: 'Descripcion', width: 552 },
-  { id: 'acciones', label: 'Acciones', width: 100 },
+  { id: 'num', label: 'No. de Habitación', width: 200 },
+  { id: 'descrip', label: 'Descripción de la Habitación', width: 677 },
+  { id: 'acciones', label: 'Acciones', width: 75 },
 ];
 let dataDescriptions = '';
 let dataSelectTarifas = [];
@@ -45,8 +46,6 @@ const TableViewHabitaciones = () => {
   const password = localStorage.getItem('password');
   const endpointHabitacion = generalEndpoints.habitacion;
 
-
-
   const handleOpen = item => {
     dataDescriptions = item.descripcion;
     dataSelectTarifas = item.tarifas.map(element => {
@@ -57,17 +56,13 @@ const TableViewHabitaciones = () => {
     setDataHabitaciones(item);
   };
 
-  const handleCloseModal = () => {
-    setOpenModal(false);
-  };
-
+  const handleCloseModal = () => setOpenModal(false);
   const handleChangePage = (event, newPage) => setPage(newPage);
 
   const handleChangeRowsPerPage = event => {
     setRowsPerPage(parseInt(event.target.value, 10));
     setPage(0);
   };
-
 
   const { list, loading, error } = useGetGeneralTable(identifier, password, endpointHabitacion);
 
@@ -80,7 +75,7 @@ const TableViewHabitaciones = () => {
             <TableHead>
               <TableRow>
                 {columns.map((column, index) => (
-                  <TableCell key={index} sx={[stylesTableCell, { width: column.width }]}>
+                  <TableCell key={index} sx={[stylesTableCellHeader, { width: column.width }]}>
                     {column.label}
                   </TableCell>
                 ))}
@@ -89,14 +84,14 @@ const TableViewHabitaciones = () => {
             <TableBody>
               {loading && (
                 <TableRow>
-                  <TableCell align='center' colSpan={columns.length} sx={stylesTableCell}>
+                  <TableCell align='center' colSpan={columns.length} sx={stylesTableCellBody}>
                     <SleketonLoader />
                   </TableCell>
                 </TableRow>
               )}
               {error && (
                 <TableRow>
-                  <TableCell align='center' colSpan={columns.length} sx={stylesTableCell}>
+                  <TableCell align='center' colSpan={columns.length} sx={stylesTableCellBody}>
                     <AlertGlobalTables messageError='Ah ocurrido un error al obtener los datos' />
                   </TableCell>
                 </TableRow>
@@ -106,9 +101,9 @@ const TableViewHabitaciones = () => {
 
                 return (
                   <TableRow key={id}>
-                    <TableCell sx={stylesTableCell}>{num_hab}</TableCell>
-                    <TableCell sx={stylesTableCell}>{descripcion}</TableCell>
-                    <TableCell sx={stylesTableCell}>
+                    <TableCell sx={stylesTableCellBody}>{num_hab}</TableCell>
+                    <TableCell sx={stylesTableCellBody}>{descripcion}</TableCell>
+                    <TableCell sx={stylesTableCellBody}>
                       <IconButton color='info' size='small' onClick={() => handleOpen(item)}>
                         <VisibilityIcon />
                       </IconButton>

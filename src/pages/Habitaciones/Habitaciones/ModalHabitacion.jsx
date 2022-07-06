@@ -33,7 +33,7 @@ import {
   stylesModalClose,
   stylesWidthHeightModal,
   stylesWidthInput,
-} from '@/components/Habitaciones/Habitaciones/HabitacionesStyles';
+} from '@/pages/Habitaciones/Habitaciones/HabitacionesStyles';
 
 const ModalHabitaciones = ({ dataHabitaciones, dataSelectTarifas, dataDescription, handleCloseModal }) => {
   const [description, setDescriptions] = useState(dataDescription);
@@ -50,7 +50,6 @@ const ModalHabitaciones = ({ dataHabitaciones, dataSelectTarifas, dataDescriptio
   const tarifaId = [];
 
   const handleInputChangeNumHabitacion = event => setNumHabitacion(event.target.value);
-
   const handleChangeDescription = event => setDescriptions(event.target.value);
 
   const handleChangeTarifas = event => {
@@ -133,14 +132,14 @@ const ModalHabitaciones = ({ dataHabitaciones, dataSelectTarifas, dataDescriptio
 
   return (
     <Container component='section' disableGutters sx={[stylesContainerSection, stylesWidthHeightModal]}>
-      <TitlePage titlePage='Actualización de habitación' />
+      <TitlePage titlePage='Actualización de Habitación' />
       <Box component='form' sx={stylesBoxModal}>
         <Button variant='text' color='error' size='large' onClick={handleCloseModal} sx={stylesModalClose}>
           <CloseIcon />
         </Button>
         <Box sx={stylesBoxInputs}>
           <Box component='div' sx={[stylesContainerInput, stylesWidthInput]}>
-            <TitleInput titleInput='Numero de habitación' />
+            <TitleInput titleInput='No. de habitación' />
             <TextField
               disabled={disabledModal}
               defaultValue={dataHabitaciones.num_hab}
@@ -155,20 +154,20 @@ const ModalHabitaciones = ({ dataHabitaciones, dataSelectTarifas, dataDescriptio
             />
           </Box>
           <Box component='div' sx={[stylesContainerInput, stylesWidthInput]}>
-            <TitleInput titleInput='Descripción de la Habitacion' />
-              <TextField
-                disabled={disabledModal}
-                defaultValue={dataHabitaciones.descripcion}
-                onChange={handleChangeDescription}
-                name='descripcion'
-                variant='outlined'
-                type='text'
-                margin='none'
-                size='small'
-                required
-                fullWidth
-                autoFocus
-              />
+            <TitleInput titleInput='Descripción de la habitación' />
+            <TextField
+              disabled={disabledModal}
+              defaultValue={dataHabitaciones.descripcion}
+              onChange={handleChangeDescription}
+              name='descripcion'
+              variant='outlined'
+              type='text'
+              multiline
+              margin='none'
+              size='small'
+              required
+              fullWidth
+            />
           </Box>
         </Box>
         <Box sx={stylesBoxInputs}>
@@ -177,7 +176,6 @@ const ModalHabitaciones = ({ dataHabitaciones, dataSelectTarifas, dataDescriptio
             <FormControl disabled={disabledModal} fullWidth>
               <Select
                 multiple
-                multiline
                 value={optionTarifas}
                 onChange={handleChangeTarifas}
                 renderValue={selected => selected.join(', ')}

@@ -19,22 +19,23 @@ import Swal from 'sweetalert2';
 import TitlePage from '@/components/Title/TitlePage';
 import SleketonLoader from '@/components/Loader/SleketonLoader';
 import AlertGlobalTables from '@/components/Alert/AlertGlobalTables';
-import ModalTarifa from '@/components/Habitaciones/Tarifa/ModalTarifa';
+import ModalTarifa from '@/pages/Habitaciones/Tarifa/ModalTarifa';
 import useGetGeneralTable from '@/hooks/useGetGeneralTable';
 import putGeneralTable from '@/services/putGeneralTable';
 import { generalEndpoints } from '@/utilities/endpoints';
 import {
   stylesContainerSection,
   stylesModal,
-  stylesTableCell,
+  stylesTableCellHeader,
+  stylesTableCellBody,
   stylesWidthHeightTable,
-} from '@/components/Habitaciones/Tarifa/TarifaStyles';
+} from '@/pages/Habitaciones/Tarifa/TarifaStyles';
 
 const columns = [
-  { id: 'desc_tarifa', label: 'Descripción de la Tarifa', width: 400 },
-  { id: 'num_personas', label: 'No. de Personas', width: 250},
+  { id: 'desc_tarifa', label: 'Descripción de la Tarifa', width: 437 },
+  { id: 'num_personas', label: 'No. de Personas', width: 250 },
   { id: 'precio_aplicado', label: 'Precio Aplicado', width: 185 },
-  { id: 'acciones', label: 'Acciones', width: 100 },
+  { id: 'acciones', label: 'Acciones', width: 80 },
 ];
 
 let dataSelectPersonas = [];
@@ -50,12 +51,12 @@ const TableViewTarifas = () => {
   const endpointTarifa = generalEndpoints.tarifa;
 
   const handleOpen = item => {
-    const {personas} = item;
+    const { personas } = item;
     setOpenModal(true);
     setDataTarifa(item);
-     dataSelectPersonas = personas.map(element => {
-       return element.num_persona;
-     });
+    dataSelectPersonas = personas.map(element => {
+      return element.num_persona;
+    });
   };
 
   const handleCloseModal = () => setOpenModal(false);
@@ -67,9 +68,8 @@ const TableViewTarifas = () => {
   };
 
   const deleteByIdTarifa = async id => {
-    const generalData = {
-      status: false,
-    };
+    const generalData = { status: false };
+
     const { status } = await putGeneralTable(identifier, password, endpointTarifa, id, generalData);
     return status;
   };
@@ -124,7 +124,7 @@ const TableViewTarifas = () => {
             <TableHead>
               <TableRow>
                 {columns.map((column, index) => (
-                  <TableCell key={index} sx={[stylesTableCell, { width: column.width }]}>
+                  <TableCell key={index} sx={[stylesTableCellHeader, { width: column.width }]}>
                     {column.label}
                   </TableCell>
                 ))}
@@ -133,14 +133,14 @@ const TableViewTarifas = () => {
             <TableBody>
               {loading && (
                 <TableRow>
-                  <TableCell align='center' colSpan={columns.length} sx={stylesTableCell}>
+                  <TableCell align='center' colSpan={columns.length} sx={stylesTableCellBody}>
                     <SleketonLoader />
                   </TableCell>
                 </TableRow>
               )}
               {error && (
                 <TableRow>
-                  <TableCell align='center' colSpan={columns.length} sx={stylesTableCell}>
+                  <TableCell align='center' colSpan={columns.length} sx={stylesTableCellBody}>
                     <AlertGlobalTables messageError='Ah ocurrido un error al obtener los datos' />
                   </TableCell>
                 </TableRow>
@@ -148,21 +148,20 @@ const TableViewTarifas = () => {
               {list.slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage).map(item => {
                 const { id, descripcion, personas, precio } = item;
 
-                let no_personas = personas.map(persona => { 
-                  return `${persona.num_persona}`;
-                });
+                let no_personas = personas.map(persona => `${persona.num_persona}`);
+
                 return (
                   <TableRow key={id}>
-                    <TableCell sx={stylesTableCell}>{descripcion}</TableCell>
-                    <TableCell sx={stylesTableCell}>{no_personas.join('-')}</TableCell>
-                    <TableCell sx={stylesTableCell}>
+                    <TableCell sx={stylesTableCellBody}>{descripcion}</TableCell>
+                    <TableCell sx={stylesTableCellBody}>{no_personas.join('-')}</TableCell>
+                    <TableCell sx={stylesTableCellBody}>
                       {precio.toLocaleString('es-MX', {
                         style: 'currency',
                         currency: 'MXN',
                         minimumFractionDigits: 2,
                       })}
                     </TableCell>
-                    <TableCell sx={stylesTableCell}>
+                    <TableCell sx={stylesTableCellBody}>
                       <IconButton color='info' size='small' onClick={() => handleOpen(item)}>
                         <VisibilityIcon />
                       </IconButton>

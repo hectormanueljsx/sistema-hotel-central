@@ -1,6 +1,15 @@
 import React, { useState } from 'react';
-import { Box, Button, Container, TextField, MenuItem,
-FormControl, ListItemText, Select, Checkbox} from '@mui/material';
+import {
+  Box,
+  Button,
+  Container,
+  TextField,
+  MenuItem,
+  FormControl,
+  ListItemText,
+  Select,
+  Checkbox,
+} from '@mui/material';
 import SaveIcon from '@mui/icons-material/Save';
 import Swal from 'sweetalert2';
 
@@ -17,8 +26,7 @@ import {
   stylesContainerInput,
   stylesContainerSection,
   stylesWidthHeightForm,
-} from '@/components/Habitaciones/Tarifa/TarifaStyles';
-
+} from '@/pages/Habitaciones/Tarifa/TarifaStyles';
 
 const FormCreateTarifa = () => {
   const [numPersonas, setNumPersonas] = useState([]);
@@ -40,7 +48,7 @@ const FormCreateTarifa = () => {
     const {
       target: { value },
     } = event;
-    setNumPersonas(typeof value === 'string' ? value.split(',') : value,);
+    setNumPersonas(typeof value === 'string' ? value.split(',') : value);
   };
 
   const sendDatos = async event => {
@@ -49,13 +57,14 @@ const FormCreateTarifa = () => {
     if (datos.descripcion.trim().length > 0 && datos.precio.trim().length > 0 && numPersonas.length > 0) {
       for (let i = 0; i < list.length; i++) {
         if (numPersonas.includes(list[i].num_persona)) {
-            datos.numPersonas.push(list[i].id);
+          datos.numPersonas.push(list[i].id);
         }
       }
+
       const generalData = {
         descripcion: datos.descripcion.toUpperCase(),
         precio: datos.precio,
-        personas : datos.numPersonas,
+        personas: datos.numPersonas,
       };
 
       setLoadingBtn(true);
@@ -132,6 +141,7 @@ const FormCreateTarifa = () => {
               value={numPersonas}
               onChange={handleChangeNumPersonas}
               renderValue={selected => selected.join(', ')}
+              size='small'
             >
               {list.map(name => (
                 <MenuItem key={name.id} value={name.num_persona}>
