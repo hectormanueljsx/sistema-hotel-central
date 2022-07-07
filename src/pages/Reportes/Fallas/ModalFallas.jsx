@@ -8,6 +8,7 @@ import {
   stylesBoxInputs,
   stylesBoxModal,
   stylesContainerInput,
+  stylesContainerInputNoMargin,
   stylesContainerSection,
   stylesModalClose,
   stylesWidthHeightModal,
@@ -143,7 +144,7 @@ const ModalMantenimiento = ({ dataMantenimiento, handleCloseModal }) => {
           </Box>
         </Box>
         <Box sx={stylesBoxInputs}>
-          <Box component='div' sx={[stylesContainerInput, stylesWidthInput]}>
+          <Box component='div' sx={[stylesContainerInput, stylesContainerInputNoMargin, stylesWidthInput]}>
             <TitleInput titleInput='Subcategoría' />
             <TextField
               defaultValue={dataMantenimiento.subcategoria.descripcion}
@@ -157,7 +158,7 @@ const ModalMantenimiento = ({ dataMantenimiento, handleCloseModal }) => {
               fullWidth
             />
           </Box>
-          <Box component='div' sx={[stylesContainerInput, stylesWidthInput]}>
+          <Box component='div' sx={[stylesContainerInput, stylesContainerInputNoMargin, stylesWidthInput]}>
             <TitleInput titleInput='Usuario' />
             <TextField
               defaultValue={dataMantenimiento.users_permissions_user.username}

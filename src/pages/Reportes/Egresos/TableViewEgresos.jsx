@@ -24,7 +24,8 @@ import {
   stylesContainerSection,
   stylesDateTable,
   stylesModal,
-  stylesTableCell,
+  stylesTableCellHeader,
+  stylesTableCellBody,
   stylesWidthHeightTable,
 } from '@/pages/Reportes/Egresos/EgresosStyles';
 
@@ -69,7 +70,7 @@ const TableViewEgresos = ({ dataSearch, dateTable, loading, error }) => {
             <TableHead>
               <TableRow>
                 {columns.map((column, index) => (
-                  <TableCell key={index} sx={[stylesTableCell, { width: column.width }]}>
+                  <TableCell key={index} sx={[stylesTableCellHeader, { width: column.width }]}>
                     {column.label}
                   </TableCell>
                 ))}
@@ -78,14 +79,14 @@ const TableViewEgresos = ({ dataSearch, dateTable, loading, error }) => {
             <TableBody>
               {loading && (
                 <TableRow>
-                  <TableCell align='center' colSpan={columns.length} sx={stylesTableCell}>
+                  <TableCell align='center' colSpan={columns.length} sx={stylesTableCellBody}>
                     <SleketonLoader />
                   </TableCell>
                 </TableRow>
               )}
               {error && (
                 <TableRow>
-                  <TableCell align='center' colSpan={columns.length} sx={stylesTableCell}>
+                  <TableCell align='center' colSpan={columns.length} sx={stylesTableCellBody}>
                     <AlertGlobalTables messageError='Ah ocurrido un error al obtener los datos' />
                   </TableCell>
                 </TableRow>
@@ -97,19 +98,19 @@ const TableViewEgresos = ({ dataSearch, dateTable, loading, error }) => {
 
                 return (
                   <TableRow key={id}>
-                    <TableCell sx={stylesTableCell}>{moment(fecha).format('YYYY-MM-DD hh:mm:ss')}</TableCell>
-                    <TableCell sx={stylesTableCell}>{pago.f_pago}</TableCell>
-                    <TableCell sx={stylesTableCell}>{subcategoria.descripcion}</TableCell>
-                    <TableCell sx={stylesTableCell}>
+                    <TableCell sx={stylesTableCellBody}>{moment(fecha).format('YYYY-MM-DD hh:mm:ss')}</TableCell>
+                    <TableCell sx={stylesTableCellBody}>{pago.f_pago}</TableCell>
+                    <TableCell sx={stylesTableCellBody}>{subcategoria.descripcion}</TableCell>
+                    <TableCell sx={stylesTableCellBody}>
                       {importe.toLocaleString('es-MX', {
                         style: 'currency',
                         currency: 'MXN',
                         minimumFractionDigits: 2,
                       })}
                     </TableCell>
-                    <TableCell sx={stylesTableCell}>{concepto}</TableCell>
-                    <TableCell sx={stylesTableCell}>{users_permissions_user.username}</TableCell>
-                    <TableCell sx={stylesTableCell}>
+                    <TableCell sx={stylesTableCellBody}>{concepto}</TableCell>
+                    <TableCell sx={stylesTableCellBody}>{users_permissions_user.username}</TableCell>
+                    <TableCell sx={stylesTableCellBody}>
                       <IconButton color='info' size='small' onClick={() => handleOpen(item)}>
                         <VisibilityIcon />
                       </IconButton>
@@ -119,23 +120,21 @@ const TableViewEgresos = ({ dataSearch, dateTable, loading, error }) => {
               })}
               {totalImporte === 0 ? null : (
                 <>
+                  <br />
                   <TableRow>
-                    <TableCell colSpan={columns.length} sx={stylesTableCell}></TableCell>
-                  </TableRow>
-                  <TableRow>
-                    <TableCell sx={[stylesTableCell, { fontWeight: '500' }]}>Total</TableCell>
-                    <TableCell sx={stylesTableCell}></TableCell>
-                    <TableCell sx={stylesTableCell}></TableCell>
-                    <TableCell sx={stylesTableCell}>
+                    <TableCell sx={[stylesTableCellBody, { fontWeight: '500' }]}>Total</TableCell>
+                    <TableCell sx={stylesTableCellBody}></TableCell>
+                    <TableCell sx={stylesTableCellBody}></TableCell>
+                    <TableCell sx={stylesTableCellBody}>
                       {totalImporte.toLocaleString('es-MX', {
                         style: 'currency',
                         currency: 'MXN',
                         minimumFractionDigits: 2,
                       })}
                     </TableCell>
-                    <TableCell sx={stylesTableCell}></TableCell>
-                    <TableCell sx={stylesTableCell}></TableCell>
-                    <TableCell sx={stylesTableCell}></TableCell>
+                    <TableCell sx={stylesTableCellBody}></TableCell>
+                    <TableCell sx={stylesTableCellBody}></TableCell>
+                    <TableCell sx={stylesTableCellBody}></TableCell>
                   </TableRow>
                 </>
               )}

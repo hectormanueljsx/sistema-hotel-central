@@ -19,7 +19,8 @@ import AlertGlobalTables from '@/components/Alert/AlertGlobalTables';
 import {
   stylesContainerSection,
   stylesDateTable,
-  stylesTableCell,
+  stylesTableCellHeader,
+  stylesTableCellBody,
   stylesWidthHeightTable,
 } from '@/pages/Reportes/Anticipo/AnticipoStyles';
 
@@ -53,7 +54,7 @@ const TableViewAnticipo = ({ dataSearch, dateTable, loading, error }) => {
             <TableHead>
               <TableRow>
                 {columns.map((column, index) => (
-                  <TableCell key={index} sx={[stylesTableCell, { width: column.width }]}>
+                  <TableCell key={index} sx={[stylesTableCellHeader, { width: column.width }]}>
                     {column.label}
                   </TableCell>
                 ))}
@@ -62,14 +63,14 @@ const TableViewAnticipo = ({ dataSearch, dateTable, loading, error }) => {
             <TableBody>
               {loading && (
                 <TableRow>
-                  <TableCell align='center' colSpan={columns.length} sx={stylesTableCell}>
+                  <TableCell align='center' colSpan={columns.length} sx={stylesTableCellBody}>
                     <SleketonLoader />
                   </TableCell>
                 </TableRow>
               )}
               {error && (
                 <TableRow>
-                  <TableCell align='center' colSpan={columns.length} sx={stylesTableCell}>
+                  <TableCell align='center' colSpan={columns.length} sx={stylesTableCellBody}>
                     <AlertGlobalTables messageError='Ah ocurrido un error al obtener los datos' />
                   </TableCell>
                 </TableRow>
@@ -87,38 +88,36 @@ const TableViewAnticipo = ({ dataSearch, dateTable, loading, error }) => {
 
                 return (
                   <TableRow key={id}>
-                    <TableCell sx={stylesTableCell}>{id}</TableCell>
-                    <TableCell sx={stylesTableCell}>{moment(fecha).format('YYYY-MM-DD hh:mm:ss a')}</TableCell>
-                    <TableCell sx={stylesTableCell}>{f_pago}</TableCell>
-                    <TableCell sx={stylesTableCell}>
+                    <TableCell sx={stylesTableCellBody}>{id}</TableCell>
+                    <TableCell sx={stylesTableCellBody}>{moment(fecha).format('YYYY-MM-DD hh:mm:ss a')}</TableCell>
+                    <TableCell sx={stylesTableCellBody}>{f_pago}</TableCell>
+                    <TableCell sx={stylesTableCellBody}>
                       {cantidad.toLocaleString('es-MX', {
                         style: 'currency',
                         currency: 'MXN',
                         minimumFractionDigits: 2,
                       })}
                     </TableCell>
-                    <TableCell sx={stylesTableCell}>{reservacion.id}</TableCell>
+                    <TableCell sx={stylesTableCellBody}>{reservacion.id}</TableCell>
                   </TableRow>
                 );
               })}
 
               {totalCantidad === 0 ? null : (
                 <>
+                  <br />
                   <TableRow>
-                    <TableCell colSpan={columns.length} sx={stylesTableCell}></TableCell>
-                  </TableRow>
-                  <TableRow>
-                    <TableCell sx={[stylesTableCell, { fontWeight: '500' }]}>Total</TableCell>
-                    <TableCell sx={stylesTableCell}></TableCell>
-                    <TableCell sx={stylesTableCell}></TableCell>
-                    <TableCell sx={stylesTableCell}>
+                    <TableCell sx={[stylesTableCellBody, { fontWeight: '500' }]}>Total</TableCell>
+                    <TableCell sx={stylesTableCellBody}></TableCell>
+                    <TableCell sx={stylesTableCellBody}></TableCell>
+                    <TableCell sx={stylesTableCellBody}>
                       {totalCantidad.toLocaleString('es-MX', {
                         style: 'currency',
                         currency: 'MXN',
                         minimumFractionDigits: 2,
                       })}
                     </TableCell>
-                    <TableCell sx={stylesTableCell}></TableCell>
+                    <TableCell sx={stylesTableCellBody}></TableCell>
                   </TableRow>
                 </>
               )}

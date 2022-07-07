@@ -113,7 +113,7 @@ const FormAnticipo = ({ setDataSearch, dataSearch, setDateTable, setLoading, set
   };
 
   return (
-    <Container component='section' sx={[stylesContainerSection, stylesWidthHeightForm]}>
+    <Container component='section' disableGutters sx={[stylesContainerSection, stylesWidthHeightForm]}>
       <TitlePage titlePage='Anticipos por Periodo' />
       <Box component='form' sx={stylesContainerBox}>
         <Box component='div' sx={stylesContainerInput}>

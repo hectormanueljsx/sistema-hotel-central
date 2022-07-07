@@ -10,6 +10,7 @@ import {
   stylesBoxModal,
   stylesCheckboxForm,
   stylesContainerInput,
+  stylesContainerInputNoMargin,
   stylesContainerSection,
   stylesModalClose,
   stylesWidthHeightModal,
@@ -131,7 +132,7 @@ const ModalEgresos = ({ dataEgreso, handleCloseModal }) => {
           </Box>
         </Box>
         <Box sx={stylesBoxInputs}>
-          <Box component='div' sx={[stylesContainerInput, stylesWidthInput]}>
+          <Box component='div' sx={[stylesContainerInput, stylesContainerInputNoMargin, stylesWidthInput]}>
             <TitleInput titleInput='Fecha' />
             <TextField
               value={moment(dataEgreso.fecha).format('YYYY-MM-DD hh:mm:ss a')}
@@ -146,7 +147,7 @@ const ModalEgresos = ({ dataEgreso, handleCloseModal }) => {
               autoFocus
             />
           </Box>
-          <Box component='div' sx={[stylesContainerInput, stylesWidthInput]}>
+          <Box component='div' sx={[stylesContainerInput, stylesContainerInputNoMargin, stylesWidthInput]}>
             <TitleInput titleInput='Usuario' />
             <TextField
               value={dataEgreso.users_permissions_user.username}

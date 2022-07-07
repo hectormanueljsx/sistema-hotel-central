@@ -22,7 +22,8 @@ import AlertGlobalTables from '@/components/Alert/AlertGlobalTables';
 import {
   stylesContainerSection,
   stylesModal,
-  stylesTableCell,
+  stylesTableCellHeader,
+  stylesTableCellBody,
   stylesWidthHeightTable,
   stylesDateTable,
 } from '@/pages/Reportes/Fallas/FallasStyles';
@@ -31,9 +32,9 @@ const columns = [
   { id: 'fechaReporte', label: 'Fecha de Reporte', width: 130 },
   { id: 'fechInicio', label: 'Fecha de Inicio', width: 130 },
   { id: 'motivo', label: 'Motivo', width: 250 },
-  { id: 'categoria', label: 'Categoría', width: 200 },
-  { id: 'estado', label: 'Estado', width: 142 },
-  { id: 'acciones', label: 'Acciones', width: 100 },
+  { id: 'categoria', label: 'Categoría', width: 245 },
+  { id: 'estado', label: 'Estado', width: 122 },
+  { id: 'acciones', label: 'Acciones', width: 75 },
 ];
 
 const TableViewMantenimiento = ({ dataSearch, dateTable, loading, error }) => {
@@ -65,7 +66,7 @@ const TableViewMantenimiento = ({ dataSearch, dateTable, loading, error }) => {
             <TableHead>
               <TableRow>
                 {columns.map((column, index) => (
-                  <TableCell key={index} sx={[stylesTableCell, { width: column.width }]}>
+                  <TableCell key={index} sx={[stylesTableCellHeader, { width: column.width }]}>
                     {column.label}
                   </TableCell>
                 ))}
@@ -74,14 +75,14 @@ const TableViewMantenimiento = ({ dataSearch, dateTable, loading, error }) => {
             <TableBody>
               {loading && (
                 <TableRow>
-                  <TableCell align='center' colSpan={columns.length} sx={stylesTableCell}>
+                  <TableCell align='center' colSpan={columns.length} sx={stylesTableCellBody}>
                     <SleketonLoader />
                   </TableCell>
                 </TableRow>
               )}
               {error && (
                 <TableRow>
-                  <TableCell align='center' colSpan={columns.length} sx={stylesTableCell}>
+                  <TableCell align='center' colSpan={columns.length} sx={stylesTableCellBody}>
                     <AlertGlobalTables messageError='Ah ocurrido un error al obtener los datos' />
                   </TableCell>
                 </TableRow>
@@ -98,12 +99,12 @@ const TableViewMantenimiento = ({ dataSearch, dateTable, loading, error }) => {
 
                 return (
                   <TableRow key={id}>
-                    <TableCell sx={stylesTableCell}>{f_reporte}</TableCell>
-                    <TableCell sx={stylesTableCell}>{f_inicio}</TableCell>
-                    <TableCell sx={stylesTableCell}>{motivo}</TableCell>
-                    <TableCell sx={stylesTableCell}>{descripcion}</TableCell>
-                    <TableCell sx={stylesTableCell}>{estado}</TableCell>
-                    <TableCell sx={stylesTableCell}>
+                    <TableCell sx={stylesTableCellBody}>{f_reporte}</TableCell>
+                    <TableCell sx={stylesTableCellBody}>{f_inicio}</TableCell>
+                    <TableCell sx={stylesTableCellBody}>{motivo}</TableCell>
+                    <TableCell sx={stylesTableCellBody}>{descripcion}</TableCell>
+                    <TableCell sx={stylesTableCellBody}>{estado}</TableCell>
+                    <TableCell sx={stylesTableCellBody}>
                       <IconButton color='info' size='small' onClick={() => handleOpen(item)}>
                         <VisibilityIcon />
                       </IconButton>

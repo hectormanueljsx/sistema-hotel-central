@@ -49,8 +49,14 @@ export const stylesTableHead = css`
   margin-bottom: 30px;
 `;
 
-export const stylesTableCell = css`
-  padding: 8px;
+export const stylesTableCellHeader = css`
+  padding: 8px 4px;
+  border-bottom: 2px solid #dee2e6;
+`;
+
+export const stylesTableCellBody = css`
+  padding: 9px 3px;
+  border-bottom: 1.5px solid #dee2e6;
 `;
 
 export const stylesWidthFPago = css`
