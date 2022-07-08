@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
+import { Avatar } from '@mui/material';
 import Swal from 'sweetalert2';
 
 import Dropdown from '@/components/Navbar/Dropdown';
@@ -137,9 +138,11 @@ const Navbar = () => {
                 }
               })}
             </ul>
-            <ul className='navbar-items'>
-              <li className='navbar-item'>
-                <button
+            <div className='container-user'>
+              <div className='user-details'>
+                <p className='details-user'>{user.toLowerCase()}</p>
+                <p
+                  className='details-logout'
                   onClick={() => {
                     Swal.fire({
                       icon: 'warning',
@@ -159,9 +162,12 @@ const Navbar = () => {
                   }}
                 >
                   Cerrar Sesión
-                </button>
-              </li>
-            </ul>
+                </p>
+              </div>
+              <Avatar sx={{ backgroundColor: '#00b8b2' }} variant='rounded' alt={user}>
+                {user.substring(0, 1)}
+              </Avatar>
+            </div>
           </>
         ) : (
           <ul className='navbar-items'>

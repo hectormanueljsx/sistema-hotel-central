@@ -38,6 +38,18 @@ export const navItems = [
 
 export const reservasDropdown = [
   {
+    id: '16dbaf89-7d6b-40c2-b864-78b6581878c0',
+    title: 'Histórico de Reservaciones',
+    path: './reservas/historico-de-reservaciones',
+    cName: 'submenu-item',
+  },
+  {
+    id: 'b085695d-a3df-401c-9748-0c0df379c47c',
+    title: 'Histórico de Registros',
+    path: './reservas/historico-de-registros',
+    cName: 'submenu-item',
+  },
+  {
     id: 'ca6fe174-5e88-4baf-8dd6-fa24985d8a3c',
     title: 'Empresas',
     path: './reservas/empresas',
