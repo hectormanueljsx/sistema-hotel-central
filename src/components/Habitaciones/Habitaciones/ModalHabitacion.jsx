@@ -48,7 +48,7 @@ const ModalHabitaciones = ({ dataHabitaciones, dataSelectTarifas, dataDescriptio
   const endpointHabitacion = generalEndpoints.habitacion;
   const endpointTarifa = generalEndpoints.tarifa;
   const tarifaId = [];
-
+ 
   const handleInputChangeNumHabitacion = event => setNumHabitacion(event.target.value);
 
   const handleChangeDescription = event => setDescriptions(event.target.value);
@@ -75,7 +75,6 @@ const ModalHabitaciones = ({ dataHabitaciones, dataSelectTarifas, dataDescriptio
           tarifaId.push(list[i].id);
         }
       }
-
       const habitacionData = {
         num_hab: numHabitacion,
         tarifas: tarifaId,

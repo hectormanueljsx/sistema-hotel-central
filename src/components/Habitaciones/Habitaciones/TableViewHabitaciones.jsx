@@ -32,7 +32,7 @@ const columns = [
   { id: 'descrip', label: 'Descripcion', width: 552 },
   { id: 'acciones', label: 'Acciones', width: 100 },
 ];
-let dataDescriptions = '';
+let dataDescription = '';
 let dataSelectTarifas = [];
 
 const TableViewHabitaciones = () => {
@@ -48,7 +48,7 @@ const TableViewHabitaciones = () => {
 
 
   const handleOpen = item => {
-    dataDescriptions = item.descripcion;
+    dataDescription = item.descripcion;
     dataSelectTarifas = item.tarifas.map(element => {
       return element.descripcion;
     });
@@ -136,7 +136,7 @@ const TableViewHabitaciones = () => {
         <Box sx={stylesModal}>
           <ModalHabitaciones
             dataHabitaciones={dataHabitaciones}
-            dataDescriptions={dataDescriptions}
+            dataDescription={dataDescription}
             dataSelectTarifas={dataSelectTarifas}
             handleCloseModal={handleCloseModal}
           />
