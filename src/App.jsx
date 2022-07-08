@@ -2,22 +2,24 @@ import React from 'react';
 import { createTheme, CssBaseline, ThemeProvider } from '@mui/material';
 import { Routes, Route } from 'react-router-dom';
 
-import HomeDashboard from '@/components/Dashboard/HomeDashboard/HomeDashboard';
-import Empresa from '@/components/Reservas/Empresa/Empresa';
-import CategoriaEgresos from '@/components/Caja/CategoriaEgresos/CategoriaEgresos';
-import Egresos from '@/components/Caja/Egresos/Egresos';
-import HistoricoDeGastos from '@/components/Caja/HistoricoEgresos/HistoricoEgresos';
-import Anticipo from '@/components/Reportes/Anticipo/Anticipo';
-import Gastos from '@/components/Reportes/Egresos/Egresos';
-import IngresoBruto from '@/components/Reportes/IngresoBruto/IngresoBruto';
-import ReportesMantenimiento from '@/components/Reportes/Fallas/Fallas';
-import Tarifas from '@/components/Habitaciones/Tarifa/Tarifas';
-import Habitaciones from '@/components/Habitaciones/Habitaciones/Habitaciones';
-import Mantenimiento from '@/components/Mantenimiento/Mantenimiento/Mantenimiento';
-import Usuarios from '@/components/Administracion/Usuario/Usuarios';
+import HomeDashboard from '@/pages/Dashboard/HomeDashboard/HomeDashboard';
+import HistoricoReservaciones from '@/pages/Reservas/HistoricoReservaciones/HistoricoReservaciones';
+import HistoricoRegistro from '@/pages/Reservas/HistoricoRegistro/HistoricoRegistro';
+import Empresa from '@/pages/Reservas/Empresa/Empresa';
+import CategoriaEgresos from '@/pages/Caja/CategoriaEgresos/CategoriaEgresos';
+import Egresos from '@/pages/Caja/Egresos/Egresos';
+import HistoricoDeGastos from '@/pages/Caja/HistoricoEgresos/HistoricoEgresos';
+import Anticipo from '@/pages/Reportes/Anticipo/Anticipo';
+import Gastos from '@/pages/Reportes/Egresos/Egresos';
+import IngresoBruto from '@/pages/Reportes/IngresoBruto/IngresoBruto';
+import ReportesMantenimiento from '@/pages/Reportes/Fallas/Fallas';
+import Tarifas from '@/pages/Habitaciones/Tarifa/Tarifas';
+import Habitaciones from '@/pages/Habitaciones/Habitaciones/Habitaciones';
+import Mantenimiento from '@/pages/Mantenimiento/Mantenimiento/Mantenimiento';
+import Usuarios from '@/pages/Administracion/Usuario/Usuarios';
+import Login from '@/pages/Login/Login';
 import Navbar from '@/components/Navbar/Navbar';
 import ProtectedRoute from '@/components/ProtectedRoute/ProtectedRoute';
-import Login from '@/components/Login/Login';
 import NotFound from '@/components/NotFound/NotFound';
 
 const theme = createTheme({
@@ -49,6 +51,22 @@ const App = () => {
           }
         />
         <Route path='/login' element={<Login />} />
+        <Route
+          path='/reservas/historico-de-reservaciones'
+          element={
+            <ProtectedRoute allowedRoles={[ROLES.ADMINISTRADOR]}>
+              <HistoricoReservaciones />
+            </ProtectedRoute>
+          }
+        />
+        <Route
+          path='/reservas/historico-de-registros'
+          element={
+            <ProtectedRoute allowedRoles={[ROLES.ADMINISTRADOR]}>
+              <HistoricoRegistro />
+            </ProtectedRoute>
+          }
+        />
         <Route
           path='/reservas/empresas'
           element={

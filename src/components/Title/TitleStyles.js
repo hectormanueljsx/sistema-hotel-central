@@ -1,7 +1,7 @@
 import { css } from '@emotion/react';
 
 export const stylesTitlePage = css`
-  font-size: 24px;
+  font-size: 22px;
   font-weight: 700;
   text-align: center;
   margin-bottom: 24px;
