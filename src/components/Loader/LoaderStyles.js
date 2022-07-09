@@ -3,7 +3,7 @@ import { css } from '@emotion/react';
 export const stylesButtonSend = css`
   display: flex;
   justify-content: center;
-  margin-top: 16px;
+  margin-top: 32px;
 `;
 
 export const stylesCircularProgress = css`
