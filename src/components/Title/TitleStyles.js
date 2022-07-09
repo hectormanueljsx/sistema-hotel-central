@@ -4,7 +4,7 @@ export const stylesTitlePage = css`
   font-size: 22px;
   font-weight: 700;
   text-align: center;
-  margin-bottom: 24px;
+  margin-bottom: 16px;
 `;
 
 export const stylesTitleInput = css`
