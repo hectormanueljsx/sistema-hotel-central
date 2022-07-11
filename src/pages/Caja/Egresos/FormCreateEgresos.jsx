@@ -1,15 +1,5 @@
 import React, { useState } from 'react';
-import {
-  Box,
-  Button,
-  Checkbox,
-  Container,
-  FormControl,
-  FormControlLabel,
-  Select,
-  TextField,
-  MenuItem,
-} from '@mui/material';
+import { Box, Button, Checkbox, FormControl, FormControlLabel, Select, TextField, MenuItem } from '@mui/material';
 import SaveIcon from '@mui/icons-material/Save';
 import Swal from 'sweetalert2';
 
@@ -21,10 +11,9 @@ import { generalEndpoints } from '@/utilities/endpoints';
 import {
   stylesButtonSend,
   stylesCheckboxForm,
-  stylesContainerBox,
-  stylesContainerInput,
-  stylesContainerSection,
+  stylesGridWrapperForm,
   stylesWidthHeightForm,
+  stylesWrapperBoxShadow,
 } from '@/pages/Caja/Egresos/EgresosStyles';
 
 const FormCreateEgresos = ({ pago, categoria }) => {
@@ -103,10 +92,10 @@ const FormCreateEgresos = ({ pago, categoria }) => {
   };
 
   return (
-    <Container component='section' disableGutters sx={[stylesContainerSection, stylesWidthHeightForm]}>
+    <Box component='section' sx={[stylesWrapperBoxShadow, stylesWidthHeightForm]}>
       <TitlePage titlePage='Registro de Gasto' />
-      <Box component='form' sx={stylesContainerBox}>
-        <Box component='div' sx={stylesContainerInput}>
+      <Box component='form' sx={stylesGridWrapperForm}>
+        <Box component='div'>
           <TitleInput titleInput='Concepto' />
           <TextField
             onChange={handleInputChange}
@@ -120,7 +109,7 @@ const FormCreateEgresos = ({ pago, categoria }) => {
             autoFocus
           />
         </Box>
-        <Box component='div' sx={stylesContainerInput}>
+        <Box component='div'>
           <TitleInput titleInput='Importe' />
           <TextField
             onChange={handleInputChange}
@@ -133,75 +122,89 @@ const FormCreateEgresos = ({ pago, categoria }) => {
             fullWidth
           />
         </Box>
-        <Box component='div' sx={stylesContainerInput}>
+        <Box component='div'>
           <TitleInput titleInput='Con factura' />
           <FormControlLabel
             control={<Checkbox name='factura' onChange={handleCheckbox} disableRipple sx={stylesCheckboxForm} />}
           />
         </Box>
-        <Box component='div' sx={stylesContainerInput}>
+        <Box component='div'>
           <TitleInput titleInput='Forma de pago' />
           <FormControl fullWidth>
             <Select size='small' value={idPago} onChange={handlePago}>
-              {pago.map(item => {
-                const { f_pago, id } = item;
+              {pago.length > 0 ? (
+                pago.map(item => {
+                  const { f_pago, id } = item;
 
-                return (
-                  <MenuItem key={id} value={id}>
-                    {f_pago}
-                  </MenuItem>
-                );
-              })}
+                  return (
+                    <MenuItem key={id} value={id}>
+                      {f_pago}
+                    </MenuItem>
+                  );
+                })
+              ) : (
+                <MenuItem value=''>No se encontraron opciones</MenuItem>
+              )}
             </Select>
           </FormControl>
         </Box>
-        <Box component='div' sx={stylesContainerInput}>
+        <Box component='div'>
           <TitleInput titleInput='Categoría' />
           <FormControl fullWidth>
             <Select size='small' value={idCategoria} onChange={handleCategoria}>
-              {categoria.map(item => {
-                const { categoria, id, status } = item;
+              {categoria.length > 0 ? (
+                categoria.map(item => {
+                  const { categoria, id, status } = item;
 
-                return status ? (
-                  <MenuItem key={id} value={item}>
-                    {categoria}
-                  </MenuItem>
-                ) : (
-                  false
-                );
-              })}
+                  return status ? (
+                    <MenuItem key={id} value={item}>
+                      {categoria}
+                    </MenuItem>
+                  ) : null;
+                })
+              ) : (
+                <MenuItem value=''>No se encontraron opciones</MenuItem>
+              )}
             </Select>
           </FormControl>
         </Box>
-        <Box component='div' sx={stylesContainerInput}>
+        <Box component='div'>
           <TitleInput titleInput='Subcategoría' />
           <FormControl fullWidth>
             <Select size='small' value={idSubcategoria} onChange={handleSubCategoria}>
-              {idCategoria
-                ? idCategoria.subcategorias.map(subitem => {
+              {idCategoria ? (
+                idCategoria.subcategorias.length > 0 ? (
+                  idCategoria.subcategorias.map(subitem => {
                     const { descripcion, id, status } = subitem;
 
                     return status ? (
                       <MenuItem key={id} value={id}>
                         {descripcion}
                       </MenuItem>
-                    ) : (
-                      false
-                    );
+                    ) : null;
                   })
-                : null}
+                ) : (
+                  <MenuItem value=''>No se encontraron opciones</MenuItem>
+                )
+              ) : (
+                <MenuItem value=''>No se encontraron opciones</MenuItem>
+              )}
             </Select>
           </FormControl>
         </Box>
-        {loadingBtn ? (
+      </Box>
+      {loadingBtn ? (
+        <Box component='div' sx={stylesButtonSend}>
           <ButtonLoader />
-        ) : (
-          <Button variant='contained' onClick={postEgreso} size='large' startIcon={<SaveIcon />} sx={stylesButtonSend}>
+        </Box>
+      ) : (
+        <Box component='div' sx={stylesButtonSend}>
+          <Button variant='contained' onClick={postEgreso} size='large' startIcon={<SaveIcon />}>
             Registrar Gasto
           </Button>
-        )}
-      </Box>
-    </Container>
+        </Box>
+      )}
+    </Box>
   );
 };
 

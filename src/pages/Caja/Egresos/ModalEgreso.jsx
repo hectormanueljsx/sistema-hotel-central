@@ -1,15 +1,5 @@
 import React, { useState } from 'react';
-import {
-  Box,
-  Button,
-  Checkbox,
-  Container,
-  FormControl,
-  FormControlLabel,
-  MenuItem,
-  Select,
-  TextField,
-} from '@mui/material';
+import { Box, Button, Checkbox, FormControl, FormControlLabel, MenuItem, Select, TextField } from '@mui/material';
 import UpdateIcon from '@mui/icons-material/Update';
 import EditIcon from '@mui/icons-material/Edit';
 import CloseIcon from '@mui/icons-material/Close';
@@ -23,17 +13,15 @@ import getSpecificSelect from '@/services/getSpecificSelect';
 import putGeneralTable from '@/services/putGeneralTable';
 import { generalEndpoints } from '@/utilities/endpoints';
 import {
+  stylesButtonAlignEnd,
+  stylesButtonCloseModal,
   stylesButtonSend,
-  stylesBoxButtons,
-  stylesBoxInputs,
-  stylesBoxModal,
   stylesCheckboxForm,
-  stylesContainerBoxButtonAlign,
-  stylesContainerInput,
-  stylesContainerSection,
-  stylesModalClose,
+  stylesGridWrapperButtons,
+  stylesGridWrapperModal,
+  stylesWidthAutoButtons,
   stylesWidthHeightModal,
-  stylesWidthInput,
+  stylesWrapperBoxShadow,
 } from '@/pages/Caja/Egresos/EgresosStyles';
 
 const ModalEgreso = ({ dataEgreso, pago, categoria, dataCategoria, handleCloseModal }) => {
@@ -139,57 +127,55 @@ const ModalEgreso = ({ dataEgreso, pago, categoria, dataCategoria, handleCloseMo
   };
 
   return (
-    <Container component='section' disableGutters sx={[stylesContainerSection, stylesWidthHeightModal]}>
+    <Box component='section' sx={[stylesWrapperBoxShadow, stylesWidthHeightModal]}>
       <TitlePage titlePage='Actualización de Gasto' />
-      <Box component='form' sx={stylesBoxModal}>
-        <Button variant='text' color='error' size='large' onClick={handleCloseModal} sx={stylesModalClose}>
-          <CloseIcon />
-        </Button>
-        <Box sx={stylesBoxInputs}>
-          <Box component='div' sx={[stylesContainerInput, stylesWidthInput]}>
-            <TitleInput titleInput='Concepto' />
-            <TextField
-              defaultValue={dataEgreso.concepto}
-              onChange={handleInputChange}
-              name='concepto'
-              variant='outlined'
-              type='text'
-              margin='none'
-              size='small'
-              required
-              fullWidth
-              disabled={disabledModal}
-            />
-          </Box>
-          <Box component='div' sx={[stylesContainerInput, stylesWidthInput]}>
-            <TitleInput titleInput='Importe' />
-            <TextField
-              defaultValue={dataEgreso.importe}
-              onChange={handleInputChange}
-              name='importe'
-              variant='outlined'
-              type='number'
-              margin='none'
-              size='small'
-              required
-              fullWidth
-              disabled={disabledModal}
-            />
-          </Box>
+      <Button variant='text' color='error' size='large' onClick={handleCloseModal} sx={stylesButtonCloseModal}>
+        <CloseIcon />
+      </Button>
+      <Box component='form' sx={stylesGridWrapperModal}>
+        <Box component='div'>
+          <TitleInput titleInput='Concepto' />
+          <TextField
+            defaultValue={dataEgreso.concepto}
+            onChange={handleInputChange}
+            name='concepto'
+            variant='outlined'
+            type='text'
+            margin='none'
+            size='small'
+            required
+            fullWidth
+            disabled={disabledModal}
+          />
         </Box>
-        <Box sx={stylesBoxInputs}>
-          <Box component='div' sx={[stylesContainerInput, stylesWidthInput]}>
-            <TitleInput titleInput='Con factura' />
-            <FormControlLabel
-              disabled={disabledModal}
-              control={<Checkbox name='factura' onChange={handleCheckbox} disableRipple sx={stylesCheckboxForm} />}
-            />
-          </Box>
-          <Box component='div' sx={[stylesContainerInput, stylesWidthInput]}>
-            <TitleInput titleInput='Forma de pago' />
-            <FormControl disabled={disabledModal} fullWidth>
-              <Select size='small' value={idPago} onChange={handlePago}>
-                {pago.map(item => {
+        <Box component='div'>
+          <TitleInput titleInput='Importe' />
+          <TextField
+            defaultValue={dataEgreso.importe}
+            onChange={handleInputChange}
+            name='importe'
+            variant='outlined'
+            type='number'
+            margin='none'
+            size='small'
+            required
+            fullWidth
+            disabled={disabledModal}
+          />
+        </Box>
+        <Box component='div'>
+          <TitleInput titleInput='Con factura' />
+          <FormControlLabel
+            disabled={disabledModal}
+            control={<Checkbox name='factura' onChange={handleCheckbox} disableRipple sx={stylesCheckboxForm} />}
+          />
+        </Box>
+        <Box component='div'>
+          <TitleInput titleInput='Forma de pago' />
+          <FormControl disabled={disabledModal} fullWidth>
+            <Select size='small' value={idPago} onChange={handlePago}>
+              {pago.length > 0 ? (
+                pago.map(item => {
                   const { f_pago, id } = item;
 
                   return (
@@ -197,111 +183,119 @@ const ModalEgreso = ({ dataEgreso, pago, categoria, dataCategoria, handleCloseMo
                       {f_pago}
                     </MenuItem>
                   );
-                })}
-              </Select>
-            </FormControl>
-          </Box>
+                })
+              ) : (
+                <MenuItem value=''>No se encontraron opciones</MenuItem>
+              )}
+            </Select>
+          </FormControl>
         </Box>
-        <Box sx={stylesBoxInputs}>
-          <Box component='div' sx={[stylesContainerInput, stylesWidthInput]}>
-            <TitleInput titleInput='Categoría' />
-            <FormControl disabled={disabledModal} fullWidth>
-              <Select size='small' value={idCategoria} onChange={handleCategoria}>
-                {categoria.map(item => {
-                  const { categoria, id } = item;
+        <Box component='div'>
+          <TitleInput titleInput='Categoría' />
+          <FormControl disabled={disabledModal} fullWidth>
+            <Select size='small' value={idCategoria} onChange={handleCategoria}>
+              {categoria.length > 0 ? (
+                categoria.map(item => {
+                  const { categoria, id, status } = item;
 
-                  return (
+                  return status ? (
                     <MenuItem key={id} value={id}>
                       {categoria}
                     </MenuItem>
-                  );
-                })}
-              </Select>
-            </FormControl>
-          </Box>
-          <Box component='div' sx={[stylesContainerInput, stylesWidthInput]}>
-            <TitleInput titleInput='Subcategoría' />
-            <FormControl disabled={disabledModal} fullWidth>
-              <Select size='small' value={idSubcategoria} onChange={handleSubCategoria}>
-                {itemCategoria
-                  ? itemCategoria.subcategorias.map(subitem => {
-                      const { descripcion, id } = subitem;
+                  ) : null;
+                })
+              ) : (
+                <MenuItem value=''>No se encontraron opciones</MenuItem>
+              )}
+            </Select>
+          </FormControl>
+        </Box>
+        <Box component='div'>
+          <TitleInput titleInput='Subcategoría' />
+          <FormControl disabled={disabledModal} fullWidth>
+            <Select size='small' value={idSubcategoria} onChange={handleSubCategoria}>
+              {itemCategoria ? (
+                itemCategoria.subcategorias.length > 0 ? (
+                  itemCategoria.subcategorias.map(subitem => {
+                    const { descripcion, id, status } = subitem;
 
-                      return (
-                        <MenuItem key={id} value={id}>
-                          {descripcion}
-                        </MenuItem>
-                      );
-                    })
-                  : null}
-              </Select>
-            </FormControl>
-          </Box>
+                    return status ? (
+                      <MenuItem key={id} value={id}>
+                        {descripcion}
+                      </MenuItem>
+                    ) : null;
+                  })
+                ) : (
+                  <MenuItem value=''>No se encontraron opciones</MenuItem>
+                )
+              ) : (
+                <MenuItem value=''>No se encontraron opciones</MenuItem>
+              )}
+            </Select>
+          </FormControl>
         </Box>
-        <Box sx={stylesBoxInputs}>
-          <Box component='div' sx={[stylesContainerInput, stylesWidthInput]}>
-            <TitleInput titleInput='Fecha' />
-            <TextField
-              value={moment(dataEgreso.fecha).format('YYYY-MM-DD hh:mm:ss')}
-              name='fecha'
-              variant='outlined'
-              type='datetime'
-              margin='none'
-              size='small'
-              required
-              fullWidth
-              disabled={true}
-            />
-          </Box>
-          <Box component='div' sx={[stylesContainerInput, stylesWidthInput]}>
-            <TitleInput titleInput='Usuario' />
-            <TextField
-              value={dataEgreso.users_permissions_user.username}
-              name='usuario'
-              variant='outlined'
-              type='text'
-              margin='none'
-              size='small'
-              required
-              fullWidth
-              disabled={true}
-            />
-          </Box>
+        <Box component='div'>
+          <TitleInput titleInput='Fecha' />
+          <TextField
+            value={moment(dataEgreso.fecha).format('YYYY-MM-DD hh:mm:ss')}
+            name='fecha'
+            variant='outlined'
+            type='datetime'
+            margin='none'
+            size='small'
+            required
+            fullWidth
+            disabled={true}
+          />
         </Box>
-        <Box sx={stylesBoxButtons}>
-          {loadingBtn ? (
-            <ButtonLoader />
-          ) : (
-            <>
-              <Box component='div' sx={[stylesContainerBoxButtonAlign, stylesWidthInput]}>
-                <Button
-                  variant='contained'
-                  disabled={disableView}
-                  onClick={viewDisabled}
-                  size='large'
-                  startIcon={<EditIcon />}
-                  sx={stylesButtonSend}
-                >
-                  Modificar
-                </Button>
-              </Box>
-              <Box component='div' sx={stylesWidthInput}>
-                <Button
-                  variant='contained'
-                  disabled={disabledModal}
-                  onClick={putEgreso}
-                  size='large'
-                  startIcon={<UpdateIcon />}
-                  sx={stylesButtonSend}
-                >
-                  Actualizar
-                </Button>
-              </Box>
-            </>
-          )}
+        <Box component='div'>
+          <TitleInput titleInput='Usuario' />
+          <TextField
+            value={dataEgreso.users_permissions_user.username}
+            name='usuario'
+            variant='outlined'
+            type='text'
+            margin='none'
+            size='small'
+            required
+            fullWidth
+            disabled={true}
+          />
         </Box>
       </Box>
-    </Container>
+      {loadingBtn ? (
+        <Box component='div' sx={stylesButtonSend}>
+          <ButtonLoader />
+        </Box>
+      ) : (
+        <Box component='div' sx={stylesGridWrapperButtons}>
+          <Box component='div' sx={stylesButtonAlignEnd}>
+            <Button
+              variant='contained'
+              disabled={disableView}
+              onClick={viewDisabled}
+              size='large'
+              startIcon={<EditIcon />}
+              sx={stylesWidthAutoButtons}
+            >
+              Modificar
+            </Button>
+          </Box>
+          <Box component='div'>
+            <Button
+              variant='contained'
+              disabled={disabledModal}
+              onClick={putEgreso}
+              size='large'
+              startIcon={<UpdateIcon />}
+              sx={stylesWidthAutoButtons}
+            >
+              Actualizar
+            </Button>
+          </Box>
+        </Box>
+      )}
+    </Box>
   );
 };
 

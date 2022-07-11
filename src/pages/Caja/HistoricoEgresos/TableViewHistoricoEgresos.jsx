@@ -1,7 +1,6 @@
 import React, { useState } from 'react';
 import {
   Box,
-  Container,
   IconButton,
   Table,
   TableBody,
@@ -18,19 +17,18 @@ import TitlePage from '@/components/Title/TitlePage';
 import SleketonLoader from '@/components/Loader/SleketonLoader';
 import AlertGlobalTables from '@/components/Alert/AlertGlobalTables';
 import {
-  stylesContainerSection,
-  stylesTableCellHeader,
   stylesTableCellBody,
+  stylesTableCellHeader,
   stylesWidthHeightTable,
+  stylesWrapperBoxShadow,
 } from '@/pages/Caja/HistoricoEgresos/HistoricoEgresosStyles';
 
 const columns = [
-  { id: 'num_gasto', label: 'No. de Gasto', width: 95 },
   { id: 'fecha', label: 'Fecha', width: 180 },
-  { id: 'concepto', label: 'Concepto', width: 350 },
-  { id: 'importe', label: 'Importe', width: 112 },
-  { id: 'detalles', label: 'Detalles', width: 140 },
-  { id: 'acciones', label: 'Acciones', width: 75 },
+  { id: 'concepto', label: 'Concepto', width: 446 },
+  { id: 'importe', label: 'Importe', width: 126 },
+  { id: 'detalles', label: 'Detalles', width: 154 },
+  { id: 'acciones', label: 'Acciones', width: 80 },
 ];
 
 const TableViewHistoricoEgresos = ({ search, dataEgreso, loading, error }) => {
@@ -44,11 +42,12 @@ const TableViewHistoricoEgresos = ({ search, dataEgreso, loading, error }) => {
     setPage(0);
   };
 
-  const filterConcepto = dataEgreso.filter(item => item.concepto.toUpperCase().includes(search.toUpperCase()));
+  const filterConcepto =
+    dataEgreso.length > 0 ? dataEgreso.filter(item => item.concepto.toUpperCase().includes(search.toUpperCase())) : [];
 
   return (
-    <Container component='section' disableGutters sx={[stylesContainerSection, stylesWidthHeightTable]}>
-      <TitlePage titlePage='Histórico de Egresos' />
+    <Box component='section' sx={[stylesWrapperBoxShadow, stylesWidthHeightTable]}>
+      <TitlePage titlePage='Lista de Históricos de Egresos' />
       <Box component='div'>
         <TableContainer>
           <Table>
@@ -62,48 +61,53 @@ const TableViewHistoricoEgresos = ({ search, dataEgreso, loading, error }) => {
               </TableRow>
             </TableHead>
             <TableBody>
-              {loading && (
+              {loading ? (
                 <TableRow>
                   <TableCell align='center' colSpan={columns.length} sx={stylesTableCellBody}>
                     <SleketonLoader />
                   </TableCell>
                 </TableRow>
-              )}
-              {error && (
+              ) : error ? (
                 <TableRow>
                   <TableCell align='center' colSpan={columns.length} sx={stylesTableCellBody}>
                     <AlertGlobalTables messageError='Ah ocurrido un error al obtener los datos' />
                   </TableCell>
                 </TableRow>
-              )}
-              {filterConcepto.slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage).map(item => {
-                const { id, fecha, concepto, importe, p_caja } = item;
+              ) : filterConcepto.length > 0 ? (
+                filterConcepto.slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage).map(item => {
+                  const { id, fecha, concepto, importe, p_caja } = item;
 
-                return (
-                  <TableRow key={id}>
-                    <TableCell sx={stylesTableCellBody}>{id}</TableCell>
-                    <TableCell sx={stylesTableCellBody}>{moment(fecha).format('YYYY-MM-DD hh:mm:ss a')}</TableCell>
-                    <TableCell sx={stylesTableCellBody}>{concepto}</TableCell>
-                    <TableCell sx={stylesTableCellBody}>
-                      {importe.toLocaleString('es-MX', {
-                        style: 'currency',
-                        currency: 'MXN',
-                        minimumFractionDigits: 2,
-                      })}
-                    </TableCell>
-                    <TableCell sx={stylesTableCellBody}>{p_caja ? 'EN CAJA' : 'CORTE DE CAJA'}</TableCell>
-                    <TableCell sx={stylesTableCellBody}>
-                      <IconButton color='info' size='small'>
-                        <VisibilityIcon />
-                      </IconButton>
-                    </TableCell>
-                  </TableRow>
-                );
-              })}
+                  return (
+                    <TableRow key={id}>
+                      <TableCell sx={stylesTableCellBody}>{moment(fecha).format('YYYY-MM-DD hh:mm:ss a')}</TableCell>
+                      <TableCell sx={stylesTableCellBody}>{concepto}</TableCell>
+                      <TableCell sx={stylesTableCellBody}>
+                        {importe.toLocaleString('es-MX', {
+                          style: 'currency',
+                          currency: 'MXN',
+                          minimumFractionDigits: 2,
+                        })}
+                      </TableCell>
+                      <TableCell sx={stylesTableCellBody}>{p_caja ? 'EN CAJA' : 'CORTE DE CAJA'}</TableCell>
+                      <TableCell sx={stylesTableCellBody}>
+                        <IconButton color='info' size='small'>
+                          <VisibilityIcon />
+                        </IconButton>
+                      </TableCell>
+                    </TableRow>
+                  );
+                })
+              ) : (
+                <TableRow>
+                  <TableCell align='center' colSpan={columns.length} sx={stylesTableCellBody}>
+                    <AlertGlobalTables messageError='No se encontraron datos para esta tabla' />
+                  </TableCell>
+                </TableRow>
+              )}
             </TableBody>
           </Table>
         </TableContainer>
-        {loading || error ? null : (
+        {loading ? null : (
           <TablePagination
             rowsPerPageOptions={[]}
             component='div'
@@ -116,7 +120,7 @@ const TableViewHistoricoEgresos = ({ search, dataEgreso, loading, error }) => {
           />
         )}
       </Box>
-    </Container>
+    </Box>
   );
 };
 

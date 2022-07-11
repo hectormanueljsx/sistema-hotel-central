@@ -4,7 +4,6 @@ import {
   AccordionDetails,
   AccordionSummary,
   Box,
-  Container,
   IconButton,
   ListItemIcon,
   Typography,
@@ -21,14 +20,15 @@ import useGetGeneralTable from '@/hooks/useGetGeneralTable';
 import putGeneralTable from '@/services/putGeneralTable';
 import { generalEndpoints } from '@/utilities/endpoints';
 import {
-  stylesAccordion,
   stylesAccordionDetails,
-  stylesBoxCategoria,
-  stylesBoxSubcategoria,
-  stylesContainerSection,
-  stylesFontCategoria,
-  stylesFontSubcategoria,
-  stylesWidthAcordion,
+  stylesAccordionSummary,
+  stylesRemovePaddingButton,
+  stylesTextFontCategoria,
+  stylesTextFontSubcategoria,
+  stylesWidthCategoria,
+  stylesWidthHeightTable,
+  stylesWidthSubcategoria,
+  stylesWrapperBoxShadow,
 } from '@/pages/Caja/CategoriaEgresos/CategoriaEgresosStyles';
 
 const TableViewCategoriaEgresos = () => {
@@ -134,58 +134,87 @@ const TableViewCategoriaEgresos = () => {
   const { list, loading, error } = useGetGeneralTable(identifier, password, `${endpointCategoria}?status=true`);
 
   return (
-    <Container component='section' disableGutters sx={[stylesContainerSection, stylesWidthAcordion]}>
-      <TitlePage titlePage='Lista de Categorías Registradas' />
+    <Box component='section' sx={[stylesWrapperBoxShadow, stylesWidthHeightTable]}>
+      <TitlePage titlePage='Lista de Categorías y Subcategorías' />
       <Box component='div'>
-        {loading && <SleketonLoader />}
-        {error && <AlertGlobalTables messageError='Ah ocurrido un error al obtener los datos' />}
-        {list.map(item => {
-          const { categoria, subcategorias, id } = item;
+        {loading ? (
+          <SleketonLoader />
+        ) : error ? (
+          <AlertGlobalTables messageError='Ah ocurrido un error al obtener los datos' />
+        ) : list.length > 0 ? (
+          list.map(item => {
+            const { categoria, subcategorias, id } = item;
 
-          return (
-            <Accordion key={id} expanded={expanded === `panel${id}`} onChange={handleChange(`panel${id}`)}>
-              <AccordionSummary key={id} expandIcon={<ExpandMore />}>
-                <Box sx={[stylesAccordion, stylesBoxCategoria]}>
-                  <Typography key={id} sx={stylesFontCategoria}>
-                    {categoria}
-                  </Typography>
-                  {subcategorias.length === 0 && (
-                    <IconButton color='error' size='small' onClick={() => deleteCategoria(id)}>
-                      <DeleteIcon />
-                    </IconButton>
-                  )}
-                </Box>
-              </AccordionSummary>
-              {subcategorias.map(subitem => {
-                const { descripcion, id, status } = subitem;
-
-                return (
-                  <AccordionDetails key={id} sx={stylesAccordionDetails}>
-                    {status ? (
-                      <Box sx={[stylesAccordion, stylesBoxSubcategoria]}>
-                        <Box sx={[stylesAccordion, { marginLeft: 5 }]}>
-                          <ListItemIcon sx={{ minWidth: 0 }}>
-                            <ArrowRightIcon />
-                          </ListItemIcon>
-                          <Typography key={id} sx={stylesFontSubcategoria}>
-                            {descripcion}
-                          </Typography>
-                        </Box>
-                        <IconButton color='error' size='small' onClick={() => deleteSubcategoria(id)}>
-                          <DeleteIcon />
-                        </IconButton>
-                      </Box>
+            return (
+              <Accordion key={id} expanded={expanded === `panel${id}`} onChange={handleChange(`panel${id}`)}>
+                <AccordionSummary key={id} expandIcon={<ExpandMore />}>
+                  <Box sx={[stylesAccordionSummary, stylesWidthCategoria]}>
+                    <Typography key={id} sx={stylesTextFontCategoria}>
+                      {categoria}
+                    </Typography>
+                    {subcategorias.length > 0 ? (
+                      subcategorias.map(option => {
+                        return option.status ? null : (
+                          <IconButton
+                            color='error'
+                            size='small'
+                            onClick={() => deleteCategoria(id)}
+                            sx={stylesRemovePaddingButton}
+                          >
+                            <DeleteIcon />
+                          </IconButton>
+                        );
+                      })
                     ) : (
-                      false
+                      <IconButton
+                        color='error'
+                        size='small'
+                        onClick={() => deleteCategoria(id)}
+                        sx={stylesRemovePaddingButton}
+                      >
+                        <DeleteIcon />
+                      </IconButton>
                     )}
-                  </AccordionDetails>
-                );
-              })}
-            </Accordion>
-          );
-        })}
+                  </Box>
+                </AccordionSummary>
+                {subcategorias.length > 0
+                  ? subcategorias.map(subitem => {
+                      const { descripcion, id, status } = subitem;
+
+                      return (
+                        <AccordionDetails key={id} sx={stylesAccordionDetails}>
+                          {status ? (
+                            <Box sx={[stylesAccordionSummary, stylesWidthSubcategoria]}>
+                              <Box sx={[stylesAccordionSummary, { marginLeft: 5 }]}>
+                                <ListItemIcon sx={{ minWidth: 0 }}>
+                                  <ArrowRightIcon />
+                                </ListItemIcon>
+                                <Typography key={id} sx={stylesTextFontSubcategoria}>
+                                  {descripcion}
+                                </Typography>
+                              </Box>
+                              <IconButton
+                                color='error'
+                                size='small'
+                                onClick={() => deleteSubcategoria(id)}
+                                sx={stylesRemovePaddingButton}
+                              >
+                                <DeleteIcon />
+                              </IconButton>
+                            </Box>
+                          ) : null}
+                        </AccordionDetails>
+                      );
+                    })
+                  : null}
+              </Accordion>
+            );
+          })
+        ) : (
+          <AlertGlobalTables messageError='No se encontraron datos para esta tabla' />
+        )}
       </Box>
-    </Container>
+    </Box>
   );
 };
 

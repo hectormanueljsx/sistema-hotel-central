@@ -1,11 +1,11 @@
 import React, { useEffect, useState } from 'react';
-import { Box, Container } from '@mui/material';
+import { Box } from '@mui/material';
 
 import FormCreateEgresos from '@/pages/Caja/Egresos/FormCreateEgresos';
 import TableViewEgresos from '@/pages/Caja/Egresos/TableViewEgresos';
 import getGeneralSelect from '@/services/getGeneralSelect';
 import { generalEndpoints } from '@/utilities/endpoints';
-import { stylesBoxEgresos } from '@/pages/Caja/Egresos/EgresosStyles';
+import { stylesWrapperGeneral } from '@/pages/Caja/Egresos/EgresosStyles';
 
 const Egresos = () => {
   const [pago, setPago] = useState([]);
@@ -32,12 +32,10 @@ const Egresos = () => {
   }, []);
 
   return (
-    <Container component='section' disableGutters maxWidth='xl'>
-      <Box sx={stylesBoxEgresos}>
-        <FormCreateEgresos pago={pago} categoria={categoria} />
-        <TableViewEgresos pago={pago} categoria={categoria} />
-      </Box>
-    </Container>
+    <Box component='section' sx={stylesWrapperGeneral}>
+      <FormCreateEgresos pago={pago} categoria={categoria} />
+      <TableViewEgresos pago={pago} categoria={categoria} />
+    </Box>
   );
 };
 

@@ -1,7 +1,6 @@
 import React, { useState } from 'react';
 import {
   Box,
-  Container,
   IconButton,
   Modal,
   Table,
@@ -23,20 +22,19 @@ import useGetSpecific from '@/hooks/useGetSpecific';
 import getSpecificSelect from '@/services/getSpecificSelect';
 import { generalEndpoints } from '@/utilities/endpoints';
 import {
-  stylesContainerSection,
-  stylesModal,
-  stylesTableCellHeader,
+  stylesSuperpositionModal,
   stylesTableCellBody,
+  stylesTableCellHeader,
   stylesWidthHeightTable,
+  stylesWrapperBoxShadow,
 } from '@/pages/Caja/Egresos/EgresosStyles';
 
 const columns = [
-  { id: 'num_gasto', label: 'No. de Gasto', width: 95 },
   { id: 'fecha', label: 'Fecha', width: 180 },
-  { id: 'concepto', label: 'Concepto', width: 245 },
-  { id: 'categoria', label: 'Categoría', width: 245 },
-  { id: 'importe', label: 'Importe', width: 112 },
-  { id: 'acciones', label: 'Acciones', width: 75 },
+  { id: 'concepto', label: 'Concepto', width: 300 },
+  { id: 'categoria', label: 'Categoría', width: 300 },
+  { id: 'importe', label: 'Importe', width: 126 },
+  { id: 'acciones', label: 'Acciones', width: 80 },
 ];
 
 const TableViewEgresos = ({ pago, categoria }) => {
@@ -79,8 +77,8 @@ const TableViewEgresos = ({ pago, categoria }) => {
   );
 
   return (
-    <Container component='section' disableGutters sx={[stylesContainerSection, stylesWidthHeightTable]}>
-      <TitlePage titlePage='Gastos no Incluidos en un Corte de Caja' />
+    <Box component='section' sx={[stylesWrapperBoxShadow, stylesWidthHeightTable]}>
+      <TitlePage titlePage='Lista de Gastos no Incluidos en un Corte de Caja' />
       <Box component='div'>
         <TableContainer>
           <Table>
@@ -94,54 +92,59 @@ const TableViewEgresos = ({ pago, categoria }) => {
               </TableRow>
             </TableHead>
             <TableBody>
-              {loadingGetSpecific && (
+              {loadingGetSpecific ? (
                 <TableRow>
                   <TableCell align='center' colSpan={columns.length} sx={stylesTableCellBody}>
                     <SleketonLoader />
                   </TableCell>
                 </TableRow>
-              )}
-              {errorGetSpecific && (
+              ) : errorGetSpecific ? (
                 <TableRow>
                   <TableCell align='center' colSpan={columns.length} sx={stylesTableCellBody}>
                     <AlertGlobalTables messageError='Ah ocurrido un error al obtener los datos' />
                   </TableCell>
                 </TableRow>
-              )}
-              {listGetSpecific.slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage).map(item => {
-                const {
-                  id,
-                  fecha,
-                  concepto,
-                  subcategoria: { descripcion, categoria },
-                  importe,
-                } = item;
+              ) : listGetSpecific.length > 0 ? (
+                listGetSpecific.slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage).map(item => {
+                  const {
+                    id,
+                    fecha,
+                    concepto,
+                    subcategoria: { descripcion, categoria },
+                    importe,
+                  } = item;
 
-                return (
-                  <TableRow key={id}>
-                    <TableCell sx={stylesTableCellBody}>{id}</TableCell>
-                    <TableCell sx={stylesTableCellBody}>{moment(fecha).format('YYYY-MM-DD hh:mm:ss a')}</TableCell>
-                    <TableCell sx={stylesTableCellBody}>{concepto}</TableCell>
-                    <TableCell sx={stylesTableCellBody}>{descripcion}</TableCell>
-                    <TableCell sx={stylesTableCellBody}>
-                      {importe.toLocaleString('es-MX', {
-                        style: 'currency',
-                        currency: 'MXN',
-                        minimumFractionDigits: 2,
-                      })}
-                    </TableCell>
-                    <TableCell sx={stylesTableCellBody}>
-                      <IconButton color='info' size='small' onClick={() => handleOpen(item, categoria)}>
-                        <VisibilityIcon />
-                      </IconButton>
-                    </TableCell>
-                  </TableRow>
-                );
-              })}
+                  return (
+                    <TableRow key={id}>
+                      <TableCell sx={stylesTableCellBody}>{moment(fecha).format('YYYY-MM-DD hh:mm:ss a')}</TableCell>
+                      <TableCell sx={stylesTableCellBody}>{concepto}</TableCell>
+                      <TableCell sx={stylesTableCellBody}>{descripcion}</TableCell>
+                      <TableCell sx={stylesTableCellBody}>
+                        {importe.toLocaleString('es-MX', {
+                          style: 'currency',
+                          currency: 'MXN',
+                          minimumFractionDigits: 2,
+                        })}
+                      </TableCell>
+                      <TableCell sx={stylesTableCellBody}>
+                        <IconButton color='info' size='small' onClick={() => handleOpen(item, categoria)}>
+                          <VisibilityIcon />
+                        </IconButton>
+                      </TableCell>
+                    </TableRow>
+                  );
+                })
+              ) : (
+                <TableRow>
+                  <TableCell align='center' colSpan={columns.length} sx={stylesTableCellBody}>
+                    <AlertGlobalTables messageError='No se encontraron datos para esta tabla' />
+                  </TableCell>
+                </TableRow>
+              )}
             </TableBody>
           </Table>
         </TableContainer>
-        {loadingGetSpecific || errorGetSpecific ? null : (
+        {loadingGetSpecific ? null : (
           <TablePagination
             rowsPerPageOptions={[]}
             component='div'
@@ -155,7 +158,7 @@ const TableViewEgresos = ({ pago, categoria }) => {
         )}
       </Box>
       <Modal open={openModal}>
-        <Box sx={stylesModal}>
+        <Box component='div' sx={stylesSuperpositionModal}>
           <ModalEgreso
             dataEgreso={dataEgreso}
             pago={pago}
@@ -165,7 +168,7 @@ const TableViewEgresos = ({ pago, categoria }) => {
           />
         </Box>
       </Modal>
-    </Container>
+    </Box>
   );
 };
 

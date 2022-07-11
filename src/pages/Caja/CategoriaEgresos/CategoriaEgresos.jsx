@@ -1,18 +1,20 @@
 import React from 'react';
-import { Box, Container } from '@mui/material';
+import { Box } from '@mui/material';
 
 import FormCreateCategoriaEgresos from '@/pages/Caja/CategoriaEgresos/FormCreateCategoriaEgresos';
+import FormCreateSubcategoriaEgresos from '@/pages/Caja/CategoriaEgresos/FormCreateSubcategoriaEgresos';
 import TableViewCategoriaEgresos from '@/pages/Caja/CategoriaEgresos/TableViewCategoriaEgresos';
-import { stylesBoxCategoriaEgresos } from '@/pages/Caja/CategoriaEgresos/CategoriaEgresosStyles';
+import { stylesWrapperGeneral, stylesWrapperInternal } from '@/pages/Caja/CategoriaEgresos/CategoriaEgresosStyles';
 
 const CategoriaEgresos = () => {
   return (
-    <Container component='section' disableGutters maxWidth='xl'>
-      <Box sx={stylesBoxCategoriaEgresos}>
+    <Box component='section' sx={stylesWrapperGeneral}>
+      <Box component='section' sx={stylesWrapperInternal}>
         <FormCreateCategoriaEgresos />
-        <TableViewCategoriaEgresos />
+        <FormCreateSubcategoriaEgresos />
       </Box>
-    </Container>
+      <TableViewCategoriaEgresos />
+    </Box>
   );
 };
 

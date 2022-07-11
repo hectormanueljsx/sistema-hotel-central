@@ -1,64 +1,61 @@
 import { css } from '@emotion/react';
 
-export const stylesBoxCategoriaEgresos = css`
+export const stylesWrapperGeneral = css`
   display: flex;
-  justify-content: center;
+  flex-direction: row;
   gap: 32px;
+  width: 1432px;
+  height: max-content;
+  margin: 32px auto;
 `;
 
-export const stylesContainerDoubleForm = css`
+export const stylesWrapperInternal = css`
   display: flex;
   flex-direction: column;
   gap: 32px;
-  margin-left: 0;
-  margin-right: 0;
-  margin-bottom: 40px;
-  width: 400px;
 `;
 
-export const stylesContainerSection = css`
+export const stylesWrapperBoxShadow = css`
   background-color: #ffffff;
   border-radius: 4px;
   box-shadow: 0px 0px 5px rgba(0, 0, 0, 0.25);
-  padding: 24px;
-  margin-top: 40px;
-  margin-bottom: 40px;
-  margin-left: 0;
-  margin-right: 0;
+  padding: 16px;
 `;
 
-export const stylesWidthHeightFormCategoria = css`
-  margin-bottom: 0;
-  width: 400px;
+export const stylesWidthHeightForm = css`
+  width: 382px;
   height: max-content;
 `;
 
-export const stylesWidthHeightFormSubcategoria = css`
-  margin-top: 0;
-  margin-bottom: 0;
-  width: 400px;
-  height: max-content;
-`;
-
-export const stylesContainerBox = css`
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-`;
-
-export const stylesContainerInput = css`
-  width: 100%;
-  margin-bottom: 16px;
+export const stylesGridWrapperForm = css`
+  display: grid;
+  grid-template-columns: repeat(1, 1fr);
+  gap: 16px;
 `;
 
 export const stylesButtonSend = css`
-  margin-top: 16px;
+  display: flex;
+  justify-content: center;
+  margin-top: 32px;
 `;
 
-export const stylesAccordion = css`
+export const stylesWidthHeightTable = css`
+  width: 1018px;
+  height: max-content;
+`;
+
+export const stylesAccordionSummary = css`
   display: flex;
   align-items: center;
   justify-content: space-between;
+`;
+
+export const stylesWidthCategoria = css`
+  width: 900px;
+`;
+
+export const stylesTextFontCategoria = css`
+  font-weight: 700;
 `;
 
 export const stylesAccordionDetails = css`
@@ -66,23 +63,14 @@ export const stylesAccordionDetails = css`
   margin-bottom: 8px;
 `;
 
-export const stylesWidthAcordion = css`
-  width: 1000px;
-  height: max-content;
+export const stylesWidthSubcategoria = css`
+  width: 916px;
 `;
 
-export const stylesBoxCategoria = css`
-  width: 850px;
-`;
-
-export const stylesBoxSubcategoria = css`
-  width: 866px;
-`;
-
-export const stylesFontCategoria = css`
-  font-weight: 700;
-`;
-
-export const stylesFontSubcategoria = css`
+export const stylesTextFontSubcategoria = css`
   font-weight: 400;
+`;
+
+export const stylesRemovePaddingButton = css`
+  padding: 0;
 `;
