@@ -1,15 +1,5 @@
 import React, { useState } from 'react';
-import {
-  Box,
-  Button,
-  Container,
-  TextField,
-  MenuItem,
-  FormControl,
-  ListItemText,
-  Select,
-  Checkbox,
-} from '@mui/material';
+import { Box, Button, TextField, MenuItem, FormControl, ListItemText, Select, Checkbox } from '@mui/material';
 import SaveIcon from '@mui/icons-material/Save';
 import Swal from 'sweetalert2';
 
@@ -21,11 +11,10 @@ import useGetGeneralTable from '@/hooks/useGetGeneralTable';
 import { generalEndpoints } from '@/utilities/endpoints';
 import {
   stylesButtonSend,
-  stylesContainerBox,
   stylesCheckboxForm,
-  stylesContainerInput,
-  stylesContainerSection,
+  stylesGridWrapperForm,
   stylesWidthHeightForm,
+  stylesWrapperBoxShadow,
 } from '@/pages/Habitaciones/Tarifa/TarifaStyles';
 
 const FormCreateTarifa = () => {
@@ -103,10 +92,10 @@ const FormCreateTarifa = () => {
   const { list } = useGetGeneralTable(identifier, password, endpointPersona);
 
   return (
-    <Container component='section' disableGutters sx={[stylesContainerSection, stylesWidthHeightForm]}>
+    <Box component='section' sx={[stylesWrapperBoxShadow, stylesWidthHeightForm]}>
       <TitlePage titlePage='Registro de Nueva Tarifa' />
-      <Box component='form' sx={stylesContainerBox}>
-        <Box component='div' sx={stylesContainerInput}>
+      <Box component='form' sx={stylesGridWrapperForm}>
+        <Box component='div'>
           <TitleInput titleInput='Descripción de la tarifa' />
           <TextField
             onChange={handleInputChange}
@@ -120,7 +109,7 @@ const FormCreateTarifa = () => {
             autoFocus
           />
         </Box>
-        <Box component='div' sx={stylesContainerInput}>
+        <Box component='div'>
           <TitleInput titleInput='Precio de la tarifa' />
           <TextField
             onChange={handleInputChange}
@@ -133,7 +122,7 @@ const FormCreateTarifa = () => {
             fullWidth
           />
         </Box>
-        <Box component='div' sx={stylesContainerInput}>
+        <Box component='div'>
           <TitleInput titleInput='No. de personas' />
           <FormControl fullWidth>
             <Select
@@ -143,28 +132,36 @@ const FormCreateTarifa = () => {
               renderValue={selected => selected.join(', ')}
               size='small'
             >
-              {list.map(name => (
-                <MenuItem key={name.id} value={name.num_persona}>
-                  <Checkbox
-                    checked={numPersonas.indexOf(name.num_persona) > -1}
-                    disableRipple
-                    sx={stylesCheckboxForm}
-                  />
-                  <ListItemText primary={name.num_persona} />
-                </MenuItem>
-              ))}
+              {list.length > 0 ? (
+                list.map(name => (
+                  <MenuItem key={name.id} value={name.num_persona}>
+                    <Checkbox
+                      checked={numPersonas.indexOf(name.num_persona) > -1}
+                      disableRipple
+                      sx={stylesCheckboxForm}
+                    />
+                    <ListItemText primary={name.num_persona} />
+                  </MenuItem>
+                ))
+              ) : (
+                <MenuItem value=''>No se encontraron opciones</MenuItem>
+              )}
             </Select>
           </FormControl>
         </Box>
-        {loadingBtn ? (
+      </Box>
+      {loadingBtn ? (
+        <Box component='div' sx={stylesButtonSend}>
           <ButtonLoader />
-        ) : (
-          <Button variant='contained' onClick={sendDatos} size='large' startIcon={<SaveIcon />} sx={stylesButtonSend}>
+        </Box>
+      ) : (
+        <Box component='div' sx={stylesButtonSend}>
+          <Button variant='contained' onClick={sendDatos} size='large' startIcon={<SaveIcon />}>
             Registrar Tarifa
           </Button>
-        )}
-      </Box>
-    </Container>
+        </Box>
+      )}
+    </Box>
   );
 };
 

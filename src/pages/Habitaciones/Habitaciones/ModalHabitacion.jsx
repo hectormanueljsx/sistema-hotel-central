@@ -1,15 +1,5 @@
 import React, { useState } from 'react';
-import {
-  Box,
-  Button,
-  Checkbox,
-  Container,
-  FormControl,
-  ListItemText,
-  MenuItem,
-  Select,
-  TextField,
-} from '@mui/material';
+import { Box, Button, Checkbox, FormControl, ListItemText, MenuItem, Select, TextField } from '@mui/material';
 import UpdateIcon from '@mui/icons-material/Update';
 import EditIcon from '@mui/icons-material/Edit';
 import CloseIcon from '@mui/icons-material/Close';
@@ -22,17 +12,16 @@ import putGeneralTable from '@/services/putGeneralTable';
 import useGetGeneralTable from '@/hooks/useGetGeneralTable';
 import { generalEndpoints } from '@/utilities/endpoints';
 import {
+  stylesButtonAlignEnd,
+  stylesButtonCloseModal,
   stylesButtonSend,
-  stylesBoxButtons,
-  stylesBoxInputs,
-  stylesBoxModal,
   stylesCheckboxForm,
-  stylesContainerBoxButtonAlign,
-  stylesContainerInput,
-  stylesContainerSection,
-  stylesModalClose,
+  stylesGridWrapperButtons,
+  stylesGridWrapperModal,
+  stylesWidthAutoButtons,
   stylesWidthHeightModal,
-  stylesWidthInput,
+  stylesWrapperBoxShadow,
+  stylesWrapperOneLine,
 } from '@/pages/Habitaciones/Habitaciones/HabitacionesStyles';
 
 const ModalHabitaciones = ({ dataHabitaciones, dataSelectTarifas, dataDescription, handleCloseModal }) => {
@@ -48,7 +37,7 @@ const ModalHabitaciones = ({ dataHabitaciones, dataSelectTarifas, dataDescriptio
   const endpointHabitacion = generalEndpoints.habitacion;
   const endpointTarifa = generalEndpoints.tarifa;
   const tarifaId = [];
- 
+
   const handleInputChangeNumHabitacion = event => setNumHabitacion(event.target.value);
   const handleChangeDescription = event => setDescriptions(event.target.value);
 
@@ -77,7 +66,7 @@ const ModalHabitaciones = ({ dataHabitaciones, dataSelectTarifas, dataDescriptio
       const habitacionData = {
         num_hab: numHabitacion,
         tarifas: tarifaId,
-        descripcion: description,
+        descripcion: description.toUpperCase(),
       };
 
       setLoadingBtn(true);
@@ -130,60 +119,60 @@ const ModalHabitaciones = ({ dataHabitaciones, dataSelectTarifas, dataDescriptio
   const { list } = useGetGeneralTable(identifier, password, endpointTarifa);
 
   return (
-    <Container component='section' disableGutters sx={[stylesContainerSection, stylesWidthHeightModal]}>
+    <Box component='section' sx={[stylesWrapperBoxShadow, stylesWidthHeightModal]}>
       <TitlePage titlePage='Actualización de Habitación' />
-      <Box component='form' sx={stylesBoxModal}>
-        <Button variant='text' color='error' size='large' onClick={handleCloseModal} sx={stylesModalClose}>
-          <CloseIcon />
-        </Button>
-        <Box sx={stylesBoxInputs}>
-          <Box component='div' sx={[stylesContainerInput, stylesWidthInput]}>
-            <TitleInput titleInput='No. de habitación' />
-            <TextField
-              disabled={disabledModal}
-              defaultValue={dataHabitaciones.num_hab}
-              onChange={handleInputChangeNumHabitacion}
-              name='num_hab'
-              variant='outlined'
-              type='number'
-              margin='none'
-              size='small'
-              required
-              fullWidth
-            />
-          </Box>
-          <Box component='div' sx={[stylesContainerInput, stylesWidthInput]}>
-            <TitleInput titleInput='Descripción de la habitación' />
-            <TextField
-              disabled={disabledModal}
-              defaultValue={dataHabitaciones.descripcion}
-              onChange={handleChangeDescription}
-              name='descripcion'
-              variant='outlined'
-              type='text'
-              multiline
-              margin='none'
-              size='small'
-              required
-              fullWidth
-            />
-          </Box>
+      <Button variant='text' color='error' size='large' onClick={handleCloseModal} sx={stylesButtonCloseModal}>
+        <CloseIcon />
+      </Button>
+      <Box component='form' sx={stylesGridWrapperModal}>
+        <Box component='div'>
+          <TitleInput titleInput='No. de habitación' />
+          <TextField
+            disabled={disabledModal}
+            defaultValue={dataHabitaciones.num_hab}
+            onChange={handleInputChangeNumHabitacion}
+            name='num_hab'
+            variant='outlined'
+            type='number'
+            margin='none'
+            size='small'
+            required
+            fullWidth
+          />
         </Box>
-        <Box sx={stylesBoxInputs}>
-          <Box component='div' sx={[stylesContainerInput]}>
-            <TitleInput titleInput='Tarifas permitidas' />
-            <FormControl disabled={disabledModal} fullWidth>
-              <Select
-                multiple
-                value={optionTarifas}
-                onChange={handleChangeTarifas}
-                renderValue={selected => selected.join(', ')}
-                size='small'
-              >
-                {list.map(item => {
-                  const { id, descripcion } = item;
+        <Box component='div'>
+          <TitleInput titleInput='Descripción de la habitación' />
+          <TextField
+            disabled={disabledModal}
+            defaultValue={dataHabitaciones.descripcion}
+            onChange={handleChangeDescription}
+            name='descripcion'
+            variant='outlined'
+            type='text'
+            multiline
+            margin='none'
+            size='small'
+            required
+            fullWidth
+          />
+        </Box>
+      </Box>
+      <Box component='div' sx={stylesWrapperOneLine}>
+        <Box component='div'>
+          <TitleInput titleInput='Tarifas permitidas' />
+          <FormControl disabled={disabledModal} fullWidth>
+            <Select
+              multiple
+              value={optionTarifas}
+              onChange={handleChangeTarifas}
+              renderValue={selected => selected.join(', ')}
+              size='small'
+            >
+              {list.length > 0 ? (
+                list.map(item => {
+                  const { id, descripcion, status } = item;
 
-                  return (
+                  return status ? (
                     <MenuItem key={descripcion} value={descripcion} name={id}>
                       <Checkbox
                         checked={optionTarifas.indexOf(descripcion) > -1}
@@ -192,46 +181,48 @@ const ModalHabitaciones = ({ dataHabitaciones, dataSelectTarifas, dataDescriptio
                       />
                       <ListItemText primary={descripcion} />
                     </MenuItem>
-                  );
-                })}
-              </Select>
-            </FormControl>
-          </Box>
-        </Box>
-        <Box sx={stylesBoxButtons}>
-          {loadingBtn ? (
-            <ButtonLoader />
-          ) : (
-            <>
-              <Box component='div' sx={[stylesContainerBoxButtonAlign, stylesWidthInput]}>
-                <Button
-                  variant='contained'
-                  disabled={disableView}
-                  onClick={viewDisabled}
-                  size='large'
-                  startIcon={<EditIcon />}
-                  sx={stylesButtonSend}
-                >
-                  Modificar
-                </Button>
-              </Box>
-              <Box component='div' sx={stylesWidthInput}>
-                <Button
-                  variant='contained'
-                  disabled={disabledModal}
-                  onClick={updateDatos}
-                  size='large'
-                  startIcon={<UpdateIcon />}
-                  sx={stylesButtonSend}
-                >
-                  Actualizar
-                </Button>
-              </Box>
-            </>
-          )}
+                  ) : null;
+                })
+              ) : (
+                <MenuItem value=''>No se encontraron opciones</MenuItem>
+              )}
+            </Select>
+          </FormControl>
         </Box>
       </Box>
-    </Container>
+      {loadingBtn ? (
+        <Box component='div' sx={stylesButtonSend}>
+          <ButtonLoader />
+        </Box>
+      ) : (
+        <Box component='div' sx={stylesGridWrapperButtons}>
+          <Box component='div' sx={stylesButtonAlignEnd}>
+            <Button
+              variant='contained'
+              disabled={disableView}
+              onClick={viewDisabled}
+              size='large'
+              startIcon={<EditIcon />}
+              sx={stylesWidthAutoButtons}
+            >
+              Modificar
+            </Button>
+          </Box>
+          <Box component='div'>
+            <Button
+              variant='contained'
+              disabled={disabledModal}
+              onClick={updateDatos}
+              size='large'
+              startIcon={<UpdateIcon />}
+              sx={stylesWidthAutoButtons}
+            >
+              Actualizar
+            </Button>
+          </Box>
+        </Box>
+      )}
+    </Box>
   );
 };
 

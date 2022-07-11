@@ -1,7 +1,6 @@
 import React, { useState } from 'react';
 import {
   Box,
-  Container,
   IconButton,
   Modal,
   Table,
@@ -24,17 +23,17 @@ import useGetGeneralTable from '@/hooks/useGetGeneralTable';
 import putGeneralTable from '@/services/putGeneralTable';
 import { generalEndpoints } from '@/utilities/endpoints';
 import {
-  stylesContainerSection,
-  stylesModal,
-  stylesTableCellHeader,
+  stylesSuperpositionModal,
   stylesTableCellBody,
+  stylesTableCellHeader,
   stylesWidthHeightTable,
+  stylesWrapperBoxShadow,
 } from '@/pages/Habitaciones/Tarifa/TarifaStyles';
 
 const columns = [
-  { id: 'desc_tarifa', label: 'Descripción de la Tarifa', width: 437 },
-  { id: 'num_personas', label: 'No. de Personas', width: 250 },
-  { id: 'precio_aplicado', label: 'Precio Aplicado', width: 185 },
+  { id: 'desc_tarifa', label: 'Descripción de la Tarifa', width: 451 },
+  { id: 'num_personas', label: 'No. de Personas', width: 260 },
+  { id: 'precio_aplicado', label: 'Precio Aplicado', width: 195 },
   { id: 'acciones', label: 'Acciones', width: 80 },
 ];
 
@@ -116,7 +115,7 @@ const TableViewTarifas = () => {
   const { list, loading, error } = useGetGeneralTable(identifier, password, `${endpointTarifa}?status=true`);
 
   return (
-    <Container component='section' disableGutters sx={[stylesContainerSection, stylesWidthHeightTable]}>
+    <Box component='section' sx={[stylesWrapperBoxShadow, stylesWidthHeightTable]}>
       <TitlePage titlePage='Lista de Tarifas' />
       <Box component='div'>
         <TableContainer>
@@ -131,51 +130,57 @@ const TableViewTarifas = () => {
               </TableRow>
             </TableHead>
             <TableBody>
-              {loading && (
+              {loading ? (
                 <TableRow>
                   <TableCell align='center' colSpan={columns.length} sx={stylesTableCellBody}>
                     <SleketonLoader />
                   </TableCell>
                 </TableRow>
-              )}
-              {error && (
+              ) : error ? (
                 <TableRow>
                   <TableCell align='center' colSpan={columns.length} sx={stylesTableCellBody}>
                     <AlertGlobalTables messageError='Ah ocurrido un error al obtener los datos' />
                   </TableCell>
                 </TableRow>
+              ) : list.length > 0 ? (
+                list.slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage).map(item => {
+                  const { id, descripcion, personas, precio } = item;
+
+                  let no_personas = personas.map(persona => `${persona.num_persona}`);
+
+                  return (
+                    <TableRow key={id}>
+                      <TableCell sx={stylesTableCellBody}>{descripcion}</TableCell>
+                      <TableCell sx={stylesTableCellBody}>{no_personas.join('-')}</TableCell>
+                      <TableCell sx={stylesTableCellBody}>
+                        {precio.toLocaleString('es-MX', {
+                          style: 'currency',
+                          currency: 'MXN',
+                          minimumFractionDigits: 2,
+                        })}
+                      </TableCell>
+                      <TableCell sx={stylesTableCellBody}>
+                        <IconButton color='info' size='small' onClick={() => handleOpen(item)}>
+                          <VisibilityIcon />
+                        </IconButton>
+                        <IconButton color='error' size='small' onClick={() => deleteTarifa(id)}>
+                          <DeleteIcon />
+                        </IconButton>
+                      </TableCell>
+                    </TableRow>
+                  );
+                })
+              ) : (
+                <TableRow>
+                  <TableCell align='center' colSpan={columns.length} sx={stylesTableCellBody}>
+                    <AlertGlobalTables messageError='No se encontraron datos para esta tabla' />
+                  </TableCell>
+                </TableRow>
               )}
-              {list.slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage).map(item => {
-                const { id, descripcion, personas, precio } = item;
-
-                let no_personas = personas.map(persona => `${persona.num_persona}`);
-
-                return (
-                  <TableRow key={id}>
-                    <TableCell sx={stylesTableCellBody}>{descripcion}</TableCell>
-                    <TableCell sx={stylesTableCellBody}>{no_personas.join('-')}</TableCell>
-                    <TableCell sx={stylesTableCellBody}>
-                      {precio.toLocaleString('es-MX', {
-                        style: 'currency',
-                        currency: 'MXN',
-                        minimumFractionDigits: 2,
-                      })}
-                    </TableCell>
-                    <TableCell sx={stylesTableCellBody}>
-                      <IconButton color='info' size='small' onClick={() => handleOpen(item)}>
-                        <VisibilityIcon />
-                      </IconButton>
-                      <IconButton color='error' size='small' onClick={() => deleteTarifa(id)}>
-                        <DeleteIcon />
-                      </IconButton>
-                    </TableCell>
-                  </TableRow>
-                );
-              })}
             </TableBody>
           </Table>
         </TableContainer>
-        {loading || error ? null : (
+        {loading ? null : (
           <TablePagination
             rowsPerPageOptions={[]}
             component='div'
@@ -189,11 +194,11 @@ const TableViewTarifas = () => {
         )}
       </Box>
       <Modal open={openModal}>
-        <Box sx={stylesModal}>
+        <Box component='div' sx={stylesSuperpositionModal}>
           <ModalTarifa dataPersonas={dataSelectPersonas} dataTarifa={dataTarifa} handleCloseModal={handleCloseModal} />
         </Box>
       </Modal>
-    </Container>
+    </Box>
   );
 };
 

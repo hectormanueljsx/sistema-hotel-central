@@ -1,15 +1,5 @@
 import React, { useState } from 'react';
-import {
-  Box,
-  Button,
-  Checkbox,
-  Container,
-  FormControl,
-  ListItemText,
-  MenuItem,
-  Select,
-  TextField,
-} from '@mui/material';
+import { Box, Button, Checkbox, FormControl, ListItemText, MenuItem, Select, TextField } from '@mui/material';
 import SaveIcon from '@mui/icons-material/Save';
 import Swal from 'sweetalert2';
 
@@ -22,10 +12,9 @@ import { generalEndpoints } from '@/utilities/endpoints';
 import {
   stylesButtonSend,
   stylesCheckboxForm,
-  stylesContainerBox,
-  stylesContainerInput,
-  stylesContainerSection,
+  stylesGridWrapperForm,
   stylesWidthHeightForm,
+  stylesWrapperBoxShadow,
 } from '@/pages/Habitaciones/Habitaciones/HabitacionesStyles';
 
 const FormCreateHabitaciones = () => {
@@ -63,7 +52,7 @@ const FormCreateHabitaciones = () => {
       const HabitacionData = {
         num_hab: numHabitacion,
         tarifas: tarifaId,
-        descripcion: description,
+        descripcion: description.toUpperCase(),
       };
 
       setLoadingBtn(true);
@@ -102,10 +91,10 @@ const FormCreateHabitaciones = () => {
   const { list } = useGetGeneralTable(identifier, password, endpointTarifa);
 
   return (
-    <Container component='section' disableGutters sx={[stylesContainerSection, stylesWidthHeightForm]}>
+    <Box component='section' sx={[stylesWrapperBoxShadow, stylesWidthHeightForm]}>
       <TitlePage titlePage='Registro de Habitación' />
-      <Box component='form' sx={stylesContainerBox}>
-        <Box component='div' sx={stylesContainerInput}>
+      <Box component='form' sx={stylesGridWrapperForm}>
+        <Box component='div'>
           <TitleInput titleInput='No. de habitación' />
           <TextField
             onChange={handleInputChangeNumHabitacion}
@@ -119,7 +108,7 @@ const FormCreateHabitaciones = () => {
             autoFocus
           />
         </Box>
-        <Box component='div' sx={stylesContainerInput}>
+        <Box component='div'>
           <TitleInput titleInput='Descripción de la habitación' />
           <TextField
             onChange={handleChangeServices}
@@ -133,7 +122,7 @@ const FormCreateHabitaciones = () => {
             fullWidth
           />
         </Box>
-        <Box component='div' sx={stylesContainerInput}>
+        <Box component='div'>
           <TitleInput titleInput='Seleccione las tarifas permitidas' />
           <FormControl fullWidth>
             <Select
@@ -143,28 +132,40 @@ const FormCreateHabitaciones = () => {
               renderValue={selected => selected.join(', ')}
               size='small'
             >
-              {list.map(item => {
-                const { id, descripcion } = item;
+              {list.length > 0 ? (
+                list.map(item => {
+                  const { id, descripcion, status } = item;
 
-                return (
-                  <MenuItem key={descripcion} value={descripcion} name={id}>
-                    <Checkbox checked={optionTarifas.indexOf(descripcion) > -1} disableRipple sx={stylesCheckboxForm} />
-                    <ListItemText primary={descripcion} />
-                  </MenuItem>
-                );
-              })}
+                  return status ? (
+                    <MenuItem key={descripcion} value={descripcion} name={id}>
+                      <Checkbox
+                        checked={optionTarifas.indexOf(descripcion) > -1}
+                        disableRipple
+                        sx={stylesCheckboxForm}
+                      />
+                      <ListItemText primary={descripcion} />
+                    </MenuItem>
+                  ) : null;
+                })
+              ) : (
+                <MenuItem value=''>No se encontraron opciones</MenuItem>
+              )}
             </Select>
           </FormControl>
         </Box>
-        {loadingBtn ? (
+      </Box>
+      {loadingBtn ? (
+        <Box component='div' sx={stylesButtonSend}>
           <ButtonLoader />
-        ) : (
-          <Button variant='contained' onClick={sendDatos} size='large' startIcon={<SaveIcon />} sx={stylesButtonSend}>
+        </Box>
+      ) : (
+        <Box component='div' sx={stylesButtonSend}>
+          <Button variant='contained' onClick={sendDatos} size='large' startIcon={<SaveIcon />}>
             Registrar Habitación
           </Button>
-        )}
-      </Box>
-    </Container>
+        </Box>
+      )}
+    </Box>
   );
 };
 

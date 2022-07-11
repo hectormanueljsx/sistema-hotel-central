@@ -1,15 +1,5 @@
 import React, { useState } from 'react';
-import {
-  Box,
-  Button,
-  Container,
-  TextField,
-  MenuItem,
-  FormControl,
-  ListItemText,
-  Select,
-  Checkbox,
-} from '@mui/material';
+import { Box, Button, TextField, MenuItem, FormControl, ListItemText, Select, Checkbox } from '@mui/material';
 import UpdateIcon from '@mui/icons-material/Update';
 import EditIcon from '@mui/icons-material/Edit';
 import CloseIcon from '@mui/icons-material/Close';
@@ -22,17 +12,15 @@ import putGeneralTable from '@/services/putGeneralTable';
 import useGetGeneralTable from '@/hooks/useGetGeneralTable';
 import { generalEndpoints } from '@/utilities/endpoints';
 import {
+  stylesButtonAlignEnd,
+  stylesButtonCloseModal,
   stylesButtonSend,
-  stylesBoxButtons,
-  stylesBoxInputs,
-  stylesBoxModal,
   stylesCheckboxForm,
-  stylesContainerBoxButtonAlign,
-  stylesContainerInput,
-  stylesContainerSection,
-  stylesModalClose,
+  stylesGridWrapperButtons,
+  stylesGridWrapperModal,
+  stylesWidthAutoButtons,
   stylesWidthHeightModal,
-  stylesWidthInput,
+  stylesWrapperBoxShadow,
 } from '@/pages/Habitaciones/Tarifa/TarifaStyles';
 
 const ModalTarifa = ({ dataTarifa, handleCloseModal, dataPersonas }) => {
@@ -125,57 +113,55 @@ const ModalTarifa = ({ dataTarifa, handleCloseModal, dataPersonas }) => {
   const { list } = useGetGeneralTable(identifier, password, endpointPersona);
 
   return (
-    <Container component='section' disableGutters sx={[stylesContainerSection, stylesWidthHeightModal]}>
+    <Box component='section' sx={[stylesWrapperBoxShadow, stylesWidthHeightModal]}>
       <TitlePage titlePage='Actualización de Tarifa' />
-      <Box component='form' sx={stylesBoxModal}>
-        <Button variant='text' color='error' size='large' onClick={handleCloseModal} sx={stylesModalClose}>
-          <CloseIcon />
-        </Button>
-        <Box sx={stylesBoxInputs}>
-          <Box component='div' sx={[stylesContainerInput, stylesWidthInput]}>
-            <TitleInput titleInput='Descripción de la tarifa' />
-            <TextField
-              disabled={disabledModal}
-              defaultValue={dataTarifa.descripcion}
-              onChange={handleInputChange}
-              name='descripcion'
-              variant='outlined'
-              type='text'
-              margin='none'
-              size='small'
-              required
-              fullWidth
-            />
-          </Box>
-          <Box component='div' sx={[stylesContainerInput, stylesWidthInput]}>
-            <TitleInput titleInput='Precio de la tarifa' />
-            <TextField
-              disabled={disabledModal}
-              defaultValue={dataTarifa.precio}
-              onChange={handleInputChange}
-              name='precio'
-              variant='outlined'
-              type='number'
-              margin='none'
-              size='small'
-              required
-              fullWidth
-            />
-          </Box>
+      <Button variant='text' color='error' size='large' onClick={handleCloseModal} sx={stylesButtonCloseModal}>
+        <CloseIcon />
+      </Button>
+      <Box component='form' sx={stylesGridWrapperModal}>
+        <Box component='div'>
+          <TitleInput titleInput='Descripción de la tarifa' />
+          <TextField
+            disabled={disabledModal}
+            defaultValue={dataTarifa.descripcion}
+            onChange={handleInputChange}
+            name='descripcion'
+            variant='outlined'
+            type='text'
+            margin='none'
+            size='small'
+            required
+            fullWidth
+          />
         </Box>
-        <Box sx={stylesBoxInputs}>
-          <Box component='div' sx={[stylesContainerInput, stylesWidthInput]}>
-            <TitleInput titleInput='No. de personas' />
-            <FormControl disabled={disabledModal} fullWidth>
-              <Select
-                multiple
-                multiline
-                value={numPersonas}
-                onChange={handleChangeNumPersonas}
-                renderValue={selected => selected.join(', ')}
-                size='small'
-              >
-                {list.map(name => (
+        <Box component='div'>
+          <TitleInput titleInput='Precio de la tarifa' />
+          <TextField
+            disabled={disabledModal}
+            defaultValue={dataTarifa.precio}
+            onChange={handleInputChange}
+            name='precio'
+            variant='outlined'
+            type='number'
+            margin='none'
+            size='small'
+            required
+            fullWidth
+          />
+        </Box>
+        <Box component='div'>
+          <TitleInput titleInput='No. de personas' />
+          <FormControl disabled={disabledModal} fullWidth>
+            <Select
+              multiple
+              multiline
+              value={numPersonas}
+              onChange={handleChangeNumPersonas}
+              renderValue={selected => selected.join(', ')}
+              size='small'
+            >
+              {list.length > 0 ? (
+                list.map(name => (
                   <MenuItem key={name.id} value={name.num_persona}>
                     <Checkbox
                       checked={numPersonas.indexOf(name.num_persona) > -1}
@@ -184,45 +170,47 @@ const ModalTarifa = ({ dataTarifa, handleCloseModal, dataPersonas }) => {
                     />
                     <ListItemText primary={name.num_persona} />
                   </MenuItem>
-                ))}
-              </Select>
-            </FormControl>
-          </Box>
-        </Box>
-        <Box sx={stylesBoxButtons}>
-          {loadingBtn ? (
-            <ButtonLoader />
-          ) : (
-            <>
-              <Box component='div' sx={[stylesContainerBoxButtonAlign, stylesWidthInput]}>
-                <Button
-                  variant='contained'
-                  disabled={disableView}
-                  onClick={viewDisabled}
-                  size='large'
-                  startIcon={<EditIcon />}
-                  sx={stylesButtonSend}
-                >
-                  Modificar
-                </Button>
-              </Box>
-              <Box component='div' sx={stylesWidthInput}>
-                <Button
-                  variant='contained'
-                  disabled={disabledModal}
-                  onClick={updateDatos}
-                  size='large'
-                  startIcon={<UpdateIcon />}
-                  sx={stylesButtonSend}
-                >
-                  Actualizar
-                </Button>
-              </Box>
-            </>
-          )}
+                ))
+              ) : (
+                <MenuItem value=''>No se encontraron opciones</MenuItem>
+              )}
+            </Select>
+          </FormControl>
         </Box>
       </Box>
-    </Container>
+      {loadingBtn ? (
+        <Box component='div' sx={stylesButtonSend}>
+          <ButtonLoader />
+        </Box>
+      ) : (
+        <Box component='div' sx={stylesGridWrapperButtons}>
+          <Box component='div' sx={stylesButtonAlignEnd}>
+            <Button
+              variant='contained'
+              disabled={disableView}
+              onClick={viewDisabled}
+              size='large'
+              startIcon={<EditIcon />}
+              sx={stylesWidthAutoButtons}
+            >
+              Modificar
+            </Button>
+          </Box>
+          <Box component='div'>
+            <Button
+              variant='contained'
+              disabled={disabledModal}
+              onClick={updateDatos}
+              size='large'
+              startIcon={<UpdateIcon />}
+              sx={stylesWidthAutoButtons}
+            >
+              Actualizar
+            </Button>
+          </Box>
+        </Box>
+      )}
+    </Box>
   );
 };
 

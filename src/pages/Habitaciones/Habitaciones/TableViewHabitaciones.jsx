@@ -1,7 +1,6 @@
 import React, { useState } from 'react';
 import {
   Box,
-  Container,
   IconButton,
   Modal,
   Table,
@@ -21,17 +20,17 @@ import ModalHabitaciones from '@/pages/Habitaciones/Habitaciones/ModalHabitacion
 import useGetGeneralTable from '@/hooks/useGetGeneralTable';
 import { generalEndpoints } from '@/utilities/endpoints';
 import {
-  stylesContainerSection,
-  stylesModal,
-  stylesTableCellHeader,
+  stylesSuperpositionModal,
   stylesTableCellBody,
+  stylesTableCellHeader,
   stylesWidthHeightTable,
+  stylesWrapperBoxShadow,
 } from '@/pages/Habitaciones/Habitaciones/HabitacionesStyles';
 
 const columns = [
-  { id: 'num', label: 'No. de Habitación', width: 200 },
-  { id: 'descrip', label: 'Descripción de la Habitación', width: 677 },
-  { id: 'acciones', label: 'Acciones', width: 75 },
+  { id: 'num', label: 'No. de Habitación', width: 210 },
+  { id: 'descrip', label: 'Descripción de la Habitación', width: 696 },
+  { id: 'acciones', label: 'Acciones', width: 80 },
 ];
 let dataDescription = '';
 let dataSelectTarifas = [];
@@ -67,7 +66,7 @@ const TableViewHabitaciones = () => {
   const { list, loading, error } = useGetGeneralTable(identifier, password, endpointHabitacion);
 
   return (
-    <Container component='section' disableGutters sx={[stylesContainerSection, stylesWidthHeightTable]}>
+    <Box component='section' sx={[stylesWrapperBoxShadow, stylesWidthHeightTable]}>
       <TitlePage titlePage='Lista de Habitaciones' />
       <Box component='div'>
         <TableContainer>
@@ -82,39 +81,45 @@ const TableViewHabitaciones = () => {
               </TableRow>
             </TableHead>
             <TableBody>
-              {loading && (
+              {loading ? (
                 <TableRow>
                   <TableCell align='center' colSpan={columns.length} sx={stylesTableCellBody}>
                     <SleketonLoader />
                   </TableCell>
                 </TableRow>
-              )}
-              {error && (
+              ) : error ? (
                 <TableRow>
                   <TableCell align='center' colSpan={columns.length} sx={stylesTableCellBody}>
                     <AlertGlobalTables messageError='Ah ocurrido un error al obtener los datos' />
                   </TableCell>
                 </TableRow>
-              )}
-              {list.slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage).map(item => {
-                const { id, num_hab, descripcion } = item;
+              ) : list.length > 0 ? (
+                list.slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage).map(item => {
+                  const { id, num_hab, descripcion } = item;
 
-                return (
-                  <TableRow key={id}>
-                    <TableCell sx={stylesTableCellBody}>{num_hab}</TableCell>
-                    <TableCell sx={stylesTableCellBody}>{descripcion}</TableCell>
-                    <TableCell sx={stylesTableCellBody}>
-                      <IconButton color='info' size='small' onClick={() => handleOpen(item)}>
-                        <VisibilityIcon />
-                      </IconButton>
-                    </TableCell>
-                  </TableRow>
-                );
-              })}
+                  return (
+                    <TableRow key={id}>
+                      <TableCell sx={stylesTableCellBody}>{num_hab}</TableCell>
+                      <TableCell sx={stylesTableCellBody}>{descripcion}</TableCell>
+                      <TableCell sx={stylesTableCellBody}>
+                        <IconButton color='info' size='small' onClick={() => handleOpen(item)}>
+                          <VisibilityIcon />
+                        </IconButton>
+                      </TableCell>
+                    </TableRow>
+                  );
+                })
+              ) : (
+                <TableRow>
+                  <TableCell align='center' colSpan={columns.length} sx={stylesTableCellBody}>
+                    <AlertGlobalTables messageError='No se encontraron datos para esta tabla' />
+                  </TableCell>
+                </TableRow>
+              )}
             </TableBody>
           </Table>
         </TableContainer>
-        {loading || error ? null : (
+        {loading ? null : (
           <TablePagination
             rowsPerPageOptions={[]}
             component='div'
@@ -128,7 +133,7 @@ const TableViewHabitaciones = () => {
         )}
       </Box>
       <Modal open={openModal}>
-        <Box sx={stylesModal}>
+        <Box component='div' sx={stylesSuperpositionModal}>
           <ModalHabitaciones
             dataHabitaciones={dataHabitaciones}
             dataDescription={dataDescription}
@@ -137,7 +142,7 @@ const TableViewHabitaciones = () => {
           />
         </Box>
       </Modal>
-    </Container>
+    </Box>
   );
 };
 
