@@ -1,7 +1,6 @@
 import React, { useState } from 'react';
 import {
   Box,
-  Container,
   IconButton,
   Table,
   TableBody,
@@ -18,19 +17,18 @@ import TitlePage from '@/components/Title/TitlePage';
 import SleketonLoader from '@/components/Loader/SleketonLoader';
 import AlertGlobalTables from '@/components/Alert/AlertGlobalTables';
 import {
-  stylesContainerSection,
-  stylesTableCellHeader,
   stylesTableCellBody,
+  stylesTableCellHeader,
   stylesWidthHeightTable,
+  stylesWrapperBoxShadow,
 } from '@/pages/Reservas/HistoricoRegistro/HistoricoRegistroStyles';
 
 const columns = [
-  { id: 'num_registro', label: 'No. de Registro', width: 120 },
-  { id: 'llegada', label: 'Fecha de Llegada', width: 175 },
-  { id: 'salida', label: 'Fecha de Salida', width: 175 },
-  { id: 'cliente', label: 'Nombre del Cliente', width: 277 },
-  { id: 'estado', label: 'Estado', width: 130 },
-  { id: 'acciones', label: 'Acciones', width: 75 },
+  { id: 'llegada', label: 'Fecha de Llegada', width: 180 },
+  { id: 'salida', label: 'Fecha de Salida', width: 180 },
+  { id: 'cliente', label: 'Nombre del Cliente', width: 396 },
+  { id: 'estado', label: 'Estado', width: 150 },
+  { id: 'acciones', label: 'Acciones', width: 80 },
 ];
 
 const TableViewHistoricoEgresos = ({ search, dataRegistro, loading, error }) => {
@@ -44,11 +42,14 @@ const TableViewHistoricoEgresos = ({ search, dataRegistro, loading, error }) => 
     setPage(0);
   };
 
-  const filterConcepto = dataRegistro.filter(item => item.cliente.nombre.toUpperCase().includes(search.toUpperCase()));
+  const filterCliente =
+    dataRegistro.length > 0
+      ? dataRegistro.filter(item => item.cliente.nombre.toUpperCase().includes(search.toUpperCase()))
+      : [];
 
   return (
-    <Container component='section' disableGutters sx={[stylesContainerSection, stylesWidthHeightTable]}>
-      <TitlePage titlePage='Histórico de Registros' />
+    <Box component='section' sx={[stylesWrapperBoxShadow, stylesWidthHeightTable]}>
+      <TitlePage titlePage='Lista de Históricos de Registros' />
       <Box component='div'>
         <TableContainer>
           <Table>
@@ -62,58 +63,63 @@ const TableViewHistoricoEgresos = ({ search, dataRegistro, loading, error }) => 
               </TableRow>
             </TableHead>
             <TableBody>
-              {loading && (
+              {loading ? (
                 <TableRow>
                   <TableCell align='center' colSpan={columns.length} sx={stylesTableCellBody}>
                     <SleketonLoader />
                   </TableCell>
                 </TableRow>
-              )}
-              {error && (
+              ) : error ? (
                 <TableRow>
                   <TableCell align='center' colSpan={columns.length} sx={stylesTableCellBody}>
                     <AlertGlobalTables messageError='Ah ocurrido un error al obtener los datos' />
                   </TableCell>
                 </TableRow>
-              )}
-              {filterConcepto.slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage).map(item => {
-                const {
-                  id,
-                  fecha,
-                  fecha_salida,
-                  cliente: { nombre },
-                  estado,
-                  hora_llegada,
-                  hora_salida,
-                } = item;
+              ) : filterCliente.length > 0 ? (
+                filterCliente.slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage).map(item => {
+                  const {
+                    id,
+                    fecha,
+                    fecha_salida,
+                    cliente: { nombre },
+                    estado,
+                    hora_llegada,
+                    hora_salida,
+                  } = item;
 
-                return (
-                  <TableRow key={id} sx={estado ? { backgroundColor: '#d4edda' } : { backgroundColor: '#fff3cd' }}>
-                    <TableCell sx={stylesTableCellBody}>{id}</TableCell>
-                    <TableCell sx={stylesTableCellBody}>{`${fecha} ${moment(hora_llegada, 'hh:mm:ss').format(
-                      'hh:mm:ss a',
-                    )}`}</TableCell>
-                    <TableCell sx={stylesTableCellBody}>{`${fecha_salida} ${moment(hora_salida, 'hh:mm:ss').format(
-                      'hh:mm:ss a',
-                    )}`}</TableCell>
-                    <TableCell sx={stylesTableCellBody}>{nombre}</TableCell>
-                    <TableCell sx={stylesTableCellBody}>{estado ? 'CHECK-OUT' : 'SIN CHECK-OUT'}</TableCell>
-                    <TableCell sx={stylesTableCellBody}>
-                      <IconButton color='info' size='small'>
-                        <VisibilityIcon />
-                      </IconButton>
-                    </TableCell>
-                  </TableRow>
-                );
-              })}
+                  return (
+                    <TableRow key={id} sx={estado ? { backgroundColor: '#d4edda' } : { backgroundColor: '#fff3cd' }}>
+                      <TableCell sx={stylesTableCellBody}>{`${fecha} ${moment(hora_llegada, 'hh:mm:ss').format(
+                        'hh:mm:ss a',
+                      )}`}</TableCell>
+                      <TableCell sx={stylesTableCellBody}>{`${fecha_salida} ${moment(hora_salida, 'hh:mm:ss').format(
+                        'hh:mm:ss a',
+                      )}`}</TableCell>
+                      <TableCell sx={stylesTableCellBody}>{nombre}</TableCell>
+                      <TableCell sx={stylesTableCellBody}>{estado ? 'CHECK-OUT' : 'SIN CHECK-OUT'}</TableCell>
+                      <TableCell sx={stylesTableCellBody}>
+                        <IconButton color='info' size='small'>
+                          <VisibilityIcon />
+                        </IconButton>
+                      </TableCell>
+                    </TableRow>
+                  );
+                })
+              ) : (
+                <TableRow>
+                  <TableCell align='center' colSpan={columns.length} sx={stylesTableCellBody}>
+                    <AlertGlobalTables messageError='No se encontraron datos para esta tabla' />
+                  </TableCell>
+                </TableRow>
+              )}
             </TableBody>
           </Table>
         </TableContainer>
-        {loading || error ? null : (
+        {loading ? null : (
           <TablePagination
             rowsPerPageOptions={[]}
             component='div'
-            count={filterConcepto.length}
+            count={filterCliente.length}
             rowsPerPage={rowsPerPage}
             page={page}
             onPageChange={handleChangePage}
@@ -122,7 +128,7 @@ const TableViewHistoricoEgresos = ({ search, dataRegistro, loading, error }) => 
           />
         )}
       </Box>
-    </Container>
+    </Box>
   );
 };
 

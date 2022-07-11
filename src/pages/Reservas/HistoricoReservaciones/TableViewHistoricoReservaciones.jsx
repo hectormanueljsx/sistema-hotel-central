@@ -1,7 +1,6 @@
 import React, { useState } from 'react';
 import {
   Box,
-  Container,
   IconButton,
   Table,
   TableBody,
@@ -17,19 +16,18 @@ import TitlePage from '@/components/Title/TitlePage';
 import SleketonLoader from '@/components/Loader/SleketonLoader';
 import AlertGlobalTables from '@/components/Alert/AlertGlobalTables';
 import {
-  stylesContainerSection,
-  stylesTableCellHeader,
   stylesTableCellBody,
+  stylesTableCellHeader,
   stylesWidthHeightTable,
+  stylesWrapperBoxShadow,
 } from '@/pages/Reservas/HistoricoReservaciones/HistoricoReservacionStyles';
 
 const columns = [
-  { id: 'num_registro', label: 'No. de Registro', width: 120 },
-  { id: 'llegada', label: 'Fecha de Llegada', width: 175 },
-  { id: 'salida', label: 'Fecha de Salida', width: 175 },
-  { id: 'cliente', label: 'Nombre del Cliente', width: 277 },
-  { id: 'estado', label: 'Estado', width: 130 },
-  { id: 'acciones', label: 'Acciones', width: 75 },
+  { id: 'llegada', label: 'Fecha de Llegada', width: 160 },
+  { id: 'salida', label: 'Fecha de Salida', width: 160 },
+  { id: 'cliente', label: 'Nombre del Cliente', width: 436 },
+  { id: 'estado', label: 'Estado', width: 150 },
+  { id: 'acciones', label: 'Acciones', width: 80 },
 ];
 
 const TableViewHistoricoReservaciones = ({ search, dataReservacion, loading, error }) => {
@@ -43,13 +41,14 @@ const TableViewHistoricoReservaciones = ({ search, dataReservacion, loading, err
     setPage(0);
   };
 
-  const filterCliente = dataReservacion.filter(item =>
-    item.cliente.nombre.toUpperCase().includes(search.toUpperCase()),
-  );
+  const filterCliente =
+    dataReservacion.length > 0
+      ? dataReservacion.filter(item => item.cliente.nombre.toUpperCase().includes(search.toUpperCase()))
+      : [];
 
   return (
-    <Container component='section' disableGutters sx={[stylesContainerSection, stylesWidthHeightTable]}>
-      <TitlePage titlePage='Histórico de Reservaciones' />
+    <Box component='section' sx={[stylesWrapperBoxShadow, stylesWidthHeightTable]}>
+      <TitlePage titlePage='Lista de Históricos de Reservaciones' />
       <Box component='div'>
         <TableContainer>
           <Table>
@@ -63,57 +62,62 @@ const TableViewHistoricoReservaciones = ({ search, dataReservacion, loading, err
               </TableRow>
             </TableHead>
             <TableBody>
-              {loading && (
+              {loading ? (
                 <TableRow>
                   <TableCell align='center' colSpan={columns.length} sx={stylesTableCellBody}>
                     <SleketonLoader />
                   </TableCell>
                 </TableRow>
-              )}
-              {error && (
+              ) : error ? (
                 <TableRow>
                   <TableCell align='center' colSpan={columns.length} sx={stylesTableCellBody}>
                     <AlertGlobalTables messageError='Ah ocurrido un error al obtener los datos' />
                   </TableCell>
                 </TableRow>
-              )}
-              {filterCliente.slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage).map(item => {
-                const {
-                  id,
-                  fecha,
-                  fecha_salida,
-                  cliente: { nombre },
-                  est,
-                } = item;
+              ) : filterCliente.length > 0 ? (
+                filterCliente.slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage).map(item => {
+                  const {
+                    id,
+                    fecha,
+                    fecha_salida,
+                    cliente: { nombre },
+                    est,
+                  } = item;
 
-                return (
-                  <TableRow
-                    key={id}
-                    sx={
-                      est === 'CHECK-OUT'
-                        ? { backgroundColor: '#d4edda' }
-                        : est === 'SIN CHECK-OUT'
-                        ? { backgroundColor: '#fff3cd' }
-                        : { backgroundColor: '#f8d7da' }
-                    }
-                  >
-                    <TableCell sx={stylesTableCellBody}>{id}</TableCell>
-                    <TableCell sx={stylesTableCellBody}>{fecha}</TableCell>
-                    <TableCell sx={stylesTableCellBody}>{fecha_salida}</TableCell>
-                    <TableCell sx={stylesTableCellBody}>{nombre}</TableCell>
-                    <TableCell sx={stylesTableCellBody}>{est}</TableCell>
-                    <TableCell sx={stylesTableCellBody}>
-                      <IconButton color='info' size='small'>
-                        <VisibilityIcon />
-                      </IconButton>
-                    </TableCell>
-                  </TableRow>
-                );
-              })}
+                  return (
+                    <TableRow
+                      key={id}
+                      sx={
+                        est === 'CHECK-OUT'
+                          ? { backgroundColor: '#d4edda' }
+                          : est === 'SIN CHECK-OUT'
+                          ? { backgroundColor: '#fff3cd' }
+                          : { backgroundColor: '#f8d7da' }
+                      }
+                    >
+                      <TableCell sx={stylesTableCellBody}>{fecha}</TableCell>
+                      <TableCell sx={stylesTableCellBody}>{fecha_salida}</TableCell>
+                      <TableCell sx={stylesTableCellBody}>{nombre}</TableCell>
+                      <TableCell sx={stylesTableCellBody}>{est}</TableCell>
+                      <TableCell sx={stylesTableCellBody}>
+                        <IconButton color='info' size='small'>
+                          <VisibilityIcon />
+                        </IconButton>
+                      </TableCell>
+                    </TableRow>
+                  );
+                })
+              ) : (
+                <TableRow>
+                  <TableCell align='center' colSpan={columns.length} sx={stylesTableCellBody}>
+                    <AlertGlobalTables messageError='No se encontraron datos para esta tabla' />
+                  </TableCell>
+                </TableRow>
+              )}
             </TableBody>
           </Table>
         </TableContainer>
-        {loading || error ? null : (
+        {loading ? null : (
           <TablePagination
             rowsPerPageOptions={[]}
             component='div'
@@ -126,7 +130,7 @@ const TableViewHistoricoReservaciones = ({ search, dataReservacion, loading, err
           />
         )}
       </Box>
-    </Container>
+    </Box>
   );
 };
 

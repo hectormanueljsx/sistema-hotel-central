@@ -1,9 +1,9 @@
 import React, { useState } from 'react';
-import { Box, Container } from '@mui/material';
+import { Box } from '@mui/material';
 
 import FormSearchReservaciones from '@/pages/Reservas/HistoricoReservaciones/FormSearchReservaciones';
 import TableViewHistoricoReservaciones from '@/pages/Reservas/HistoricoReservaciones/TableViewHistoricoReservaciones';
-import { stylesBoxHistoricoReservacion } from '@/pages/Reservas/HistoricoReservaciones/HistoricoReservacionStyles';
+import { stylesWrapperGeneral } from '@/pages/Reservas/HistoricoReservaciones/HistoricoReservacionStyles';
 
 const HistoricoReservaciones = () => {
   const [search, setSearch] = useState('');
@@ -12,23 +12,21 @@ const HistoricoReservaciones = () => {
   const [error, setError] = useState(false);
 
   return (
-    <Container component='section' disableGutters maxWidth='xl'>
-      <Box sx={stylesBoxHistoricoReservacion}>
-        <FormSearchReservaciones
-          setSearch={setSearch}
-          dataReservacion={dataReservacion}
-          setDataReservacion={setDataReservacion}
-          setLoading={setLoading}
-          setError={setError}
-        />
-        <TableViewHistoricoReservaciones
-          search={search}
-          dataReservacion={dataReservacion}
-          loading={loading}
-          error={error}
-        />
-      </Box>
-    </Container>
+    <Box component='section' sx={stylesWrapperGeneral}>
+      <FormSearchReservaciones
+        setSearch={setSearch}
+        dataReservacion={dataReservacion}
+        setDataReservacion={setDataReservacion}
+        setLoading={setLoading}
+        setError={setError}
+      />
+      <TableViewHistoricoReservaciones
+        search={search}
+        dataReservacion={dataReservacion}
+        loading={loading}
+        error={error}
+      />
+    </Box>
   );
 };
 
