@@ -1,29 +1,25 @@
 import { css } from '@emotion/react';
 
-export const stylesBoxHomeDashboard = css`
+export const stylesWrapperGeneral = css`
   display: flex;
-  justify-content: center;
+  flex-direction: column;
+  gap: 32px;
+  width: 1432px;
+  height: max-content;
+  margin: 32px auto;
+`;
+
+export const stylesWrapperInternal = css`
+  display: flex;
+  flex-direction: row;
   gap: 32px;
 `;
 
-export const stylesContainerSection = css`
+export const stylesWrapperBoxShadow = css`
   background-color: #ffffff;
   border-radius: 4px;
   box-shadow: 0px 0px 5px rgba(0, 0, 0, 0.25);
-  padding: 24px;
-  margin-top: 40px;
-  margin-bottom: 40px;
-  margin-left: 0;
-  margin-right: 0;
-`;
-
-export const stylesGridBox = css`
-  display: grid;
-  grid-template-columns: repeat(8, 1fr);
-`;
-
-export const stylesFlexBox = css`
-  flex-direction: column;
+  padding: 16px;
 `;
 
 export const stylesWidthHeightPaletteColors = css`
@@ -31,18 +27,29 @@ export const stylesWidthHeightPaletteColors = css`
   height: max-content;
 `;
 
-export const stylesTitleAvailable = css`
+export const stylesGridWrapperPaletteColors = css`
+  display: grid;
+  grid-template-columns: repeat(8, 1fr);
+  grid-template-rows: 50px 35px;
+`;
+
+export const stylesBackgroundHeaderAvailable = css`
+  background-color: #49afcd;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 100%;
+  height: 100%;
+`;
+
+export const stylesTextTitleAvailable = css`
   color: #ffffff;
   font-weight: 500;
   text-align: center;
 `;
 
-export const stylesHeaderAvailable = css`
-  background-color: #49afcd;
-  height: 50px;
-`;
-
-export const stylesHeightBoxColor = css`
+export const stylesWidthHeightColor = css`
+  width: 100%;
   height: 35px;
 `;
 

@@ -1,16 +1,16 @@
 import React from 'react';
-import { Box, Container } from '@mui/material';
+import { Box } from '@mui/material';
 
 import ColorBarAvailables from '@/pages/Dashboard/HomeDashboard/ColorBarAvailables';
-import { stylesBoxHomeDashboard } from '@/pages/Dashboard/HomeDashboard/HomeDashboardStyles';
+import { stylesWrapperGeneral, stylesWrapperInternal } from '@/pages/Dashboard/HomeDashboard/HomeDashboardStyles';
 
 const HomeDashboard = () => {
   return (
-    <Container component='section' disableGutters maxWidth='xl'>
-      <Box sx={stylesBoxHomeDashboard}>
+    <Box component='section' sx={stylesWrapperGeneral}>
+      <Box component='section' sx={stylesWrapperInternal}>
         <ColorBarAvailables />
       </Box>
-    </Container>
+    </Box>
   );
 };
 
