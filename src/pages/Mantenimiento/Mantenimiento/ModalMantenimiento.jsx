@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { Box, Button, Container, FormControl, MenuItem, Select, TextField } from '@mui/material';
+import { Box, Button, FormControl, MenuItem, Select, TextField } from '@mui/material';
 import UpdateIcon from '@mui/icons-material/Update';
 import EditIcon from '@mui/icons-material/Edit';
 import CloseIcon from '@mui/icons-material/Close';
@@ -11,16 +11,14 @@ import ButtonLoader from '@/components/Loader/ButtonLoader';
 import putGeneralTable from '@/services/putGeneralTable';
 import { generalEndpoints } from '@/utilities/endpoints';
 import {
+  stylesButtonAlignEnd,
+  stylesButtonCloseModal,
   stylesButtonSend,
-  stylesBoxButtons,
-  stylesBoxInputs,
-  stylesBoxModal,
-  stylesContainerBoxButtonAlign,
-  stylesContainerInput,
-  stylesContainerSection,
-  stylesModalClose,
+  stylesGridWrapperButtons,
+  stylesGridWrapperModal,
+  stylesWidthAutoButtons,
   stylesWidthHeightModal,
-  stylesWidthInput,
+  stylesWrapperBoxShadow,
 } from '@/pages/Mantenimiento/Mantenimiento/MantenimientoStyles';
 
 const ModalMantenimiento = ({ habitacion, subcategoria, dataMantenimiento, handleCloseModal }) => {
@@ -74,7 +72,7 @@ const ModalMantenimiento = ({ habitacion, subcategoria, dataMantenimiento, handl
         estado: status,
         costo: datos.precio,
         reporta: datos.reporta,
-        trabajador: datos.trabajador,
+        trabajador: datos.trabajador ? datos.trabajador.toUpperCase() : datos.trabajador,
         habitacion: { id: idHabitacion },
         subcategoria: { id: idSubcategoria },
       };
@@ -127,82 +125,79 @@ const ModalMantenimiento = ({ habitacion, subcategoria, dataMantenimiento, handl
   };
 
   return (
-    <Container component='section' disableGutters sx={[stylesContainerSection, stylesWidthHeightModal]}>
+    <Box component='section' sx={[stylesWrapperBoxShadow, stylesWidthHeightModal]}>
       <TitlePage titlePage='Actualización de Mantenimiento' />
-      <Box component='form' sx={stylesBoxModal}>
-        <Button variant='text' color='error' size='large' onClick={handleCloseModal} sx={stylesModalClose}>
-          <CloseIcon />
-        </Button>
-        <Box sx={stylesBoxInputs}>
-          <Box component='div' sx={[stylesContainerInput, stylesWidthInput]}>
-            <TitleInput titleInput='Motivo' />
-            <TextField
-              defaultValue={dataMantenimiento.motivo}
-              onChange={handleInputChange}
-              name='motivo'
-              variant='outlined'
-              type='text'
-              margin='none'
-              size='small'
-              disabled={disabledModal}
-              required
-              fullWidth
-            />
-          </Box>
-          <Box component='div' sx={[stylesContainerInput, stylesWidthInput]}>
-            <TitleInput titleInput='Fecha de inicio' />
-            <TextField
-              defaultValue={dataMantenimiento.f_inicio}
-              onChange={handleInputChange}
-              name='fechaInicio'
-              variant='outlined'
-              type='date'
-              margin='none'
-              size='small'
-              disabled={disabledModal}
-              required
-              fullWidth
-            />
-          </Box>
+      <Button variant='text' color='error' size='large' onClick={handleCloseModal} sx={stylesButtonCloseModal}>
+        <CloseIcon />
+      </Button>
+      <Box component='form' sx={stylesGridWrapperModal}>
+        <Box component='div'>
+          <TitleInput titleInput='Motivo' />
+          <TextField
+            defaultValue={dataMantenimiento.motivo}
+            onChange={handleInputChange}
+            name='motivo'
+            variant='outlined'
+            type='text'
+            margin='none'
+            size='small'
+            disabled={disabledModal}
+            multiline
+            required
+            fullWidth
+          />
         </Box>
-        <Box sx={stylesBoxInputs}>
-          <Box component='div' sx={[stylesContainerInput, stylesWidthInput]}>
-            <TitleInput titleInput='Fecha de termino' />
-            <TextField
-              defaultValue={dataMantenimiento.f_fin}
-              onChange={handleInputChange}
-              name='fechafin'
-              variant='outlined'
-              type='date'
-              margin='none'
-              size='small'
-              disabled={disabledModal}
-              required
-              fullWidth
-            />
-          </Box>
-          <Box component='div' sx={[stylesContainerInput, stylesWidthInput]}>
-            <TitleInput titleInput='Precio' />
-            <TextField
-              defaultValue={dataMantenimiento.costo}
-              onChange={handleInputChange}
-              name='precio'
-              variant='outlined'
-              type='number'
-              margin='none'
-              size='small'
-              disabled={disabledModal}
-              required
-              fullWidth
-            />
-          </Box>
+        <Box component='div'>
+          <TitleInput titleInput='Fecha de inicio' />
+          <TextField
+            defaultValue={dataMantenimiento.f_inicio}
+            onChange={handleInputChange}
+            name='fechaInicio'
+            variant='outlined'
+            type='date'
+            margin='none'
+            size='small'
+            disabled={disabledModal}
+            required
+            fullWidth
+          />
         </Box>
-        <Box sx={stylesBoxInputs}>
-          <Box component='div' sx={[stylesContainerInput, stylesWidthInput]}>
-            <TitleInput titleInput='Habitación' />
-            <FormControl fullWidth disabled={disabledModal}>
-              <Select size='small' value={idHabitacion} onChange={handleHabitacion}>
-                {habitacion.map(item => {
+        <Box component='div'>
+          <TitleInput titleInput='Fecha de termino' />
+          <TextField
+            defaultValue={dataMantenimiento.f_fin}
+            onChange={handleInputChange}
+            name='fechafin'
+            variant='outlined'
+            type='date'
+            margin='none'
+            size='small'
+            disabled={disabledModal}
+            required
+            fullWidth
+          />
+        </Box>
+        <Box component='div'>
+          <TitleInput titleInput='Precio' />
+          <TextField
+            defaultValue={dataMantenimiento.costo}
+            onChange={handleInputChange}
+            name='precio'
+            variant='outlined'
+            type='number'
+            margin='none'
+            size='small'
+            disabled={disabledModal}
+            required
+            fullWidth
+          />
+        </Box>
+        <Box component='div'>
+          <TitleInput titleInput='Habitación' />
+          <FormControl fullWidth disabled={disabledModal}>
+            <Select size='small' value={idHabitacion} onChange={handleHabitacion}>
+              {habitacion.length > 0 ? (
+                habitacion.map(item => {
                   const { num_hab, id } = item;
 
                   return (
@@ -210,63 +205,63 @@ const ModalMantenimiento = ({ habitacion, subcategoria, dataMantenimiento, handl
                       {num_hab}
                     </MenuItem>
                   );
-                })}
-              </Select>
-            </FormControl>
-          </Box>
-          <Box component='div' sx={[stylesContainerInput, stylesWidthInput]}>
-            <TitleInput titleInput='Estado' />
-            <TextField
-              defaultValue={dataMantenimiento.estado}
-              name='estado'
-              variant='outlined'
-              type='text'
-              margin='none'
-              size='small'
-              disabled={true}
-              required
-              fullWidth
-            />
-          </Box>
+                })
+              ) : (
+                <MenuItem value=''>No se encontraron opciones</MenuItem>
+              )}
+            </Select>
+          </FormControl>
         </Box>
-        <Box sx={stylesBoxInputs}>
-          <Box component='div' sx={[stylesContainerInput, stylesWidthInput]}>
-            <TitleInput titleInput='Realizado por' />
-            <TextField
-              defaultValue={dataMantenimiento.trabajador}
-              onChange={handleInputChange}
-              name='trabajador'
-              variant='outlined'
-              type='text'
-              margin='none'
-              size='small'
-              disabled={disabledModal}
-              required
-              fullWidth
-            />
-          </Box>
-          <Box component='div' sx={[stylesContainerInput, stylesWidthInput]}>
-            <TitleInput titleInput='Reportado por' />
-            <TextField
-              defaultValue={dataMantenimiento.reporta}
-              onChange={handleInputChange}
-              name='reporta'
-              variant='outlined'
-              type='text'
-              margin='none'
-              size='small'
-              disabled={disabledModal}
-              required
-              fullWidth
-            />
-          </Box>
+        <Box component='div'>
+          <TitleInput titleInput='Estado' />
+          <TextField
+            defaultValue={dataMantenimiento.estado}
+            name='estado'
+            variant='outlined'
+            type='text'
+            margin='none'
+            size='small'
+            disabled={true}
+            required
+            fullWidth
+          />
         </Box>
-        <Box sx={stylesBoxInputs}>
-          <Box component='div' sx={[stylesContainerInput, stylesWidthInput]}>
-            <TitleInput titleInput='Categoría' />
-            <FormControl fullWidth disabled={disabledModal}>
-              <Select size='small' value={idSubcategoria} onChange={handleSubcategoria}>
-                {subcategoria.map(item => {
+        <Box component='div'>
+          <TitleInput titleInput='Realizado por' />
+          <TextField
+            defaultValue={dataMantenimiento.trabajador}
+            onChange={handleInputChange}
+            name='trabajador'
+            variant='outlined'
+            type='text'
+            margin='none'
+            size='small'
+            disabled={disabledModal}
+            required
+            fullWidth
+          />
+        </Box>
+        <Box component='div'>
+          <TitleInput titleInput='Reportado por' />
+          <TextField
+            defaultValue={dataMantenimiento.reporta}
+            onChange={handleInputChange}
+            name='reporta'
+            variant='outlined'
+            type='text'
+            margin='none'
+            size='small'
+            disabled={disabledModal}
+            required
+            fullWidth
+          />
+        </Box>
+        <Box component='div'>
+          <TitleInput titleInput='Categoría' />
+          <FormControl fullWidth disabled={disabledModal}>
+            <Select size='small' value={idSubcategoria} onChange={handleSubcategoria}>
+              {subcategoria.length > 0 ? (
+                subcategoria.map(item => {
                   const { descripcion, id, status } = item;
 
                   return status ? (
@@ -276,58 +271,60 @@ const ModalMantenimiento = ({ habitacion, subcategoria, dataMantenimiento, handl
                   ) : (
                     false
                   );
-                })}
-              </Select>
-            </FormControl>
-          </Box>
-          <Box component='div' sx={[stylesContainerInput, stylesWidthInput]}>
-            <TitleInput titleInput='Usuario' />
-            <TextField
-              defaultValue={dataMantenimiento.users_permissions_user.username}
-              variant='outlined'
-              type='text'
-              margin='none'
-              size='small'
-              disabled={true}
-              required
-              fullWidth
-            />
-          </Box>
+                })
+              ) : (
+                <MenuItem value=''>No se encontraron opciones</MenuItem>
+              )}
+            </Select>
+          </FormControl>
         </Box>
-        <Box sx={stylesBoxButtons}>
-          {loadingBtn ? (
-            <ButtonLoader />
-          ) : (
-            <>
-              <Box component='div' sx={[stylesContainerBoxButtonAlign, stylesWidthInput]}>
-                <Button
-                  variant='contained'
-                  disabled={disableView}
-                  onClick={viewDisabled}
-                  size='large'
-                  startIcon={<EditIcon />}
-                  sx={stylesButtonSend}
-                >
-                  Modificar
-                </Button>
-              </Box>
-              <Box component='div' sx={stylesWidthInput}>
-                <Button
-                  variant='contained'
-                  disabled={disabledModal}
-                  onClick={sendDatos}
-                  size='large'
-                  startIcon={<UpdateIcon />}
-                  sx={stylesButtonSend}
-                >
-                  Actualizar
-                </Button>
-              </Box>
-            </>
-          )}
+        <Box component='div'>
+          <TitleInput titleInput='Usuario' />
+          <TextField
+            defaultValue={dataMantenimiento.users_permissions_user.username}
+            variant='outlined'
+            type='text'
+            margin='none'
+            size='small'
+            disabled={true}
+            required
+            fullWidth
+          />
         </Box>
       </Box>
-    </Container>
+      {loadingBtn ? (
+        <Box component='div' sx={stylesButtonSend}>
+          <ButtonLoader />
+        </Box>
+      ) : (
+        <Box component='div' sx={stylesGridWrapperButtons}>
+          <Box component='div' sx={stylesButtonAlignEnd}>
+            <Button
+              variant='contained'
+              disabled={disableView}
+              onClick={viewDisabled}
+              size='large'
+              startIcon={<EditIcon />}
+              sx={stylesWidthAutoButtons}
+            >
+              Modificar
+            </Button>
+          </Box>
+          <Box component='div'>
+            <Button
+              variant='contained'
+              disabled={disabledModal}
+              onClick={sendDatos}
+              size='large'
+              startIcon={<UpdateIcon />}
+              sx={stylesWidthAutoButtons}
+            >
+              Actualizar
+            </Button>
+          </Box>
+        </Box>
+      )}
+    </Box>
   );
 };
 

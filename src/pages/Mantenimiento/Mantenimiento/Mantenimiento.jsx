@@ -1,12 +1,12 @@
 import React, { useEffect, useState } from 'react';
-import { Box, Container } from '@mui/material';
+import { Box } from '@mui/material';
 
 import FormCreateMantenimiento from '@/pages/Mantenimiento/Mantenimiento/FormCreateMantenimiento';
 import TableViewMantenimiento from '@/pages/Mantenimiento/Mantenimiento/TableViewMantenimiento';
 import getGeneralSelect from '@/services/getGeneralSelect';
 import getSpecificSelect from '@/services/getSpecificSelect';
 import { generalEndpoints } from '@/utilities/endpoints';
-import { stylesBoxMantenimiento } from '@/pages/Mantenimiento/Mantenimiento/MantenimientoStyles';
+import { stylesWrapperGeneral } from '@/pages/Mantenimiento/Mantenimiento/MantenimientoStyles';
 
 const Mantenimiento = () => {
   const [habitacion, setHabitacion] = useState([]);
@@ -36,12 +36,10 @@ const Mantenimiento = () => {
   }, []);
 
   return (
-    <Container component='section' disableGutters maxWidth='xl'>
-      <Box sx={stylesBoxMantenimiento}>
-        <FormCreateMantenimiento habitacion={habitacion} subcategoria={subcategoria} />
-        <TableViewMantenimiento habitacion={habitacion} subcategoria={subcategoria} />
-      </Box>
-    </Container>
+    <Box component='section' sx={stylesWrapperGeneral}>
+      <FormCreateMantenimiento habitacion={habitacion} subcategoria={subcategoria} />
+      <TableViewMantenimiento habitacion={habitacion} subcategoria={subcategoria} />
+    </Box>
   );
 };
 

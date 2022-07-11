@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { Box, Button, Container, FormControl, MenuItem, Select, TextField } from '@mui/material';
+import { Box, Button, FormControl, MenuItem, Select, TextField } from '@mui/material';
 import SaveIcon from '@mui/icons-material/Save';
 import Swal from 'sweetalert2';
 
@@ -10,10 +10,9 @@ import postGeneralTable from '@/services/postGeneralTable';
 import { generalEndpoints } from '@/utilities/endpoints';
 import {
   stylesButtonSend,
-  stylesContainerBox,
-  stylesContainerInput,
-  stylesContainerSection,
+  stylesGridWrapperForm,
   stylesWidthHeightForm,
+  stylesWrapperBoxShadow,
 } from '@/pages/Mantenimiento/Mantenimiento/MantenimientoStyles';
 
 const FormCreateMantenimiento = ({ habitacion, subcategoria }) => {
@@ -83,10 +82,10 @@ const FormCreateMantenimiento = ({ habitacion, subcategoria }) => {
   };
 
   return (
-    <Container component='section' disableGutters sx={[stylesContainerSection, stylesWidthHeightForm]}>
+    <Box component='section' sx={[stylesWrapperBoxShadow, stylesWidthHeightForm]}>
       <TitlePage titlePage='Registro de Fallas' />
-      <Box component='form' sx={stylesContainerBox}>
-        <Box component='div' sx={stylesContainerInput}>
+      <Box component='form' sx={stylesGridWrapperForm}>
+        <Box component='div'>
           <TitleInput titleInput='Motivo' />
           <TextField
             onChange={handleInputChange}
@@ -95,12 +94,13 @@ const FormCreateMantenimiento = ({ habitacion, subcategoria }) => {
             type='text'
             margin='none'
             size='small'
+            multiline
             required
             fullWidth
             autoFocus
           />
         </Box>
-        <Box component='div' sx={stylesContainerInput}>
+        <Box component='div'>
           <TitleInput titleInput='Reportado por' />
           <TextField
             onChange={handleInputChange}
@@ -113,49 +113,61 @@ const FormCreateMantenimiento = ({ habitacion, subcategoria }) => {
             fullWidth
           />
         </Box>
-        <Box component='div' sx={stylesContainerInput}>
+        <Box component='div'>
           <TitleInput titleInput='Habitación' />
           <FormControl fullWidth>
             <Select size='small' value={idHabitacion} onChange={handleHabitacion}>
-              {habitacion.map(item => {
-                const { num_hab, id } = item;
+              {habitacion.length > 0 ? (
+                habitacion.map(item => {
+                  const { num_hab, id } = item;
 
-                return (
-                  <MenuItem key={id} value={id}>
-                    {num_hab}
-                  </MenuItem>
-                );
-              })}
+                  return (
+                    <MenuItem key={id} value={id}>
+                      {num_hab}
+                    </MenuItem>
+                  );
+                })
+              ) : (
+                <MenuItem value=''>No se encontraron opciones</MenuItem>
+              )}
             </Select>
           </FormControl>
         </Box>
-        <Box component='div' sx={stylesContainerInput}>
+        <Box component='div'>
           <TitleInput titleInput='Subcategoría' />
           <FormControl fullWidth>
             <Select size='small' value={idSubcategoria} onChange={handleSubcategoria}>
-              {subcategoria.map(item => {
-                const { descripcion, id, status } = item;
+              {subcategoria.length > 0 ? (
+                subcategoria.map(item => {
+                  const { descripcion, id, status } = item;
 
-                return status ? (
-                  <MenuItem key={id} value={id}>
-                    {descripcion}
-                  </MenuItem>
-                ) : (
-                  false
-                );
-              })}
+                  return status ? (
+                    <MenuItem key={id} value={id}>
+                      {descripcion}
+                    </MenuItem>
+                  ) : (
+                    false
+                  );
+                })
+              ) : (
+                <MenuItem value=''>No se encontraron opciones</MenuItem>
+              )}
             </Select>
           </FormControl>
         </Box>
-        {loadingBtn ? (
+      </Box>
+      {loadingBtn ? (
+        <Box component='div' sx={stylesButtonSend}>
           <ButtonLoader />
-        ) : (
-          <Button variant='contained' onClick={sendDatos} size='large' startIcon={<SaveIcon />} sx={stylesButtonSend}>
+        </Box>
+      ) : (
+        <Box component='div' sx={stylesButtonSend}>
+          <Button variant='contained' onClick={sendDatos} size='large' startIcon={<SaveIcon />}>
             Registrar Mantenimiento
           </Button>
-        )}
-      </Box>
-    </Container>
+        </Box>
+      )}
+    </Box>
   );
 };
 

@@ -1,7 +1,6 @@
 import React, { useState } from 'react';
 import {
   Box,
-  Container,
   IconButton,
   Modal,
   Table,
@@ -21,20 +20,20 @@ import ModalMantenimiento from '@/pages/Mantenimiento/Mantenimiento/ModalManteni
 import useGetGeneralTable from '@/hooks/useGetGeneralTable';
 import { generalEndpoints } from '@/utilities/endpoints';
 import {
-  stylesContainerSection,
-  stylesModal,
-  stylesTableCellHeader,
+  stylesSuperpositionModal,
   stylesTableCellBody,
+  stylesTableCellHeader,
   stylesWidthHeightTable,
+  stylesWrapperBoxShadow,
 } from '@/pages/Mantenimiento/Mantenimiento/MantenimientoStyles';
 
 const columns = [
-  { id: 'fechaReporte', label: 'Fecha de Reporte', width: 130 },
-  { id: 'fechInicio', label: 'Fecha de Inicio', width: 130 },
-  { id: 'motivo', label: 'Motivo', width: 250 },
-  { id: 'categoria', label: 'Categoría', width: 245 },
-  { id: 'estado', label: 'Estado', width: 122 },
-  { id: 'acciones', label: 'Acciones', width: 75 },
+  { id: 'fechaReporte', label: 'Fecha de Reporte', width: 125 },
+  { id: 'fechInicio', label: 'Fecha de Inicio', width: 125 },
+  { id: 'motivo', label: 'Motivo', width: 280 },
+  { id: 'categoria', label: 'Categoría', width: 256 },
+  { id: 'estado', label: 'Estado', width: 120 },
+  { id: 'acciones', label: 'Acciones', width: 80 },
 ];
 
 const TableViewMantenimiento = ({ habitacion, subcategoria }) => {
@@ -63,7 +62,7 @@ const TableViewMantenimiento = ({ habitacion, subcategoria }) => {
   const { list, loading, error } = useGetGeneralTable(identifier, password, endpointMantenimiento);
 
   return (
-    <Container component='section' disableGutters sx={[stylesContainerSection, stylesWidthHeightTable]}>
+    <Box component='section' sx={[stylesWrapperBoxShadow, stylesWidthHeightTable]}>
       <TitlePage titlePage='Lista de Mantenimientos' />
       <Box component='div'>
         <TableContainer>
@@ -78,49 +77,55 @@ const TableViewMantenimiento = ({ habitacion, subcategoria }) => {
               </TableRow>
             </TableHead>
             <TableBody>
-              {loading && (
+              {loading ? (
                 <TableRow>
                   <TableCell align='center' colSpan={columns.length} sx={stylesTableCellBody}>
                     <SleketonLoader />
                   </TableCell>
                 </TableRow>
-              )}
-              {error && (
+              ) : error ? (
                 <TableRow>
                   <TableCell align='center' colSpan={columns.length} sx={stylesTableCellBody}>
                     <AlertGlobalTables messageError='Ah ocurrido un error al obtener los datos' />
                   </TableCell>
                 </TableRow>
-              )}
-              {list.slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage).map(item => {
-                const {
-                  id,
-                  f_inicio,
-                  motivo,
-                  estado,
-                  subcategoria: { descripcion },
-                  f_reporte,
-                } = item;
+              ) : list.length > 0 ? (
+                list.slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage).map(item => {
+                  const {
+                    id,
+                    f_inicio,
+                    motivo,
+                    estado,
+                    subcategoria: { descripcion },
+                    f_reporte,
+                  } = item;
 
-                return (
-                  <TableRow key={id}>
-                    <TableCell sx={stylesTableCellBody}>{f_reporte}</TableCell>
-                    <TableCell sx={stylesTableCellBody}>{f_inicio}</TableCell>
-                    <TableCell sx={stylesTableCellBody}>{motivo}</TableCell>
-                    <TableCell sx={stylesTableCellBody}>{descripcion}</TableCell>
-                    <TableCell sx={stylesTableCellBody}>{estado}</TableCell>
-                    <TableCell sx={stylesTableCellBody}>
-                      <IconButton color='info' size='small' onClick={() => handleOpen(item)}>
-                        <VisibilityIcon />
-                      </IconButton>
-                    </TableCell>
-                  </TableRow>
-                );
-              })}
+                  return (
+                    <TableRow key={id}>
+                      <TableCell sx={stylesTableCellBody}>{f_reporte}</TableCell>
+                      <TableCell sx={stylesTableCellBody}>{f_inicio}</TableCell>
+                      <TableCell sx={stylesTableCellBody}>{motivo}</TableCell>
+                      <TableCell sx={stylesTableCellBody}>{descripcion}</TableCell>
+                      <TableCell sx={stylesTableCellBody}>{estado}</TableCell>
+                      <TableCell sx={stylesTableCellBody}>
+                        <IconButton color='info' size='small' onClick={() => handleOpen(item)}>
+                          <VisibilityIcon />
+                        </IconButton>
+                      </TableCell>
+                    </TableRow>
+                  );
+                })
+              ) : (
+                <TableRow>
+                  <TableCell align='center' colSpan={columns.length} sx={stylesTableCellBody}>
+                    <AlertGlobalTables messageError='No se encontraron datos para esta tabla' />
+                  </TableCell>
+                </TableRow>
+              )}
             </TableBody>
           </Table>
         </TableContainer>
-        {loading || error ? null : (
+        {loading ? null : (
           <TablePagination
             rowsPerPageOptions={[]}
             component='div'
@@ -134,7 +139,7 @@ const TableViewMantenimiento = ({ habitacion, subcategoria }) => {
         )}
       </Box>
       <Modal open={openModal}>
-        <Box sx={stylesModal}>
+        <Box component='div' sx={stylesSuperpositionModal}>
           <ModalMantenimiento
             dataMantenimiento={dataMantenimiento}
             handleCloseModal={handleCloseModal}
@@ -143,7 +148,7 @@ const TableViewMantenimiento = ({ habitacion, subcategoria }) => {
           />
         </Box>
       </Modal>
-    </Container>
+    </Box>
   );
 };
 
