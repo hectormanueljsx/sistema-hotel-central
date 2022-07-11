@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { Box, Button, Checkbox, Container, FormControlLabel, TextField } from '@mui/material';
+import { Box, Button, FormControlLabel, Radio, RadioGroup, TextField } from '@mui/material';
 import UpdateIcon from '@mui/icons-material/Update';
 import EditIcon from '@mui/icons-material/Edit';
 import CloseIcon from '@mui/icons-material/Close';
@@ -11,19 +11,18 @@ import ButtonLoader from '@/components/Loader/ButtonLoader';
 import putUsers from '@/services/putUsers';
 import { generalEndpoints } from '@/utilities/endpoints';
 import {
+  stylesButtonAlignEnd,
+  stylesButtonCloseModal,
   stylesButtonSend,
-  stylesBoxButtons,
-  stylesBoxInputs,
-  stylesBoxModal,
-  stylesContainerBoxButtonAlign,
-  stylesContainerInput,
-  stylesContainerSection,
-  stylesModalClose,
+  stylesFormControlLabel,
+  stylesGridWrapperButtons,
+  stylesGridWrapperCheckboxsOneLine,
+  stylesGridWrapperModal,
+  stylesRadioButton,
+  stylesWidthAutoButtons,
   stylesWidthHeightModal,
-  stylesWidthInput,
-  stylesCheckboxForm,
-  stylesBoxCheckboxs,
-  stylesCheckboxFlex,
+  stylesWrapperBoxShadow,
+  stylesWrapperOneLine,
 } from '@/pages/Administracion/Usuario/UsuarioStyles';
 
 const ModalUsuario = ({ dataUsuario, handleCloseModal }) => {
@@ -96,7 +95,7 @@ const ModalUsuario = ({ dataUsuario, handleCloseModal }) => {
       dataRole = { role: { id: rol } };
     } else {
       dataUser = {
-        username: data.username,
+        username: data.username.toUpperCase(),
         password: data.password,
         email: data.email,
         confirmed,
@@ -141,160 +140,138 @@ const ModalUsuario = ({ dataUsuario, handleCloseModal }) => {
   };
 
   return (
-    <Container component='section' disableGutters sx={[stylesContainerSection, stylesWidthHeightModal]}>
+    <Box component='section' sx={[stylesWrapperBoxShadow, stylesWidthHeightModal]}>
       <TitlePage titlePage='Actualización de Usuario' />
-      <Box component='form' sx={stylesBoxModal}>
-        <Button variant='text' color='error' size='large' onClick={handleCloseModal} sx={stylesModalClose}>
-          <CloseIcon />
-        </Button>
-        <Box sx={stylesBoxInputs}>
-          <Box component='div' sx={[stylesContainerInput, stylesWidthInput]}>
-            <TitleInput titleInput='Nombre de usuario' />
-            <TextField
-              disabled={disabledModal}
-              defaultValue={dataUsuario.username}
-              onChange={handleInputChange}
-              name='username'
-              variant='outlined'
-              type='text'
-              margin='none'
-              size='small'
-              required
-              fullWidth
-            />
-          </Box>
-          <Box component='div' sx={[stylesContainerInput, stylesWidthInput]}>
-            <TitleInput titleInput='Correo electrónico' />
-            <TextField
-              disabled={disabledModal}
-              defaultValue={dataUsuario.email}
-              onChange={handleInputChange}
-              name='email'
-              variant='outlined'
-              type='email'
-              margin='none'
-              size='small'
-              required
-              fullWidth
-            />
-          </Box>
+      <Button variant='text' color='error' size='large' onClick={handleCloseModal} sx={stylesButtonCloseModal}>
+        <CloseIcon />
+      </Button>
+      <Box component='form' sx={stylesGridWrapperModal}>
+        <Box component='div'>
+          <TitleInput titleInput='Nombre de usuario' />
+          <TextField
+            disabled={disabledModal}
+            defaultValue={dataUsuario.username}
+            onChange={handleInputChange}
+            name='username'
+            variant='outlined'
+            type='text'
+            margin='none'
+            size='small'
+            required
+            fullWidth
+          />
         </Box>
-        <Box sx={stylesBoxInputs}>
-          <Box component='div' sx={[stylesContainerInput, stylesWidthInput]}>
-            <TitleInput titleInput='Contraseña' />
-            <TextField
-              disabled={disabledModal}
-              onChange={handleInputChange}
-              name='password'
-              variant='outlined'
-              type='password'
-              margin='none'
-              size='small'
-              required
-              fullWidth
-            />
-          </Box>
-          <Box component='div' sx={[stylesContainerInput, stylesWidthInput]}>
-            <TitleInput titleInput='Confirmar contraseña' />
-            <TextField
-              disabled={disabledModal}
-              onChange={handleInputChange}
-              name='confirm'
-              variant='outlined'
-              type='password'
-              margin='none'
-              size='small'
-              required
-              fullWidth
-            />
-          </Box>
+        <Box component='div'>
+          <TitleInput titleInput='Correo electrónico' />
+          <TextField
+            disabled={disabledModal}
+            defaultValue={dataUsuario.email}
+            onChange={handleInputChange}
+            name='email'
+            variant='outlined'
+            type='email'
+            margin='none'
+            size='small'
+            required
+            fullWidth
+          />
         </Box>
-        <Box sx={stylesBoxInputs}>
-          <Box component='div' sx={stylesContainerInput}>
-            <TitleInput titleInput='Selecciona un rol' />
-            <Box sx={stylesBoxCheckboxs}>
-              <FormControlLabel
-                control={
-                  <Checkbox
-                    name='admin'
-                    defaultChecked={dataUsuario.role.id === 4 ? true : false}
-                    value={'4'}
-                    onChange={handleCheckbox}
-                    disableRipple
-                    sx={stylesCheckboxForm}
-                  />
-                }
-                label='Administrador'
-                sx={stylesCheckboxFlex}
-                disabled={disabledModal}
-              />
-              <FormControlLabel
-                control={
-                  <Checkbox
-                    name='recepcion'
-                    defaultChecked={dataUsuario.role.id === 3 ? true : false}
-                    value={'3'}
-                    onChange={handleCheckbox}
-                    disableRipple
-                    sx={stylesCheckboxForm}
-                  />
-                }
-                label='Recepcionista'
-                sx={stylesCheckboxFlex}
-                disabled={disabledModal}
-              />
-              <FormControlLabel
-                control={
-                  <Checkbox
-                    name='encargado'
-                    defaultChecked={dataUsuario.role.id === 5 ? true : false}
-                    value={'5'}
-                    onChange={handleCheckbox}
-                    disableRipple
-                    sx={stylesCheckboxForm}
-                  />
-                }
-                label='Encargado'
-                sx={stylesCheckboxFlex}
-                disabled={disabledModal}
-              />
-            </Box>
-          </Box>
+        <Box component='div'>
+          <TitleInput titleInput='Contraseña' />
+          <TextField
+            disabled={disabledModal}
+            onChange={handleInputChange}
+            name='password'
+            variant='outlined'
+            type='password'
+            margin='none'
+            size='small'
+            required
+            fullWidth
+          />
         </Box>
-        <Box sx={stylesBoxButtons}>
-          {loadingBtn ? (
-            <ButtonLoader />
-          ) : (
-            <>
-              <Box component='div' sx={[stylesContainerBoxButtonAlign, stylesWidthInput]}>
-                <Button
-                  variant='contained'
-                  disabled={disableView}
-                  onClick={viewDisabled}
-                  size='large'
-                  startIcon={<EditIcon />}
-                  sx={stylesButtonSend}
-                >
-                  Modificar
-                </Button>
-              </Box>
-              <Box component='div' sx={stylesWidthInput}>
-                <Button
-                  variant='contained'
-                  disabled={disabledModal}
-                  onClick={updateDatos}
-                  size='large'
-                  startIcon={<UpdateIcon />}
-                  sx={stylesButtonSend}
-                >
-                  Actualizar
-                </Button>
-              </Box>
-            </>
-          )}
+        <Box component='div'>
+          <TitleInput titleInput='Confirmar contraseña' />
+          <TextField
+            disabled={disabledModal}
+            onChange={handleInputChange}
+            name='confirm'
+            variant='outlined'
+            type='password'
+            margin='none'
+            size='small'
+            required
+            fullWidth
+          />
         </Box>
       </Box>
-    </Container>
+      <Box component='div' sx={stylesWrapperOneLine}>
+        <Box component='div'>
+          <TitleInput titleInput='Selecciona un rol' />
+          <Box component='div'>
+            <RadioGroup
+              onChange={handleCheckbox}
+              defaultValue={dataUsuario.role.id}
+              sx={stylesGridWrapperCheckboxsOneLine}
+            >
+              <FormControlLabel
+                value='4'
+                control={<Radio disableRipple sx={stylesRadioButton} />}
+                label='Administrador'
+                disabled={disabledModal}
+                sx={stylesFormControlLabel}
+              />
+              <FormControlLabel
+                value='3'
+                control={<Radio disableRipple sx={stylesRadioButton} />}
+                label='Recepcionista'
+                disabled={disabledModal}
+                sx={stylesFormControlLabel}
+              />
+              <FormControlLabel
+                value='5'
+                control={<Radio disableRipple sx={stylesRadioButton} />}
+                label='Encargado'
+                disabled={disabledModal}
+                sx={stylesFormControlLabel}
+              />
+            </RadioGroup>
+          </Box>
+        </Box>
+      </Box>
+      {loadingBtn ? (
+        <Box component='div' sx={stylesButtonSend}>
+          <ButtonLoader />
+        </Box>
+      ) : (
+        <Box component='div' sx={stylesGridWrapperButtons}>
+          <Box component='div' sx={stylesButtonAlignEnd}>
+            <Button
+              variant='contained'
+              disabled={disableView}
+              onClick={viewDisabled}
+              size='large'
+              startIcon={<EditIcon />}
+              sx={stylesWidthAutoButtons}
+            >
+              Modificar
+            </Button>
+          </Box>
+          <Box component='div'>
+            <Button
+              variant='contained'
+              disabled={disabledModal}
+              onClick={updateDatos}
+              size='large'
+              startIcon={<UpdateIcon />}
+              sx={stylesWidthAutoButtons}
+            >
+              Actualizar
+            </Button>
+          </Box>
+        </Box>
+      )}
+    </Box>
   );
 };
 

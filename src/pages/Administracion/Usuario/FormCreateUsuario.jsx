@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { Box, Button, Checkbox, Container, FormControlLabel, TextField } from '@mui/material';
+import { Box, Button, FormControlLabel, Radio, RadioGroup, TextField } from '@mui/material';
 import SaveIcon from '@mui/icons-material/Save';
 import Swal from 'sweetalert2';
 
@@ -9,15 +9,13 @@ import ButtonLoader from '@/components/Loader/ButtonLoader';
 import postUsers from '@/services/postUsers';
 import { generalEndpoints } from '@/utilities/endpoints';
 import {
-  stylesBoxCheckboxs,
   stylesButtonSend,
-  stylesCheckboxFlex,
-  stylesCheckboxForm,
-  stylesContainerBox,
-  stylesContainerInput,
-  stylesContainerSection,
-  stylesMarginTopCheckbox,
+  stylesFormControlLabel,
+  stylesGridWrapperCheckboxs,
+  stylesGridWrapperForm,
+  stylesRadioButton,
   stylesWidthHeightForm,
+  stylesWrapperBoxShadow,
 } from '@/pages/Administracion/Usuario/UsuarioStyles';
 
 const FormCreateUsuario = () => {
@@ -34,8 +32,8 @@ const FormCreateUsuario = () => {
   const password = localStorage.getItem('password');
   const endpointUsuario = generalEndpoints.usuario;
 
-  const handleCheckbox = e => setRol(e.target.value);
   const handleInputChange = event => setDatos({ ...datos, [event.target.name]: event.target.value });
+  const handleCheckbox = e => setRol(e.target.value);
 
   const sendDatos = async event => {
     event.preventDefault();
@@ -103,10 +101,10 @@ const FormCreateUsuario = () => {
   };
 
   return (
-    <Container component='section' disableGutters sx={[stylesContainerSection, stylesWidthHeightForm]}>
+    <Box component='section' sx={[stylesWrapperBoxShadow, stylesWidthHeightForm]}>
       <TitlePage titlePage='Registro de Nuevo Usuario' />
-      <Box component='form' sx={stylesContainerBox}>
-        <Box component='div' sx={stylesContainerInput}>
+      <Box component='form' sx={stylesGridWrapperForm}>
+        <Box component='div'>
           <TitleInput titleInput='Nombre de usuario' />
           <TextField
             onChange={handleInputChange}
@@ -120,7 +118,7 @@ const FormCreateUsuario = () => {
             autoFocus
           />
         </Box>
-        <Box component='div' sx={stylesContainerInput}>
+        <Box component='div'>
           <TitleInput titleInput='Correo electrónico' />
           <TextField
             onChange={handleInputChange}
@@ -133,7 +131,7 @@ const FormCreateUsuario = () => {
             fullWidth
           />
         </Box>
-        <Box component='div' sx={stylesContainerInput}>
+        <Box component='div'>
           <TitleInput titleInput='Contraseña' />
           <TextField
             onChange={handleInputChange}
@@ -146,7 +144,7 @@ const FormCreateUsuario = () => {
             fullWidth
           />
         </Box>
-        <Box component='div' sx={stylesContainerInput}>
+        <Box component='div'>
           <TitleInput titleInput='Confirmar contraseña' />
           <TextField
             onChange={handleInputChange}
@@ -159,53 +157,44 @@ const FormCreateUsuario = () => {
             fullWidth
           />
         </Box>
-        <Box component='div' sx={stylesContainerInput}>
+        <Box component='div'>
           <TitleInput titleInput='Selecciona un rol' />
-          <Box sx={stylesBoxCheckboxs}>
-            <FormControlLabel
-              control={
-                <Checkbox name='admin' value={'4'} onChange={handleCheckbox} disableRipple sx={stylesCheckboxForm} />
-              }
-              label='Administrador'
-              sx={stylesCheckboxFlex}
-            />
-            <FormControlLabel
-              control={
-                <Checkbox
-                  name='recepcion'
-                  value={'3'}
-                  onChange={handleCheckbox}
-                  disableRipple
-                  sx={stylesCheckboxForm}
-                />
-              }
-              label='Recepcionista'
-              sx={stylesCheckboxFlex}
-            />
-            <FormControlLabel
-              control={
-                <Checkbox
-                  name='encargado'
-                  value={'5'}
-                  onChange={handleCheckbox}
-                  disableRipple
-                  sx={stylesCheckboxForm}
-                />
-              }
-              label='Encargado'
-              sx={[stylesCheckboxFlex, stylesMarginTopCheckbox]}
-            />
+          <Box component='div'>
+            <RadioGroup onChange={handleCheckbox} sx={stylesGridWrapperCheckboxs}>
+              <FormControlLabel
+                value='4'
+                control={<Radio disableRipple sx={stylesRadioButton} />}
+                label='Administrador'
+                sx={stylesFormControlLabel}
+              />
+              <FormControlLabel
+                value='3'
+                control={<Radio disableRipple sx={stylesRadioButton} />}
+                label='Recepcionista'
+                sx={stylesFormControlLabel}
+              />
+              <FormControlLabel
+                value='5'
+                control={<Radio disableRipple sx={stylesRadioButton} />}
+                label='Encargado'
+                sx={stylesFormControlLabel}
+              />
+            </RadioGroup>
           </Box>
         </Box>
-        {loadingBtn ? (
+      </Box>
+      {loadingBtn ? (
+        <Box component='div' sx={stylesButtonSend}>
           <ButtonLoader />
-        ) : (
-          <Button variant='contained' onClick={sendDatos} size='large' startIcon={<SaveIcon />} sx={stylesButtonSend}>
+        </Box>
+      ) : (
+        <Box component='div' sx={stylesButtonSend}>
+          <Button variant='contained' onClick={sendDatos} size='large' startIcon={<SaveIcon />}>
             Registrar Usuario
           </Button>
-        )}
-      </Box>
-    </Container>
+        </Box>
+      )}
+    </Box>
   );
 };
 

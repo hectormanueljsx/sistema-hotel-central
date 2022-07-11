@@ -1,7 +1,6 @@
 import React, { useState } from 'react';
 import {
   Box,
-  Container,
   IconButton,
   Modal,
   Table,
@@ -25,17 +24,17 @@ import useGetGeneralTable from '@/hooks/useGetGeneralTable';
 import putGeneralTable from '@/services/putGeneralTable';
 import { generalEndpoints } from '@/utilities/endpoints';
 import {
-  stylesContainerSection,
-  stylesModal,
-  stylesTableCellHeader,
+  stylesSuperpositionModal,
   stylesTableCellBody,
+  stylesTableCellHeader,
   stylesWidthHeightTable,
+  stylesWrapperBoxShadow,
 } from '@/pages/Administracion/Usuario/UsuarioStyles';
 
 const columns = [
-  { id: 'username', label: 'Nombre', width: 482 },
-  { id: 'role', label: 'Rol', width: 165 },
-  { id: 'ult_ingreso', label: 'Último Ingreso', width: 225 },
+  { id: 'username', label: 'Nombre', width: 496 },
+  { id: 'role', label: 'Rol', width: 175 },
+  { id: 'ult_ingreso', label: 'Último Ingreso', width: 235 },
   { id: 'acciones', label: 'Acciones', width: 80 },
 ];
 
@@ -110,7 +109,7 @@ const TableViewUsuarios = () => {
   const { list, loading, error } = useGetGeneralTable(identifier, password, `${endpointUsuario}?blocked=false`);
 
   return (
-    <Container component='section' disableGutters sx={[stylesContainerSection, stylesWidthHeightTable]}>
+    <Box component='section' sx={[stylesWrapperBoxShadow, stylesWidthHeightTable]}>
       <TitlePage titlePage='Lista de Usuarios' />
       <Box component='div'>
         <TableContainer>
@@ -125,50 +124,56 @@ const TableViewUsuarios = () => {
               </TableRow>
             </TableHead>
             <TableBody>
-              {loading && (
+              {loading ? (
                 <TableRow>
                   <TableCell align='center' colSpan={columns.length} sx={stylesTableCellBody}>
                     <SleketonLoader />
                   </TableCell>
                 </TableRow>
-              )}
-              {error && (
+              ) : error ? (
                 <TableRow>
                   <TableCell align='center' colSpan={columns.length} sx={stylesTableCellBody}>
                     <AlertGlobalTables messageError='Ah ocurrido un error al obtener los datos' />
                   </TableCell>
                 </TableRow>
-              )}
-              {list.slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage).map(item => {
-                const {
-                  id,
-                  username,
-                  role: { name },
-                  ult_ingreso,
-                } = item;
+              ) : list.length > 0 ? (
+                list.slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage).map(item => {
+                  const {
+                    id,
+                    username,
+                    role: { name },
+                    ult_ingreso,
+                  } = item;
 
-                return (
-                  <TableRow key={id}>
-                    <TableCell sx={stylesTableCellBody}>{username}</TableCell>
-                    <TableCell sx={stylesTableCellBody}>{name}</TableCell>
-                    <TableCell sx={stylesTableCellBody}>
-                      {moment(ult_ingreso).format('YYYY-MM-DD hh:mm:ss a')}
-                    </TableCell>
-                    <TableCell sx={stylesTableCellBody}>
-                      <IconButton color='info' size='small' onClick={() => handleOpen(item)}>
-                        <VisibilityIcon />
-                      </IconButton>
-                      <IconButton color='error' size='small' onClick={() => deleteUsuario(id)}>
-                        <DeleteIcon />
-                      </IconButton>
-                    </TableCell>
-                  </TableRow>
-                );
-              })}
+                  return (
+                    <TableRow key={id}>
+                      <TableCell sx={stylesTableCellBody}>{username}</TableCell>
+                      <TableCell sx={stylesTableCellBody}>{name}</TableCell>
+                      <TableCell sx={stylesTableCellBody}>
+                        {moment(ult_ingreso).format('YYYY-MM-DD hh:mm:ss a')}
+                      </TableCell>
+                      <TableCell sx={stylesTableCellBody}>
+                        <IconButton color='info' size='small' onClick={() => handleOpen(item)}>
+                          <VisibilityIcon />
+                        </IconButton>
+                        <IconButton color='error' size='small' onClick={() => deleteUsuario(id)}>
+                          <DeleteIcon />
+                        </IconButton>
+                      </TableCell>
+                    </TableRow>
+                  );
+                })
+              ) : (
+                <TableRow>
+                  <TableCell align='center' colSpan={columns.length} sx={stylesTableCellBody}>
+                    <AlertGlobalTables messageError='No se encontraron datos para esta tabla' />
+                  </TableCell>
+                </TableRow>
+              )}
             </TableBody>
           </Table>
         </TableContainer>
-        {loading || error ? null : (
+        {loading ? null : (
           <TablePagination
             rowsPerPageOptions={[]}
             component='div'
@@ -182,11 +187,11 @@ const TableViewUsuarios = () => {
         )}
       </Box>
       <Modal open={openModal}>
-        <Box sx={stylesModal}>
+        <Box component='div' sx={stylesSuperpositionModal}>
           <ModalUsuario dataUsuario={dataUsuario} handleCloseModal={handleCloseModal} />
         </Box>
       </Modal>
-    </Container>
+    </Box>
   );
 };
 
