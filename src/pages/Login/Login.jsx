@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import { Box, Button, CardMedia, Container, TextField } from '@mui/material';
+import { Box, Button, CardMedia, TextField } from '@mui/material';
 import LoginIcon from '@mui/icons-material/Login';
 import { useNavigate } from 'react-router-dom';
 import Swal from 'sweetalert2';
@@ -11,13 +11,13 @@ import { generalEndpoints } from '@/utilities/endpoints';
 import postLogin from '@/services/postLogin';
 import putGeneralTable from '@/services/putGeneralTable';
 import {
+  stylesBoxImage,
   stylesButtonSend,
-  stylesContainerBox,
-  stylesContainerImage,
-  stylesContainerInput,
-  stylesContainerSection,
+  stylesGridWrapperForm,
   stylesIconImage,
   stylesWidthHeightForm,
+  stylesWrapperBoxShadow,
+  stylesWrapperGeneral,
 } from '@/pages/Login/LoginStyles';
 import LogoIcon from '@/assets/favicon.png';
 
@@ -91,48 +91,54 @@ const Login = () => {
   };
 
   return (
-    <Container component='section' disableGutters sx={[stylesContainerSection, stylesWidthHeightForm]}>
-      <Box component='section' sx={stylesContainerImage}>
-        <CardMedia component='img' image={LogoIcon} alt='Logo Icon' sx={stylesIconImage} />
-        <TitlePage titlePage='Iniciar Sesión' />
-      </Box>
-      <Box component='form' sx={stylesContainerBox}>
-        <Box component='div' sx={stylesContainerInput}>
-          <TitleInput titleInput='Correo electrónico' />
-          <TextField
-            onChange={handleInputChange}
-            name='username'
-            variant='outlined'
-            type='email'
-            margin='none'
-            size='small'
-            required
-            fullWidth
-            autoFocus
-          />
+    <Box component='section' sx={stylesWrapperGeneral}>
+      <Box component='section' sx={[stylesWrapperBoxShadow, stylesWidthHeightForm]}>
+        <Box component='div' sx={stylesBoxImage}>
+          <CardMedia component='img' image={LogoIcon} alt='Logo Icon' sx={stylesIconImage} />
+          <TitlePage titlePage='Iniciar Sesión' />
         </Box>
-        <Box component='div' sx={stylesContainerInput}>
-          <TitleInput titleInput='Contraseña' />
-          <TextField
-            onChange={handleInputChange}
-            name='password'
-            variant='outlined'
-            type='password'
-            margin='none'
-            size='small'
-            required
-            fullWidth
-          />
+        <Box component='form' sx={stylesGridWrapperForm}>
+          <Box component='div'>
+            <TitleInput titleInput='Correo electrónico' />
+            <TextField
+              onChange={handleInputChange}
+              name='username'
+              variant='outlined'
+              type='email'
+              margin='none'
+              size='small'
+              required
+              fullWidth
+              autoFocus
+            />
+          </Box>
+          <Box component='div'>
+            <TitleInput titleInput='Contraseña' />
+            <TextField
+              onChange={handleInputChange}
+              name='password'
+              variant='outlined'
+              type='password'
+              margin='none'
+              size='small'
+              required
+              fullWidth
+            />
+          </Box>
         </Box>
         {loadingBtn ? (
-          <ButtonLoader />
+          <Box component='div' sx={stylesButtonSend}>
+            <ButtonLoader />
+          </Box>
         ) : (
-          <Button variant='contained' onClick={handleSubmit} size='large' endIcon={<LoginIcon />} sx={stylesButtonSend}>
-            Iniciar Sesión
-          </Button>
+          <Box component='div' sx={stylesButtonSend}>
+            <Button variant='contained' onClick={handleSubmit} size='large' endIcon={<LoginIcon />}>
+              Iniciar Sesión
+            </Button>
+          </Box>
         )}
       </Box>
-    </Container>
+    </Box>
   );
 };
 
