@@ -19,6 +19,7 @@ import AlertGlobalTables from '@/components/Alert/AlertGlobalTables';
 import ModalMantenimiento from '@/pages/Mantenimiento/Mantenimiento/ModalMantenimiento';
 import useGetGeneralTable from '@/hooks/useGetGeneralTable';
 import { generalEndpoints } from '@/utilities/endpoints';
+import { messageEmptyGetData, messageErrorGetData } from '@/utilities/messagesAlerts';
 import {
   stylesSuperpositionModal,
   stylesTableCellBody,
@@ -86,7 +87,7 @@ const TableViewMantenimiento = ({ habitacion, subcategoria }) => {
               ) : error ? (
                 <TableRow>
                   <TableCell align='center' colSpan={columns.length} sx={stylesTableCellBody}>
-                    <AlertGlobalTables messageError='Ah ocurrido un error al obtener los datos' />
+                    <AlertGlobalTables messageError={messageErrorGetData} />
                   </TableCell>
                 </TableRow>
               ) : list.length > 0 ? (
@@ -118,7 +119,7 @@ const TableViewMantenimiento = ({ habitacion, subcategoria }) => {
               ) : (
                 <TableRow>
                   <TableCell align='center' colSpan={columns.length} sx={stylesTableCellBody}>
-                    <AlertGlobalTables messageError='No se encontraron datos para esta tabla' />
+                    <AlertGlobalTables messageError={messageEmptyGetData} />
                   </TableCell>
                 </TableRow>
               )}

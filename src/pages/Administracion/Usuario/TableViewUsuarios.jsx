@@ -23,6 +23,7 @@ import ModalUsuario from '@/pages/Administracion/Usuario/ModalUsuario';
 import useGetGeneralTable from '@/hooks/useGetGeneralTable';
 import putGeneralTable from '@/services/putGeneralTable';
 import { generalEndpoints } from '@/utilities/endpoints';
+import { messageEmptyGetData, messageErrorGetData } from '@/utilities/messagesAlerts';
 import {
   stylesSuperpositionModal,
   stylesTableCellBody,
@@ -106,7 +107,8 @@ const TableViewUsuarios = () => {
     });
   };
 
-  const { list, loading, error } = useGetGeneralTable(identifier, password, `${endpointUsuario}?blocked=false`);
+  const { /* list,  */ loading, error } = useGetGeneralTable(identifier, password, `${endpointUsuario}?blocked=false`);
+  const list = [];
 
   return (
     <Box component='section' sx={[stylesWrapperBoxShadow, stylesWidthHeightTable]}>
@@ -133,7 +135,7 @@ const TableViewUsuarios = () => {
               ) : error ? (
                 <TableRow>
                   <TableCell align='center' colSpan={columns.length} sx={stylesTableCellBody}>
-                    <AlertGlobalTables messageError='Ah ocurrido un error al obtener los datos' />
+                    <AlertGlobalTables messageError={messageErrorGetData} />
                   </TableCell>
                 </TableRow>
               ) : list.length > 0 ? (
@@ -166,7 +168,7 @@ const TableViewUsuarios = () => {
               ) : (
                 <TableRow>
                   <TableCell align='center' colSpan={columns.length} sx={stylesTableCellBody}>
-                    <AlertGlobalTables messageError='No se encontraron datos para esta tabla' />
+                    <AlertGlobalTables messageError={messageEmptyGetData} />
                   </TableCell>
                 </TableRow>
               )}

@@ -16,6 +16,7 @@ import moment from 'moment';
 import TitlePage from '@/components/Title/TitlePage';
 import SleketonLoader from '@/components/Loader/SleketonLoader';
 import AlertGlobalTables from '@/components/Alert/AlertGlobalTables';
+import { messageEmptyGetData, messageErrorGetData } from '@/utilities/messagesAlerts';
 import {
   stylesTableCellBody,
   stylesTableCellHeader,
@@ -72,7 +73,7 @@ const TableViewHistoricoEgresos = ({ search, dataRegistro, loading, error }) => 
               ) : error ? (
                 <TableRow>
                   <TableCell align='center' colSpan={columns.length} sx={stylesTableCellBody}>
-                    <AlertGlobalTables messageError='Ah ocurrido un error al obtener los datos' />
+                    <AlertGlobalTables messageError={messageErrorGetData} />
                   </TableCell>
                 </TableRow>
               ) : filterCliente.length > 0 ? (
@@ -108,7 +109,7 @@ const TableViewHistoricoEgresos = ({ search, dataRegistro, loading, error }) => 
               ) : (
                 <TableRow>
                   <TableCell align='center' colSpan={columns.length} sx={stylesTableCellBody}>
-                    <AlertGlobalTables messageError='No se encontraron datos para esta tabla' />
+                    <AlertGlobalTables messageError={messageEmptyGetData} />
                   </TableCell>
                 </TableRow>
               )}

@@ -22,6 +22,7 @@ import ModalTarifa from '@/pages/Habitaciones/Tarifa/ModalTarifa';
 import useGetGeneralTable from '@/hooks/useGetGeneralTable';
 import putGeneralTable from '@/services/putGeneralTable';
 import { generalEndpoints } from '@/utilities/endpoints';
+import { messageEmptyGetData, messageErrorGetData } from '@/utilities/messagesAlerts';
 import {
   stylesSuperpositionModal,
   stylesTableCellBody,
@@ -139,7 +140,7 @@ const TableViewTarifas = () => {
               ) : error ? (
                 <TableRow>
                   <TableCell align='center' colSpan={columns.length} sx={stylesTableCellBody}>
-                    <AlertGlobalTables messageError='Ah ocurrido un error al obtener los datos' />
+                    <AlertGlobalTables messageError={messageErrorGetData} />
                   </TableCell>
                 </TableRow>
               ) : list.length > 0 ? (
@@ -173,7 +174,7 @@ const TableViewTarifas = () => {
               ) : (
                 <TableRow>
                   <TableCell align='center' colSpan={columns.length} sx={stylesTableCellBody}>
-                    <AlertGlobalTables messageError='No se encontraron datos para esta tabla' />
+                    <AlertGlobalTables messageError={messageEmptyGetData} />
                   </TableCell>
                 </TableRow>
               )}

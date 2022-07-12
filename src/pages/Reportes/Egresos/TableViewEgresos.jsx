@@ -19,6 +19,7 @@ import TitlePage from '@/components/Title/TitlePage';
 import SleketonLoader from '@/components/Loader/SleketonLoader';
 import AlertGlobalTables from '@/components/Alert/AlertGlobalTables';
 import ModalEgresos from '@/pages/Reportes/Egresos/ModalEgresos';
+import { messageEmptyGetData, messageErrorGetData } from '@/utilities/messagesAlerts';
 import {
   stylesDateTable,
   stylesSuperpositionModal,
@@ -88,7 +89,7 @@ const TableViewEgresos = ({ dataSearch, dateTable, loading, error }) => {
               ) : error ? (
                 <TableRow>
                   <TableCell align='center' colSpan={columns.length} sx={stylesTableCellBody}>
-                    <AlertGlobalTables messageError='Ah ocurrido un error al obtener los datos' />
+                    <AlertGlobalTables messageError={messageErrorGetData} />
                   </TableCell>
                 </TableRow>
               ) : dataSearch.length > 0 ? (
@@ -122,7 +123,7 @@ const TableViewEgresos = ({ dataSearch, dateTable, loading, error }) => {
               ) : (
                 <TableRow>
                   <TableCell align='center' colSpan={columns.length} sx={stylesTableCellBody}>
-                    <AlertGlobalTables messageError='No se encontraron datos para esta tabla' />
+                    <AlertGlobalTables messageError={messageEmptyGetData} />
                   </TableCell>
                 </TableRow>
               )}

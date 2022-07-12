@@ -19,6 +19,7 @@ import AlertGlobalTables from '@/components/Alert/AlertGlobalTables';
 import useGetGeneralTable from '@/hooks/useGetGeneralTable';
 import putGeneralTable from '@/services/putGeneralTable';
 import { generalEndpoints } from '@/utilities/endpoints';
+import { messageEmptyGetData, messageErrorGetData } from '@/utilities/messagesAlerts';
 import {
   stylesAccordionDetails,
   stylesAccordionSummary,
@@ -140,7 +141,7 @@ const TableViewCategoriaEgresos = () => {
         {loading ? (
           <SleketonLoader />
         ) : error ? (
-          <AlertGlobalTables messageError='Ah ocurrido un error al obtener los datos' />
+          <AlertGlobalTables messageError={messageErrorGetData} />
         ) : list.length > 0 ? (
           list.map(item => {
             const { categoria, subcategorias, id } = item;
@@ -211,7 +212,7 @@ const TableViewCategoriaEgresos = () => {
             );
           })
         ) : (
-          <AlertGlobalTables messageError='No se encontraron datos para esta tabla' />
+          <AlertGlobalTables messageError={messageEmptyGetData} />
         )}
       </Box>
     </Box>

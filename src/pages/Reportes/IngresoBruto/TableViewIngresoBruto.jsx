@@ -4,6 +4,7 @@ import { Box, Table, TableBody, TableCell, TableContainer, TableHead, TableRow, 
 import TitlePage from '@/components/Title/TitlePage';
 import SleketonLoader from '@/components/Loader/SleketonLoader';
 import AlertGlobalTables from '@/components/Alert/AlertGlobalTables';
+import { messageEmptyGetData, messageErrorGetData } from '@/utilities/messagesAlerts';
 import {
   stylesDateTable,
   stylesGridTables,
@@ -58,7 +59,7 @@ const TableViewIngresoBruto = ({ dateTable, dataSearch, dataPago, dataRegistro, 
                 ) : error ? (
                   <TableRow>
                     <TableCell align='center' colSpan={columns.length} sx={stylesTableCellBody}>
-                      <AlertGlobalTables messageError='Ah ocurrido un error al obtener los datos' />
+                      <AlertGlobalTables messageError={messageErrorGetData} />
                     </TableCell>
                   </TableRow>
                 ) : dataSearch.length > 0 ? (
@@ -91,7 +92,7 @@ const TableViewIngresoBruto = ({ dateTable, dataSearch, dataPago, dataRegistro, 
                 ) : (
                   <TableRow>
                     <TableCell align='center' colSpan={columns.length} sx={stylesTableCellBody}>
-                      <AlertGlobalTables messageError='No se encontraron datos para esta tabla' />
+                      <AlertGlobalTables messageError={messageEmptyGetData} />
                     </TableCell>
                   </TableRow>
                 )}
@@ -124,7 +125,7 @@ const TableViewIngresoBruto = ({ dateTable, dataSearch, dataPago, dataRegistro, 
                 ) : error ? (
                   <TableRow>
                     <TableCell align='center' colSpan={columns.length} sx={stylesTableCellBody}>
-                      <AlertGlobalTables messageError='Ah ocurrido un error al obtener los datos' />
+                      <AlertGlobalTables messageError={messageErrorGetData} />
                     </TableCell>
                   </TableRow>
                 ) : dataSearch.length > 0 ? (
@@ -156,7 +157,7 @@ const TableViewIngresoBruto = ({ dateTable, dataSearch, dataPago, dataRegistro, 
                 ) : (
                   <TableRow>
                     <TableCell align='center' colSpan={columns.length} sx={stylesTableCellBody}>
-                      <AlertGlobalTables messageError='No se encontraron datos para esta tabla' />
+                      <AlertGlobalTables messageError={messageEmptyGetData} />
                     </TableCell>
                   </TableRow>
                 )}
@@ -189,7 +190,7 @@ const TableViewIngresoBruto = ({ dateTable, dataSearch, dataPago, dataRegistro, 
                 ) : error ? (
                   <TableRow>
                     <TableCell align='center' colSpan={columns.length} sx={stylesTableCellBody}>
-                      <AlertGlobalTables messageError='Ah ocurrido un error al obtener los datos' />
+                      <AlertGlobalTables messageError={messageErrorGetData} />
                     </TableCell>
                   </TableRow>
                 ) : dataSearch.length > 0 ? (
@@ -229,7 +230,7 @@ const TableViewIngresoBruto = ({ dateTable, dataSearch, dataPago, dataRegistro, 
                 ) : (
                   <TableRow>
                     <TableCell align='center' colSpan={columns.length} sx={stylesTableCellBody}>
-                      <AlertGlobalTables messageError='No se encontraron datos para esta tabla' />
+                      <AlertGlobalTables messageError={messageEmptyGetData} />
                     </TableCell>
                   </TableRow>
                 )}

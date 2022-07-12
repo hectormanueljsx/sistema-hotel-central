@@ -21,6 +21,7 @@ import ModalEgreso from '@/pages/Caja/Egresos/ModalEgreso';
 import useGetSpecific from '@/hooks/useGetSpecific';
 import getSpecificSelect from '@/services/getSpecificSelect';
 import { generalEndpoints } from '@/utilities/endpoints';
+import { messageEmptyGetData, messageErrorGetData } from '@/utilities/messagesAlerts';
 import {
   stylesSuperpositionModal,
   stylesTableCellBody,
@@ -101,7 +102,7 @@ const TableViewEgresos = ({ pago, categoria }) => {
               ) : errorGetSpecific ? (
                 <TableRow>
                   <TableCell align='center' colSpan={columns.length} sx={stylesTableCellBody}>
-                    <AlertGlobalTables messageError='Ah ocurrido un error al obtener los datos' />
+                    <AlertGlobalTables messageError={messageErrorGetData} />
                   </TableCell>
                 </TableRow>
               ) : listGetSpecific.length > 0 ? (
@@ -137,7 +138,7 @@ const TableViewEgresos = ({ pago, categoria }) => {
               ) : (
                 <TableRow>
                   <TableCell align='center' colSpan={columns.length} sx={stylesTableCellBody}>
-                    <AlertGlobalTables messageError='No se encontraron datos para esta tabla' />
+                    <AlertGlobalTables messageError={messageEmptyGetData} />
                   </TableCell>
                 </TableRow>
               )}
