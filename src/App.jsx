@@ -7,7 +7,7 @@ import HistoricoReservaciones from '@/pages/Reservas/HistoricoReservaciones/Hist
 import IntercambiarReservacion from './pages/Reservas/IntercambiarReservacion/IntercambiarReservacion';
 import HistoricoRegistro from '@/pages/Reservas/HistoricoRegistro/HistoricoRegistro';
 import Empresa from '@/pages/Reservas/Empresa/Empresa';
-import EmpresaClientes from '@/pages/Reservas/Empresa/TableViewListEmpresasClientes';
+import EmpresaClientes from '@/pages/Reservas/EmpresaClientes/EmpresaClientes';
 import CategoriaEgresos from '@/pages/Caja/CategoriaEgresos/CategoriaEgresos';
 import Egresos from '@/pages/Caja/Egresos/Egresos';
 import HistoricoDeGastos from '@/pages/Caja/HistoricoEgresos/HistoricoEgresos';
