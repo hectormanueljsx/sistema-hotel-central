@@ -100,6 +100,12 @@ export const reportesDropdown = [
     cName: 'submenu-item',
   },
   {
+    id: '63e79a75-1baf-41e1-a72b-61a04c9e5fa0',
+    title: 'Habitaciones con Saldo Pendiente',
+    path: './reportes/habitaciones-saldo-pendiente',
+    cName: 'submenu-item',
+  },
+  {
     id: 'aa5a562a-9a9a-4cab-b809-112a27ad613a',
     title: 'Mantenimiento',
     path: './reportes/mantenimiento',

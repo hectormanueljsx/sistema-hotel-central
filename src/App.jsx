@@ -12,6 +12,7 @@ import HistoricoDeGastos from '@/pages/Caja/HistoricoEgresos/HistoricoEgresos';
 import Anticipo from '@/pages/Reportes/Anticipo/Anticipo';
 import Gastos from '@/pages/Reportes/Egresos/Egresos';
 import IngresoBruto from '@/pages/Reportes/IngresoBruto/IngresoBruto';
+import HabitacionSaldoPendiente from '@/pages/Reportes/HabitacionSaldoPendiente/HabitacionSaldoPendiente';
 import ReportesMantenimiento from '@/pages/Reportes/Fallas/Fallas';
 import Tarifas from '@/pages/Habitaciones/Tarifa/Tarifas';
 import Habitaciones from '@/pages/Habitaciones/Habitaciones/Habitaciones';
@@ -120,6 +121,14 @@ const App = () => {
           element={
             <ProtectedRoute allowedRoles={[ROLES.ADMINISTRADOR]}>
               <IngresoBruto />
+            </ProtectedRoute>
+          }
+        />
+        <Route
+          path='/reportes/habitaciones-saldo-pendiente'
+          element={
+            <ProtectedRoute allowedRoles={[ROLES.ADMINISTRADOR]}>
+              <HabitacionSaldoPendiente />
             </ProtectedRoute>
           }
         />
