@@ -7,6 +7,7 @@ import HistoricoReservaciones from '@/pages/Reservas/HistoricoReservaciones/Hist
 import IntercambiarReservacion from './pages/Reservas/IntercambiarReservacion/IntercambiarReservacion';
 import HistoricoRegistro from '@/pages/Reservas/HistoricoRegistro/HistoricoRegistro';
 import Empresa from '@/pages/Reservas/Empresa/Empresa';
+import EmpresaClientes from '@/pages/Reservas/Empresa/TableViewListEmpresasClientes';
 import CategoriaEgresos from '@/pages/Caja/CategoriaEgresos/CategoriaEgresos';
 import Egresos from '@/pages/Caja/Egresos/Egresos';
 import HistoricoDeGastos from '@/pages/Caja/HistoricoEgresos/HistoricoEgresos';
@@ -82,6 +83,14 @@ const App = () => {
           element={
             <ProtectedRoute allowedRoles={[ROLES.ADMINISTRADOR]}>
               <Empresa />
+            </ProtectedRoute>
+          }
+        />
+        <Route
+          path='/reservas/empresas/:rfc'
+          element={
+            <ProtectedRoute allowedRoles={[ROLES.ADMINISTRADOR]}>
+              <EmpresaClientes />
             </ProtectedRoute>
           }
         />
