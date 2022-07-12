@@ -1,40 +1,40 @@
 import { css } from '@emotion/react';
 
-export const stylesBoxIngresoBruto = css`
+export const stylesWrapperGeneral = css`
   display: flex;
-  justify-content: center;
+  flex-direction: row;
   gap: 32px;
+  width: 1432px;
+  height: max-content;
+  margin: 32px auto;
 `;
 
-export const stylesContainerSection = css`
+export const stylesWrapperBoxShadow = css`
   background-color: #ffffff;
   border-radius: 4px;
   box-shadow: 0px 0px 5px rgba(0, 0, 0, 0.25);
-  padding: 24px;
-  margin-top: 40px;
-  margin-bottom: 40px;
-  margin-left: 0;
-  margin-right: 0;
-`;
-
-export const stylesContainerBox = css`
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-`;
-
-export const stylesContainerInput = css`
-  width: 100%;
-  margin-bottom: 16px;
+  padding: 16px;
 `;
 
 export const stylesWidthHeightForm = css`
-  width: 400px;
+  width: 382px;
   height: max-content;
 `;
 
+export const stylesGridWrapperForm = css`
+  display: grid;
+  grid-template-columns: repeat(1, 1fr);
+  gap: 16px;
+`;
+
+export const stylesButtonSend = css`
+  display: flex;
+  justify-content: center;
+  margin-top: 32px;
+`;
+
 export const stylesWidthHeightTable = css`
-  width: 1000px;
+  width: 1018px;
   height: max-content;
 `;
 
@@ -45,8 +45,16 @@ export const stylesDateTable = css`
   text-align: center;
 `;
 
-export const stylesTableHead = css`
-  margin-bottom: 30px;
+export const stylesGridTables = css`
+  display: grid;
+  grid-template-columns: repeat(1, 1fr);
+  gap: 32px;
+`;
+
+export const stylesTableCellTitle = css`
+  padding: 1px 4px;
+  border-bottom: none;
+  font-size: 16px;
 `;
 
 export const stylesTableCellHeader = css`
@@ -55,20 +63,6 @@ export const stylesTableCellHeader = css`
 `;
 
 export const stylesTableCellBody = css`
-  padding: 9px 3px;
+  padding: 9px 4px;
   border-bottom: 1.5px solid #dee2e6;
-`;
-
-export const stylesWidthFPago = css`
-  width: 800px;
-`;
-
-export const stylesWidthPrice = css`
-  width: 152px;
-`;
-
-export const stylesBoxButtons = css`
-  display: flex;
-  justify-content: space-between;
-  margin-top: 16px;
 `;

@@ -1,20 +1,20 @@
-import React from 'react';
-import { Box, Button, Container, TextField } from '@mui/material';
+import React, { useState } from 'react';
+import { Box, Button, TextField } from '@mui/material';
 import SearchIcon from '@mui/icons-material/Search';
 import moment from 'moment';
 import Swal from 'sweetalert2';
 
 import TitlePage from '@/components/Title/TitlePage';
 import TitleInput from '@/components/Title/TitleInput';
+import ButtonLoader from '@/components/Loader/ButtonLoader';
 import useGetGeneralTable from '@/hooks/useGetGeneralTable';
 import getGeneralSelect from '@/services/getGeneralSelect';
 import { generalEndpoints } from '@/utilities/endpoints';
 import {
-  stylesBoxButtons,
-  stylesContainerBox,
-  stylesContainerInput,
-  stylesContainerSection,
+  stylesButtonSend,
+  stylesGridWrapperForm,
   stylesWidthHeightForm,
+  stylesWrapperBoxShadow,
 } from '@/pages/Reportes/IngresoBruto/IngresoBrutoStyles';
 
 const FormIngresoBruto = ({
@@ -27,6 +27,8 @@ const FormIngresoBruto = ({
   setLoading,
   setError,
 }) => {
+  const [loadingBtn, setLoadingBtn] = useState(false);
+
   const identifier = localStorage.getItem('identifier');
   const password = localStorage.getItem('password');
   const limit = `?fecha_gte=${data.fechaInicio}&fecha_lte=${data.fechaFin}&_start=0`;
@@ -43,6 +45,7 @@ const FormIngresoBruto = ({
     if (data.fechaInicio.length > 0 && data.fechaFin.length) {
       try {
         setLoading(true);
+        setLoadingBtn(true);
 
         const res = await getGeneralSelect(identifier, password, endpointAnticipo);
         const resHistorial = await getGeneralSelect(identifier, password, endpointHistorial);
@@ -84,6 +87,7 @@ const FormIngresoBruto = ({
       } catch (error) {
       } finally {
         setLoading(false);
+        setLoadingBtn(false);
       }
     } else {
       Swal.fire({
@@ -97,10 +101,10 @@ const FormIngresoBruto = ({
   };
 
   return (
-    <Container component='section' disableGutters sx={[stylesContainerSection, stylesWidthHeightForm]}>
-      <TitlePage titlePage='Selecciona el Periodo' />
-      <Box component='form' sx={stylesContainerBox}>
-        <Box component='div' sx={stylesContainerInput}>
+    <Box component='section' sx={[stylesWrapperBoxShadow, stylesWidthHeightForm]}>
+      <TitlePage titlePage='Buscar Ingresos Brutos por Periodo' />
+      <Box component='form' sx={stylesGridWrapperForm}>
+        <Box component='div'>
           <TitleInput titleInput='De fecha' />
           <TextField
             name='fechaInicio'
@@ -115,7 +119,7 @@ const FormIngresoBruto = ({
             autoFocus
           />
         </Box>
-        <Box component='div' sx={stylesContainerInput}>
+        <Box component='div'>
           <TitleInput titleInput='A fecha' />
           <TextField
             name='fechaFin'
@@ -129,13 +133,19 @@ const FormIngresoBruto = ({
             fullWidth
           />
         </Box>
-        <Box component='div' sx={stylesBoxButtons}>
+      </Box>
+      {loadingBtn ? (
+        <Box component='div' sx={stylesButtonSend}>
+          <ButtonLoader />
+        </Box>
+      ) : (
+        <Box component='div' sx={stylesButtonSend}>
           <Button onClick={getData} variant='contained' size='large' startIcon={<SearchIcon />}>
             Buscar Registro
           </Button>
         </Box>
-      </Box>
-    </Container>
+      )}
+    </Box>
   );
 };
 

@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { Box, Button, Container, FormControl, MenuItem, Select, TextField } from '@mui/material';
+import { Box, Button, FormControl, MenuItem, Select, TextField } from '@mui/material';
 import SearchIcon from '@mui/icons-material/Search';
 import ControlPointIcon from '@mui/icons-material/ControlPoint';
 import Swal from 'sweetalert2';
@@ -7,15 +7,15 @@ import moment from 'moment';
 
 import TitlePage from '@/components/Title/TitlePage';
 import TitleInput from '@/components/Title/TitleInput';
+import ButtonLoader from '@/components/Loader/ButtonLoader';
 import getGeneralSelect from '@/services/getGeneralSelect';
 import { generalEndpoints } from '@/utilities/endpoints';
 import {
-  stylesBoxButtons,
-  stylesContainerBox,
-  stylesContainerInput,
-  stylesContainerSection,
-  stylesWidthButton,
+  stylesBoxButtonsSearchMore,
+  stylesButtonSend,
+  stylesGridWrapperForm,
   stylesWidthHeightForm,
+  stylesWrapperBoxShadow,
 } from '@/pages/Reportes/Egresos/EgresosStyles';
 
 const FormEgresos = ({ dataSearch, setDataSearch, setDateTable, setLoading, setError }) => {
@@ -26,6 +26,8 @@ const FormEgresos = ({ dataSearch, setDataSearch, setDateTable, setLoading, setE
   const [start, setStart] = useState(0);
   const [end, setEnd] = useState(100);
   const [visibleButton, setVisibleButton] = useState(true);
+  const [loadingBtnSearch, setLoadingBtnSearch] = useState(false);
+  const [loadingBtn, setLoadingBtn] = useState(false);
 
   const identifier = localStorage.getItem('identifier');
   const password = localStorage.getItem('password');
@@ -48,6 +50,7 @@ const FormEgresos = ({ dataSearch, setDataSearch, setDateTable, setLoading, setE
     if (data.fechaInicio.trim().length > 0 && data.fechaFin.trim().length && idCategoria && idSubcategoria) {
       try {
         setLoading(true);
+        setLoadingBtnSearch(true);
 
         const endpointEgreso = `egresos?fecha_gte=${data.fechaInicio}T00:00:00.000Z&fecha_lte=${data.fechaFin}T23:59:59.000Z&subcategoria=${idSubcategoria}:DESC&_start=${start}`;
 
@@ -96,6 +99,7 @@ const FormEgresos = ({ dataSearch, setDataSearch, setDateTable, setLoading, setE
       } catch (error) {
       } finally {
         setLoading(false);
+        setLoadingBtnSearch(false);
       }
     } else {
       Swal.fire({
@@ -113,7 +117,10 @@ const FormEgresos = ({ dataSearch, setDataSearch, setDateTable, setLoading, setE
       setVisibleButton(false);
 
       const endpointEgreso = `egresos?fecha_gte=${data.fechaInicio}T00:00:00.000Z&fecha_lte=${data.fechaFin}T23:59:59.000Z&subcategoria=${idSubcategoria}:DESC&_start=${start}`;
+
+      setLoadingBtn(true);
       const resultado = await getGeneralSelect(identifier, password, endpointEgreso);
+      setLoadingBtn(false);
 
       setDataSearch(prevData => [...prevData, ...resultado.data]);
       setEnd(end + 100);
@@ -124,10 +131,10 @@ const FormEgresos = ({ dataSearch, setDataSearch, setDateTable, setLoading, setE
   };
 
   return (
-    <Container component='section' disableGutters sx={[stylesContainerSection, stylesWidthHeightForm]}>
-      <TitlePage titlePage='Reporte de Egresos' />
-      <Box component='form' sx={stylesContainerBox}>
-        <Box component='div' sx={stylesContainerInput}>
+    <Box component='section' sx={[stylesWrapperBoxShadow, stylesWidthHeightForm]}>
+      <TitlePage titlePage='Buscar Reporte de Egresos' />
+      <Box component='form' sx={stylesGridWrapperForm}>
+        <Box component='div'>
           <TitleInput titleInput='De fecha' />
           <TextField
             name='fechaInicio'
@@ -142,7 +149,7 @@ const FormEgresos = ({ dataSearch, setDataSearch, setDateTable, setLoading, setE
             autoFocus
           />
         </Box>
-        <Box component='div' sx={stylesContainerInput}>
+        <Box component='div'>
           <TitleInput titleInput='A fecha' />
           <TextField
             name='fechaFin'
@@ -156,61 +163,84 @@ const FormEgresos = ({ dataSearch, setDataSearch, setDateTable, setLoading, setE
             fullWidth
           />
         </Box>
-        <Box component='div' sx={stylesContainerInput}>
+        <Box component='div'>
           <TitleInput titleInput='Categoría' />
           <FormControl fullWidth>
             <Select size='small' value={idCategoria} onChange={handleCategoria}>
-              {categoria.map(item => {
-                const { categoria, id, status } = item;
+              {categoria.length > 0 ? (
+                categoria.map(item => {
+                  const { categoria, id, status } = item;
 
-                return status ? (
-                  <MenuItem key={id} value={item}>
-                    {categoria}
-                  </MenuItem>
-                ) : (
-                  false
-                );
-              })}
+                  return status ? (
+                    <MenuItem key={id} value={item}>
+                      {categoria}
+                    </MenuItem>
+                  ) : null;
+                })
+              ) : (
+                <MenuItem value=''>No se encontraron opciones</MenuItem>
+              )}
             </Select>
           </FormControl>
         </Box>
-        <Box component='div' sx={stylesContainerInput}>
+        <Box component='div'>
           <TitleInput titleInput='Subcategoría' />
           <FormControl fullWidth>
             <Select size='small' value={idSubcategoria} onChange={handleSubCategoria}>
-              {idCategoria
-                ? idCategoria.subcategorias.map(subitem => {
+              {idCategoria ? (
+                idCategoria.subcategorias.length > 0 ? (
+                  idCategoria.subcategorias.map(subitem => {
                     const { descripcion, id, status } = subitem;
 
                     return status ? (
                       <MenuItem key={id} value={id}>
                         {descripcion}
                       </MenuItem>
-                    ) : (
-                      false
-                    );
+                    ) : null;
                   })
-                : null}
+                ) : (
+                  <MenuItem value=''>No se encontraron opciones</MenuItem>
+                )
+              ) : (
+                <MenuItem value=''>No se encontraron opciones</MenuItem>
+              )}
             </Select>
           </FormControl>
         </Box>
-        <Box component='div' sx={stylesBoxButtons}>
-          <Button onClick={getData} variant='contained' size='large' sx={stylesWidthButton} startIcon={<SearchIcon />}>
-            Buscar
-          </Button>
-          <Button
-            variant='contained'
-            disabled={visibleButton}
-            onClick={getMoreData}
-            size='large'
-            sx={stylesWidthButton}
-            startIcon={<ControlPointIcon />}
-          >
-            {`Más de ${start} registros`}
-          </Button>
+      </Box>
+      <Box component='div' sx={stylesButtonSend}>
+        <Box component='div' sx={stylesBoxButtonsSearchMore}>
+          {loadingBtnSearch ? (
+            <Box component='div'>
+              <ButtonLoader />
+            </Box>
+          ) : (
+            <Box component='div'>
+              <Button onClick={getData} variant='contained' size='large' startIcon={<SearchIcon />}>
+                Buscar
+              </Button>
+            </Box>
+          )}
+          {loadingBtn ? (
+            <Box component='div'>
+              <ButtonLoader />
+            </Box>
+          ) : (
+            <Box component='div'>
+              <Button
+                variant='contained'
+                disabled={visibleButton}
+                onClick={getMoreData}
+                size='large'
+                startIcon={<ControlPointIcon />}
+              >
+                {`Más de ${start} registros`}
+              </Button>
+            </Box>
+          )}
         </Box>
       </Box>
-    </Container>
+    </Box>
   );
 };
 

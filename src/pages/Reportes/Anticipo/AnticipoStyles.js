@@ -1,40 +1,47 @@
 import { css } from '@emotion/react';
 
-export const stylesBoxAnticipo = css`
+export const stylesWrapperGeneral = css`
   display: flex;
-  justify-content: center;
+  flex-direction: row;
   gap: 32px;
+  width: 1432px;
+  height: max-content;
+  margin: 32px auto;
 `;
 
-export const stylesContainerSection = css`
+export const stylesWrapperBoxShadow = css`
   background-color: #ffffff;
   border-radius: 4px;
   box-shadow: 0px 0px 5px rgba(0, 0, 0, 0.25);
-  padding: 24px;
-  margin-top: 40px;
-  margin-bottom: 40px;
-  margin-left: 0;
-  margin-right: 0;
-`;
-
-export const stylesContainerBox = css`
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-`;
-
-export const stylesContainerInput = css`
-  width: 100%;
-  margin-bottom: 16px;
+  padding: 16px;
 `;
 
 export const stylesWidthHeightForm = css`
-  width: 400px;
+  width: 382px;
   height: max-content;
 `;
 
+export const stylesGridWrapperForm = css`
+  display: grid;
+  grid-template-columns: repeat(1, 1fr);
+  gap: 16px;
+`;
+
+export const stylesButtonSend = css`
+  display: flex;
+  justify-content: center;
+  margin-top: 32px;
+`;
+
+export const stylesBoxButtonsSearchMore = css`
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 16px;
+`;
+
 export const stylesWidthHeightTable = css`
-  width: 1000px;
+  width: 1018px;
   height: max-content;
 `;
 
@@ -51,18 +58,6 @@ export const stylesTableCellHeader = css`
 `;
 
 export const stylesTableCellBody = css`
-  padding: 2px 4px;
+  padding: 9px 4px;
   border-bottom: 1.5px solid #dee2e6;
-`;
-
-export const stylesWidthButton = css`
-  width: max-content;
-`;
-
-export const stylesBoxButtons = css`
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  gap: 16px;
-  margin-top: 16px;
 `;

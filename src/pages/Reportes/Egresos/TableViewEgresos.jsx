@@ -1,7 +1,6 @@
 import React, { useState } from 'react';
 import {
   Box,
-  Container,
   IconButton,
   Modal,
   Table,
@@ -21,22 +20,23 @@ import SleketonLoader from '@/components/Loader/SleketonLoader';
 import AlertGlobalTables from '@/components/Alert/AlertGlobalTables';
 import ModalEgresos from '@/pages/Reportes/Egresos/ModalEgresos';
 import {
-  stylesContainerSection,
   stylesDateTable,
-  stylesModal,
-  stylesTableCellHeader,
+  stylesSuperpositionModal,
   stylesTableCellBody,
+  stylesTableCellBodyImporte,
+  stylesTableCellHeader,
   stylesWidthHeightTable,
+  stylesWrapperBoxShadow,
 } from '@/pages/Reportes/Egresos/EgresosStyles';
 
 const columns = [
-  { id: 'fecha', label: 'Fecha', width: 94.98 },
-  { id: 'formaPago', label: 'Forma de Pago', width: 173.94 },
-  { id: 'subcategoria', label: 'Subcategoría', width: 179.95 },
-  { id: 'importe', label: 'Importe', width: 99.98 },
-  { id: 'concepto', label: 'Concepto', width: 227.9 },
-  { id: 'user', label: 'Usuario', width: 99.98 },
-  { id: 'acciones', label: 'Acciones', width: 75.29 },
+  { id: 'fecha', label: 'Fecha', width: 90 },
+  { id: 'formaPago', label: 'Forma de Pago', width: 195 },
+  { id: 'subcategoria', label: 'Subcategoría', width: 200 },
+  { id: 'importe', label: 'Importe', width: 100 },
+  { id: 'concepto', label: 'Concepto', width: 200 },
+  { id: 'user', label: 'Usuario', width: 121 },
+  { id: 'acciones', label: 'Acciones', width: 80 },
 ];
 
 const TableViewEgresos = ({ dataSearch, dateTable, loading, error }) => {
@@ -61,9 +61,11 @@ const TableViewEgresos = ({ dataSearch, dateTable, loading, error }) => {
   };
 
   return (
-    <Container component='section' disableGutters sx={[stylesContainerSection, stylesWidthHeightTable]}>
-      <TitlePage titlePage='Histórico de Egresos' />
-      <Typography sx={stylesDateTable}>{dateTable}</Typography>
+    <Box component='section' sx={[stylesWrapperBoxShadow, stylesWidthHeightTable]}>
+      <TitlePage titlePage='Lista de Históricos de Egresos' />
+      <Typography component='p' sx={stylesDateTable}>
+        {dateTable}
+      </Typography>
       <Box component='div'>
         <TableContainer>
           <Table>
@@ -77,71 +79,74 @@ const TableViewEgresos = ({ dataSearch, dateTable, loading, error }) => {
               </TableRow>
             </TableHead>
             <TableBody>
-              {loading && (
+              {loading ? (
                 <TableRow>
                   <TableCell align='center' colSpan={columns.length} sx={stylesTableCellBody}>
                     <SleketonLoader />
                   </TableCell>
                 </TableRow>
-              )}
-              {error && (
+              ) : error ? (
                 <TableRow>
                   <TableCell align='center' colSpan={columns.length} sx={stylesTableCellBody}>
                     <AlertGlobalTables messageError='Ah ocurrido un error al obtener los datos' />
                   </TableCell>
                 </TableRow>
+              ) : dataSearch.length > 0 ? (
+                dataSearch.slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage).map(item => {
+                  const { id, fecha, concepto, subcategoria, importe, pago, users_permissions_user } = item;
+
+                  totalImporte += importe;
+
+                  return (
+                    <TableRow key={id}>
+                      <TableCell sx={stylesTableCellBody}>{moment(fecha).format('YYYY-MM-DD')}</TableCell>
+                      <TableCell sx={stylesTableCellBody}>{pago.f_pago}</TableCell>
+                      <TableCell sx={stylesTableCellBody}>{subcategoria.descripcion}</TableCell>
+                      <TableCell sx={stylesTableCellBody}>
+                        {importe.toLocaleString('es-MX', {
+                          style: 'currency',
+                          currency: 'MXN',
+                          minimumFractionDigits: 2,
+                        })}
+                      </TableCell>
+                      <TableCell sx={stylesTableCellBody}>{concepto}</TableCell>
+                      <TableCell sx={stylesTableCellBody}>{users_permissions_user.username}</TableCell>
+                      <TableCell sx={stylesTableCellBody}>
+                        <IconButton color='info' size='small' onClick={() => handleOpen(item)}>
+                          <VisibilityIcon />
+                        </IconButton>
+                      </TableCell>
+                    </TableRow>
+                  );
+                })
+              ) : (
+                <TableRow>
+                  <TableCell align='center' colSpan={columns.length} sx={stylesTableCellBody}>
+                    <AlertGlobalTables messageError='No se encontraron datos para esta tabla' />
+                  </TableCell>
+                </TableRow>
               )}
-              {dataSearch.slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage).map(item => {
-                const { id, fecha, concepto, subcategoria, importe, pago, users_permissions_user } = item;
-
-                totalImporte += importe;
-
-                return (
-                  <TableRow key={id}>
-                    <TableCell sx={stylesTableCellBody}>{moment(fecha).format('YYYY-MM-DD hh:mm:ss')}</TableCell>
-                    <TableCell sx={stylesTableCellBody}>{pago.f_pago}</TableCell>
-                    <TableCell sx={stylesTableCellBody}>{subcategoria.descripcion}</TableCell>
-                    <TableCell sx={stylesTableCellBody}>
-                      {importe.toLocaleString('es-MX', {
-                        style: 'currency',
-                        currency: 'MXN',
-                        minimumFractionDigits: 2,
-                      })}
-                    </TableCell>
-                    <TableCell sx={stylesTableCellBody}>{concepto}</TableCell>
-                    <TableCell sx={stylesTableCellBody}>{users_permissions_user.username}</TableCell>
-                    <TableCell sx={stylesTableCellBody}>
-                      <IconButton color='info' size='small' onClick={() => handleOpen(item)}>
-                        <VisibilityIcon />
-                      </IconButton>
-                    </TableCell>
-                  </TableRow>
-                );
-              })}
               {totalImporte === 0 ? null : (
-                <>
-                  <br />
-                  <TableRow>
-                    <TableCell sx={[stylesTableCellBody, { fontWeight: '500' }]}>Total</TableCell>
-                    <TableCell sx={stylesTableCellBody}></TableCell>
-                    <TableCell sx={stylesTableCellBody}></TableCell>
-                    <TableCell sx={stylesTableCellBody}>
-                      {totalImporte.toLocaleString('es-MX', {
-                        style: 'currency',
-                        currency: 'MXN',
-                        minimumFractionDigits: 2,
-                      })}
-                    </TableCell>
-                    <TableCell sx={stylesTableCellBody}></TableCell>
-                    <TableCell sx={stylesTableCellBody}></TableCell>
-                    <TableCell sx={stylesTableCellBody}></TableCell>
-                  </TableRow>
-                </>
+                <TableRow>
+                  <TableCell sx={[stylesTableCellBodyImporte, { fontWeight: '500' }]}>Total</TableCell>
+                  <TableCell sx={stylesTableCellBodyImporte}></TableCell>
+                  <TableCell sx={stylesTableCellBodyImporte}></TableCell>
+                  <TableCell sx={stylesTableCellBodyImporte}>
+                    {totalImporte.toLocaleString('es-MX', {
+                      style: 'currency',
+                      currency: 'MXN',
+                      minimumFractionDigits: 2,
+                    })}
+                  </TableCell>
+                  <TableCell sx={stylesTableCellBodyImporte}></TableCell>
+                  <TableCell sx={stylesTableCellBodyImporte}></TableCell>
+                  <TableCell sx={stylesTableCellBodyImporte}></TableCell>
+                </TableRow>
               )}
             </TableBody>
           </Table>
         </TableContainer>
-        {loading || error ? null : (
+        {loading ? null : (
           <TablePagination
             rowsPerPageOptions={[]}
             component='div'
@@ -155,11 +160,11 @@ const TableViewEgresos = ({ dataSearch, dateTable, loading, error }) => {
         )}
       </Box>
       <Modal open={openModal}>
-        <Box sx={stylesModal}>
+        <Box component='div' sx={stylesSuperpositionModal}>
           <ModalEgresos dataEgreso={dataEgreso} handleCloseModal={handleCloseModal} />
         </Box>
       </Modal>
-    </Container>
+    </Box>
   );
 };
 

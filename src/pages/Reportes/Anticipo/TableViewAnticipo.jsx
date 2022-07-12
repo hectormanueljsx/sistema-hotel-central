@@ -1,7 +1,6 @@
 import React, { useState } from 'react';
 import {
   Box,
-  Container,
   Table,
   TableBody,
   TableCell,
@@ -17,19 +16,18 @@ import TitlePage from '@/components/Title/TitlePage';
 import SleketonLoader from '@/components/Loader/SleketonLoader';
 import AlertGlobalTables from '@/components/Alert/AlertGlobalTables';
 import {
-  stylesContainerSection,
   stylesDateTable,
-  stylesTableCellHeader,
   stylesTableCellBody,
+  stylesTableCellHeader,
   stylesWidthHeightTable,
+  stylesWrapperBoxShadow,
 } from '@/pages/Reportes/Anticipo/AnticipoStyles';
 
 const columns = [
-  { id: 'id', label: 'No. de Anticipo', width: 140 },
-  { id: 'fecha', label: 'Fecha', width: 200 },
-  { id: 'cantidad', label: 'Forma de Pago', width: 300 },
-  { id: 'no_reservacion', label: 'Cantidad Pagada', width: 172 },
-  { id: 'f_pago', label: 'Reserva', width: 140 },
+  { id: 'fecha', label: 'Fecha', width: 240 },
+  { id: 'cantidad', label: 'Forma de Pago', width: 364 },
+  { id: 'no_reservacion', label: 'Cantidad Pagada', width: 212 },
+  { id: 'f_pago', label: 'Reserva', width: 170 },
 ];
 
 const TableViewAnticipo = ({ dataSearch, dateTable, loading, error }) => {
@@ -45,9 +43,11 @@ const TableViewAnticipo = ({ dataSearch, dateTable, loading, error }) => {
   };
 
   return (
-    <Container component='section' sx={[stylesContainerSection, stylesWidthHeightTable]}>
-      <TitlePage titlePage='Histórico de Anticipos' />
-      <Typography sx={stylesDateTable}>{dateTable}</Typography>
+    <Box component='section' sx={[stylesWrapperBoxShadow, stylesWidthHeightTable]}>
+      <TitlePage titlePage='Lista de Históricos de Anticipos' />
+      <Typography component='p' sx={stylesDateTable}>
+        {dateTable}
+      </Typography>
       <Box component='div'>
         <TableContainer>
           <Table>
@@ -61,70 +61,70 @@ const TableViewAnticipo = ({ dataSearch, dateTable, loading, error }) => {
               </TableRow>
             </TableHead>
             <TableBody>
-              {loading && (
+              {loading ? (
                 <TableRow>
                   <TableCell align='center' colSpan={columns.length} sx={stylesTableCellBody}>
                     <SleketonLoader />
                   </TableCell>
                 </TableRow>
-              )}
-              {error && (
+              ) : error ? (
                 <TableRow>
                   <TableCell align='center' colSpan={columns.length} sx={stylesTableCellBody}>
                     <AlertGlobalTables messageError='Ah ocurrido un error al obtener los datos' />
                   </TableCell>
                 </TableRow>
+              ) : dataSearch.length > 0 ? (
+                dataSearch.slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage).map(item => {
+                  const {
+                    id,
+                    fecha,
+                    cantidad,
+                    pago: { f_pago },
+                    reservacion,
+                  } = item;
+
+                  totalCantidad += cantidad;
+
+                  return (
+                    <TableRow key={id}>
+                      <TableCell sx={stylesTableCellBody}>{moment(fecha).format('YYYY-MM-DD hh:mm:ss a')}</TableCell>
+                      <TableCell sx={stylesTableCellBody}>{f_pago}</TableCell>
+                      <TableCell sx={stylesTableCellBody}>
+                        {cantidad.toLocaleString('es-MX', {
+                          style: 'currency',
+                          currency: 'MXN',
+                          minimumFractionDigits: 2,
+                        })}
+                      </TableCell>
+                      <TableCell sx={stylesTableCellBody}>{reservacion.id}</TableCell>
+                    </TableRow>
+                  );
+                })
+              ) : (
+                <TableRow>
+                  <TableCell align='center' colSpan={columns.length} sx={stylesTableCellBody}>
+                    <AlertGlobalTables messageError='No se encontraron datos para esta tabla' />
+                  </TableCell>
+                </TableRow>
               )}
-              {dataSearch.slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage).map(item => {
-                const {
-                  id,
-                  fecha,
-                  cantidad,
-                  pago: { f_pago },
-                  reservacion,
-                } = item;
-
-                totalCantidad += cantidad;
-
-                return (
-                  <TableRow key={id}>
-                    <TableCell sx={stylesTableCellBody}>{id}</TableCell>
-                    <TableCell sx={stylesTableCellBody}>{moment(fecha).format('YYYY-MM-DD hh:mm:ss a')}</TableCell>
-                    <TableCell sx={stylesTableCellBody}>{f_pago}</TableCell>
-                    <TableCell sx={stylesTableCellBody}>
-                      {cantidad.toLocaleString('es-MX', {
-                        style: 'currency',
-                        currency: 'MXN',
-                        minimumFractionDigits: 2,
-                      })}
-                    </TableCell>
-                    <TableCell sx={stylesTableCellBody}>{reservacion.id}</TableCell>
-                  </TableRow>
-                );
-              })}
-
               {totalCantidad === 0 ? null : (
-                <>
-                  <br />
-                  <TableRow>
-                    <TableCell sx={[stylesTableCellBody, { fontWeight: '500' }]}>Total</TableCell>
-                    <TableCell sx={stylesTableCellBody}></TableCell>
-                    <TableCell sx={stylesTableCellBody}></TableCell>
-                    <TableCell sx={stylesTableCellBody}>
-                      {totalCantidad.toLocaleString('es-MX', {
-                        style: 'currency',
-                        currency: 'MXN',
-                        minimumFractionDigits: 2,
-                      })}
-                    </TableCell>
-                    <TableCell sx={stylesTableCellBody}></TableCell>
-                  </TableRow>
-                </>
+                <TableRow>
+                  <TableCell sx={[stylesTableCellBody, { fontWeight: '500' }]}>Total</TableCell>
+                  <TableCell sx={stylesTableCellBody}></TableCell>
+                  <TableCell sx={stylesTableCellBody}>
+                    {totalCantidad.toLocaleString('es-MX', {
+                      style: 'currency',
+                      currency: 'MXN',
+                      minimumFractionDigits: 2,
+                    })}
+                  </TableCell>
+                  <TableCell sx={stylesTableCellBody}></TableCell>
+                </TableRow>
               )}
             </TableBody>
           </Table>
         </TableContainer>
-        {loading || error ? null : (
+        {loading ? null : (
           <TablePagination
             rowsPerPageOptions={[]}
             component='div'
@@ -137,7 +137,7 @@ const TableViewAnticipo = ({ dataSearch, dateTable, loading, error }) => {
           />
         )}
       </Box>
-    </Container>
+    </Box>
   );
 };
 

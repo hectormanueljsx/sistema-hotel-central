@@ -1,29 +1,23 @@
 import React from 'react';
-import {
-  Box,
-  Container,
-  Table,
-  TableBody,
-  TableCell,
-  TableContainer,
-  TableHead,
-  TableRow,
-  Typography,
-} from '@mui/material';
+import { Box, Table, TableBody, TableCell, TableContainer, TableHead, TableRow, Typography } from '@mui/material';
 
 import TitlePage from '@/components/Title/TitlePage';
 import SleketonLoader from '@/components/Loader/SleketonLoader';
 import AlertGlobalTables from '@/components/Alert/AlertGlobalTables';
 import {
-  stylesContainerSection,
   stylesDateTable,
-  stylesTableCellHeader,
+  stylesGridTables,
   stylesTableCellBody,
-  stylesTableHead,
-  stylesWidthFPago,
+  stylesTableCellHeader,
+  stylesTableCellTitle,
   stylesWidthHeightTable,
-  stylesWidthPrice,
+  stylesWrapperBoxShadow,
 } from '@/pages/Reportes/IngresoBruto/IngresoBrutoStyles';
+
+const columns = [
+  { id: 'f_pago', label: 'Forma de Pago', width: 830 },
+  { id: 'cantidad', label: 'Cantidad', width: 156 },
+];
 
 const TableViewIngresoBruto = ({ dateTable, dataSearch, dataPago, dataRegistro, loading, error }) => {
   let total = 0;
@@ -31,36 +25,44 @@ const TableViewIngresoBruto = ({ dateTable, dataSearch, dataPago, dataRegistro, 
   let totalRegistros = [];
 
   return (
-    <Container component='section' disableGutters sx={[stylesContainerSection, stylesWidthHeightTable]}>
-      <TitlePage titlePage='Ingresos Brutos por Periodo' />
-      <Typography sx={stylesDateTable}>{dateTable}</Typography>
+    <Box component='section' sx={[stylesWrapperBoxShadow, stylesWidthHeightTable]}>
+      <TitlePage titlePage='Lista de Ingresos Brutos por Periodo' />
+      <Typography component='p' sx={stylesDateTable}>
+        {dateTable}
+      </Typography>
       <Box component='div'>
-        <TableContainer sx={stylesTableHead}>
-          <Table>
-            <TableHead>
-              <TableRow>
-                <TableCell align='center' colSpan={2} sx={stylesTableCellHeader}>
-                  Ingresos por Reservaciones (Anticipos)
-                </TableCell>
-              </TableRow>
-            </TableHead>
-            <TableBody>
-              {loading && (
+        <Box component='div' sx={stylesGridTables}>
+          <TableContainer>
+            <Table>
+              <TableHead>
                 <TableRow>
-                  <TableCell align='center' colSpan={2} sx={stylesTableCellBody}>
-                    <SleketonLoader />
+                  <TableCell align='center' colSpan={columns.length} sx={stylesTableCellTitle}>
+                    Ingresos por Reservaciones (Anticipos)
                   </TableCell>
                 </TableRow>
-              )}
-              {error && (
                 <TableRow>
-                  <TableCell align='center' colSpan={2} sx={stylesTableCellBody}>
-                    <AlertGlobalTables messageError='Ah ocurrido un error al obtener los datos' />
-                  </TableCell>
+                  {columns.map((column, index) => (
+                    <TableCell key={index} sx={[stylesTableCellHeader, { width: column.width }]}>
+                      {column.label}
+                    </TableCell>
+                  ))}
                 </TableRow>
-              )}
-              {dataSearch.length !== 0
-                ? dataPago.map(item => {
+              </TableHead>
+              <TableBody>
+                {loading ? (
+                  <TableRow>
+                    <TableCell align='center' colSpan={columns.length} sx={stylesTableCellBody}>
+                      <SleketonLoader />
+                    </TableCell>
+                  </TableRow>
+                ) : error ? (
+                  <TableRow>
+                    <TableCell align='center' colSpan={columns.length} sx={stylesTableCellBody}>
+                      <AlertGlobalTables messageError='Ah ocurrido un error al obtener los datos' />
+                    </TableCell>
+                  </TableRow>
+                ) : dataSearch.length > 0 ? (
+                  dataPago.map(item => {
                     const { id, f_pago } = item;
                     total = 0;
 
@@ -75,8 +77,8 @@ const TableViewIngresoBruto = ({ dateTable, dataSearch, dataPago, dataRegistro, 
 
                     return (
                       <TableRow key={id}>
-                        <TableCell sx={[stylesTableCellBody, stylesWidthFPago]}>Ingresos por {f_pago}</TableCell>
-                        <TableCell sx={[stylesTableCellBody, stylesWidthPrice]}>
+                        <TableCell sx={stylesTableCellBody}>Ingresos por {f_pago}</TableCell>
+                        <TableCell sx={stylesTableCellBody}>
                           {total.toLocaleString('es-MX', {
                             style: 'currency',
                             currency: 'MXN',
@@ -86,36 +88,47 @@ const TableViewIngresoBruto = ({ dateTable, dataSearch, dataPago, dataRegistro, 
                       </TableRow>
                     );
                   })
-                : null}
-            </TableBody>
-          </Table>
-        </TableContainer>
-        <TableContainer sx={stylesTableHead}>
-          <Table>
-            <TableHead>
-              <TableRow>
-                <TableCell align='center' colSpan={2} sx={stylesTableCellHeader}>
-                  Ingresos por Registros
-                </TableCell>
-              </TableRow>
-            </TableHead>
-            <TableBody>
-              {loading && (
+                ) : (
+                  <TableRow>
+                    <TableCell align='center' colSpan={columns.length} sx={stylesTableCellBody}>
+                      <AlertGlobalTables messageError='No se encontraron datos para esta tabla' />
+                    </TableCell>
+                  </TableRow>
+                )}
+              </TableBody>
+            </Table>
+          </TableContainer>
+          <TableContainer>
+            <Table>
+              <TableHead>
                 <TableRow>
-                  <TableCell align='center' colSpan={2} sx={stylesTableCellBody}>
-                    <SleketonLoader />
+                  <TableCell align='center' colSpan={columns.length} sx={stylesTableCellTitle}>
+                    Ingresos por Registros
                   </TableCell>
                 </TableRow>
-              )}
-              {error && (
                 <TableRow>
-                  <TableCell align='center' colSpan={2} sx={stylesTableCellBody}>
-                    <AlertGlobalTables messageError='Ah ocurrido un error al obtener los datos' />
-                  </TableCell>
+                  {columns.map((column, index) => (
+                    <TableCell key={index} sx={[stylesTableCellHeader, { width: column.width }]}>
+                      {column.label}
+                    </TableCell>
+                  ))}
                 </TableRow>
-              )}
-              {dataSearch.length !== 0
-                ? dataPago.map(item => {
+              </TableHead>
+              <TableBody>
+                {loading ? (
+                  <TableRow>
+                    <TableCell align='center' colSpan={columns.length} sx={stylesTableCellBody}>
+                      <SleketonLoader />
+                    </TableCell>
+                  </TableRow>
+                ) : error ? (
+                  <TableRow>
+                    <TableCell align='center' colSpan={columns.length} sx={stylesTableCellBody}>
+                      <AlertGlobalTables messageError='Ah ocurrido un error al obtener los datos' />
+                    </TableCell>
+                  </TableRow>
+                ) : dataSearch.length > 0 ? (
+                  dataPago.map(item => {
                     const { id, f_pago } = item;
                     total = 0;
 
@@ -129,8 +142,8 @@ const TableViewIngresoBruto = ({ dateTable, dataSearch, dataPago, dataRegistro, 
 
                     return (
                       <TableRow key={id}>
-                        <TableCell sx={[stylesTableCellBody, stylesWidthFPago]}>Ingresos por {f_pago}</TableCell>
-                        <TableCell sx={[stylesTableCellBody, stylesWidthPrice]}>
+                        <TableCell sx={stylesTableCellBody}>Ingresos por {f_pago}</TableCell>
+                        <TableCell sx={stylesTableCellBody}>
                           {total.toLocaleString('es-MX', {
                             style: 'currency',
                             currency: 'MXN',
@@ -140,36 +153,47 @@ const TableViewIngresoBruto = ({ dateTable, dataSearch, dataPago, dataRegistro, 
                       </TableRow>
                     );
                   })
-                : null}
-            </TableBody>
-          </Table>
-        </TableContainer>
-        <TableContainer>
-          <Table>
-            <TableHead>
-              <TableRow>
-                <TableCell align='center' colSpan={2} sx={stylesTableCellHeader}>
-                  Ingresos Totales
-                </TableCell>
-              </TableRow>
-            </TableHead>
-            <TableBody>
-              {loading && (
+                ) : (
+                  <TableRow>
+                    <TableCell align='center' colSpan={columns.length} sx={stylesTableCellBody}>
+                      <AlertGlobalTables messageError='No se encontraron datos para esta tabla' />
+                    </TableCell>
+                  </TableRow>
+                )}
+              </TableBody>
+            </Table>
+          </TableContainer>
+          <TableContainer>
+            <Table>
+              <TableHead>
                 <TableRow>
-                  <TableCell align='center' colSpan={2} sx={stylesTableCellBody}>
-                    <SleketonLoader />
+                  <TableCell align='center' colSpan={columns.length} sx={stylesTableCellTitle}>
+                    Ingresos Totales
                   </TableCell>
                 </TableRow>
-              )}
-              {error && (
                 <TableRow>
-                  <TableCell align='center' colSpan={2} sx={stylesTableCellBody}>
-                    <AlertGlobalTables messageError='Ah ocurrido un error al obtener los datos' />
-                  </TableCell>
+                  {columns.map((column, index) => (
+                    <TableCell key={index} sx={[stylesTableCellHeader, { width: column.width }]}>
+                      {column.label}
+                    </TableCell>
+                  ))}
                 </TableRow>
-              )}
-              {dataSearch.length !== 0
-                ? dataPago.map(item => {
+              </TableHead>
+              <TableBody>
+                {loading ? (
+                  <TableRow>
+                    <TableCell align='center' colSpan={columns.length} sx={stylesTableCellBody}>
+                      <SleketonLoader />
+                    </TableCell>
+                  </TableRow>
+                ) : error ? (
+                  <TableRow>
+                    <TableCell align='center' colSpan={columns.length} sx={stylesTableCellBody}>
+                      <AlertGlobalTables messageError='Ah ocurrido un error al obtener los datos' />
+                    </TableCell>
+                  </TableRow>
+                ) : dataSearch.length > 0 ? (
+                  dataPago.map(item => {
                     const { id, f_pago } = item;
                     let total = 0;
                     let totalReg = 0;
@@ -191,10 +215,8 @@ const TableViewIngresoBruto = ({ dateTable, dataSearch, dataPago, dataRegistro, 
 
                     return (
                       <TableRow key={id}>
-                        <TableCell sx={[stylesTableCellBody, stylesWidthFPago]}>
-                          Ingresos totales por {f_pago}
-                        </TableCell>
-                        <TableCell sx={[stylesTableCellBody, stylesWidthPrice]}>
+                        <TableCell sx={stylesTableCellBody}>Ingresos totales por {f_pago}</TableCell>
+                        <TableCell sx={stylesTableCellBody}>
                           {total.toLocaleString('es-MX', {
                             style: 'currency',
                             currency: 'MXN',
@@ -204,12 +226,19 @@ const TableViewIngresoBruto = ({ dateTable, dataSearch, dataPago, dataRegistro, 
                       </TableRow>
                     );
                   })
-                : null}
-            </TableBody>
-          </Table>
-        </TableContainer>
+                ) : (
+                  <TableRow>
+                    <TableCell align='center' colSpan={columns.length} sx={stylesTableCellBody}>
+                      <AlertGlobalTables messageError='No se encontraron datos para esta tabla' />
+                    </TableCell>
+                  </TableRow>
+                )}
+              </TableBody>
+            </Table>
+          </TableContainer>
+        </Box>
       </Box>
-    </Container>
+    </Box>
   );
 };
 

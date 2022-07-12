@@ -1,7 +1,6 @@
 import React, { useState } from 'react';
 import {
   Box,
-  Container,
   IconButton,
   Modal,
   Table,
@@ -20,21 +19,21 @@ import SleketonLoader from '@/components/Loader/SleketonLoader';
 import ModalFallas from '@/pages/Reportes/Fallas/ModalFallas';
 import AlertGlobalTables from '@/components/Alert/AlertGlobalTables';
 import {
-  stylesContainerSection,
-  stylesModal,
-  stylesTableCellHeader,
-  stylesTableCellBody,
-  stylesWidthHeightTable,
   stylesDateTable,
+  stylesSuperpositionModal,
+  stylesTableCellBody,
+  stylesTableCellHeader,
+  stylesWidthHeightTable,
+  stylesWrapperBoxShadow,
 } from '@/pages/Reportes/Fallas/FallasStyles';
 
 const columns = [
   { id: 'fechaReporte', label: 'Fecha de Reporte', width: 130 },
   { id: 'fechInicio', label: 'Fecha de Inicio', width: 130 },
-  { id: 'motivo', label: 'Motivo', width: 250 },
-  { id: 'categoria', label: 'Categoría', width: 245 },
-  { id: 'estado', label: 'Estado', width: 122 },
-  { id: 'acciones', label: 'Acciones', width: 75 },
+  { id: 'motivo', label: 'Motivo', width: 264 },
+  { id: 'categoria', label: 'Categoría', width: 255 },
+  { id: 'estado', label: 'Estado', width: 127 },
+  { id: 'acciones', label: 'Acciones', width: 80 },
 ];
 
 const TableViewMantenimiento = ({ dataSearch, dateTable, loading, error }) => {
@@ -57,9 +56,11 @@ const TableViewMantenimiento = ({ dataSearch, dateTable, loading, error }) => {
   };
 
   return (
-    <Container component='section' disableGutters sx={[stylesContainerSection, stylesWidthHeightTable]}>
-      <TitlePage titlePage='Histórico de Mantenimientos' />
-      <Typography sx={stylesDateTable}>{dateTable}</Typography>
+    <Box component='section' sx={[stylesWrapperBoxShadow, stylesWidthHeightTable]}>
+      <TitlePage titlePage='Lista de Históricos de Mantenimientos' />
+      <Typography component='p' sx={stylesDateTable}>
+        {dateTable}
+      </Typography>
       <Box component='div'>
         <TableContainer>
           <Table>
@@ -73,49 +74,55 @@ const TableViewMantenimiento = ({ dataSearch, dateTable, loading, error }) => {
               </TableRow>
             </TableHead>
             <TableBody>
-              {loading && (
+              {loading ? (
                 <TableRow>
                   <TableCell align='center' colSpan={columns.length} sx={stylesTableCellBody}>
                     <SleketonLoader />
                   </TableCell>
                 </TableRow>
-              )}
-              {error && (
+              ) : error ? (
                 <TableRow>
                   <TableCell align='center' colSpan={columns.length} sx={stylesTableCellBody}>
                     <AlertGlobalTables messageError='Ah ocurrido un error al obtener los datos' />
                   </TableCell>
                 </TableRow>
-              )}
-              {dataSearch.slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage).map(item => {
-                const {
-                  id,
-                  f_inicio,
-                  motivo,
-                  estado,
-                  subcategoria: { descripcion },
-                  f_reporte,
-                } = item;
+              ) : dataSearch.length > 0 ? (
+                dataSearch.slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage).map(item => {
+                  const {
+                    id,
+                    f_inicio,
+                    motivo,
+                    estado,
+                    subcategoria: { descripcion },
+                    f_reporte,
+                  } = item;
 
-                return (
-                  <TableRow key={id}>
-                    <TableCell sx={stylesTableCellBody}>{f_reporte}</TableCell>
-                    <TableCell sx={stylesTableCellBody}>{f_inicio}</TableCell>
-                    <TableCell sx={stylesTableCellBody}>{motivo}</TableCell>
-                    <TableCell sx={stylesTableCellBody}>{descripcion}</TableCell>
-                    <TableCell sx={stylesTableCellBody}>{estado}</TableCell>
-                    <TableCell sx={stylesTableCellBody}>
-                      <IconButton color='info' size='small' onClick={() => handleOpen(item)}>
-                        <VisibilityIcon />
-                      </IconButton>
-                    </TableCell>
-                  </TableRow>
-                );
-              })}
+                  return (
+                    <TableRow key={id}>
+                      <TableCell sx={stylesTableCellBody}>{f_reporte}</TableCell>
+                      <TableCell sx={stylesTableCellBody}>{f_inicio}</TableCell>
+                      <TableCell sx={stylesTableCellBody}>{motivo}</TableCell>
+                      <TableCell sx={stylesTableCellBody}>{descripcion}</TableCell>
+                      <TableCell sx={stylesTableCellBody}>{estado}</TableCell>
+                      <TableCell sx={stylesTableCellBody}>
+                        <IconButton color='info' size='small' onClick={() => handleOpen(item)}>
+                          <VisibilityIcon />
+                        </IconButton>
+                      </TableCell>
+                    </TableRow>
+                  );
+                })
+              ) : (
+                <TableRow>
+                  <TableCell align='center' colSpan={columns.length} sx={stylesTableCellBody}>
+                    <AlertGlobalTables messageError='No se encontraron datos para esta tabla' />
+                  </TableCell>
+                </TableRow>
+              )}
             </TableBody>
           </Table>
         </TableContainer>
-        {loading || error ? null : (
+        {loading ? null : (
           <TablePagination
             rowsPerPageOptions={[]}
             component='div'
@@ -129,11 +136,11 @@ const TableViewMantenimiento = ({ dataSearch, dateTable, loading, error }) => {
         )}
       </Box>
       <Modal open={openModal}>
-        <Box sx={stylesModal}>
+        <Box component='div' sx={stylesSuperpositionModal}>
           <ModalFallas dataMantenimiento={dataMantenimiento} handleCloseModal={handleCloseModal} />
         </Box>
       </Modal>
-    </Container>
+    </Box>
   );
 };
 
