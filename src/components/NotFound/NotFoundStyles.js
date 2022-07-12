@@ -1,9 +1,10 @@
 import { css } from '@emotion/react';
 
-export const stylesSectionContainer = css`
+export const stylesWrapperGeneral = css`
   display: flex;
-  width: 100%;
+  width: 1432px;
   height: calc(100vh - 80px);
+  margin: 0 auto;
 `;
 
 export const stylesSectionText = css`

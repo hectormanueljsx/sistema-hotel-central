@@ -5,7 +5,7 @@ import { stylesButtonSend, stylesCircularProgress } from '@/components/Loader/Lo
 
 const ButtonLoader = () => {
   return (
-    <Box sx={stylesButtonSend}>
+    <Box component='div' sx={stylesButtonSend}>
       <CircularProgress sx={stylesCircularProgress} size={42.25} variant='indeterminate' />
     </Box>
   );

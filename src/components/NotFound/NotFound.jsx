@@ -1,18 +1,18 @@
 import React from 'react';
-import { Box, Button, Container, Typography } from '@mui/material';
+import { Box, Button, Typography } from '@mui/material';
 
 import {
   stylesButtonHome,
   stylesErrorNumber,
   stylesErrorText,
-  stylesSectionContainer,
+  stylesWrapperGeneral,
   stylesSectionText,
 } from '@/components/NotFound/NotFoundStyles';
 
 const NotFound = () => {
   return (
-    <Container component='section' disableGutters maxWidth='xl' sx={stylesSectionContainer}>
-      <Box sx={stylesSectionText}>
+    <Box component='section' sx={stylesWrapperGeneral}>
+      <Box component='div' sx={stylesSectionText}>
         <Typography component='h1' sx={stylesErrorNumber}>
           404
         </Typography>
@@ -23,7 +23,7 @@ const NotFound = () => {
           Volver al inicio
         </Button>
       </Box>
-    </Container>
+    </Box>
   );
 };
 

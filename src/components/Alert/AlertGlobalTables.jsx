@@ -5,7 +5,7 @@ import { stylesErrorTable } from '@/components/Alert/AlertStyles';
 
 const AlertGlobalTables = ({ messageError }) => {
   return (
-    <Box sx={stylesErrorTable}>
+    <Box component='div' sx={stylesErrorTable}>
       <Alert icon={false} variant='filled' severity='error'>
         {messageError}
       </Alert>
