@@ -107,8 +107,7 @@ const TableViewUsuarios = () => {
     });
   };
 
-  const { /* list,  */ loading, error } = useGetGeneralTable(identifier, password, `${endpointUsuario}?blocked=false`);
-  const list = [];
+  const { list,  loading, error } = useGetGeneralTable(identifier, password, `${endpointUsuario}?blocked=false`);
 
   return (
     <Box component='section' sx={[stylesWrapperBoxShadow, stylesWidthHeightTable]}>
