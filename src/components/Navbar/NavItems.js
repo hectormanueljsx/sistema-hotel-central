@@ -44,6 +44,12 @@ export const reservasDropdown = [
     cName: 'submenu-item',
   },
   {
+    id: '1eda9124-5541-430b-988d-e5654897fe22',
+    title: 'Intercambiar Reservación',
+    path: './reservas/intercambiar-reservacion',
+    cName: 'submenu-item',
+  },
+  {
     id: 'b085695d-a3df-401c-9748-0c0df379c47c',
     title: 'Histórico de Registros',
     path: './reservas/historico-de-registros',

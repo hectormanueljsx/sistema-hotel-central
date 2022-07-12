@@ -4,6 +4,7 @@ import { Routes, Route } from 'react-router-dom';
 
 import HomeDashboard from '@/pages/Dashboard/HomeDashboard/HomeDashboard';
 import HistoricoReservaciones from '@/pages/Reservas/HistoricoReservaciones/HistoricoReservaciones';
+import IntercambiarReservacion from './pages/Reservas/IntercambiarReservacion/IntercambiarReservacion';
 import HistoricoRegistro from '@/pages/Reservas/HistoricoRegistro/HistoricoRegistro';
 import Empresa from '@/pages/Reservas/Empresa/Empresa';
 import CategoriaEgresos from '@/pages/Caja/CategoriaEgresos/CategoriaEgresos';
@@ -57,6 +58,14 @@ const App = () => {
           element={
             <ProtectedRoute allowedRoles={[ROLES.ADMINISTRADOR]}>
               <HistoricoReservaciones />
+            </ProtectedRoute>
+          }
+        />
+        <Route
+          path='/reservas/intercambiar-reservacion'
+          element={
+            <ProtectedRoute allowedRoles={[ROLES.ADMINISTRADOR]}>
+              <IntercambiarReservacion />
             </ProtectedRoute>
           }
         />
