@@ -73,18 +73,6 @@ const FormAnticipo = ({ setDataSearch, dataSearch, setDateTable, setLoading, set
           setData({ fechaInicio: '', fechaFin: '' });
           setFormaPago('');
 
-          if (res.data.length === 0) {
-            setDateTable('');
-            Swal.fire({
-              icon: 'error',
-              text: 'No se encontraron registros',
-              allowOutsideClick: false,
-              confirmButtonColor: '#1976d2',
-              confirmButtonText: 'Aceptar',
-            });
-            return;
-          }
-
           if (res.data.length >= end) {
             setStart(start + 100);
             setVisibleButton(false);

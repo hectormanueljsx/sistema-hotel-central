@@ -61,18 +61,6 @@ const FormIngresoBruto = ({
 
           setDateTable(dateIngresoBruto);
           setData({ fechaInicio: '', fechaFin: '' });
-
-          if (res.data.length === 0) {
-            setDateTable('');
-            Swal.fire({
-              icon: 'error',
-              text: 'No se encontraron registros',
-              allowOutsideClick: false,
-              confirmButtonColor: '#1976d2',
-              confirmButtonText: 'Aceptar',
-            });
-            return;
-          }
         } else {
           setError(true);
           Swal.fire({
