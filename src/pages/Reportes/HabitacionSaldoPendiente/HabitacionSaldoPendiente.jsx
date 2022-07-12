@@ -1,9 +1,9 @@
 import React, { useState } from 'react';
-import { Box, Container } from '@mui/material';
+import { Box } from '@mui/material';
 
 import FormSearchSaldoPendiente from '@/pages/Reportes/HabitacionSaldoPendiente/FormSearchSaldoPendiente';
 import TableViewSaldoPendiente from '@/pages/Reportes/HabitacionSaldoPendiente/TableViewSaldoPendiente';
-import { stylesBoxHistoricoReservacion } from '@/pages/Reportes/HabitacionSaldoPendiente/SaldoPendienteStyles';
+import { stylesWrapperGeneral } from '@/pages/Reportes/HabitacionSaldoPendiente/HabitacionSaldoPendienteStyles';
 
 const HabitacionSaldoPendiente = () => {
   const [search, setSearch] = useState('');
@@ -12,23 +12,16 @@ const HabitacionSaldoPendiente = () => {
   const [error, setError] = useState(false);
 
   return (
-    <Container component='section' disableGutters maxWidth='xl'>
-      <Box sx={stylesBoxHistoricoReservacion}>
-        <FormSearchSaldoPendiente
-          setSearch={setSearch}
-          dataHistorico={dataHistorico}
-          setDataHistorico={setDataHistorico}
-          setLoading={setLoading}
-          setError={setError}
-        />
-        <TableViewSaldoPendiente
-          search={search}
-          dataHistorico={dataHistorico}
-          loading={loading}
-          error={error}
-        />
-      </Box>
-    </Container>
+    <Box component='section' sx={stylesWrapperGeneral}>
+      <FormSearchSaldoPendiente
+        setSearch={setSearch}
+        dataHistorico={dataHistorico}
+        setDataHistorico={setDataHistorico}
+        setLoading={setLoading}
+        setError={setError}
+      />
+      <TableViewSaldoPendiente search={search} dataHistorico={dataHistorico} loading={loading} error={error} />
+    </Box>
   );
 };
 

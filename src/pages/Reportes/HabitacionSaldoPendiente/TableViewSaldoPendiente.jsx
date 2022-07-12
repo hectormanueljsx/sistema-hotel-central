@@ -1,7 +1,6 @@
 import React, { useState } from 'react';
 import {
   Box,
-  Container,
   IconButton,
   Table,
   TableBody,
@@ -17,21 +16,22 @@ import TitlePage from '@/components/Title/TitlePage';
 import SleketonLoader from '@/components/Loader/SleketonLoader';
 import AlertGlobalTables from '@/components/Alert/AlertGlobalTables';
 import {
-  stylesContainerSection,
-  stylesTableCellHeader,
   stylesTableCellBody,
-  stylesWidthHeightTable,
+  stylesTableCellHeader,
   stylesTextDanger,
-} from '@/pages/Reportes/HabitacionSaldoPendiente/SaldoPendienteStyles';
+  stylesWidthHeightTable,
+  stylesWrapperBoxShadow,
+} from '@/pages/Reportes/HabitacionSaldoPendiente/HabitacionSaldoPendienteStyles';
 
 const columns = [
-  { id: 'llegada', label: 'Llegada', width: 130 },
-  { id: 'salida', label: 'Salida', width: 130 },
-  { id: 'cliente', label: 'Cliente', width: 350 },
-  { id: 'total', label: 'Total a Pagar', width: 150 },
-  { id: 'pagado', label: 'Pagado', width: 150 },
-  { id: 'restante', label: 'Restante', width: 200},
-  { id: 'estado', label: 'Estado', width: 250 },
+  { id: 'llegada', label: 'Fecha de Llegada', width: 125 },
+  { id: 'salida', label: 'Fecha de Salida', width: 125 },
+  { id: 'cliente', label: 'Cliente', width: 241 },
+  { id: 'total', label: 'Total a Pagar', width: 100 },
+  { id: 'pagado', label: 'Pagado', width: 100 },
+  { id: 'restante', label: 'Restante', width: 100 },
+  { id: 'estado', label: 'Estado', width: 115 },
+  { id: 'acciones', label: 'Acciones', width: 80 },
 ];
 
 const TableViewSaldoPendiente = ({ search, dataHistorico, loading, error }) => {
@@ -45,13 +45,14 @@ const TableViewSaldoPendiente = ({ search, dataHistorico, loading, error }) => {
     setPage(0);
   };
 
-  const filterCliente = dataHistorico.filter(
-    item => item.registro.cliente.nombre.toUpperCase().includes(search.toUpperCase()),
-  );
+  const filterCliente =
+    dataHistorico.length > 0
+      ? dataHistorico.filter(item => item.registro.cliente.nombre.toUpperCase().includes(search.toUpperCase()))
+      : [];
 
   return (
-    <Container component='section' disableGutters sx={[stylesContainerSection, stylesWidthHeightTable]}>
-      <TitlePage titlePage='Registros con Saldos Pendientes' />
+    <Box component='section' sx={[stylesWrapperBoxShadow, stylesWidthHeightTable]}>
+      <TitlePage titlePage='Lista de Habitaciones con Saldos Pendientes' />
       <Box component='div'>
         <TableContainer>
           <Table>
@@ -65,21 +66,20 @@ const TableViewSaldoPendiente = ({ search, dataHistorico, loading, error }) => {
               </TableRow>
             </TableHead>
             <TableBody>
-              {loading && (
+              {loading ? (
                 <TableRow>
                   <TableCell align='center' colSpan={columns.length} sx={stylesTableCellBody}>
                     <SleketonLoader />
                   </TableCell>
                 </TableRow>
-              )}
-              {error && (
+              ) : error ? (
                 <TableRow>
                   <TableCell align='center' colSpan={columns.length} sx={stylesTableCellBody}>
                     <AlertGlobalTables messageError='Ah ocurrido un error al obtener los datos' />
                   </TableCell>
                 </TableRow>
-              )}
-             {filterCliente.slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage).map(item => {
+              ) : filterCliente.length > 0 ? (
+                filterCliente.slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage).map(item => {
                   const {
                     id,
                     fecha_hosp,
@@ -91,27 +91,55 @@ const TableViewSaldoPendiente = ({ search, dataHistorico, loading, error }) => {
                       cliente: { nombre },
                     },
                   } = item;
-                return (
-                  <TableRow key={id} sx={estado ? { backgroundColor: '#d4edda' } : { backgroundColor: '#fff3cd' }}>
-                    <TableCell sx={stylesTableCellBody}>{fecha_hosp}</TableCell>
-                    <TableCell sx={stylesTableCellBody}>{fecha_salida}</TableCell>
-                    <TableCell sx={stylesTableCellBody}>{nombre}</TableCell>
-                    <TableCell sx={stylesTableCellBody}>{tarifa}</TableCell>
-                    <TableCell sx={stylesTableCellBody}>{pagado}</TableCell>
-                    <TableCell sx={[stylesTableCellBody, stylesTextDanger]}>{tarifa - pagado}</TableCell>
-                    <TableCell sx={stylesTableCellBody}>{estado ? 'CHECK-OUT' : 'SIN CHECK-OUT'}</TableCell>
-                    <TableCell sx={stylesTableCellBody}>
-                      <IconButton color='info' size='small'>
-                        <VisibilityIcon />
-                      </IconButton>
-                    </TableCell>
-                  </TableRow>
-                );
-              })}
+
+                  const totalRestante = tarifa - pagado;
+
+                  return (
+                    <TableRow key={id} sx={estado ? { backgroundColor: '#d4edda' } : { backgroundColor: '#fff3cd' }}>
+                      <TableCell sx={stylesTableCellBody}>{fecha_hosp}</TableCell>
+                      <TableCell sx={stylesTableCellBody}>{fecha_salida}</TableCell>
+                      <TableCell sx={stylesTableCellBody}>{nombre}</TableCell>
+                      <TableCell sx={stylesTableCellBody}>
+                        {tarifa.toLocaleString('es-MX', {
+                          style: 'currency',
+                          currency: 'MXN',
+                          minimumFractionDigits: 2,
+                        })}
+                      </TableCell>
+                      <TableCell sx={stylesTableCellBody}>
+                        {pagado.toLocaleString('es-MX', {
+                          style: 'currency',
+                          currency: 'MXN',
+                          minimumFractionDigits: 2,
+                        })}
+                      </TableCell>
+                      <TableCell sx={[stylesTableCellBody, stylesTextDanger]}>
+                        {totalRestante.toLocaleString('es-MX', {
+                          style: 'currency',
+                          currency: 'MXN',
+                          minimumFractionDigits: 2,
+                        })}
+                      </TableCell>
+                      <TableCell sx={stylesTableCellBody}>{estado ? 'CHECK-OUT' : 'SIN CHECK-OUT'}</TableCell>
+                      <TableCell sx={stylesTableCellBody}>
+                        <IconButton color='info' size='small'>
+                          <VisibilityIcon />
+                        </IconButton>
+                      </TableCell>
+                    </TableRow>
+                  );
+                })
+              ) : (
+                <TableRow>
+                  <TableCell align='center' colSpan={columns.length} sx={stylesTableCellBody}>
+                    <AlertGlobalTables messageError='No se encontraron datos para esta tabla' />
+                  </TableCell>
+                </TableRow>
+              )}
             </TableBody>
           </Table>
         </TableContainer>
-      {loading || error ? null : (
+        {loading ? null : (
           <TablePagination
             rowsPerPageOptions={[]}
             component='div'
@@ -124,7 +152,7 @@ const TableViewSaldoPendiente = ({ search, dataHistorico, loading, error }) => {
           />
         )}
       </Box>
-    </Container>
+    </Box>
   );
 };
 
