@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { Box, Button, Container, TextField } from '@mui/material';
+import { Box, Button, TextField } from '@mui/material';
 import UpdateIcon from '@mui/icons-material/Update';
 import EditIcon from '@mui/icons-material/Edit';
 import CloseIcon from '@mui/icons-material/Close';
@@ -11,16 +11,14 @@ import ButtonLoader from '@/components/Loader/ButtonLoader';
 import putGeneralTable from '@/services/putGeneralTable';
 import { generalEndpoints } from '@/utilities/endpoints';
 import {
-  stylesBoxButtons,
-  stylesBoxInputs,
-  stylesBoxModal,
+  stylesButtonAlignEnd,
+  stylesButtonCloseModal,
   stylesButtonSend,
-  stylesContainerBoxButtonAlign,
-  stylesContainerInput,
-  stylesContainerSection,
-  stylesModalClose,
+  stylesGridWrapperButtons,
+  stylesGridWrapperModal,
+  stylesWidthAutoButtons,
   stylesWidthHeightModal,
-  stylesWidthInput,
+  stylesWrapperBoxShadow,
 } from '@/pages/Reservas/Empresa/EmpresaStyle';
 
 const ModalEmpresa = ({ selectEmpresa, handleCloseModal }) => {
@@ -119,159 +117,151 @@ const ModalEmpresa = ({ selectEmpresa, handleCloseModal }) => {
   };
 
   return (
-    <Container component='section' disableGutters sx={[stylesContainerSection, stylesWidthHeightModal]}>
+    <Box component='section' sx={[stylesWrapperBoxShadow, stylesWidthHeightModal]}>
       <TitlePage titlePage='Actualización de Empresa' />
-      <Box component='form' sx={stylesBoxModal}>
-        <Button variant='text' color='error' size='large' onClick={handleCloseModal} sx={stylesModalClose}>
-          <CloseIcon />
-        </Button>
-        <Box sx={stylesBoxInputs}>
-          <Box component='div' sx={[stylesContainerInput, stylesWidthInput]}>
-            <TitleInput titleInput='RFC' />
-            <TextField
-              disabled={disabledModal}
-              onChange={handleInputChange}
-              defaultValue={selectEmpresa.rfc}
-              variant='outlined'
-              name='RFC'
-              type='text'
-              margin='none'
-              size='small'
-              required
-              fullWidth
-            />
-          </Box>
-          <Box component='div' sx={[stylesContainerInput, stylesWidthInput]}>
-            <TitleInput titleInput='Nombre' />
-            <TextField
-              disabled={disabledModal}
-              onChange={handleInputChange}
-              defaultValue={selectEmpresa.nombre}
-              variant='outlined'
-              name='nombre'
-              type='text'
-              margin='none'
-              size='small'
-              required
-              fullWidth
-            />
-          </Box>
+      <Button variant='text' color='error' size='large' onClick={handleCloseModal} sx={stylesButtonCloseModal}>
+        <CloseIcon />
+      </Button>
+      <Box component='form' sx={stylesGridWrapperModal}>
+        <Box component='div'>
+          <TitleInput titleInput='RFC' />
+          <TextField
+            disabled={disabledModal}
+            onChange={handleInputChange}
+            defaultValue={selectEmpresa.rfc}
+            variant='outlined'
+            name='RFC'
+            type='text'
+            margin='none'
+            size='small'
+            required
+            fullWidth
+          />
         </Box>
-        <Box sx={stylesBoxInputs}>
-          <Box component='div' sx={[stylesContainerInput, stylesWidthInput]}>
-            <TitleInput titleInput='Dirección' />
-            <TextField
-              disabled={disabledModal}
-              onChange={handleInputChange}
-              defaultValue={selectEmpresa.direccion}
-              variant='outlined'
-              name='direccion'
-              type='text'
-              margin='none'
-              size='small'
-              required
-              fullWidth
-            />
-          </Box>
-          <Box component='div' sx={[stylesContainerInput, stylesWidthInput]}>
-            <TitleInput titleInput='Estado' />
-            <TextField
-              disabled={disabledModal}
-              onChange={handleInputChange}
-              defaultValue={selectEmpresa.estado}
-              variant='outlined'
-              name='estado'
-              type='text'
-              margin='none'
-              size='small'
-              required
-              fullWidth
-            />
-          </Box>
+        <Box component='div'>
+          <TitleInput titleInput='Nombre' />
+          <TextField
+            disabled={disabledModal}
+            onChange={handleInputChange}
+            defaultValue={selectEmpresa.nombre}
+            variant='outlined'
+            name='nombre'
+            type='text'
+            margin='none'
+            size='small'
+            required
+            fullWidth
+          />
         </Box>
-        <Box sx={stylesBoxInputs}>
-          <Box component='div' sx={[stylesContainerInput, stylesWidthInput]}>
-            <TitleInput titleInput='Ciudad' />
-            <TextField
-              disabled={disabledModal}
-              onChange={handleInputChange}
-              defaultValue={selectEmpresa.ciudad}
-              variant='outlined'
-              name='ciudad'
-              type='text'
-              margin='none'
-              size='small'
-              required
-              fullWidth
-            />
-          </Box>
-          <Box component='div' sx={[stylesContainerInput, stylesWidthInput]}>
-            <TitleInput titleInput='Colonia' />
-            <TextField
-              disabled={disabledModal}
-              onChange={handleInputChange}
-              defaultValue={selectEmpresa.colonia}
-              variant='outlined'
-              name='colonia'
-              type='text'
-              margin='none'
-              size='small'
-              required
-              fullWidth
-            />
-          </Box>
+        <Box component='div'>
+          <TitleInput titleInput='Dirección' />
+          <TextField
+            disabled={disabledModal}
+            onChange={handleInputChange}
+            defaultValue={selectEmpresa.direccion}
+            variant='outlined'
+            name='direccion'
+            type='text'
+            margin='none'
+            size='small'
+            required
+            fullWidth
+          />
         </Box>
-        <Box sx={stylesBoxInputs}>
-          <Box component='div' sx={[stylesContainerInput, stylesWidthInput]}>
-            <TitleInput titleInput='Código postal' />
-            <TextField
-              disabled={disabledModal}
-              onChange={handleInputChange}
-              defaultValue={selectEmpresa.cod_p}
-              variant='outlined'
-              name='CP'
-              type='number'
-              margin='none'
-              size='small'
-              required
-              fullWidth
-            />
-          </Box>
+        <Box component='div'>
+          <TitleInput titleInput='Estado' />
+          <TextField
+            disabled={disabledModal}
+            onChange={handleInputChange}
+            defaultValue={selectEmpresa.estado}
+            variant='outlined'
+            name='estado'
+            type='text'
+            margin='none'
+            size='small'
+            required
+            fullWidth
+          />
         </Box>
-        <Box sx={stylesBoxButtons}>
-          {loadingBtn ? (
-            <ButtonLoader />
-          ) : (
-            <>
-              <Box component='div' sx={[stylesContainerBoxButtonAlign, stylesWidthInput]}>
-                <Button
-                  variant='contained'
-                  disabled={disableView}
-                  onClick={viewDisabled}
-                  size='large'
-                  startIcon={<EditIcon />}
-                  sx={stylesButtonSend}
-                >
-                  Modificar
-                </Button>
-              </Box>
-              <Box component='div' sx={stylesWidthInput}>
-                <Button
-                  variant='contained'
-                  disabled={disabledModal}
-                  onClick={updateEmpresa}
-                  size='large'
-                  startIcon={<UpdateIcon />}
-                  sx={stylesButtonSend}
-                >
-                  Actualizar
-                </Button>
-              </Box>
-            </>
-          )}
+        <Box component='div'>
+          <TitleInput titleInput='Ciudad' />
+          <TextField
+            disabled={disabledModal}
+            onChange={handleInputChange}
+            defaultValue={selectEmpresa.ciudad}
+            variant='outlined'
+            name='ciudad'
+            type='text'
+            margin='none'
+            size='small'
+            required
+            fullWidth
+          />
+        </Box>
+        <Box component='div'>
+          <TitleInput titleInput='Colonia' />
+          <TextField
+            disabled={disabledModal}
+            onChange={handleInputChange}
+            defaultValue={selectEmpresa.colonia}
+            variant='outlined'
+            name='colonia'
+            type='text'
+            margin='none'
+            size='small'
+            required
+            fullWidth
+          />
+        </Box>
+        <Box component='div'>
+          <TitleInput titleInput='Código postal' />
+          <TextField
+            disabled={disabledModal}
+            onChange={handleInputChange}
+            defaultValue={selectEmpresa.cod_p}
+            variant='outlined'
+            name='CP'
+            type='number'
+            margin='none'
+            size='small'
+            required
+            fullWidth
+          />
         </Box>
       </Box>
-    </Container>
+      {loadingBtn ? (
+        <Box component='div' sx={stylesButtonSend}>
+          <ButtonLoader />
+        </Box>
+      ) : (
+        <Box component='div' sx={stylesGridWrapperButtons}>
+          <Box component='div' sx={stylesButtonAlignEnd}>
+            <Button
+              variant='contained'
+              disabled={disableView}
+              onClick={viewDisabled}
+              size='large'
+              startIcon={<EditIcon />}
+              sx={stylesWidthAutoButtons}
+            >
+              Modificar
+            </Button>
+          </Box>
+          <Box component='div'>
+            <Button
+              variant='contained'
+              disabled={disabledModal}
+              onClick={updateEmpresa}
+              size='large'
+              startIcon={<UpdateIcon />}
+              sx={stylesWidthAutoButtons}
+            >
+              Actualizar
+            </Button>
+          </Box>
+        </Box>
+      )}
+    </Box>
   );
 };
 

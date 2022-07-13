@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { Box, Button, Container, TextField } from '@mui/material';
+import { Box, Button, TextField } from '@mui/material';
 import SaveIcon from '@mui/icons-material/Save';
 import Swal from 'sweetalert2';
 
@@ -9,11 +9,10 @@ import ButtonLoader from '@/components/Loader/ButtonLoader';
 import postGeneralTable from '@/services/postGeneralTable';
 import { generalEndpoints } from '@/utilities/endpoints';
 import {
-  stylesContainerInput,
-  stylesContainerSection,
-  stylesWidthHeightForm,
-  stylesContainerBox,
   stylesButtonSend,
+  stylesGridWrapperForm,
+  stylesWidthHeightForm,
+  stylesWrapperBoxShadow,
 } from '@/pages/Reservas/Empresa/EmpresaStyle';
 
 const FormCreateEmpresas = () => {
@@ -90,10 +89,10 @@ const FormCreateEmpresas = () => {
   };
 
   return (
-    <Container component='section' disableGutters sx={[stylesContainerSection, stylesWidthHeightForm]}>
+    <Box component='section' sx={[stylesWrapperBoxShadow, stylesWidthHeightForm]}>
       <TitlePage titlePage='Registro de Empresa' />
-      <Box component='form' sx={stylesContainerBox}>
-        <Box component='div' sx={stylesContainerInput}>
+      <Box component='form' sx={stylesGridWrapperForm}>
+        <Box component='div'>
           <TitleInput titleInput='RFC' />
           <TextField
             onChange={handleInputChange}
@@ -107,7 +106,7 @@ const FormCreateEmpresas = () => {
             autoFocus
           />
         </Box>
-        <Box component='div' sx={stylesContainerInput}>
+        <Box component='div'>
           <TitleInput titleInput='Nombre' />
           <TextField
             onChange={handleInputChange}
@@ -120,7 +119,7 @@ const FormCreateEmpresas = () => {
             fullWidth
           />
         </Box>
-        <Box component='div' sx={stylesContainerInput}>
+        <Box component='div'>
           <TitleInput titleInput='Dirección' />
           <TextField
             onChange={handleInputChange}
@@ -133,7 +132,7 @@ const FormCreateEmpresas = () => {
             fullWidth
           />
         </Box>
-        <Box component='div' sx={stylesContainerInput}>
+        <Box component='div'>
           <TitleInput titleInput='Estado' />
           <TextField
             onChange={handleInputChange}
@@ -146,7 +145,7 @@ const FormCreateEmpresas = () => {
             fullWidth
           />
         </Box>
-        <Box component='div' sx={stylesContainerInput}>
+        <Box component='div'>
           <TitleInput titleInput='Ciudad' />
           <TextField
             onChange={handleInputChange}
@@ -159,7 +158,7 @@ const FormCreateEmpresas = () => {
             fullWidth
           />
         </Box>
-        <Box component='div' sx={stylesContainerInput}>
+        <Box component='div'>
           <TitleInput titleInput='Colonia' />
           <TextField
             onChange={handleInputChange}
@@ -172,7 +171,7 @@ const FormCreateEmpresas = () => {
             fullWidth
           />
         </Box>
-        <Box component='div' sx={stylesContainerInput}>
+        <Box component='div'>
           <TitleInput titleInput='Código postal' />
           <TextField
             onChange={handleInputChange}
@@ -185,21 +184,19 @@ const FormCreateEmpresas = () => {
             fullWidth
           />
         </Box>
-        {loadingBtn ? (
+      </Box>
+      {loadingBtn ? (
+        <Box component='div' sx={stylesButtonSend}>
           <ButtonLoader />
-        ) : (
-          <Button
-            variant='contained'
-            onClick={sendDatosEmpresa}
-            size='large'
-            startIcon={<SaveIcon />}
-            sx={stylesButtonSend}
-          >
+        </Box>
+      ) : (
+        <Box component='div' sx={stylesButtonSend}>
+          <Button variant='contained' onClick={sendDatosEmpresa} size='large' startIcon={<SaveIcon />}>
             Registrar Empresa
           </Button>
-        )}
-      </Box>
-    </Container>
+        </Box>
+      )}
+    </Box>
   );
 };
 

@@ -1,7 +1,6 @@
 import React, { useState } from 'react';
 import {
   Box,
-  Container,
   IconButton,
   Modal,
   Table,
@@ -13,26 +12,27 @@ import {
   TableRow,
 } from '@mui/material';
 import VisibilityIcon from '@mui/icons-material/Visibility';
+import PersonSearchIcon from '@mui/icons-material/PersonSearch';
 
 import TitlePage from '@/components/Title/TitlePage';
 import ModalEmpresa from '@/pages/Reservas/Empresa/ModalEmpresa';
 import SleketonLoader from '@/components/Loader/SleketonLoader';
 import AlertGlobalTables from '@/components/Alert/AlertGlobalTables';
+import { messageEmptyGetData, messageErrorGetData } from '@/utilities/messagesAlerts';
 import {
-  stylesContainerNoMarginTop,
-  stylesContainerSection,
-  stylesModal,
-  stylesTableCellHeader,
+  stylesSuperpositionModal,
   stylesTableCellBody,
+  stylesTableCellHeader,
   stylesWidthHeightTable,
+  stylesWrapperBoxShadow,
 } from '@/pages/Reservas/Empresa/EmpresaStyle';
 
 const columns = [
   { id: 'rfc', label: 'RFC de la Empresa', width: 130 },
-  { id: 'nombre', label: 'Nombre de la Empresa', width: 280 },
+  { id: 'nombre', label: 'Nombre de la Empresa', width: 300 },
   { id: 'estado', label: 'Estado', width: 160 },
-  { id: 'ciudad', label: 'Ciudad', width: 307 },
-  { id: 'acciones', label: 'Acciones', width: 75 },
+  { id: 'ciudad', label: 'Ciudad', width: 316 },
+  { id: 'acciones', label: 'Acciones', width: 80 },
 ];
 
 const TableViewEmpresas = ({ search, dataEmpresa, loading, error }) => {
@@ -54,15 +54,12 @@ const TableViewEmpresas = ({ search, dataEmpresa, loading, error }) => {
     setPage(0);
   };
 
-  const filterName = dataEmpresa.filter(item => item.nombre.toUpperCase().includes(search.toUpperCase()));
+  const filterName =
+    dataEmpresa.length > 0 ? dataEmpresa.filter(item => item.nombre.toUpperCase().includes(search.toUpperCase())) : [];
 
   return (
-    <Container
-      component='section'
-      disableGutters
-      sx={[stylesContainerSection, stylesContainerNoMarginTop, stylesWidthHeightTable]}
-    >
-      <TitlePage titlePage='Histórico de Empresas' />
+    <Box component='section' sx={[stylesWrapperBoxShadow, stylesWidthHeightTable]}>
+      <TitlePage titlePage='Lista de Empresas' />
       <Box component='div'>
         <TableContainer>
           <Table>
@@ -76,41 +73,51 @@ const TableViewEmpresas = ({ search, dataEmpresa, loading, error }) => {
               </TableRow>
             </TableHead>
             <TableBody>
-              {loading && (
+              {loading ? (
                 <TableRow>
                   <TableCell align='center' colSpan={columns.length} sx={stylesTableCellBody}>
                     <SleketonLoader />
                   </TableCell>
                 </TableRow>
-              )}
-              {error && (
+              ) : error ? (
                 <TableRow>
                   <TableCell align='center' colSpan={columns.length} sx={stylesTableCellBody}>
-                    <AlertGlobalTables messageError='Ah ocurrido un error al obtener los datos' />
+                    <AlertGlobalTables messageError={messageErrorGetData} />
+                  </TableCell>
+                </TableRow>
+              ) : filterName.length > 0 ? (
+                filterName.slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage).map(item => {
+                  const { id, rfc, nombre, ciudad, estado } = item;
+                  const url = `/reservas/empresas/${rfc}`;
+
+                  return (
+                    <TableRow key={id}>
+                      <TableCell sx={stylesTableCellBody}>{rfc}</TableCell>
+                      <TableCell sx={stylesTableCellBody}>{nombre}</TableCell>
+                      <TableCell sx={stylesTableCellBody}>{estado}</TableCell>
+                      <TableCell sx={stylesTableCellBody}>{ciudad}</TableCell>
+                      <TableCell sx={stylesTableCellBody}>
+                        <IconButton color='info' size='small' onClick={() => handleOpen(item)}>
+                          <VisibilityIcon />
+                        </IconButton>
+                        <IconButton color='info' size='small' href={url}>
+                          <PersonSearchIcon />
+                        </IconButton>
+                      </TableCell>
+                    </TableRow>
+                  );
+                })
+              ) : (
+                <TableRow>
+                  <TableCell align='center' colSpan={columns.length} sx={stylesTableCellBody}>
+                    <AlertGlobalTables messageError={messageEmptyGetData} />
                   </TableCell>
                 </TableRow>
               )}
-              {filterName.slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage).map(item => {
-                const { id, rfc, nombre, ciudad, estado } = item;
-
-                return (
-                  <TableRow key={id}>
-                    <TableCell sx={stylesTableCellBody}>{rfc}</TableCell>
-                    <TableCell sx={stylesTableCellBody}>{nombre}</TableCell>
-                    <TableCell sx={stylesTableCellBody}>{estado}</TableCell>
-                    <TableCell sx={stylesTableCellBody}>{ciudad}</TableCell>
-                    <TableCell sx={stylesTableCellBody}>
-                      <IconButton color='info' size='small' onClick={() => handleOpen(item)}>
-                        <VisibilityIcon />
-                      </IconButton>
-                    </TableCell>
-                  </TableRow>
-                );
-              })}
             </TableBody>
           </Table>
         </TableContainer>
-        {loading || error ? null : (
+        {loading ? null : (
           <TablePagination
             rowsPerPageOptions={[]}
             component='div'
@@ -124,11 +131,11 @@ const TableViewEmpresas = ({ search, dataEmpresa, loading, error }) => {
         )}
       </Box>
       <Modal open={openModal}>
-        <Box sx={stylesModal}>
+        <Box component='div' sx={stylesSuperpositionModal}>
           <ModalEmpresa selectEmpresa={selectEmpresa} handleCloseModal={handleCloseModal} />
         </Box>
       </Modal>
-    </Container>
+    </Box>
   );
 };
 
