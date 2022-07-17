@@ -45,10 +45,15 @@ export const stylesWidthHeightSearch = css`
 `;
 
 export const stylesBoxFormSearch = css`
+  display: grid;
+  grid-template-columns: 700px 270px;
+  gap: 16px;
+`;
+
+export const stylesButtonSearch = css`
   display: flex;
-  justify-content: space-between;
-  align-items: flex-end;
-  gap: 32px;
+  justify-content: center;
+  margin-top: calc(64px - 42.25px);
 `;
 
 export const stylesInputWidthAuto = css`

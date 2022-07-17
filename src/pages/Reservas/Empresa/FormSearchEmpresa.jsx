@@ -10,7 +10,7 @@ import getGeneralSelect from '@/services/getGeneralSelect';
 import {
   stylesBoxFormSearch,
   stylesButtonMaxContent,
-  stylesButtonSend,
+  stylesButtonSearch,
   stylesInputWidthAuto,
   stylesWidthHeightSearch,
   stylesWrapperBoxShadow,
@@ -84,11 +84,11 @@ const FormSearchEmpresa = ({ setSearch, dataEmpresa, setDataEmpresa, setLoading,
           />
         </Box>
         {loadingBtn ? (
-          <Box component='div' sx={stylesButtonSend}>
+          <Box component='div' sx={stylesButtonSearch}>
             <ButtonLoader />
           </Box>
         ) : (
-          <Box component='div'>
+          <Box component='div' sx={stylesButtonSearch}>
             <Button
               variant='contained'
               disabled={visibleButton}
