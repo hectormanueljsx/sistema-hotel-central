@@ -54,15 +54,15 @@ const App = () => {
             </ProtectedRoute>
           }
         />
+        <Route path='/login' element={<Login />} />
         <Route
-          path='/detalles-reservacion'
+          path='/reservas/detalles-reservacion'
           element={
             <ProtectedRoute allowedRoles={[ROLES.ADMINISTRADOR]}>
               <Registros />
             </ProtectedRoute>
           }
         />
-        <Route path='/login' element={<Login />} />
         <Route
           path='/reservas/historico-de-reservaciones'
           element={
