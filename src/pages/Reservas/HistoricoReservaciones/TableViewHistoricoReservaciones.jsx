@@ -89,9 +89,9 @@ const TableViewHistoricoReservaciones = ({ search, dataReservacion, loading, err
                     <TableRow
                       key={id}
                       sx={
-                        est === 'CHECK-OUT'
+                        est === 'CONCRETADO'
                           ? { backgroundColor: '#d4edda' }
-                          : est === 'SIN CHECK-OUT'
+                          : est === 'PENDIENTE'
                           ? { backgroundColor: '#fff3cd' }
                           : { backgroundColor: '#f8d7da' }
                       }
