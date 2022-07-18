@@ -105,7 +105,7 @@ const App = () => {
           }
         />
         <Route
-          path='/reservas/empresas/:rfc'
+          path='/reservas/empresas/:id'
           element={
             <ProtectedRoute allowedRoles={[ROLES.ADMINISTRADOR]}>
               <EmpresaClientes />
