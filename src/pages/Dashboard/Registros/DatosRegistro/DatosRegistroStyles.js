@@ -29,8 +29,9 @@ export const stylesGridWrapperForm = css`
 `;
 
 export const stylesGridWrapperButtons = css`
-  display: grid;
-  grid-template-columns: repeat(4, 1fr);
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
   gap: 16px;
 `;
 

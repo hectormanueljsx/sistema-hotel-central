@@ -1,17 +1,7 @@
 import React, { useState } from 'react';
-import {
-  Box,
-  Button,
-  FormControl,
-  FormControlLabel,
-  InputAdornment,
-  Radio,
-  RadioGroup,
-  Select,
-  TextField,
-} from '@mui/material';
+import { Box, Button, FormControl, FormControlLabel, Radio, RadioGroup, Select, TextField } from '@mui/material';
 import SaveIcon from '@mui/icons-material/Save';
-import ClearIcon from '@mui/icons-material/Clear';
+import CloseIcon from '@mui/icons-material/Close';
 
 import TitlePage from '@/components/Title/TitlePage';
 import TitleInput from '@/components/Title/TitleInput';
@@ -173,48 +163,15 @@ const FormReservacion = () => {
         </Box>
         <Box component='div'>
           <TitleInput titleInput='Total a pagar' />
-          <TextField
-            name='totalPagar'
-            variant='outlined'
-            type='number'
-            margin='none'
-            size='small'
-            InputProps={{
-              startAdornment: <InputAdornment position='start'>$</InputAdornment>,
-            }}
-            required
-            fullWidth
-          />
+          <TextField name='totalPagar' variant='outlined' type='number' margin='none' size='small' required fullWidth />
         </Box>
         <Box component='div'>
           <TitleInput titleInput='Pagado' />
-          <TextField
-            name='pagado'
-            variant='outlined'
-            type='number'
-            margin='none'
-            size='small'
-            InputProps={{
-              startAdornment: <InputAdornment position='start'>$</InputAdornment>,
-            }}
-            required
-            fullWidth
-          />
+          <TextField name='pagado' variant='outlined' type='number' margin='none' size='small' required fullWidth />
         </Box>
         <Box component='div'>
           <TitleInput titleInput='Restante' />
-          <TextField
-            name='restante'
-            variant='outlined'
-            type='number'
-            margin='none'
-            size='small'
-            InputProps={{
-              startAdornment: <InputAdornment position='start'>$</InputAdornment>,
-            }}
-            required
-            fullWidth
-          />
+          <TextField name='restante' variant='outlined' type='number' margin='none' size='small' required fullWidth />
         </Box>
       </Box>
       <Box component='div' sx={stylesButtonSend}>
@@ -231,7 +188,7 @@ const FormReservacion = () => {
             </Box>
           )}
           <Box component='div'>
-            <Button variant='contained' size='large' startIcon={<ClearIcon />}>
+            <Button variant='contained' color='error' size='large' startIcon={<CloseIcon />}>
               Cancelar Reservación
             </Button>
           </Box>
