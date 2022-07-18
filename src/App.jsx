@@ -4,6 +4,7 @@ import { Routes, Route } from 'react-router-dom';
 
 import HomeDashboard from '@/pages/Dashboard/HomeDashboard/HomeDashboard';
 import Registros from '@/pages/Dashboard/Registros/Registros';
+import Reservacion from '@/pages/Dashboard/Reservacion/Reservacion';
 import HistoricoReservaciones from '@/pages/Reservas/HistoricoReservaciones/HistoricoReservaciones';
 import IntercambiarReservacion from './pages/Reservas/IntercambiarReservacion/IntercambiarReservacion';
 import HistoricoRegistro from '@/pages/Reservas/HistoricoRegistro/HistoricoRegistro';
@@ -56,10 +57,18 @@ const App = () => {
         />
         <Route path='/login' element={<Login />} />
         <Route
-          path='/reservas/detalles-reservacion'
+          path='/reservas/detalles-reservacion/:id'
           element={
             <ProtectedRoute allowedRoles={[ROLES.ADMINISTRADOR]}>
               <Registros />
+            </ProtectedRoute>
+          }
+        />
+        <Route
+          path='/reservas/nueva-reservacion'
+          element={
+            <ProtectedRoute allowedRoles={[ROLES.ADMINISTRADOR]}>
+              <Reservacion />
             </ProtectedRoute>
           }
         />
