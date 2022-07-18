@@ -28,6 +28,6 @@ export const stylesTableCellHeader = css`
 `;
 
 export const stylesTableCellBody = css`
-  padding: 2px 4px;
+  padding: 9px 4px;
   border-bottom: 1.5px solid #dee2e6;
 `;

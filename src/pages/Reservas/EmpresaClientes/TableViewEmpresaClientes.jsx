@@ -5,10 +5,9 @@ import { useParams } from 'react-router-dom';
 import TitlePage from '@/components/Title/TitlePage';
 import SleketonLoader from '@/components/Loader/SleketonLoader';
 import AlertGlobalTables from '@/components/Alert/AlertGlobalTables';
+import useGetSpecific from '@/hooks/useGetSpecific';
 import { messageEmptyGetData, messageErrorGetData } from '@/utilities/messagesAlerts';
 import { generalEndpoints } from '@/utilities/endpoints';
-import useGetSpecific from '@/hooks/useGetSpecific';
-
 import {
   stylesTableCellBody,
   stylesTableCellHeader,
@@ -17,9 +16,10 @@ import {
 } from '@/pages/Reservas/EmpresaClientes/EmpresaClientesStyles';
 
 const columns = [
-  { id: 'nombre', label: 'Nombre del Cliente', width: 100 },
-  { id: 'email', label: 'Correo Electrónico', width: 100 },
+  { id: 'nombre', label: 'Nombre del Cliente', width: 300 },
+  { id: 'email', label: 'Correo Electrónico', width: 286 },
   { id: 'numero', label: 'Teléfono', width: 100 },
+  { id: 'empresa', label: 'Nombre de la Empresa', width: 300 },
 ];
 
 const TableViewEmpresaClientes = () => {
@@ -28,15 +28,15 @@ const TableViewEmpresaClientes = () => {
 
   const identifier = localStorage.getItem('identifier');
   const password = localStorage.getItem('password');
-  const endpoint = generalEndpoints.cliente;
-  const atrtibute = 'empresa';
+  const endpointCliente = generalEndpoints.cliente;
+  const attribute = 'empresa';
 
   const { id } = useParams();
   const { listGetSpecific, loadingGetSpecific, errorGetSpecific } = useGetSpecific(
     identifier,
     password,
-    endpoint,
-    atrtibute,
+    endpointCliente,
+    attribute,
     id,
   );
 
@@ -77,13 +77,14 @@ const TableViewEmpresaClientes = () => {
                 </TableRow>
               ) : listGetSpecific.length > 0 ? (
                 listGetSpecific.slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage).map(item => {
-                  const { id, nombre, mail, tel } = item;
+                  const { id, nombre, mail, tel, empresa } = item;
 
                   return (
                     <TableRow key={id}>
                       <TableCell sx={stylesTableCellBody}>{nombre}</TableCell>
                       <TableCell sx={stylesTableCellBody}>{mail}</TableCell>
                       <TableCell sx={stylesTableCellBody}>{tel}</TableCell>
+                      <TableCell sx={stylesTableCellBody}>{empresa.nombre}</TableCell>
                     </TableRow>
                   );
                 })
