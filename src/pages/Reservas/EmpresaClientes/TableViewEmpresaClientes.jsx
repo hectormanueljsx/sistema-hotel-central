@@ -23,7 +23,7 @@ const TableViewEmpresaClientes = () => {
   const [page, setPage] = useState(0);
   const [rowsPerPage, setRowsPerPage] = useState(10);
 
-  const { rfc } = useParams();
+  const { id } = useParams();
 
   const handleChangePage = (event, newPage) => setPage(newPage);
 
