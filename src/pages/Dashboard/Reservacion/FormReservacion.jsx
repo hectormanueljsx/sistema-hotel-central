@@ -1,9 +1,24 @@
-import React from 'react';
-import { Box, FormControl, FormControlLabel, Radio, RadioGroup, Select, TextField } from '@mui/material';
+import React, { useState } from 'react';
+import {
+  Box,
+  Button,
+  FormControl,
+  FormControlLabel,
+  InputAdornment,
+  Radio,
+  RadioGroup,
+  Select,
+  TextField,
+} from '@mui/material';
+import SaveIcon from '@mui/icons-material/Save';
+import ClearIcon from '@mui/icons-material/Clear';
 
 import TitlePage from '@/components/Title/TitlePage';
 import TitleInput from '@/components/Title/TitleInput';
+import ButtonLoader from '@/components/Loader/ButtonLoader';
 import {
+  stylesBoxButtons,
+  stylesButtonSend,
   stylesFormControlLabel,
   stylesGridWrapperCheckboxs,
   stylesGridWrapperForm,
@@ -13,6 +28,8 @@ import {
 } from '@/pages/Dashboard/Reservacion/ReservacionStyles';
 
 const FormReservacion = () => {
+  const [loadingBtn, setLoadingBtn] = useState(false);
+
   return (
     <Box component='section' sx={[stylesWrapperBoxShadow, stylesWidthHeightForm]}>
       <TitlePage titlePage='Registro de Nueva Reservación' />
@@ -156,15 +173,68 @@ const FormReservacion = () => {
         </Box>
         <Box component='div'>
           <TitleInput titleInput='Total a pagar' />
-          <TextField name='totalPagar' variant='outlined' type='number' margin='none' size='small' required fullWidth />
+          <TextField
+            name='totalPagar'
+            variant='outlined'
+            type='number'
+            margin='none'
+            size='small'
+            InputProps={{
+              startAdornment: <InputAdornment position='start'>$</InputAdornment>,
+            }}
+            required
+            fullWidth
+          />
         </Box>
         <Box component='div'>
           <TitleInput titleInput='Pagado' />
-          <TextField name='pagado' variant='outlined' type='number' margin='none' size='small' required fullWidth />
+          <TextField
+            name='pagado'
+            variant='outlined'
+            type='number'
+            margin='none'
+            size='small'
+            InputProps={{
+              startAdornment: <InputAdornment position='start'>$</InputAdornment>,
+            }}
+            required
+            fullWidth
+          />
         </Box>
         <Box component='div'>
           <TitleInput titleInput='Restante' />
-          <TextField name='restante' variant='outlined' type='number' margin='none' size='small' required fullWidth />
+          <TextField
+            name='restante'
+            variant='outlined'
+            type='number'
+            margin='none'
+            size='small'
+            InputProps={{
+              startAdornment: <InputAdornment position='start'>$</InputAdornment>,
+            }}
+            required
+            fullWidth
+          />
+        </Box>
+      </Box>
+      <Box component='div' sx={stylesButtonSend}>
+        <Box component='div' sx={stylesBoxButtons}>
+          {loadingBtn ? (
+            <Box component='div'>
+              <ButtonLoader />
+            </Box>
+          ) : (
+            <Box component='div'>
+              <Button variant='contained' size='large' startIcon={<SaveIcon />}>
+                Registrar Reservación
+              </Button>
+            </Box>
+          )}
+          <Box component='div'>
+            <Button variant='contained' size='large' startIcon={<ClearIcon />}>
+              Cancelar Reservación
+            </Button>
+          </Box>
         </Box>
       </Box>
     </Box>

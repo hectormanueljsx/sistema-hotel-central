@@ -48,3 +48,10 @@ export const stylesButtonSend = css`
   justify-content: center;
   margin-top: 32px;
 `;
+
+export const stylesBoxButtons = css`
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  gap: 16px;
+`;
