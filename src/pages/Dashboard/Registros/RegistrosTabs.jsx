@@ -2,6 +2,10 @@ import React, { useState } from 'react';
 import { Box, Tab, Tabs } from '@mui/material';
 
 import DatosRegistro from '@/pages/Dashboard/Registros/DatosRegistro/DatosRegistro';
+import HistorialPago from '@/pages/Dashboard/Registros/HistorialPago/HistorialPago';
+import DatosFacturacion from '@/pages/Dashboard/Registros/DatosFacturacion/DatosFacturacion';
+import HistorialFactura from '@/pages/Dashboard/Registros/HistorialFactura/HistorialFactura';
+import CargosExtras from '@/pages/Dashboard/Registros/CargosExtras/CargosExtras';
 import {
   stylesCenteredTabs,
   stylesRemovePaddingTab,
@@ -44,16 +48,16 @@ const RegistrosTabs = () => {
         <DatosRegistro />
       </TabPanel>
       <TabPanel value={value} index={1}>
-        <DatosRegistro />
+        <HistorialPago />
       </TabPanel>
       <TabPanel value={value} index={2}>
-        <DatosRegistro />
+        <DatosFacturacion />
       </TabPanel>
       <TabPanel value={value} index={3}>
-        <DatosRegistro />
+        <HistorialFactura />
       </TabPanel>
       <TabPanel value={value} index={4}>
-        <DatosRegistro />
+        <CargosExtras />
       </TabPanel>
     </Box>
   );
