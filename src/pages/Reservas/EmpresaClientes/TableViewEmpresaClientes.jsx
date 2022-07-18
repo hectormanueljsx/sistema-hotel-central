@@ -16,10 +16,9 @@ import {
 } from '@/pages/Reservas/EmpresaClientes/EmpresaClientesStyles';
 
 const columns = [
-  { id: 'nombre', label: 'Nombre del Cliente', width: 300 },
-  { id: 'email', label: 'Correo Electrónico', width: 286 },
-  { id: 'numero', label: 'Teléfono', width: 100 },
-  { id: 'empresa', label: 'Nombre de la Empresa', width: 300 },
+  { id: 'nombre', label: 'Nombre del Cliente', width: 500 },
+  { id: 'email', label: 'Correo Electrónico', width: 366 },
+  { id: 'numero', label: 'Teléfono', width: 120 },
 ];
 
 const TableViewEmpresaClientes = () => {
@@ -40,6 +39,16 @@ const TableViewEmpresaClientes = () => {
     id,
   );
 
+  const nameEmpresa =
+    listGetSpecific?.length > 0
+      ? listGetSpecific?.map(item => {
+          const {
+            empresa: { nombre },
+          } = item;
+          return nombre;
+        })
+      : '';
+
   const handleChangePage = (event, newPage) => setPage(newPage);
 
   const handleChangeRowsPerPage = event => {
@@ -49,7 +58,13 @@ const TableViewEmpresaClientes = () => {
 
   return (
     <Box component='section' sx={[stylesWrapperBoxShadow, stylesWidthHeightTable]}>
-      <TitlePage titlePage='Lista de Clientes Relacionados' />
+      <TitlePage
+        titlePage={
+          listGetSpecific.length > 0
+            ? `Lista de Clientes Relacionados a ${nameEmpresa[0]}`
+            : `Lista de Clientes Relacionados`
+        }
+      />
       <Box component='div'>
         <TableContainer>
           <Table>
@@ -77,14 +92,13 @@ const TableViewEmpresaClientes = () => {
                 </TableRow>
               ) : listGetSpecific.length > 0 ? (
                 listGetSpecific.slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage).map(item => {
-                  const { id, nombre, mail, tel, empresa } = item;
+                  const { id, nombre, mail, tel } = item;
 
                   return (
                     <TableRow key={id}>
                       <TableCell sx={stylesTableCellBody}>{nombre}</TableCell>
                       <TableCell sx={stylesTableCellBody}>{mail}</TableCell>
                       <TableCell sx={stylesTableCellBody}>{tel}</TableCell>
-                      <TableCell sx={stylesTableCellBody}>{empresa.nombre}</TableCell>
                     </TableRow>
                   );
                 })
