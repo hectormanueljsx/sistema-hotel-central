@@ -75,7 +75,7 @@ const TableViewUsuarios = () => {
   const deleteUsuario = async id => {
     Swal.fire({
       icon: 'warning',
-      title: 'Eliminación',
+      title: 'Confirmación de eliminación',
       text: '¿Estás seguro de eliminar este registro?',
       showCancelButton: true,
       allowOutsideClick: false,
