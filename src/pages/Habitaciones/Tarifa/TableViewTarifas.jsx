@@ -16,7 +16,8 @@ import DeleteIcon from '@mui/icons-material/Delete';
 import Swal from 'sweetalert2';
 
 import TitlePage from '@/components/Title/TitlePage';
-import SleketonLoader from '@/components/Loader/SleketonLoader';
+import LoaderImage from '@/components/Loader/LoaderImage';
+import LoaderSkeleton from '@/components/Loader/LoaderSkeleton';
 import AlertGlobalTables from '@/components/Alert/AlertGlobalTables';
 import ModalTarifa from '@/pages/Habitaciones/Tarifa/ModalTarifa';
 import useGetGeneralTable from '@/hooks/useGetGeneralTable';
@@ -45,6 +46,7 @@ const TableViewTarifas = () => {
   const [rowsPerPage, setRowsPerPage] = useState(10);
   const [openModal, setOpenModal] = useState(false);
   const [dataTarifa, setDataTarifa] = useState('');
+  const [loaderRequest, setLoaderRequest] = useState(false);
 
   const identifier = localStorage.getItem('identifier');
   const password = localStorage.getItem('password');
@@ -69,17 +71,20 @@ const TableViewTarifas = () => {
 
   const deleteByIdTarifa = async id => {
     const generalData = { status: false };
-
+    setLoaderRequest(true);
     const { status } = await putGeneralTable(identifier, password, endpointTarifa, id, generalData);
+    setLoaderRequest(false);
     return status;
   };
 
   const deleteTarifa = async id => {
     Swal.fire({
       icon: 'warning',
-      text: '¿Estás seguro de eliminar esta tarifa?',
+      title: 'Confirmación de eliminación',
+      text: '¿Estás seguro de eliminar este registro?',
       showCancelButton: true,
       allowOutsideClick: false,
+      allowEscapeKey: false,
       confirmButtonColor: '#1976d2',
       cancelButtonColor: '#d32f2f',
       confirmButtonText: 'Aceptar',
@@ -90,8 +95,10 @@ const TableViewTarifas = () => {
           if (res >= 200 && res <= 299) {
             Swal.fire({
               icon: 'success',
-              text: 'Tarifa eliminada correctamente',
+              title: 'Eliminación con éxito',
+              text: 'El registro se ha eliminado con éxito',
               allowOutsideClick: false,
+              allowEscapeKey: false,
               confirmButtonColor: '#1976d2',
               confirmButtonText: 'Aceptar',
             }).then(result => {
@@ -102,8 +109,10 @@ const TableViewTarifas = () => {
           } else {
             Swal.fire({
               icon: 'error',
-              text: 'Error al eliminar tarifa',
+              title: 'Ah ocurrido un error',
+              text: 'Lo sentimos, no se pudo eliminar el registro debido a un problema internamente',
               allowOutsideClick: false,
+              allowEscapeKey: false,
               confirmButtonColor: '#1976d2',
               confirmButtonText: 'Aceptar',
             });
@@ -114,6 +123,10 @@ const TableViewTarifas = () => {
   };
 
   const { list, loading, error } = useGetGeneralTable(identifier, password, `${endpointTarifa}?status=true`);
+
+  if (loaderRequest) {
+    return <LoaderImage />;
+  }
 
   return (
     <Box component='section' sx={[stylesWrapperBoxShadow, stylesWidthHeightTable]}>
@@ -134,7 +147,7 @@ const TableViewTarifas = () => {
               {loading ? (
                 <TableRow>
                   <TableCell align='center' colSpan={columns.length} sx={stylesTableCellBody}>
-                    <SleketonLoader />
+                    <LoaderSkeleton />
                   </TableCell>
                 </TableRow>
               ) : error ? (

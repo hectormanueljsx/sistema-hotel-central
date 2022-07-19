@@ -14,7 +14,7 @@ import {
 import VisibilityIcon from '@mui/icons-material/Visibility';
 
 import TitlePage from '@/components/Title/TitlePage';
-import SleketonLoader from '@/components/Loader/SleketonLoader';
+import LoaderSkeleton from '@/components/Loader/LoaderSkeleton';
 import AlertGlobalTables from '@/components/Alert/AlertGlobalTables';
 import ModalHabitaciones from '@/pages/Habitaciones/Habitaciones/ModalHabitacion';
 import useGetGeneralTable from '@/hooks/useGetGeneralTable';
@@ -85,7 +85,7 @@ const TableViewHabitaciones = () => {
               {loading ? (
                 <TableRow>
                   <TableCell align='center' colSpan={columns.length} sx={stylesTableCellBody}>
-                    <SleketonLoader />
+                    <LoaderSkeleton />
                   </TableCell>
                 </TableRow>
               ) : error ? (

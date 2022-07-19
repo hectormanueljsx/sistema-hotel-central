@@ -7,7 +7,7 @@ import Swal from 'sweetalert2';
 
 import TitlePage from '@/components/Title/TitlePage';
 import TitleInput from '@/components/Title/TitleInput';
-import LoaderImageModal from '@/components/Loader/LoaderImageModal';
+import LoaderImage from '@/components/Loader/LoaderImage';
 import putUsers from '@/services/putUsers';
 import { generalEndpoints } from '@/utilities/endpoints';
 import {
@@ -144,7 +144,7 @@ const ModalUsuario = ({ dataUsuario, handleCloseModal }) => {
   };
 
   if (loaderRequest) {
-    return <LoaderImageModal />;
+    return <LoaderImage />;
   }
 
   return (

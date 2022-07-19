@@ -14,21 +14,6 @@ export const stylesBoxLoader = css`
   z-index: 3000;
 `;
 
-export const stylesBoxLoaderModal = css`
-  background-color: #ffffff;
-  width: 100vw;
-  height: 100vh;
-  position: sticky;
-  top: 0;
-  left: 0;
-  bottom: 0;
-  right: 0;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  transition: all 0.5s ease;
-`;
-
 const animationImage = keyframes`
   0% {
     transform: scale(0.5);
