@@ -17,7 +17,8 @@ import moment from 'moment';
 import Swal from 'sweetalert2';
 
 import TitlePage from '@/components/Title/TitlePage';
-import SleketonLoader from '@/components/Loader/SleketonLoader';
+import LoaderImage from '@/components/Loader/LoaderImage';
+import LoaderSkeleton from '@/components/Loader/LoaderSkeleton';
 import AlertGlobalTables from '@/components/Alert/AlertGlobalTables';
 import ModalUsuario from '@/pages/Administracion/Usuario/ModalUsuario';
 import useGetGeneralTable from '@/hooks/useGetGeneralTable';
@@ -44,6 +45,7 @@ const TableViewUsuarios = () => {
   const [rowsPerPage, setRowsPerPage] = useState(10);
   const [dataUsuario, setDataUsuario] = useState('');
   const [openModal, setOpenModal] = useState(false);
+  const [loaderRequest, setLoaderRequest] = useState(false);
 
   const identifier = localStorage.getItem('identifier');
   const password = localStorage.getItem('password');
@@ -64,16 +66,20 @@ const TableViewUsuarios = () => {
 
   const deleteByIdUsuario = async id => {
     const generalData = { blocked: true };
+    setLoaderRequest(true);
     const { status } = await putGeneralTable(identifier, password, endpointUsuario, id, generalData);
+    setLoaderRequest(false);
     return status;
   };
 
   const deleteUsuario = async id => {
     Swal.fire({
       icon: 'warning',
-      text: '¿Estás seguro de eliminar este usuario?',
+      title: 'Eliminación',
+      text: '¿Estás seguro de eliminar este registro?',
       showCancelButton: true,
       allowOutsideClick: false,
+      allowEscapeKey: false,
       confirmButtonColor: '#1976d2',
       cancelButtonColor: '#d32f2f',
       confirmButtonText: 'Aceptar',
@@ -84,8 +90,10 @@ const TableViewUsuarios = () => {
           if (res >= 200 && res <= 299) {
             Swal.fire({
               icon: 'success',
-              text: 'Usuario eliminado correctamente',
+              title: 'Eliminación con éxito',
+              text: 'El registro se ha eliminado con éxito',
               allowOutsideClick: false,
+              allowEscapeKey: false,
               confirmButtonColor: '#1976d2',
               confirmButtonText: 'Aceptar',
             }).then(result => {
@@ -96,8 +104,10 @@ const TableViewUsuarios = () => {
           } else {
             Swal.fire({
               icon: 'error',
-              text: 'Error al eliminar usuario',
+              title: 'Ah ocurrido un error',
+              text: 'Lo sentimos, no se pudo eliminar el registro debido a un problema internamente',
               allowOutsideClick: false,
+              allowEscapeKey: false,
               confirmButtonColor: '#1976d2',
               confirmButtonText: 'Aceptar',
             });
@@ -107,7 +117,11 @@ const TableViewUsuarios = () => {
     });
   };
 
-  const { list,  loading, error } = useGetGeneralTable(identifier, password, `${endpointUsuario}?blocked=false`);
+  const { list, loading, error } = useGetGeneralTable(identifier, password, `${endpointUsuario}?blocked=false`);
+
+  if (loaderRequest) {
+    return <LoaderImage />;
+  }
 
   return (
     <Box component='section' sx={[stylesWrapperBoxShadow, stylesWidthHeightTable]}>
@@ -128,7 +142,7 @@ const TableViewUsuarios = () => {
               {loading ? (
                 <TableRow>
                   <TableCell align='center' colSpan={columns.length} sx={stylesTableCellBody}>
-                    <SleketonLoader />
+                    <LoaderSkeleton />
                   </TableCell>
                 </TableRow>
               ) : error ? (
@@ -151,7 +165,7 @@ const TableViewUsuarios = () => {
                       <TableCell sx={stylesTableCellBody}>{username}</TableCell>
                       <TableCell sx={stylesTableCellBody}>{name}</TableCell>
                       <TableCell sx={stylesTableCellBody}>
-                        {moment(ult_ingreso).format('YYYY-MM-DD hh:mm:ss a')}
+                        {ult_ingreso ? moment(ult_ingreso).format('YYYY-MM-DD hh:mm:ss a') : null}
                       </TableCell>
                       <TableCell sx={stylesTableCellBody}>
                         <IconButton color='info' size='small' onClick={() => handleOpen(item)}>

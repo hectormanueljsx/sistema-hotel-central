@@ -6,7 +6,7 @@ import Swal from 'sweetalert2';
 
 import TitlePage from '@/components/Title/TitlePage';
 import TitleInput from '@/components/Title/TitleInput';
-import ButtonLoader from '@/components/Loader/ButtonLoader';
+import LoaderImage from '@/components/Loader/LoaderImage';
 import { generalEndpoints } from '@/utilities/endpoints';
 import postLogin from '@/services/postLogin';
 import putGeneralTable from '@/services/putGeneralTable';
@@ -19,14 +19,14 @@ import {
   stylesWrapperBoxShadow,
   stylesWrapperGeneral,
 } from '@/pages/Login/LoginStyles';
-import LogoIcon from '@/assets/favicon.png';
+import Logo from '@/assets/favicon.png';
 
 const Login = () => {
   const [datosLogin, setDatosLogin] = useState({
     username: '',
     password: '',
   });
-  const [loadingBtn, setLoadingBtn] = useState(false);
+  const [loaderRequest, setLoaderRequest] = useState(false);
 
   const navigate = useNavigate();
 
@@ -43,7 +43,7 @@ const Login = () => {
 
     if (datosLogin.username.trim().length > 0 && datosLogin.password.trim().length > 0) {
       try {
-        setLoadingBtn(true);
+        setLoaderRequest(true);
         const res = await postLogin(datosLogin.username, datosLogin.password);
         const dateTime = new Date();
 
@@ -59,42 +59,44 @@ const Login = () => {
           localStorage.setItem('username', res.username);
           localStorage.setItem('role', res.name);
 
-          Swal.fire({
-            icon: 'success',
-            text: 'Inicio de sesión correcto',
-            allowOutsideClick: false,
-            confirmButtonColor: '#1976d2',
-            confirmButtonText: 'Aceptar',
-          }).then(result => navigate('/'));
+          navigate('/');
         } else {
           Swal.fire({
             icon: 'error',
-            text: 'Error al iniciar sesión, verifique sus datos',
+            title: 'Ah ocurrido un error',
+            text: 'Por favor, verifique su usuario y contraseña',
             allowOutsideClick: false,
+            allowEscapeKey: false,
             confirmButtonColor: '#1976d2',
             confirmButtonText: 'Aceptar',
           });
         }
       } catch (error) {
       } finally {
-        setLoadingBtn(false);
+        setLoaderRequest(false);
       }
     } else {
       Swal.fire({
         icon: 'error',
+        title: 'Ah ocurrido un error',
         text: 'Por favor, rellene todos los campos',
         allowOutsideClick: false,
+        allowEscapeKey: false,
         confirmButtonColor: '#1976d2',
         confirmButtonText: 'Aceptar',
       });
     }
   };
 
+  if (loaderRequest) {
+    return <LoaderImage />;
+  }
+
   return (
     <Box component='section' sx={stylesWrapperGeneral}>
       <Box component='section' sx={[stylesWrapperBoxShadow, stylesWidthHeightForm]}>
         <Box component='div' sx={stylesBoxImage}>
-          <CardMedia component='img' image={LogoIcon} alt='Logo Icon' sx={stylesIconImage} />
+          <CardMedia component='img' image={Logo} alt='Logo Icon' sx={stylesIconImage} />
           <TitlePage titlePage='Iniciar Sesión' />
         </Box>
         <Box component='form' sx={stylesGridWrapperForm}>
@@ -126,17 +128,11 @@ const Login = () => {
             />
           </Box>
         </Box>
-        {loadingBtn ? (
-          <Box component='div' sx={stylesButtonSend}>
-            <ButtonLoader />
-          </Box>
-        ) : (
-          <Box component='div' sx={stylesButtonSend}>
-            <Button variant='contained' onClick={handleSubmit} size='large' endIcon={<LoginIcon />}>
-              Iniciar Sesión
-            </Button>
-          </Box>
-        )}
+        <Box component='div' sx={stylesButtonSend}>
+          <Button variant='contained' onClick={handleSubmit} size='large' endIcon={<LoginIcon />}>
+            Iniciar Sesión
+          </Button>
+        </Box>
       </Box>
     </Box>
   );

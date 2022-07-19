@@ -5,7 +5,7 @@ import Swal from 'sweetalert2';
 
 import TitlePage from '@/components/Title/TitlePage';
 import TitleInput from '@/components/Title/TitleInput';
-import ButtonLoader from '@/components/Loader/ButtonLoader';
+import LoaderImage from '@/components/Loader/LoaderImage';
 import postUsers from '@/services/postUsers';
 import { generalEndpoints } from '@/utilities/endpoints';
 import {
@@ -26,7 +26,7 @@ const FormCreateUsuario = () => {
     confirm: '',
   });
   const [rol, setRol] = useState('');
-  const [loadingBtn, setLoadingBtn] = useState(false);
+  const [loaderRequest, setLoaderRequest] = useState(false);
 
   const identifier = localStorage.getItem('identifier');
   const password = localStorage.getItem('password');
@@ -58,23 +58,27 @@ const FormCreateUsuario = () => {
         };
         const dataRole = { role: { id: rol } };
 
-        setLoadingBtn(true);
+        setLoaderRequest(true);
         const res = await postUsers(identifier, password, endpointUsuario, dataUser, dataRole);
-        setLoadingBtn(false);
+        setLoaderRequest(false);
 
         if (res.status >= 200 && res.status <= 299) {
           Swal.fire({
             icon: 'success',
-            text: 'Usuario registrado correctamente',
+            title: 'Creación con éxito',
+            text: 'El registro se ha creado con éxito',
             allowOutsideClick: false,
+            allowEscapeKey: false,
             confirmButtonColor: '#1976d2',
             confirmButtonText: 'Aceptar',
           }).then(result => result.isConfirmed && location.reload());
         } else {
           Swal.fire({
             icon: 'error',
-            text: 'Error al registrar usuario',
+            title: 'Ah ocurrido un error',
+            text: 'Lo sentimos, no se pudo crear el registro debido a un problema internamente',
             allowOutsideClick: false,
+            allowEscapeKey: false,
             confirmButtonColor: '#1976d2',
             confirmButtonText: 'Aceptar',
           });
@@ -83,8 +87,10 @@ const FormCreateUsuario = () => {
       } else {
         Swal.fire({
           icon: 'error',
+          title: 'Ah ocurrido un error',
           text: 'Por favor, rellene todos los campos',
           allowOutsideClick: false,
+          allowEscapeKey: false,
           confirmButtonColor: '#1976d2',
           confirmButtonText: 'Aceptar',
         });
@@ -92,13 +98,19 @@ const FormCreateUsuario = () => {
     } else {
       Swal.fire({
         icon: 'error',
-        text: 'Las contraseñas no coinciden',
+        title: 'Ah ocurrido un error',
+        text: 'Por favor, verifique que las contraseñas coincidan',
         allowOutsideClick: false,
+        allowEscapeKey: false,
         confirmButtonColor: '#1976d2',
         confirmButtonText: 'Aceptar',
       });
     }
   };
+
+  if (loaderRequest) {
+    return <LoaderImage />;
+  }
 
   return (
     <Box component='section' sx={[stylesWrapperBoxShadow, stylesWidthHeightForm]}>
@@ -183,17 +195,11 @@ const FormCreateUsuario = () => {
           </Box>
         </Box>
       </Box>
-      {loadingBtn ? (
-        <Box component='div' sx={stylesButtonSend}>
-          <ButtonLoader />
-        </Box>
-      ) : (
-        <Box component='div' sx={stylesButtonSend}>
-          <Button variant='contained' onClick={sendDatos} size='large' startIcon={<SaveIcon />}>
-            Registrar Usuario
-          </Button>
-        </Box>
-      )}
+      <Box component='div' sx={stylesButtonSend}>
+        <Button variant='contained' onClick={sendDatos} size='large' startIcon={<SaveIcon />}>
+          Registrar Usuario
+        </Button>
+      </Box>
     </Box>
   );
 };
