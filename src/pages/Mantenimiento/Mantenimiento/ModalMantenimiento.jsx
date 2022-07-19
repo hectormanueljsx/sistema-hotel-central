@@ -1,19 +1,18 @@
 import React, { useState } from 'react';
 import { Box, Button, FormControl, MenuItem, Select, TextField } from '@mui/material';
-import UpdateIcon from '@mui/icons-material/Update';
+import SaveIcon from '@mui/icons-material/Save';
 import EditIcon from '@mui/icons-material/Edit';
 import CloseIcon from '@mui/icons-material/Close';
 import Swal from 'sweetalert2';
 
 import TitlePage from '@/components/Title/TitlePage';
 import TitleInput from '@/components/Title/TitleInput';
-import ButtonLoader from '@/components/Loader/ButtonLoader';
+import LoaderImage from '@/components/Loader/LoaderImage';
 import putGeneralTable from '@/services/putGeneralTable';
 import { generalEndpoints } from '@/utilities/endpoints';
 import {
   stylesButtonAlignEnd,
   stylesButtonCloseModal,
-  stylesButtonSend,
   stylesGridWrapperButtons,
   stylesGridWrapperModal,
   stylesWidthAutoButtons,
@@ -36,7 +35,7 @@ const ModalMantenimiento = ({ habitacion, subcategoria, dataMantenimiento, handl
   const [idSubcategoria, setIdSubcategoria] = useState(dataMantenimiento.subcategoria.id);
   const [disabledModal, setDisabledModal] = useState(true);
   const [disableView, setDisableView] = useState(false);
-  const [loadingBtn, setLoadingBtn] = useState(false);
+  const [loaderRequest, setLoaderRequest] = useState(false);
 
   const identifier = localStorage.getItem('identifier');
   const password = localStorage.getItem('password');
@@ -55,7 +54,7 @@ const ModalMantenimiento = ({ habitacion, subcategoria, dataMantenimiento, handl
   const sendDatos = async event => {
     event.preventDefault();
 
-    if (datos.motivo && idHabitacion && idSubcategoria) {
+    if (datos.motivo.trim().length > 0 && idHabitacion && idSubcategoria && datos.reporta.trim().length > 0) {
       let status = 'NO REALIZADO';
 
       if (datos.fechaInicio && !datos.fechafin) {
@@ -71,21 +70,23 @@ const ModalMantenimiento = ({ habitacion, subcategoria, dataMantenimiento, handl
         motivo: datos.motivo.toUpperCase(),
         estado: status,
         costo: datos.precio,
-        reporta: datos.reporta,
+        reporta: datos.reporta.toUpperCase(),
         trabajador: datos.trabajador ? datos.trabajador.toUpperCase() : datos.trabajador,
         habitacion: { id: idHabitacion },
         subcategoria: { id: idSubcategoria },
       };
 
-      setLoadingBtn(true);
+      setLoaderRequest(true);
       const res = await putGeneralTable(identifier, password, endpointMantenimiento, dataMantenimiento.id, generalData);
-      setLoadingBtn(false);
+      setLoaderRequest(false);
 
       if (res.status >= 200 && res.status <= 299) {
         Swal.fire({
           icon: 'success',
-          text: 'Mantenimiento actualizado correctamente',
+          title: 'Actualización con éxito',
+          text: 'El registro se ha actualizado con éxito',
           allowOutsideClick: false,
+          allowEscapeKey: false,
           confirmButtonColor: '#1976d2',
           confirmButtonText: 'Aceptar',
           customClass: {
@@ -100,8 +101,10 @@ const ModalMantenimiento = ({ habitacion, subcategoria, dataMantenimiento, handl
       } else {
         Swal.fire({
           icon: 'error',
-          text: 'Error al actualizar mantenimiento',
+          title: 'Ah ocurrido un error',
+          text: 'Lo sentimos, no se pudo actualizar el registro debido a un problema internamente',
           allowOutsideClick: false,
+          allowEscapeKey: false,
           confirmButtonColor: '#1976d2',
           confirmButtonText: 'Aceptar',
           customClass: {
@@ -113,8 +116,10 @@ const ModalMantenimiento = ({ habitacion, subcategoria, dataMantenimiento, handl
     } else {
       Swal.fire({
         icon: 'error',
+        title: 'Ah ocurrido un error',
         text: 'Por favor, rellene todos los campos',
         allowOutsideClick: false,
+        allowEscapeKey: false,
         confirmButtonColor: '#1976d2',
         confirmButtonText: 'Aceptar',
         customClass: {
@@ -123,6 +128,10 @@ const ModalMantenimiento = ({ habitacion, subcategoria, dataMantenimiento, handl
       });
     }
   };
+
+  if (loaderRequest) {
+    return <LoaderImage />;
+  }
 
   return (
     <Box component='section' sx={[stylesWrapperBoxShadow, stylesWidthHeightModal]}>
@@ -292,38 +301,32 @@ const ModalMantenimiento = ({ habitacion, subcategoria, dataMantenimiento, handl
           />
         </Box>
       </Box>
-      {loadingBtn ? (
-        <Box component='div' sx={stylesButtonSend}>
-          <ButtonLoader />
+      <Box component='div' sx={stylesGridWrapperButtons}>
+        <Box component='div' sx={stylesButtonAlignEnd}>
+          <Button
+            variant='contained'
+            disabled={disableView}
+            onClick={viewDisabled}
+            size='large'
+            startIcon={<EditIcon />}
+            sx={stylesWidthAutoButtons}
+          >
+            Modificar
+          </Button>
         </Box>
-      ) : (
-        <Box component='div' sx={stylesGridWrapperButtons}>
-          <Box component='div' sx={stylesButtonAlignEnd}>
-            <Button
-              variant='contained'
-              disabled={disableView}
-              onClick={viewDisabled}
-              size='large'
-              startIcon={<EditIcon />}
-              sx={stylesWidthAutoButtons}
-            >
-              Modificar
-            </Button>
-          </Box>
-          <Box component='div'>
-            <Button
-              variant='contained'
-              disabled={disabledModal}
-              onClick={sendDatos}
-              size='large'
-              startIcon={<UpdateIcon />}
-              sx={stylesWidthAutoButtons}
-            >
-              Actualizar
-            </Button>
-          </Box>
+        <Box component='div'>
+          <Button
+            variant='contained'
+            disabled={disabledModal}
+            onClick={sendDatos}
+            size='large'
+            startIcon={<SaveIcon />}
+            sx={stylesWidthAutoButtons}
+          >
+            Guardar
+          </Button>
         </Box>
-      )}
+      </Box>
     </Box>
   );
 };
