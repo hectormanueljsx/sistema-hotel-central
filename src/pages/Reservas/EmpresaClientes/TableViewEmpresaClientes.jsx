@@ -3,7 +3,7 @@ import { Box, Table, TableBody, TableCell, TableContainer, TableHead, TablePagin
 import { useParams } from 'react-router-dom';
 
 import TitlePage from '@/components/Title/TitlePage';
-import SleketonLoader from '@/components/Loader/SleketonLoader';
+import LoaderSkeleton from '@/components/Loader/LoaderSkeleton';
 import AlertGlobalTables from '@/components/Alert/AlertGlobalTables';
 import useGetSpecific from '@/hooks/useGetSpecific';
 import { messageEmptyGetData, messageErrorGetData } from '@/utilities/messagesAlerts';
@@ -81,7 +81,7 @@ const TableViewEmpresaClientes = () => {
               {loadingGetSpecific ? (
                 <TableRow>
                   <TableCell align='center' colSpan={columns.length} sx={stylesTableCellBody}>
-                    <SleketonLoader />
+                    <LoaderSkeleton />
                   </TableCell>
                 </TableRow>
               ) : errorGetSpecific ? (

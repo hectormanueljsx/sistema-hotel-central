@@ -5,7 +5,7 @@ import Swal from 'sweetalert2';
 
 import TitlePage from '@/components/Title/TitlePage';
 import TitleInput from '@/components/Title/TitleInput';
-import ButtonLoader from '@/components/Loader/ButtonLoader';
+import LoaderImage from '@/components/Loader/LoaderImage';
 import postGeneralTable from '@/services/postGeneralTable';
 import { generalEndpoints } from '@/utilities/endpoints';
 import {
@@ -25,7 +25,7 @@ const FormCreateEmpresas = () => {
     estado: '',
     CP: '',
   });
-  const [loadingBtn, setLoadingBtn] = useState(false);
+  const [loaderRequest, setLoaderRequest] = useState(false);
 
   const identifier = localStorage.getItem('identifier');
   const password = localStorage.getItem('password');
@@ -55,23 +55,27 @@ const FormCreateEmpresas = () => {
         cod_p: datos.CP,
       };
 
-      setLoadingBtn(true);
+      setLoaderRequest(true);
       const result = await postGeneralTable(identifier, password, endpointEmpresa, generalData);
-      setLoadingBtn(false);
+      setLoaderRequest(false);
 
       if (result.status >= 200 && result.status <= 299) {
         Swal.fire({
           icon: 'success',
-          text: 'Empresa registrada correctamente',
+          title: 'Creación con éxito',
+          text: 'El registro se ha creado con éxito',
           allowOutsideClick: false,
+          allowEscapeKey: false,
           confirmButtonColor: '#1976d2',
           confirmButtonText: 'Aceptar',
         }).then(result => result.isConfirmed && location.reload());
       } else {
         Swal.fire({
           icon: 'error',
-          text: 'Error al registrar la empresa',
+          title: 'Ah ocurrido un error',
+          text: 'Lo sentimos, no se pudo crear el registro debido a un problema internamente',
           allowOutsideClick: false,
+          allowEscapeKey: false,
           confirmButtonColor: '#1976d2',
           confirmButtonText: 'Aceptar',
         });
@@ -80,13 +84,19 @@ const FormCreateEmpresas = () => {
     } else {
       Swal.fire({
         icon: 'error',
+        title: 'Ah ocurrido un error',
         text: 'Por favor, rellene todos los campos',
         allowOutsideClick: false,
+        allowEscapeKey: false,
         confirmButtonColor: '#1976d2',
         confirmButtonText: 'Aceptar',
       });
     }
   };
+
+  if (loaderRequest) {
+    return <LoaderImage />;
+  }
 
   return (
     <Box component='section' sx={[stylesWrapperBoxShadow, stylesWidthHeightForm]}>
@@ -185,17 +195,11 @@ const FormCreateEmpresas = () => {
           />
         </Box>
       </Box>
-      {loadingBtn ? (
-        <Box component='div' sx={stylesButtonSend}>
-          <ButtonLoader />
-        </Box>
-      ) : (
-        <Box component='div' sx={stylesButtonSend}>
-          <Button variant='contained' onClick={sendDatosEmpresa} size='large' startIcon={<SaveIcon />}>
-            Registrar Empresa
-          </Button>
-        </Box>
-      )}
+      <Box component='div' sx={stylesButtonSend}>
+        <Button variant='contained' onClick={sendDatosEmpresa} size='large' startIcon={<SaveIcon />}>
+          Registrar Empresa
+        </Button>
+      </Box>
     </Box>
   );
 };

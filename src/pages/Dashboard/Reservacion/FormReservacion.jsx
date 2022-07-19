@@ -5,7 +5,7 @@ import CloseIcon from '@mui/icons-material/Close';
 
 import TitlePage from '@/components/Title/TitlePage';
 import TitleInput from '@/components/Title/TitleInput';
-import ButtonLoader from '@/components/Loader/ButtonLoader';
+import LoaderImage from '@/components/Loader/LoaderImage';
 import {
   stylesBoxButtons,
   stylesButtonSend,
@@ -18,7 +18,11 @@ import {
 } from '@/pages/Dashboard/Reservacion/ReservacionStyles';
 
 const FormReservacion = () => {
-  const [loadingBtn, setLoadingBtn] = useState(false);
+  const [loaderRequest, setLoaderRequest] = useState(false);
+
+  if (loaderRequest) {
+    return <LoaderImage />;
+  }
 
   return (
     <Box component='section' sx={[stylesWrapperBoxShadow, stylesWidthHeightForm]}>
@@ -176,17 +180,11 @@ const FormReservacion = () => {
       </Box>
       <Box component='div' sx={stylesButtonSend}>
         <Box component='div' sx={stylesBoxButtons}>
-          {loadingBtn ? (
-            <Box component='div'>
-              <ButtonLoader />
-            </Box>
-          ) : (
-            <Box component='div'>
-              <Button variant='contained' size='large' startIcon={<SaveIcon />}>
-                Registrar Reservación
-              </Button>
-            </Box>
-          )}
+          <Box component='div'>
+            <Button variant='contained' size='large' startIcon={<SaveIcon />}>
+              Registrar Reservación
+            </Button>
+          </Box>
           <Box component='div'>
             <Button variant='contained' color='error' size='large' startIcon={<CloseIcon />}>
               Cancelar Reservación

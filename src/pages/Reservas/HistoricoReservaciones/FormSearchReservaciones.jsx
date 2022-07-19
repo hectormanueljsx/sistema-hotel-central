@@ -4,7 +4,6 @@ import ControlPointIcon from '@mui/icons-material/ControlPoint';
 
 import TitlePage from '@/components/Title/TitlePage';
 import TitleInput from '@/components/Title/TitleInput';
-import ButtonLoader from '@/components/Loader/ButtonLoader';
 import { historicalEndpoints } from '@/utilities/endpoints';
 import getGeneralSelect from '@/services/getGeneralSelect';
 import {
@@ -18,7 +17,6 @@ const FormSearchReservaciones = ({ setSearch, dataReservacion, setDataReservacio
   const [start, setStart] = useState(0);
   const [end, setEnd] = useState(100);
   const [visibleButton, setVisibleButton] = useState(true);
-  const [loadingBtn, setLoadingBtn] = useState(false);
 
   const identifier = localStorage.getItem('identifier');
   const password = localStorage.getItem('password');
@@ -32,9 +30,7 @@ const FormSearchReservaciones = ({ setSearch, dataReservacion, setDataReservacio
     if (dataReservacion.length >= end) {
       setVisibleButton(false);
 
-      setLoadingBtn(true);
       const resultado = await getGeneralSelect(identifier, password, `${endpointReservas}${start}`);
-      setLoadingBtn(false);
 
       setDataReservacion(prevData => [...prevData, ...resultado.data]);
       setEnd(end + 100);
@@ -83,23 +79,17 @@ const FormSearchReservaciones = ({ setSearch, dataReservacion, setDataReservacio
           />
         </Box>
       </Box>
-      {loadingBtn ? (
-        <Box component='div' sx={stylesButtonSend}>
-          <ButtonLoader />
-        </Box>
-      ) : (
-        <Box component='div' sx={stylesButtonSend}>
-          <Button
-            variant='contained'
-            disabled={visibleButton}
-            onClick={getMoreData}
-            size='large'
-            startIcon={<ControlPointIcon />}
-          >
-            {`Más de ${start} registros`}
-          </Button>
-        </Box>
-      )}
+      <Box component='div' sx={stylesButtonSend}>
+        <Button
+          variant='contained'
+          disabled={visibleButton}
+          onClick={getMoreData}
+          size='large'
+          startIcon={<ControlPointIcon />}
+        >
+          {`Más de ${start} registros`}
+        </Button>
+      </Box>
     </Box>
   );
 };

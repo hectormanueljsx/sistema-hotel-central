@@ -4,7 +4,6 @@ import ControlPointIcon from '@mui/icons-material/ControlPoint';
 
 import TitlePage from '@/components/Title/TitlePage';
 import TitleInput from '@/components/Title/TitleInput';
-import ButtonLoader from '@/components/Loader/ButtonLoader';
 import { historicalEndpoints } from '@/utilities/endpoints';
 import getGeneralSelect from '@/services/getGeneralSelect';
 import {
@@ -20,7 +19,6 @@ const FormSearchEmpresa = ({ setSearch, dataEmpresa, setDataEmpresa, setLoading,
   const [start, setStart] = useState(0);
   const [end, setEnd] = useState(100);
   const [visibleButton, setVisibleButton] = useState(true);
-  const [loadingBtn, setLoadingBtn] = useState(false);
 
   const identifier = localStorage.getItem('identifier');
   const password = localStorage.getItem('password');
@@ -34,9 +32,7 @@ const FormSearchEmpresa = ({ setSearch, dataEmpresa, setDataEmpresa, setLoading,
     if (dataEmpresa.length >= end) {
       setVisibleButton(false);
 
-      setLoadingBtn(true);
       const resultado = await getGeneralSelect(identifier, password, `${endpointEmpresa}${start}`);
-      setLoadingBtn(false);
 
       setDataEmpresa(prevData => [...prevData, ...resultado.data]);
       setEnd(end + 100);
@@ -83,24 +79,18 @@ const FormSearchEmpresa = ({ setSearch, dataEmpresa, setDataEmpresa, setLoading,
             fullWidth
           />
         </Box>
-        {loadingBtn ? (
-          <Box component='div' sx={stylesButtonSearch}>
-            <ButtonLoader />
-          </Box>
-        ) : (
-          <Box component='div' sx={stylesButtonSearch}>
-            <Button
-              variant='contained'
-              disabled={visibleButton}
-              onClick={getMoreData}
-              size='large'
-              startIcon={<ControlPointIcon />}
-              sx={stylesButtonMaxContent}
-            >
-              {`Más de ${start} registros`}
-            </Button>
-          </Box>
-        )}
+        <Box component='div' sx={stylesButtonSearch}>
+          <Button
+            variant='contained'
+            disabled={visibleButton}
+            onClick={getMoreData}
+            size='large'
+            startIcon={<ControlPointIcon />}
+            sx={stylesButtonMaxContent}
+          >
+            {`Más de ${start} registros`}
+          </Button>
+        </Box>
       </Box>
     </Box>
   );

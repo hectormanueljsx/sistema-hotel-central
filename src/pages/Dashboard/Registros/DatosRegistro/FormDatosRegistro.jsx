@@ -1,13 +1,13 @@
 import React, { useState } from 'react';
 import { Box, Button, FormControl, Select, TextField } from '@mui/material';
 import EditIcon from '@mui/icons-material/Edit';
-import UpdateIcon from '@mui/icons-material/Update';
+import SaveIcon from '@mui/icons-material/Save';
 import CloseIcon from '@mui/icons-material/Close';
 import ManageAccountsIcon from '@mui/icons-material/ManageAccounts';
 
 import TitlePage from '@/components/Title/TitlePage';
 import TitleInput from '@/components/Title/TitleInput';
-import ButtonLoader from '@/components/Loader/ButtonLoader';
+import LoaderImage from '@/components/Loader/LoaderImage';
 import {
   stylesButtonSend,
   stylesGridWrapperButtons,
@@ -17,7 +17,11 @@ import {
 } from '@/pages/Dashboard/Registros/DatosRegistro/DatosRegistroStyles';
 
 const FormDatosRegistro = () => {
-  const [loadingBtn, setLoadingBtn] = useState(false);
+  const [loaderRequest, setLoaderRequest] = useState(false);
+
+  if (loaderRequest) {
+    return <LoaderImage />;
+  }
 
   return (
     <Box component='section' sx={[stylesWrapperBoxShadow, stylesWidthHeightForm]}>
@@ -147,17 +151,11 @@ const FormDatosRegistro = () => {
               Modificar
             </Button>
           </Box>
-          {loadingBtn ? (
-            <Box component='div'>
-              <ButtonLoader />
-            </Box>
-          ) : (
-            <Box component='div'>
-              <Button variant='contained' size='large' startIcon={<UpdateIcon />}>
-                Actualizar
-              </Button>
-            </Box>
-          )}
+          <Box component='div'>
+            <Button variant='contained' size='large' startIcon={<SaveIcon />}>
+              Guardar
+            </Button>
+          </Box>
           <Box component='div'>
             <Button variant='contained' color='error' size='large' startIcon={<CloseIcon />}>
               Cancelar

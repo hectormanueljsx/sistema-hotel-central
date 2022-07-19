@@ -16,7 +16,7 @@ import PersonSearchIcon from '@mui/icons-material/PersonSearch';
 
 import TitlePage from '@/components/Title/TitlePage';
 import ModalEmpresa from '@/pages/Reservas/Empresa/ModalEmpresa';
-import SleketonLoader from '@/components/Loader/SleketonLoader';
+import LoaderSkeleton from '@/components/Loader/LoaderSkeleton';
 import AlertGlobalTables from '@/components/Alert/AlertGlobalTables';
 import { messageEmptyGetData, messageErrorGetData } from '@/utilities/messagesAlerts';
 import {
@@ -76,7 +76,7 @@ const TableViewEmpresas = ({ search, dataEmpresa, loading, error }) => {
               {loading ? (
                 <TableRow>
                   <TableCell align='center' colSpan={columns.length} sx={stylesTableCellBody}>
-                    <SleketonLoader />
+                    <LoaderSkeleton />
                   </TableCell>
                 </TableRow>
               ) : error ? (

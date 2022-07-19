@@ -1,19 +1,18 @@
 import React, { useState } from 'react';
 import { Box, Button, TextField } from '@mui/material';
-import UpdateIcon from '@mui/icons-material/Update';
+import SaveIcon from '@mui/icons-material/Save';
 import EditIcon from '@mui/icons-material/Edit';
 import CloseIcon from '@mui/icons-material/Close';
 import Swal from 'sweetalert2';
 
 import TitlePage from '@/components/Title/TitlePage';
 import TitleInput from '@/components/Title/TitleInput';
-import ButtonLoader from '@/components/Loader/ButtonLoader';
+import LoaderImage from '@/components/Loader/LoaderImage';
 import putGeneralTable from '@/services/putGeneralTable';
 import { generalEndpoints } from '@/utilities/endpoints';
 import {
   stylesButtonAlignEnd,
   stylesButtonCloseModal,
-  stylesButtonSend,
   stylesGridWrapperButtons,
   stylesGridWrapperModal,
   stylesWidthAutoButtons,
@@ -33,7 +32,7 @@ const ModalEmpresa = ({ selectEmpresa, handleCloseModal }) => {
   });
   const [disabledModal, setDisabledModal] = useState(true);
   const [disableView, setDisableView] = useState(false);
-  const [loadingBtn, setLoadingBtn] = useState(false);
+  const [loaderRequest, setLoaderRequest] = useState(false);
 
   const identifier = localStorage.getItem('identifier');
   const password = localStorage.getItem('password');
@@ -69,15 +68,17 @@ const ModalEmpresa = ({ selectEmpresa, handleCloseModal }) => {
         cod_p: datos.CP,
       };
 
-      setLoadingBtn(true);
-      const resul = await putGeneralTable(identifier, password, endpointEmpresa, selectEmpresa.id, generalData);
-      setLoadingBtn(false);
+      setLoaderRequest(true);
+      const result = await putGeneralTable(identifier, password, endpointEmpresa, selectEmpresa.id, generalData);
+      setLoaderRequest(false);
 
-      if (resul.status >= 200 && resul.status <= 299) {
+      if (result.status >= 200 && result.status <= 299) {
         Swal.fire({
           icon: 'success',
-          text: 'Empresa actualizada correctamente',
+          title: 'Actualización con éxito',
+          text: 'El registro se ha actualizado con éxito',
           allowOutsideClick: false,
+          allowEscapeKey: false,
           confirmButtonColor: '#1976d2',
           confirmButtonText: 'Aceptar',
           customClass: {
@@ -92,8 +93,10 @@ const ModalEmpresa = ({ selectEmpresa, handleCloseModal }) => {
       } else {
         Swal.fire({
           icon: 'error',
-          text: 'Error al actualizar empresa',
+          title: 'Ah ocurrido un error',
+          text: 'Lo sentimos, no se pudo actualizar el registro debido a un problema internamente',
           allowOutsideClick: false,
+          allowEscapeKey: false,
           confirmButtonColor: '#1976d2',
           confirmButtonText: 'Aceptar',
           customClass: {
@@ -105,8 +108,10 @@ const ModalEmpresa = ({ selectEmpresa, handleCloseModal }) => {
     } else {
       Swal.fire({
         icon: 'error',
+        title: 'Ah ocurrido un error',
         text: 'Por favor, rellene todos los campos',
         allowOutsideClick: false,
+        allowEscapeKey: false,
         confirmButtonColor: '#1976d2',
         confirmButtonText: 'Aceptar',
         customClass: {
@@ -115,6 +120,10 @@ const ModalEmpresa = ({ selectEmpresa, handleCloseModal }) => {
       });
     }
   };
+
+  if (loaderRequest) {
+    return <LoaderImage />;
+  }
 
   return (
     <Box component='section' sx={[stylesWrapperBoxShadow, stylesWidthHeightModal]}>
@@ -229,38 +238,32 @@ const ModalEmpresa = ({ selectEmpresa, handleCloseModal }) => {
           />
         </Box>
       </Box>
-      {loadingBtn ? (
-        <Box component='div' sx={stylesButtonSend}>
-          <ButtonLoader />
+      <Box component='div' sx={stylesGridWrapperButtons}>
+        <Box component='div' sx={stylesButtonAlignEnd}>
+          <Button
+            variant='contained'
+            disabled={disableView}
+            onClick={viewDisabled}
+            size='large'
+            startIcon={<EditIcon />}
+            sx={stylesWidthAutoButtons}
+          >
+            Modificar
+          </Button>
         </Box>
-      ) : (
-        <Box component='div' sx={stylesGridWrapperButtons}>
-          <Box component='div' sx={stylesButtonAlignEnd}>
-            <Button
-              variant='contained'
-              disabled={disableView}
-              onClick={viewDisabled}
-              size='large'
-              startIcon={<EditIcon />}
-              sx={stylesWidthAutoButtons}
-            >
-              Modificar
-            </Button>
-          </Box>
-          <Box component='div'>
-            <Button
-              variant='contained'
-              disabled={disabledModal}
-              onClick={updateEmpresa}
-              size='large'
-              startIcon={<UpdateIcon />}
-              sx={stylesWidthAutoButtons}
-            >
-              Actualizar
-            </Button>
-          </Box>
+        <Box component='div'>
+          <Button
+            variant='contained'
+            disabled={disabledModal}
+            onClick={updateEmpresa}
+            size='large'
+            startIcon={<SaveIcon />}
+            sx={stylesWidthAutoButtons}
+          >
+            Guardar
+          </Button>
         </Box>
-      )}
+      </Box>
     </Box>
   );
 };

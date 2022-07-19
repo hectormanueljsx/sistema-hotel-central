@@ -6,7 +6,7 @@ import SyncAltIcon from '@mui/icons-material/SyncAlt';
 
 import TitlePage from '@/components/Title/TitlePage';
 import TitleInput from '@/components/Title/TitleInput';
-import ButtonLoader from '@/components/Loader/ButtonLoader';
+import LoaderImage from '@/components/Loader/LoaderImage';
 import {
   stylesArrowLeft,
   stylesArrowRight,
@@ -20,7 +20,11 @@ import {
 } from '@/pages/Reservas/IntercambiarReservacion/IntercambiarReservacionStyle';
 
 const FormIntercambiarReservacion = () => {
-  const [loadingBtn, setLoadingBtn] = useState(false);
+  const [loaderRequest, setLoaderRequest] = useState(false);
+
+  if (loaderRequest) {
+    return <LoaderImage />;
+  }
 
   return (
     <Box component='section' sx={stylesWrapperBoxShadow}>
@@ -111,17 +115,11 @@ const FormIntercambiarReservacion = () => {
           </Box>
         </Box>
       </Box>
-      {loadingBtn ? (
-        <Box component='div' sx={stylesButtonSend}>
-          <ButtonLoader />
-        </Box>
-      ) : (
-        <Box component='div' sx={stylesButtonSend}>
-          <Button variant='contained' size='large' startIcon={<SyncAltIcon />}>
-            Intercambiar Habitación
-          </Button>
-        </Box>
-      )}
+      <Box component='div' sx={stylesButtonSend}>
+        <Button variant='contained' size='large' startIcon={<SyncAltIcon />}>
+          Intercambiar Habitación
+        </Button>
+      </Box>
     </Box>
   );
 };
