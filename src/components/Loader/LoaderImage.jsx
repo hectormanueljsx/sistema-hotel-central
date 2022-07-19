@@ -1,14 +1,16 @@
 import React from 'react';
-import { Box, CardMedia } from '@mui/material';
+import { Box, CardMedia, Modal } from '@mui/material';
 
 import Logo from '@/assets/favicon.png';
 import { stylesBoxLoader, stylesImageLoader } from '@/components/Loader/LoaderStyles';
 
 const LoaderImage = () => {
   return (
-    <Box component='div' sx={stylesBoxLoader}>
-      <CardMedia component='img' image={Logo} alt='Logo' sx={stylesImageLoader} />
-    </Box>
+    <Modal open={true}>
+      <Box component='div' sx={stylesBoxLoader}>
+        <CardMedia component='img' image={Logo} alt='Logo' sx={stylesImageLoader} />
+      </Box>
+    </Modal>
   );
 };
 
