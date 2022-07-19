@@ -7,12 +7,20 @@
   margin-bottom: 0;
 }
 
+.swal2-title {
+  font-family: 'Roboto', sans-serif;
+  font-size: 24px;
+  line-height: 1;
+  padding: 0;
+  margin: 20px 20px;
+}
+
 .swal2-html-container {
-  color: rgba(0, 0, 0, 0.87);
   font-family: 'Roboto', sans-serif;
   font-size: 18px;
   font-weight: 500;
-  margin: 25px 25px;
+  padding: 0;
+  margin: 0 20px 30px;
 }
 
 .swal2-actions {
@@ -23,6 +31,8 @@
 
 .swal2-styled {
   font-family: 'Roboto', sans-serif;
-  font-weight: 400;
+  font-weight: 500;
+  letter-spacing: 0.5px;
+  text-transform: uppercase;
   margin: 0;
 }
