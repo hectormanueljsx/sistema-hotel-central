@@ -128,7 +128,7 @@ const ModalUsuario = ({ dataUsuario, handleCloseModal }) => {
         }
       });
     } else {
-      Swal.fire({
+      return Swal.fire({
         icon: 'error',
         title: 'Ah ocurrido un error',
         text: 'Lo sentimos, no se pudo actualizar el registro debido a un problema internamente',
@@ -140,7 +140,6 @@ const ModalUsuario = ({ dataUsuario, handleCloseModal }) => {
           container: 'swal-container',
         },
       });
-      return;
     }
   };
 
