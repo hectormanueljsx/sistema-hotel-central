@@ -91,7 +91,7 @@ const ModalHabitaciones = ({ dataHabitaciones, dataSelectTarifas, dataDescriptio
           }
         });
       } else {
-        Swal.fire({
+        return Swal.fire({
           icon: 'error',
           title: 'Ah ocurrido un error',
           text: 'Lo sentimos, no se pudo actualizar el registro debido a un problema internamente',
@@ -103,7 +103,6 @@ const ModalHabitaciones = ({ dataHabitaciones, dataSelectTarifas, dataDescriptio
             container: 'swal-container',
           },
         });
-        return;
       }
     } else {
       Swal.fire({

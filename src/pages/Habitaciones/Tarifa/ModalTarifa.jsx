@@ -85,7 +85,7 @@ const ModalTarifa = ({ dataTarifa, handleCloseModal, dataPersonas }) => {
           }
         });
       } else {
-        Swal.fire({
+        return Swal.fire({
           icon: 'error',
           title: 'Ah ocurrido un error',
           text: 'Lo sentimos, no se pudo actualizar el registro debido a un problema internamente',
@@ -97,7 +97,6 @@ const ModalTarifa = ({ dataTarifa, handleCloseModal, dataPersonas }) => {
             container: 'swal-container',
           },
         });
-        return;
       }
     } else {
       Swal.fire({

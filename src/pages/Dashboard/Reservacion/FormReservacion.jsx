@@ -187,7 +187,7 @@ const FormReservacion = () => {
           </Box>
           <Box component='div'>
             <Button variant='contained' color='error' size='large' startIcon={<CloseIcon />}>
-              Cancelar Reservación
+              Cancelar
             </Button>
           </Box>
         </Box>

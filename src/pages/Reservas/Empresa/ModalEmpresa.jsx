@@ -91,7 +91,7 @@ const ModalEmpresa = ({ selectEmpresa, handleCloseModal }) => {
           }
         });
       } else {
-        Swal.fire({
+        return Swal.fire({
           icon: 'error',
           title: 'Ah ocurrido un error',
           text: 'Lo sentimos, no se pudo actualizar el registro debido a un problema internamente',
@@ -103,7 +103,6 @@ const ModalEmpresa = ({ selectEmpresa, handleCloseModal }) => {
             container: 'swal-container',
           },
         });
-        return;
       }
     } else {
       Swal.fire({

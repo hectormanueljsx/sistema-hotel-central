@@ -70,7 +70,7 @@ const FormCreateHabitaciones = () => {
           confirmButtonText: 'Aceptar',
         }).then(result => result.isConfirmed && location.reload());
       } else {
-        Swal.fire({
+        return Swal.fire({
           icon: 'error',
           title: 'Ah ocurrido un error',
           text: 'Lo sentimos, no se pudo crear el registro debido a un problema internamente',
@@ -79,7 +79,6 @@ const FormCreateHabitaciones = () => {
           confirmButtonColor: '#1976d2',
           confirmButtonText: 'Aceptar',
         });
-        return;
       }
     } else {
       Swal.fire({
