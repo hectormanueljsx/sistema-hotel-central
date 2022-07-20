@@ -2,7 +2,7 @@ import React from 'react';
 import { Box, Table, TableBody, TableCell, TableContainer, TableHead, TableRow, Typography } from '@mui/material';
 
 import TitlePage from '@/components/Title/TitlePage';
-import SleketonLoader from '@/components/Loader/SleketonLoader';
+import LoaderSkeleton from '@/components/Loader/LoaderSkeleton';
 import AlertGlobalTables from '@/components/Alert/AlertGlobalTables';
 import { messageEmptyGetData, messageErrorGetData } from '@/utilities/messagesAlerts';
 import {
@@ -53,7 +53,7 @@ const TableViewIngresoBruto = ({ dateTable, dataSearch, dataPago, dataRegistro, 
                 {loading ? (
                   <TableRow>
                     <TableCell align='center' colSpan={columns.length} sx={stylesTableCellBody}>
-                      <SleketonLoader />
+                      <LoaderSkeleton />
                     </TableCell>
                   </TableRow>
                 ) : error ? (
@@ -119,7 +119,7 @@ const TableViewIngresoBruto = ({ dateTable, dataSearch, dataPago, dataRegistro, 
                 {loading ? (
                   <TableRow>
                     <TableCell align='center' colSpan={columns.length} sx={stylesTableCellBody}>
-                      <SleketonLoader />
+                      <LoaderSkeleton />
                     </TableCell>
                   </TableRow>
                 ) : error ? (
@@ -184,7 +184,7 @@ const TableViewIngresoBruto = ({ dateTable, dataSearch, dataPago, dataRegistro, 
                 {loading ? (
                   <TableRow>
                     <TableCell align='center' colSpan={columns.length} sx={stylesTableCellBody}>
-                      <SleketonLoader />
+                      <LoaderSkeleton />
                     </TableCell>
                   </TableRow>
                 ) : error ? (

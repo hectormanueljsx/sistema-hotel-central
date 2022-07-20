@@ -7,7 +7,6 @@ import moment from 'moment';
 
 import TitlePage from '@/components/Title/TitlePage';
 import TitleInput from '@/components/Title/TitleInput';
-import ButtonLoader from '@/components/Loader/ButtonLoader';
 import getGeneralSelect from '@/services/getGeneralSelect';
 import { generalEndpoints } from '@/utilities/endpoints';
 import {
@@ -25,8 +24,6 @@ const FormSearchMantenimiento = ({ setDataSearch, setDateTable, setLoading, setE
   const [start, setStart] = useState(0);
   const [end, setEnd] = useState(100);
   const [visibleButton, setVisibleButton] = useState(true);
-  const [loadingBtnSearch, setLoadingBtnSearch] = useState(false);
-  const [loadingBtn, setLoadingBtn] = useState(false);
 
   const identifier = localStorage.getItem('identifier');
   const password = localStorage.getItem('password');
@@ -48,7 +45,6 @@ const FormSearchMantenimiento = ({ setDataSearch, setDateTable, setLoading, setE
     if (data.firstReport.trim().length > 0 && data.lastReport.trim().length > 0 && idSubcategoria) {
       try {
         setLoading(true);
-        setLoadingBtnSearch(true);
 
         const endpointMantenimiento = `mantenimientos?f_reporte_gte=${data.firstReport}T00:00:00.000Z&f_reporte_lte=${data.lastReport}T23:59:59.000Z&subcategoria=${idSubcategoria}:DESC&_start=${start}`;
 
@@ -72,25 +68,27 @@ const FormSearchMantenimiento = ({ setDataSearch, setDateTable, setLoading, setE
           }
         } else {
           setError(true);
-          Swal.fire({
+          return Swal.fire({
             icon: 'error',
-            text: 'Error al buscar registros',
+            title: 'Ah ocurrido un error',
+            text: 'Lo sentimos, no se pudo buscar el registro debido a un problema internamente',
             allowOutsideClick: false,
+            allowEscapeKey: false,
             confirmButtonColor: '#1976d2',
             confirmButtonText: 'Aceptar',
           });
-          return;
         }
       } catch (error) {
       } finally {
         setLoading(false);
-        setLoadingBtnSearch(false);
       }
     } else {
       Swal.fire({
         icon: 'error',
+        title: 'Ah ocurrido un error',
         text: 'Por favor, rellene todos los campos',
         allowOutsideClick: false,
+        allowEscapeKey: false,
         confirmButtonColor: '#1976d2',
         confirmButtonText: 'Aceptar',
       });
@@ -103,9 +101,7 @@ const FormSearchMantenimiento = ({ setDataSearch, setDateTable, setLoading, setE
 
       const endpointMantenimiento = `mantenimientos?f_reporte_gte=${data.firstReport}T00:00:00.000Z&f_reporte_lte=${data.lastReport}T23:59:59.000Z&subcategoria=${idSubcategoria}:DESC&_start=${start}`;
 
-      setLoadingBtn(true);
       const resultado = await getGeneralSelect(identifier, password, endpointMantenimiento);
-      setLoadingBtn(false);
 
       setDataSearch(prevData => [...prevData, ...resultado.data]);
       setEnd(end + 100);
@@ -175,34 +171,22 @@ const FormSearchMantenimiento = ({ setDataSearch, setDateTable, setLoading, setE
       </Box>
       <Box component='div' sx={stylesButtonSend}>
         <Box component='div' sx={stylesBoxButtonsSearchMore}>
-          {loadingBtnSearch ? (
-            <Box component='div'>
-              <ButtonLoader />
-            </Box>
-          ) : (
-            <Box component='div'>
-              <Button variant='contained' size='large' onClick={getData} startIcon={<SearchIcon />}>
-                Buscar
-              </Button>
-            </Box>
-          )}
-          {loadingBtn ? (
-            <Box component='div'>
-              <ButtonLoader />
-            </Box>
-          ) : (
-            <Box component='div'>
-              <Button
-                variant='contained'
-                size='large'
-                disabled={visibleButton}
-                onClick={getMoreData}
-                startIcon={<ControlPointIcon />}
-              >
-                {`Más de ${start} registros`}
-              </Button>
-            </Box>
-          )}
+          <Box component='div'>
+            <Button variant='contained' size='large' onClick={getData} startIcon={<SearchIcon />}>
+              Buscar
+            </Button>
+          </Box>
+          <Box component='div'>
+            <Button
+              variant='contained'
+              size='large'
+              disabled={visibleButton}
+              onClick={getMoreData}
+              startIcon={<ControlPointIcon />}
+            >
+              {`Más de ${start} registros`}
+            </Button>
+          </Box>
         </Box>
       </Box>
     </Box>

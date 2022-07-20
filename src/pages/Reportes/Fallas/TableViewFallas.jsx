@@ -15,7 +15,7 @@ import {
 import VisibilityIcon from '@mui/icons-material/Visibility';
 
 import TitlePage from '@/components/Title/TitlePage';
-import SleketonLoader from '@/components/Loader/SleketonLoader';
+import LoaderSkeleton from '@/components/Loader/LoaderSkeleton';
 import ModalFallas from '@/pages/Reportes/Fallas/ModalFallas';
 import AlertGlobalTables from '@/components/Alert/AlertGlobalTables';
 import { messageEmptyGetData, messageErrorGetData } from '@/utilities/messagesAlerts';
@@ -78,7 +78,7 @@ const TableViewMantenimiento = ({ dataSearch, dateTable, loading, error }) => {
               {loading ? (
                 <TableRow>
                   <TableCell align='center' colSpan={columns.length} sx={stylesTableCellBody}>
-                    <SleketonLoader />
+                    <LoaderSkeleton />
                   </TableCell>
                 </TableRow>
               ) : error ? (

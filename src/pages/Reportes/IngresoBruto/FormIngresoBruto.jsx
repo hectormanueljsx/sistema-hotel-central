@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React from 'react';
 import { Box, Button, TextField } from '@mui/material';
 import SearchIcon from '@mui/icons-material/Search';
 import moment from 'moment';
@@ -6,7 +6,6 @@ import Swal from 'sweetalert2';
 
 import TitlePage from '@/components/Title/TitlePage';
 import TitleInput from '@/components/Title/TitleInput';
-import ButtonLoader from '@/components/Loader/ButtonLoader';
 import useGetGeneralTable from '@/hooks/useGetGeneralTable';
 import getGeneralSelect from '@/services/getGeneralSelect';
 import { generalEndpoints } from '@/utilities/endpoints';
@@ -27,8 +26,6 @@ const FormIngresoBruto = ({
   setLoading,
   setError,
 }) => {
-  const [loadingBtn, setLoadingBtn] = useState(false);
-
   const identifier = localStorage.getItem('identifier');
   const password = localStorage.getItem('password');
   const limit = `?fecha_gte=${data.fechaInicio}&fecha_lte=${data.fechaFin}&_start=0`;
@@ -45,7 +42,6 @@ const FormIngresoBruto = ({
     if (data.fechaInicio.length > 0 && data.fechaFin.length) {
       try {
         setLoading(true);
-        setLoadingBtn(true);
 
         const res = await getGeneralSelect(identifier, password, endpointAnticipo);
         const resHistorial = await getGeneralSelect(identifier, password, endpointHistorial);
@@ -63,25 +59,27 @@ const FormIngresoBruto = ({
           setData({ fechaInicio: '', fechaFin: '' });
         } else {
           setError(true);
-          Swal.fire({
+          return Swal.fire({
             icon: 'error',
-            text: 'Error al buscar registros',
+            title: 'Ah ocurrido un error',
+            text: 'Lo sentimos, no se pudo buscar el registro debido a un problema internamente',
             allowOutsideClick: false,
+            allowEscapeKey: false,
             confirmButtonColor: '#1976d2',
             confirmButtonText: 'Aceptar',
           });
-          return;
         }
       } catch (error) {
       } finally {
         setLoading(false);
-        setLoadingBtn(false);
       }
     } else {
       Swal.fire({
         icon: 'error',
+        title: 'Ah ocurrido un error',
         text: 'Por favor, rellene todos los campos',
         allowOutsideClick: false,
+        allowEscapeKey: false,
         confirmButtonColor: '#1976d2',
         confirmButtonText: 'Aceptar',
       });
@@ -122,17 +120,11 @@ const FormIngresoBruto = ({
           />
         </Box>
       </Box>
-      {loadingBtn ? (
-        <Box component='div' sx={stylesButtonSend}>
-          <ButtonLoader />
-        </Box>
-      ) : (
-        <Box component='div' sx={stylesButtonSend}>
-          <Button onClick={getData} variant='contained' size='large' startIcon={<SearchIcon />}>
-            Buscar Registro
-          </Button>
-        </Box>
-      )}
+      <Box component='div' sx={stylesButtonSend}>
+        <Button onClick={getData} variant='contained' size='large' startIcon={<SearchIcon />}>
+          Buscar Registro
+        </Button>
+      </Box>
     </Box>
   );
 };

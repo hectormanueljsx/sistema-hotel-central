@@ -7,7 +7,6 @@ import moment from 'moment';
 
 import TitlePage from '@/components/Title/TitlePage';
 import TitleInput from '@/components/Title/TitleInput';
-import ButtonLoader from '@/components/Loader/ButtonLoader';
 import useGetGeneralTable from '@/hooks/useGetGeneralTable';
 import getGeneralSelect from '@/services/getGeneralSelect';
 import { generalEndpoints } from '@/utilities/endpoints';
@@ -25,8 +24,6 @@ const FormAnticipo = ({ setDataSearch, dataSearch, setDateTable, setLoading, set
   const [start, setStart] = useState(0);
   const [end, setEnd] = useState(100);
   const [visibleButton, setVisibleButton] = useState(true);
-  const [loadingBtnSearch, setLoadingBtnSearch] = useState(false);
-  const [loadingBtn, setLoadingBtn] = useState(false);
 
   const identifier = localStorage.getItem('identifier');
   const password = localStorage.getItem('password');
@@ -43,9 +40,7 @@ const FormAnticipo = ({ setDataSearch, dataSearch, setDateTable, setLoading, set
     if (dataSearch.length >= end) {
       setVisibleButton(false);
 
-      setLoadingBtn(true);
       const resultado = await getGeneralSelect(identifier, password, endpointAnticipo);
-      setLoadingBtn(false);
 
       setDataSearch(prevData => [...prevData, ...resultado]);
       setEnd(end + 100);
@@ -59,7 +54,6 @@ const FormAnticipo = ({ setDataSearch, dataSearch, setDateTable, setLoading, set
     if (data.fechaInicio.length > 0 && data.fechaFin.length && formaPago) {
       try {
         setLoading(true);
-        setLoadingBtnSearch(true);
 
         const res = await getGeneralSelect(identifier, password, endpointAnticipo);
         setDataSearch(res.data);
@@ -81,25 +75,27 @@ const FormAnticipo = ({ setDataSearch, dataSearch, setDateTable, setLoading, set
           }
         } else {
           setError(true);
-          Swal.fire({
+          return Swal.fire({
             icon: 'error',
-            text: 'Error al buscar registros',
+            title: 'Ah ocurrido un error',
+            text: 'Lo sentimos, no se pudo buscar el registro debido a un problema internamente',
             allowOutsideClick: false,
+            allowEscapeKey: false,
             confirmButtonColor: '#1976d2',
             confirmButtonText: 'Aceptar',
           });
-          return;
         }
       } catch (error) {
       } finally {
         setLoading(false);
-        setLoadingBtnSearch(false);
       }
     } else {
       Swal.fire({
         icon: 'error',
+        title: 'Ah ocurrido un error',
         text: 'Por favor, rellene todos los campos',
         allowOutsideClick: false,
+        allowEscapeKey: false,
         confirmButtonColor: '#1976d2',
         confirmButtonText: 'Aceptar',
       });
@@ -162,34 +158,22 @@ const FormAnticipo = ({ setDataSearch, dataSearch, setDateTable, setLoading, set
       </Box>
       <Box component='div' sx={stylesButtonSend}>
         <Box component='div' sx={stylesBoxButtonsSearchMore}>
-          {loadingBtnSearch ? (
-            <Box component='div'>
-              <ButtonLoader />
-            </Box>
-          ) : (
-            <Box component='div'>
-              <Button onClick={getData} variant='contained' size='large' startIcon={<SearchIcon />}>
-                Buscar
-              </Button>
-            </Box>
-          )}
-          {loadingBtn ? (
-            <Box component='div'>
-              <ButtonLoader />
-            </Box>
-          ) : (
-            <Box component='div'>
-              <Button
-                variant='contained'
-                disabled={visibleButton}
-                onClick={getMoreData}
-                size='large'
-                startIcon={<ControlPointIcon />}
-              >
-                {`Más de ${start} registros`}
-              </Button>
-            </Box>
-          )}
+          <Box component='div'>
+            <Button onClick={getData} variant='contained' size='large' startIcon={<SearchIcon />}>
+              Buscar
+            </Button>
+          </Box>
+          <Box component='div'>
+            <Button
+              variant='contained'
+              disabled={visibleButton}
+              onClick={getMoreData}
+              size='large'
+              startIcon={<ControlPointIcon />}
+            >
+              {`Más de ${start} registros`}
+            </Button>
+          </Box>
         </Box>
       </Box>
     </Box>
