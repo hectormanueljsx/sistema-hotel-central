@@ -6,7 +6,7 @@ import HomeDashboard from '@/pages/Dashboard/HomeDashboard/HomeDashboard';
 import Registros from '@/pages/Dashboard/Registros/Registros';
 import Reservacion from '@/pages/Dashboard/Reservacion/Reservacion';
 import HistoricoReservaciones from '@/pages/Reservas/HistoricoReservaciones/HistoricoReservaciones';
-import IntercambiarReservacion from './pages/Reservas/IntercambiarReservacion/IntercambiarReservacion';
+import IntercambiarReservacion from '@/pages/Reservas/IntercambiarReservacion/IntercambiarReservacion';
 import HistoricoRegistro from '@/pages/Reservas/HistoricoRegistro/HistoricoRegistro';
 import Empresa from '@/pages/Reservas/Empresa/Empresa';
 import EmpresaClientes from '@/pages/Reservas/EmpresaClientes/EmpresaClientes';
@@ -30,7 +30,7 @@ import NotFound from '@/components/NotFound/NotFound';
 const theme = createTheme({
   palette: {
     background: {
-      default: '#f5f6fa',
+      default: '#f8f9fe',
     },
   },
 });
