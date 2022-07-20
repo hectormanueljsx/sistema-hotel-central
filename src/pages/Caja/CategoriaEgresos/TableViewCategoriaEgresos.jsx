@@ -14,7 +14,8 @@ import DeleteIcon from '@mui/icons-material/Delete';
 import Swal from 'sweetalert2';
 
 import TitlePage from '@/components/Title/TitlePage';
-import SleketonLoader from '@/components/Loader/SleketonLoader';
+import LoaderImage from '@/components/Loader/LoaderImage';
+import LoaderSkeleton from '@/components/Loader/LoaderSkeleton';
 import AlertGlobalTables from '@/components/Alert/AlertGlobalTables';
 import useGetGeneralTable from '@/hooks/useGetGeneralTable';
 import putGeneralTable from '@/services/putGeneralTable';
@@ -34,6 +35,7 @@ import {
 
 const TableViewCategoriaEgresos = () => {
   const [expanded, setExpanded] = useState(false);
+  const [loaderRequest, setLoaderRequest] = useState(false);
 
   const identifier = localStorage.getItem('identifier');
   const password = localStorage.getItem('password');
@@ -44,22 +46,28 @@ const TableViewCategoriaEgresos = () => {
 
   const deleteByIdCategoria = async id => {
     const generalData = { status: false };
+    setLoaderRequest(true);
     const { status } = await putGeneralTable(identifier, password, endpointCategoria, id, generalData);
+    setLoaderRequest(false);
     return status;
   };
 
   const deleteByIdSubcategoria = async id => {
     const generalData = { status: false };
+    setLoaderRequest(true);
     const { status } = await putGeneralTable(identifier, password, endpointSubategoria, id, generalData);
+    setLoaderRequest(false);
     return status;
   };
 
   const deleteCategoria = async id => {
     Swal.fire({
       icon: 'warning',
-      text: '¿Estás seguro de eliminar esta categoría?',
+      title: 'Confirmación de eliminación',
+      text: '¿Estás seguro de eliminar este registro?',
       showCancelButton: true,
       allowOutsideClick: false,
+      allowEscapeKey: false,
       confirmButtonColor: '#1976d2',
       cancelButtonColor: '#d32f2f',
       confirmButtonText: 'Aceptar',
@@ -70,8 +78,10 @@ const TableViewCategoriaEgresos = () => {
           if (res >= 200 && res <= 299) {
             Swal.fire({
               icon: 'success',
-              text: 'Categoría eliminada correctamente',
+              title: 'Eliminación con éxito',
+              text: 'El registro se ha eliminado con éxito',
               allowOutsideClick: false,
+              allowEscapeKey: false,
               confirmButtonColor: '#1976d2',
               confirmButtonText: 'Aceptar',
             }).then(result => {
@@ -82,8 +92,10 @@ const TableViewCategoriaEgresos = () => {
           } else {
             Swal.fire({
               icon: 'error',
-              text: 'Error al eliminar categoría',
+              title: 'Ah ocurrido un error',
+              text: 'Lo sentimos, no se pudo eliminar el registro debido a un problema internamente',
               allowOutsideClick: false,
+              allowEscapeKey: false,
               confirmButtonColor: '#1976d2',
               confirmButtonText: 'Aceptar',
             });
@@ -96,9 +108,11 @@ const TableViewCategoriaEgresos = () => {
   const deleteSubcategoria = async id => {
     Swal.fire({
       icon: 'warning',
-      text: '¿Estás seguro de eliminar esta subcategoría?',
+      title: 'Confirmación de eliminación',
+      text: '¿Estás seguro de eliminar este registro?',
       showCancelButton: true,
       allowOutsideClick: false,
+      allowEscapeKey: false,
       confirmButtonColor: '#1976d2',
       cancelButtonColor: '#d32f2f',
       confirmButtonText: 'Aceptar',
@@ -109,8 +123,10 @@ const TableViewCategoriaEgresos = () => {
           if (res >= 200 && res <= 299) {
             Swal.fire({
               icon: 'success',
-              text: 'Subcategoría eliminada correctamente',
+              title: 'Eliminación con éxito',
+              text: 'El registro se ha eliminado con éxito',
               allowOutsideClick: false,
+              allowEscapeKey: false,
               confirmButtonColor: '#1976d2',
               confirmButtonText: 'Aceptar',
             }).then(result => {
@@ -121,8 +137,10 @@ const TableViewCategoriaEgresos = () => {
           } else {
             Swal.fire({
               icon: 'error',
-              text: 'Error al eliminar subcategoría',
+              title: 'Ah ocurrido un error',
+              text: 'Lo sentimos, no se pudo eliminar el registro debido a un problema internamente',
               allowOutsideClick: false,
+              allowEscapeKey: false,
               confirmButtonColor: '#1976d2',
               confirmButtonText: 'Aceptar',
             });
@@ -134,12 +152,16 @@ const TableViewCategoriaEgresos = () => {
 
   const { list, loading, error } = useGetGeneralTable(identifier, password, `${endpointCategoria}?status=true`);
 
+  if (loaderRequest) {
+    return <LoaderImage />;
+  }
+
   return (
     <Box component='section' sx={[stylesWrapperBoxShadow, stylesWidthHeightTable]}>
       <TitlePage titlePage='Lista de Categorías y Subcategorías' />
       <Box component='div'>
         {loading ? (
-          <SleketonLoader />
+          <LoaderSkeleton />
         ) : error ? (
           <AlertGlobalTables messageError={messageErrorGetData} />
         ) : list.length > 0 ? (

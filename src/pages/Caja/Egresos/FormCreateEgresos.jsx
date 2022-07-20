@@ -5,7 +5,7 @@ import Swal from 'sweetalert2';
 
 import TitlePage from '@/components/Title/TitlePage';
 import TitleInput from '@/components/Title/TitleInput';
-import ButtonLoader from '@/components/Loader/ButtonLoader';
+import LoaderImage from '@/components/Loader/LoaderImage';
 import postGeneralTable from '@/services/postGeneralTable';
 import { generalEndpoints } from '@/utilities/endpoints';
 import {
@@ -29,7 +29,7 @@ const FormCreateEgresos = ({ pago, categoria }) => {
   const [idCategoria, setidCategoria] = useState('');
   const [idSubcategoria, setidSubcategoria] = useState('');
   const [facturado, setFacturado] = useState(false);
-  const [loadingBtn, setLoadingBtn] = useState(false);
+  const [loaderRequest, setLoaderRequest] = useState(false);
 
   const identifier = localStorage.getItem('identifier');
   const password = localStorage.getItem('password');
@@ -58,38 +58,47 @@ const FormCreateEgresos = ({ pago, categoria }) => {
         subcategoria: { id: idSubcategoria },
       };
 
-      setLoadingBtn(true);
+      setLoaderRequest(true);
       const res = await postGeneralTable(identifier, password, endpointEgreso, generalData);
-      setLoadingBtn(false);
+      setLoaderRequest(false);
 
       if (res.status >= 200 && res.status <= 299) {
         Swal.fire({
           icon: 'success',
-          text: 'Gasto registrado correctamente',
+          title: 'Creación con éxito',
+          text: 'El registro se ha creado con éxito',
           allowOutsideClick: false,
+          allowEscapeKey: false,
           confirmButtonColor: '#1976d2',
           confirmButtonText: 'Aceptar',
         }).then(result => result.isConfirmed && location.reload());
       } else {
-        Swal.fire({
+        return Swal.fire({
           icon: 'error',
-          text: 'Error al registrar gasto',
+          title: 'Ah ocurrido un error',
+          text: 'Lo sentimos, no se pudo crear el registro debido a un problema internamente',
           allowOutsideClick: false,
+          allowEscapeKey: false,
           confirmButtonColor: '#1976d2',
           confirmButtonText: 'Aceptar',
         });
-        return;
       }
     } else {
       Swal.fire({
         icon: 'error',
+        title: 'Ah ocurrido un error',
         text: 'Por favor, rellene todos los campos',
         allowOutsideClick: false,
+        allowEscapeKey: false,
         confirmButtonColor: '#1976d2',
         confirmButtonText: 'Aceptar',
       });
     }
   };
+
+  if (loaderRequest) {
+    return <LoaderImage />;
+  }
 
   return (
     <Box component='section' sx={[stylesWrapperBoxShadow, stylesWidthHeightForm]}>
@@ -193,17 +202,11 @@ const FormCreateEgresos = ({ pago, categoria }) => {
           </FormControl>
         </Box>
       </Box>
-      {loadingBtn ? (
-        <Box component='div' sx={stylesButtonSend}>
-          <ButtonLoader />
-        </Box>
-      ) : (
-        <Box component='div' sx={stylesButtonSend}>
-          <Button variant='contained' onClick={postEgreso} size='large' startIcon={<SaveIcon />}>
-            Registrar Gasto
-          </Button>
-        </Box>
-      )}
+      <Box component='div' sx={stylesButtonSend}>
+        <Button variant='contained' onClick={postEgreso} size='large' startIcon={<SaveIcon />}>
+          Registrar Gasto
+        </Button>
+      </Box>
     </Box>
   );
 };

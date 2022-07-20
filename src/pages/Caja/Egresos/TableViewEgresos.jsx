@@ -15,7 +15,7 @@ import VisibilityIcon from '@mui/icons-material/Visibility';
 import moment from 'moment';
 
 import TitlePage from '@/components/Title/TitlePage';
-import SleketonLoader from '@/components/Loader/SleketonLoader';
+import LoaderSkeleton from '@/components/Loader/LoaderSkeleton';
 import AlertGlobalTables from '@/components/Alert/AlertGlobalTables';
 import ModalEgreso from '@/pages/Caja/Egresos/ModalEgreso';
 import useGetSpecific from '@/hooks/useGetSpecific';
@@ -96,7 +96,7 @@ const TableViewEgresos = ({ pago, categoria }) => {
               {loadingGetSpecific ? (
                 <TableRow>
                   <TableCell align='center' colSpan={columns.length} sx={stylesTableCellBody}>
-                    <SleketonLoader />
+                    <LoaderSkeleton />
                   </TableCell>
                 </TableRow>
               ) : errorGetSpecific ? (
