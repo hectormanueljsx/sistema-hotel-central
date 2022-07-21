@@ -27,8 +27,6 @@ const FormCreateEmpresas = () => {
   });
   const [loaderRequest, setLoaderRequest] = useState(false);
 
-  const identifier = localStorage.getItem('identifier');
-  const password = localStorage.getItem('password');
   const endpointEmpresa = generalEndpoints.empresa;
 
   const handleInputChange = event => setDatos({ ...datos, [event.target.name]: event.target.value });
@@ -56,7 +54,7 @@ const FormCreateEmpresas = () => {
       };
 
       setLoaderRequest(true);
-      const result = await postGeneralTable(identifier, password, endpointEmpresa, generalData);
+      const result = await postGeneralTable(endpointEmpresa, generalData);
       setLoaderRequest(false);
 
       if (result.status >= 200 && result.status <= 299) {

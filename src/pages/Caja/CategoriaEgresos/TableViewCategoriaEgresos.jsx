@@ -37,8 +37,6 @@ const TableViewCategoriaEgresos = () => {
   const [expanded, setExpanded] = useState(false);
   const [loaderRequest, setLoaderRequest] = useState(false);
 
-  const identifier = localStorage.getItem('identifier');
-  const password = localStorage.getItem('password');
   const endpointCategoria = generalEndpoints.categoria;
   const endpointSubategoria = generalEndpoints.subcategoria;
 
@@ -47,7 +45,7 @@ const TableViewCategoriaEgresos = () => {
   const deleteByIdCategoria = async id => {
     const generalData = { status: false };
     setLoaderRequest(true);
-    const { status } = await putGeneralTable(identifier, password, endpointCategoria, id, generalData);
+    const { status } = await putGeneralTable(endpointCategoria, id, generalData);
     setLoaderRequest(false);
     return status;
   };
@@ -55,7 +53,7 @@ const TableViewCategoriaEgresos = () => {
   const deleteByIdSubcategoria = async id => {
     const generalData = { status: false };
     setLoaderRequest(true);
-    const { status } = await putGeneralTable(identifier, password, endpointSubategoria, id, generalData);
+    const { status } = await putGeneralTable(endpointSubategoria, id, generalData);
     setLoaderRequest(false);
     return status;
   };
@@ -150,7 +148,7 @@ const TableViewCategoriaEgresos = () => {
     });
   };
 
-  const { list, loading, error } = useGetGeneralTable(identifier, password, `${endpointCategoria}?status=true`);
+  const { list, loading, error } = useGetGeneralTable(`${endpointCategoria}?status=true`);
 
   if (loaderRequest) {
     return <LoaderImage />;

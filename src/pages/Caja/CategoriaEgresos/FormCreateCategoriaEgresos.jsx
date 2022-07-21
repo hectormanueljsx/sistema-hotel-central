@@ -19,8 +19,6 @@ const FormCreateCategoriaEgresos = () => {
   const [categoria, setCategoria] = useState('');
   const [loaderRequest, setLoaderRequest] = useState(false);
 
-  const identifier = localStorage.getItem('identifier');
-  const password = localStorage.getItem('password');
   const endpointCategoria = generalEndpoints.categoria;
 
   const handleInputChangeCategoria = event => setCategoria(event.target.value);
@@ -32,7 +30,7 @@ const FormCreateCategoriaEgresos = () => {
       const categoryData = { categoria: categoria.toUpperCase() };
 
       setLoaderRequest(true);
-      const res = await postGeneralTable(identifier, password, endpointCategoria, categoryData);
+      const res = await postGeneralTable(endpointCategoria, categoryData);
       setLoaderRequest(false);
 
       if (res.status >= 200 && res.status <= 299) {

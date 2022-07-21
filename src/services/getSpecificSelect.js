@@ -1,12 +1,11 @@
 import apiConfig from '@/api/apiConfig';
-import getTokenUser from '@/services/getTokenUser';
 
-const getSpecificSelect = async (identifier, password, endpoint, attribute, valueAttribute) => {
+const getSpecificSelect = async (endpoint, attribute, valueAttribute) => {
   try {
-    const userToken = await getTokenUser(identifier, password);
+    const jwt = localStorage.getItem('jwt');
     const { data, status } = await apiConfig.get(`${endpoint}?${attribute}=${valueAttribute}`, {
       headers: {
-        Authorization: `Bearer ${userToken}`,
+        Authorization: `Bearer ${jwt}`,
       },
     });
 

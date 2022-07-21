@@ -48,8 +48,6 @@ const TableViewTarifas = () => {
   const [dataTarifa, setDataTarifa] = useState('');
   const [loaderRequest, setLoaderRequest] = useState(false);
 
-  const identifier = localStorage.getItem('identifier');
-  const password = localStorage.getItem('password');
   const endpointTarifa = generalEndpoints.tarifa;
 
   const handleOpen = item => {
@@ -72,7 +70,7 @@ const TableViewTarifas = () => {
   const deleteByIdTarifa = async id => {
     const generalData = { status: false };
     setLoaderRequest(true);
-    const { status } = await putGeneralTable(identifier, password, endpointTarifa, id, generalData);
+    const { status } = await putGeneralTable(endpointTarifa, id, generalData);
     setLoaderRequest(false);
     return status;
   };
@@ -122,7 +120,7 @@ const TableViewTarifas = () => {
     });
   };
 
-  const { list, loading, error } = useGetGeneralTable(identifier, password, `${endpointTarifa}?status=true`);
+  const { list, loading, error } = useGetGeneralTable(`${endpointTarifa}?status=true`);
 
   if (loaderRequest) {
     return <LoaderImage />;

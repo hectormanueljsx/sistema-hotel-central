@@ -31,9 +31,9 @@ const Login = () => {
   const navigate = useNavigate();
 
   useEffect(() => {
-    const user = localStorage.getItem('identifier');
+    const jwt = localStorage.getItem('jwt');
 
-    if (user) return navigate('/');
+    if (jwt) return navigate('/');
   }, []);
 
   const handleInputChange = event => setDatosLogin({ ...datosLogin, [event.target.name]: event.target.value });
@@ -51,13 +51,12 @@ const Login = () => {
           const endpointUsuario = generalEndpoints.usuario;
           const generalData = { ult_ingreso: dateTime.toISOString() };
 
-          await putGeneralTable(res.email, datosLogin.password, endpointUsuario, res.id, generalData);
-
           localStorage.setItem('id', res.id);
-          localStorage.setItem('identifier', res.email);
-          localStorage.setItem('password', datosLogin.password);
+          localStorage.setItem('jwt', res.jwt);
           localStorage.setItem('username', res.username);
           localStorage.setItem('role', res.name);
+
+          await putGeneralTable(endpointUsuario, res.id, generalData);
 
           navigate('/');
         } else {

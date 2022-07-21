@@ -25,15 +25,11 @@ const TableViewEmpresaClientes = () => {
   const [page, setPage] = useState(0);
   const [rowsPerPage, setRowsPerPage] = useState(10);
 
-  const identifier = localStorage.getItem('identifier');
-  const password = localStorage.getItem('password');
   const endpointCliente = generalEndpoints.cliente;
   const attribute = 'empresa';
 
   const { id } = useParams();
   const { listGetSpecific, loadingGetSpecific, errorGetSpecific } = useGetSpecific(
-    identifier,
-    password,
     endpointCliente,
     attribute,
     id,

@@ -36,8 +36,6 @@ const ModalUsuario = ({ dataUsuario, handleCloseModal }) => {
   const [disableView, setDisableView] = useState(false);
   const [loaderRequest, setLoaderRequest] = useState(false);
 
-  const identifier = localStorage.getItem('identifier');
-  const password = localStorage.getItem('password');
   const endpointUsuario = generalEndpoints.usuario;
 
   const handleCheckbox = e => setRol(e.target.value);
@@ -106,7 +104,7 @@ const ModalUsuario = ({ dataUsuario, handleCloseModal }) => {
     }
 
     setLoaderRequest(true);
-    const res = await putUsers(identifier, password, endpointUsuario, dataUsuario.id, dataUser, dataRole);
+    const res = await putUsers(endpointUsuario, dataUsuario.id, dataUser, dataRole);
     setLoaderRequest(false);
 
     if (res.status >= 200 && res.status <= 299) {

@@ -31,8 +31,6 @@ const FormCreateEgresos = ({ pago, categoria }) => {
   const [facturado, setFacturado] = useState(false);
   const [loaderRequest, setLoaderRequest] = useState(false);
 
-  const identifier = localStorage.getItem('identifier');
-  const password = localStorage.getItem('password');
   const idUser = localStorage.getItem('id');
   const endpointEgreso = generalEndpoints.egreso;
 
@@ -59,7 +57,7 @@ const FormCreateEgresos = ({ pago, categoria }) => {
       };
 
       setLoaderRequest(true);
-      const res = await postGeneralTable(identifier, password, endpointEgreso, generalData);
+      const res = await postGeneralTable(endpointEgreso, generalData);
       setLoaderRequest(false);
 
       if (res.status >= 200 && res.status <= 299) {

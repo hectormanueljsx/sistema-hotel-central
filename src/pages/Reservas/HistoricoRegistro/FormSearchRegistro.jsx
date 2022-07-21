@@ -18,8 +18,6 @@ const FormSearchRegistro = ({ setSearch, dataRegistro, setDataRegistro, setLoadi
   const [end, setEnd] = useState(100);
   const [visibleButton, setVisibleButton] = useState(true);
 
-  const identifier = localStorage.getItem('identifier');
-  const password = localStorage.getItem('password');
   const endpointRegistros = historicalEndpoints.historicoRegistros;
 
   useEffect(() => {
@@ -30,7 +28,7 @@ const FormSearchRegistro = ({ setSearch, dataRegistro, setDataRegistro, setLoadi
     if (dataRegistro.length >= end) {
       setVisibleButton(false);
 
-      const resultado = await getGeneralSelect(identifier, password, `${endpointRegistros}${start}`);
+      const resultado = await getGeneralSelect(`${endpointRegistros}${start}`);
 
       setDataRegistro(prevData => [...prevData, ...resultado.data]);
       setEnd(end + 100);
@@ -44,7 +42,7 @@ const FormSearchRegistro = ({ setSearch, dataRegistro, setDataRegistro, setLoadi
     try {
       setLoading(true);
 
-      const result = await getGeneralSelect(identifier, password, `${endpointRegistros}${start}`);
+      const result = await getGeneralSelect(`${endpointRegistros}${start}`);
       setDataRegistro(result.data);
 
       if (result.data.length >= end) {

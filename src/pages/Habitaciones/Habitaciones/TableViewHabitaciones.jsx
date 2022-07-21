@@ -42,8 +42,6 @@ const TableViewHabitaciones = () => {
   const [openModal, setOpenModal] = useState(false);
   const [dataHabitaciones, setDataHabitaciones] = useState('');
 
-  const identifier = localStorage.getItem('identifier');
-  const password = localStorage.getItem('password');
   const endpointHabitacion = generalEndpoints.habitacion;
 
   const handleOpen = item => {
@@ -64,7 +62,7 @@ const TableViewHabitaciones = () => {
     setPage(0);
   };
 
-  const { list, loading, error } = useGetGeneralTable(identifier, password, endpointHabitacion);
+  const { list, loading, error } = useGetGeneralTable(endpointHabitacion);
 
   return (
     <Box component='section' sx={[stylesWrapperBoxShadow, stylesWidthHeightTable]}>

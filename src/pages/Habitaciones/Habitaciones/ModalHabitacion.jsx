@@ -31,8 +31,6 @@ const ModalHabitaciones = ({ dataHabitaciones, dataSelectTarifas, dataDescriptio
   const [disableView, setDisableView] = useState(false);
   const [loaderRequest, setLoaderRequest] = useState(false);
 
-  const identifier = localStorage.getItem('identifier');
-  const password = localStorage.getItem('password');
   const endpointHabitacion = generalEndpoints.habitacion;
   const endpointTarifa = generalEndpoints.tarifa;
   const tarifaId = [];
@@ -69,7 +67,7 @@ const ModalHabitaciones = ({ dataHabitaciones, dataSelectTarifas, dataDescriptio
       };
 
       setLoaderRequest(true);
-      const res = await putGeneralTable(identifier, password, endpointHabitacion, dataHabitaciones.id, habitacionData);
+      const res = await putGeneralTable(endpointHabitacion, dataHabitaciones.id, habitacionData);
       setLoaderRequest(false);
 
       if (res.status >= 200 && res.status <= 299) {
@@ -120,7 +118,7 @@ const ModalHabitaciones = ({ dataHabitaciones, dataSelectTarifas, dataDescriptio
     }
   };
 
-  const { list } = useGetGeneralTable(identifier, password, endpointTarifa);
+  const { list } = useGetGeneralTable(endpointTarifa);
 
   if (loaderRequest) {
     return <LoaderImage />;

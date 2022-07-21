@@ -26,8 +26,6 @@ const FormEgresos = ({ dataSearch, setDataSearch, setDateTable, setLoading, setE
   const [end, setEnd] = useState(100);
   const [visibleButton, setVisibleButton] = useState(true);
 
-  const identifier = localStorage.getItem('identifier');
-  const password = localStorage.getItem('password');
   const endpointCategoria = generalEndpoints.categoria;
 
   const handleInputChange = event => setData({ ...data, [event.target.name]: event.target.value });
@@ -39,7 +37,7 @@ const FormEgresos = ({ dataSearch, setDataSearch, setDateTable, setLoading, setE
   }, []);
 
   const getCategoria = async () => {
-    const res = await getGeneralSelect(identifier, password, endpointCategoria);
+    const res = await getGeneralSelect(endpointCategoria);
     setCategoria(res.data);
   };
 
@@ -50,7 +48,7 @@ const FormEgresos = ({ dataSearch, setDataSearch, setDateTable, setLoading, setE
 
         const endpointEgreso = `egresos?fecha_gte=${data.fechaInicio}T00:00:00.000Z&fecha_lte=${data.fechaFin}T23:59:59.000Z&subcategoria=${idSubcategoria}:DESC&_start=${start}`;
 
-        const res = await getGeneralSelect(identifier, password, endpointEgreso);
+        const res = await getGeneralSelect(endpointEgreso);
         setDataSearch(res.data);
 
         if (res.status >= 200 && res.status <= 299) {
@@ -104,7 +102,7 @@ const FormEgresos = ({ dataSearch, setDataSearch, setDateTable, setLoading, setE
 
       const endpointEgreso = `egresos?fecha_gte=${data.fechaInicio}T00:00:00.000Z&fecha_lte=${data.fechaFin}T23:59:59.000Z&subcategoria=${idSubcategoria}:DESC&_start=${start}`;
 
-      const resultado = await getGeneralSelect(identifier, password, endpointEgreso);
+      const resultado = await getGeneralSelect(endpointEgreso);
 
       setDataSearch(prevData => [...prevData, ...resultado.data]);
       setEnd(end + 100);

@@ -12,20 +12,19 @@ const Mantenimiento = () => {
   const [habitacion, setHabitacion] = useState([]);
   const [subcategoria, setSubcategoria] = useState([]);
 
-  const identifier = localStorage.getItem('identifier');
-  const password = localStorage.getItem('password');
+
   const endpointHabitacion = generalEndpoints.habitacion;
   const endpointCategoria = generalEndpoints.categoria;
   const attribute = 'categoria';
   const valueAttribute = 'MANTENIMIENTO';
 
   const getHabitacion = async () => {
-    const res = await getGeneralSelect(identifier, password, endpointHabitacion);
+    const res = await getGeneralSelect(endpointHabitacion);
     setHabitacion(res.data);
   };
 
   const getCategoria = async () => {
-    const res = await getSpecificSelect(identifier, password, endpointCategoria, attribute, valueAttribute);
+    const res = await getSpecificSelect(endpointCategoria, attribute, valueAttribute);
     const { subcategorias } = res.data[0];
     setSubcategoria(subcategorias);
   };

@@ -28,8 +28,6 @@ const FormCreateUsuario = () => {
   const [rol, setRol] = useState('');
   const [loaderRequest, setLoaderRequest] = useState(false);
 
-  const identifier = localStorage.getItem('identifier');
-  const password = localStorage.getItem('password');
   const endpointUsuario = generalEndpoints.usuario;
 
   const handleInputChange = event => setDatos({ ...datos, [event.target.name]: event.target.value });
@@ -59,7 +57,7 @@ const FormCreateUsuario = () => {
         const dataRole = { role: { id: rol } };
 
         setLoaderRequest(true);
-        const res = await postUsers(identifier, password, endpointUsuario, dataUser, dataRole);
+        const res = await postUsers(endpointUsuario, dataUser, dataRole);
         setLoaderRequest(false);
 
         if (res.status >= 200 && res.status <= 299) {

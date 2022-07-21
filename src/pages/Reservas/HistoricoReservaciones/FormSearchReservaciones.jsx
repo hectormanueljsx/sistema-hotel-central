@@ -18,8 +18,6 @@ const FormSearchReservaciones = ({ setSearch, dataReservacion, setDataReservacio
   const [end, setEnd] = useState(100);
   const [visibleButton, setVisibleButton] = useState(true);
 
-  const identifier = localStorage.getItem('identifier');
-  const password = localStorage.getItem('password');
   const endpointReservas = historicalEndpoints.historicoReservaciones;
 
   useEffect(() => {
@@ -30,7 +28,7 @@ const FormSearchReservaciones = ({ setSearch, dataReservacion, setDataReservacio
     if (dataReservacion.length >= end) {
       setVisibleButton(false);
 
-      const resultado = await getGeneralSelect(identifier, password, `${endpointReservas}${start}`);
+      const resultado = await getGeneralSelect(`${endpointReservas}${start}`);
 
       setDataReservacion(prevData => [...prevData, ...resultado.data]);
       setEnd(end + 100);
@@ -44,7 +42,7 @@ const FormSearchReservaciones = ({ setSearch, dataReservacion, setDataReservacio
     try {
       setLoading(true);
 
-      const result = await getGeneralSelect(identifier, password, `${endpointReservas}${start}`);
+      const result = await getGeneralSelect(`${endpointReservas}${start}`);
       setDataReservacion(result.data);
 
       if (result.data.length >= end) {

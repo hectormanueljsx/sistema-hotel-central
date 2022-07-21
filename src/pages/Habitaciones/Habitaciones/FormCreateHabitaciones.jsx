@@ -23,8 +23,6 @@ const FormCreateHabitaciones = () => {
   const [numHabitacion, setNumHabitacion] = useState('');
   const [loaderRequest, setLoaderRequest] = useState(false);
 
-  const identifier = localStorage.getItem('identifier');
-  const password = localStorage.getItem('password');
   const endpointTarifa = generalEndpoints.tarifa;
   const endpointHabitacion = generalEndpoints.habitacion;
   const tarifaId = [];
@@ -56,7 +54,7 @@ const FormCreateHabitaciones = () => {
       };
 
       setLoaderRequest(true);
-      const res = await postGeneralTable(identifier, password, endpointHabitacion, HabitacionData);
+      const res = await postGeneralTable(endpointHabitacion, HabitacionData);
       setLoaderRequest(false);
 
       if (res.status >= 200 && res.status <= 299) {
@@ -93,7 +91,7 @@ const FormCreateHabitaciones = () => {
     }
   };
 
-  const { list } = useGetGeneralTable(identifier, password, endpointTarifa);
+  const { list } = useGetGeneralTable(endpointTarifa);
 
   if (loaderRequest) {
     return <LoaderImage />;

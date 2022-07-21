@@ -34,8 +34,6 @@ const ModalEmpresa = ({ selectEmpresa, handleCloseModal }) => {
   const [disableView, setDisableView] = useState(false);
   const [loaderRequest, setLoaderRequest] = useState(false);
 
-  const identifier = localStorage.getItem('identifier');
-  const password = localStorage.getItem('password');
   const endpointEmpresa = generalEndpoints.empresa;
 
   const handleInputChange = event => setDatos({ ...datos, [event.target.name]: event.target.value });
@@ -69,7 +67,7 @@ const ModalEmpresa = ({ selectEmpresa, handleCloseModal }) => {
       };
 
       setLoaderRequest(true);
-      const result = await putGeneralTable(identifier, password, endpointEmpresa, selectEmpresa.id, generalData);
+      const result = await putGeneralTable(endpointEmpresa, selectEmpresa.id, generalData);
       setLoaderRequest(false);
 
       if (result.status >= 200 && result.status <= 299) {

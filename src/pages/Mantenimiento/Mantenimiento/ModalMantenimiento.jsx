@@ -37,8 +37,7 @@ const ModalMantenimiento = ({ habitacion, subcategoria, dataMantenimiento, handl
   const [disableView, setDisableView] = useState(false);
   const [loaderRequest, setLoaderRequest] = useState(false);
 
-  const identifier = localStorage.getItem('identifier');
-  const password = localStorage.getItem('password');
+
   const endpointMantenimiento = generalEndpoints.mantenimiento;
 
   const handleInputChange = event => setDatos({ ...datos, [event.target.name]: event.target.value });
@@ -77,7 +76,7 @@ const ModalMantenimiento = ({ habitacion, subcategoria, dataMantenimiento, handl
       };
 
       setLoaderRequest(true);
-      const res = await putGeneralTable(identifier, password, endpointMantenimiento, dataMantenimiento.id, generalData);
+      const res = await putGeneralTable(endpointMantenimiento, dataMantenimiento.id, generalData);
       setLoaderRequest(false);
 
       if (res.status >= 200 && res.status <= 299) {

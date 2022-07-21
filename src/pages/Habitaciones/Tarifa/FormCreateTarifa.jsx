@@ -26,8 +26,6 @@ const FormCreateTarifa = () => {
   });
   const [loaderRequest, setLoaderRequest] = useState(false);
 
-  const identifier = localStorage.getItem('identifier');
-  const password = localStorage.getItem('password');
   const endpointTarifa = generalEndpoints.tarifa;
   const endpointPersona = generalEndpoints.persona;
 
@@ -57,7 +55,7 @@ const FormCreateTarifa = () => {
       };
 
       setLoaderRequest(true);
-      const res = await postGeneralTable(identifier, password, endpointTarifa, generalData);
+      const res = await postGeneralTable(endpointTarifa, generalData);
       setLoaderRequest(false);
 
       if (res.status >= 200 && res.status <= 299) {
@@ -94,7 +92,7 @@ const FormCreateTarifa = () => {
     }
   };
 
-  const { list } = useGetGeneralTable(identifier, password, endpointPersona);
+  const { list } = useGetGeneralTable(endpointPersona);
 
   if (loaderRequest) {
     return <LoaderImage />;
