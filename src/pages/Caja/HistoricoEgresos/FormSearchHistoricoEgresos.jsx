@@ -18,8 +18,6 @@ const FormSearchHistoricoEgresos = ({ setSearch, dataEgreso, setDataEgreso, setL
   const [end, setEnd] = useState(100);
   const [visibleButton, setVisibleButton] = useState(true);
 
-  const identifier = localStorage.getItem('identifier');
-  const password = localStorage.getItem('password');
   const endpointEgresos = historicalEndpoints.historicoEgresos;
 
   useEffect(() => {
@@ -30,7 +28,7 @@ const FormSearchHistoricoEgresos = ({ setSearch, dataEgreso, setDataEgreso, setL
     if (dataEgreso.length >= end) {
       setVisibleButton(false);
 
-      const resultado = await getGeneralSelect(identifier, password, `${endpointEgresos}${start}`);
+      const resultado = await getGeneralSelect(`${endpointEgresos}${start}`);
 
       setDataEgreso(prevData => [...prevData, ...resultado.data]);
       setEnd(end + 100);
@@ -44,7 +42,7 @@ const FormSearchHistoricoEgresos = ({ setSearch, dataEgreso, setDataEgreso, setL
     try {
       setLoading(true);
 
-      const result = await getGeneralSelect(identifier, password, `${endpointEgresos}${start}`);
+      const result = await getGeneralSelect(`${endpointEgresos}${start}`);
       setDataEgreso(result.data);
 
       if (result.data.length >= end) {

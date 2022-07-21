@@ -18,8 +18,6 @@ const FormSearchSaldoPendiente = ({ setSearch, dataHistorico, setDataHistorico, 
   const [end, setEnd] = useState(100);
   const [visibleButton, setVisibleButton] = useState(true);
 
-  const identifier = localStorage.getItem('identifier');
-  const password = localStorage.getItem('password');
   const endpointHistorico = historicalEndpoints.historicoHistorial;
 
   useEffect(() => {
@@ -30,7 +28,7 @@ const FormSearchSaldoPendiente = ({ setSearch, dataHistorico, setDataHistorico, 
     if (dataHistorico.length >= end) {
       setVisibleButton(false);
 
-      const resultado = await getGeneralSelect(identifier, password, `${endpointHistorico}${start}`);
+      const resultado = await getGeneralSelect(`${endpointHistorico}${start}`);
 
       setDataHistorico(prevData => [...prevData, ...resultado.data]);
       setEnd(end + 100);
@@ -44,7 +42,7 @@ const FormSearchSaldoPendiente = ({ setSearch, dataHistorico, setDataHistorico, 
     try {
       setLoading(true);
 
-      const result = await getGeneralSelect(identifier, password, `${endpointHistorico}${start}`);
+      const result = await getGeneralSelect(`${endpointHistorico}${start}`);
       setDataHistorico(result.data);
 
       if (result.data.length >= end) {

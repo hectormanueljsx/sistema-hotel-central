@@ -26,6 +26,7 @@ const Navbar = () => {
   const [dropdownUser, setDropdownUser] = useState(false);
 
   const user = localStorage.getItem('username');
+  const jwt = localStorage.getItem('jwt');
 
   const navigate = useNavigate();
 
@@ -36,7 +37,7 @@ const Navbar = () => {
           <img className='logotipo-hc' src={Logotipo} alt='Logotipo Hotel Central' />
         </Link>
 
-        {user ? (
+        {jwt ? (
           <>
             <ul className='navbar-items'>
               {navItems.map(item => {

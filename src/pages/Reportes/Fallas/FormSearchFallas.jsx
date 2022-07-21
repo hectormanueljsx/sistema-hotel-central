@@ -25,8 +25,6 @@ const FormSearchMantenimiento = ({ setDataSearch, setDateTable, setLoading, setE
   const [end, setEnd] = useState(100);
   const [visibleButton, setVisibleButton] = useState(true);
 
-  const identifier = localStorage.getItem('identifier');
-  const password = localStorage.getItem('password');
   const endpointCategoria = generalEndpoints.categoria;
 
   const handleInputChange = event => setData({ ...data, [event.target.name]: event.target.value });
@@ -37,7 +35,7 @@ const FormSearchMantenimiento = ({ setDataSearch, setDateTable, setLoading, setE
   }, []);
 
   const getSubcategoria = async () => {
-    const res = await getGeneralSelect(identifier, password, `${endpointCategoria}?categoria=MANTENIMIENTO`);
+    const res = await getGeneralSelect(`${endpointCategoria}?categoria=MANTENIMIENTO`);
     setIdCategoria(res.data[0]);
   };
 
@@ -48,7 +46,7 @@ const FormSearchMantenimiento = ({ setDataSearch, setDateTable, setLoading, setE
 
         const endpointMantenimiento = `mantenimientos?f_reporte_gte=${data.firstReport}T00:00:00.000Z&f_reporte_lte=${data.lastReport}T23:59:59.000Z&subcategoria=${idSubcategoria}:DESC&_start=${start}`;
 
-        const result = await getGeneralSelect(identifier, password, endpointMantenimiento);
+        const result = await getGeneralSelect(endpointMantenimiento);
         setDataSearch(result.data);
 
         if (result.status >= 200 && result.status <= 299) {
@@ -101,7 +99,7 @@ const FormSearchMantenimiento = ({ setDataSearch, setDateTable, setLoading, setE
 
       const endpointMantenimiento = `mantenimientos?f_reporte_gte=${data.firstReport}T00:00:00.000Z&f_reporte_lte=${data.lastReport}T23:59:59.000Z&subcategoria=${idSubcategoria}:DESC&_start=${start}`;
 
-      const resultado = await getGeneralSelect(identifier, password, endpointMantenimiento);
+      const resultado = await getGeneralSelect(endpointMantenimiento);
 
       setDataSearch(prevData => [...prevData, ...resultado.data]);
       setEnd(end + 100);

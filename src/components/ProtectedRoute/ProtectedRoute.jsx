@@ -3,10 +3,10 @@ import { Navigate } from 'react-router-dom';
 import Unauthorized from '@/components/Unauthorized/Unauthorized';
 
 const ProtectedRoute = ({ children, allowedRoles }) => {
-  const user = localStorage.getItem('identifier');
+  const jwt = localStorage.getItem('jwt');
   const role = localStorage.getItem('role');
 
-  if (!user) return <Navigate to='/login' />;
+  if (!jwt) return <Navigate to='/login' />;
 
   if (allowedRoles.includes(role)) return children;
 

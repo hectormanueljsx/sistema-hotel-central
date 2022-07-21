@@ -43,8 +43,6 @@ const TableViewMantenimiento = ({ habitacion, subcategoria }) => {
   const [openModal, setOpenModal] = useState(false);
   const [dataMantenimiento, setDataMantenimiento] = useState('');
 
-  const identifier = localStorage.getItem('identifier');
-  const password = localStorage.getItem('password');
   const endpointMantenimiento = generalEndpoints.mantenimiento;
 
   const handleOpen = item => {
@@ -60,7 +58,7 @@ const TableViewMantenimiento = ({ habitacion, subcategoria }) => {
     setPage(0);
   };
 
-  const { list, loading, error } = useGetGeneralTable(identifier, password, endpointMantenimiento);
+  const { list, loading, error } = useGetGeneralTable(endpointMantenimiento);
 
   return (
     <Box component='section' sx={[stylesWrapperBoxShadow, stylesWidthHeightTable]}>

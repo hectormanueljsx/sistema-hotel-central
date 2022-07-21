@@ -11,18 +11,16 @@ const Egresos = () => {
   const [pago, setPago] = useState([]);
   const [categoria, setCategoria] = useState([]);
 
-  const identifier = localStorage.getItem('identifier');
-  const password = localStorage.getItem('password');
   const endpointPago = generalEndpoints.pago;
   const endpointCategoria = generalEndpoints.categoria;
 
   const getPago = async () => {
-    const res = await getGeneralSelect(identifier, password, endpointPago);
+    const res = await getGeneralSelect(endpointPago);
     setPago(res.data);
   };
 
   const getCategoria = async () => {
-    const res = await getGeneralSelect(identifier, password, endpointCategoria);
+    const res = await getGeneralSelect(endpointCategoria);
     setCategoria(res.data);
   };
 

@@ -46,9 +46,8 @@ const TableViewUsuarios = () => {
   const [dataUsuario, setDataUsuario] = useState('');
   const [openModal, setOpenModal] = useState(false);
   const [loaderRequest, setLoaderRequest] = useState(false);
-
-  const identifier = localStorage.getItem('identifier');
-  const password = localStorage.getItem('password');
+/* const jwt = localStorage.getItem('jwt'); */
+  
   const endpointUsuario = generalEndpoints.usuario;
 
   const handleOpen = item => {
@@ -67,7 +66,7 @@ const TableViewUsuarios = () => {
   const deleteByIdUsuario = async id => {
     const generalData = { blocked: true };
     setLoaderRequest(true);
-    const { status } = await putGeneralTable(identifier, password, endpointUsuario, id, generalData);
+    const { status } = await putGeneralTable(endpointUsuario, id, generalData);
     setLoaderRequest(false);
     return status;
   };
@@ -117,7 +116,7 @@ const TableViewUsuarios = () => {
     });
   };
 
-  const { list, loading, error } = useGetGeneralTable(identifier, password, `${endpointUsuario}?blocked=false`);
+  const { list, loading, error } = useGetGeneralTable(`${endpointUsuario}?blocked=false`);
 
   if (loaderRequest) {
     return <LoaderImage />;

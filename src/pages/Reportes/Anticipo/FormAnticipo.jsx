@@ -25,8 +25,6 @@ const FormAnticipo = ({ setDataSearch, dataSearch, setDateTable, setLoading, set
   const [end, setEnd] = useState(100);
   const [visibleButton, setVisibleButton] = useState(true);
 
-  const identifier = localStorage.getItem('identifier');
-  const password = localStorage.getItem('password');
   const endpointPago = generalEndpoints.pago;
   const limit = `?fecha_gte=${data.fechaInicio}&fecha_lte=${data.fechaFin}&pago.f_pago=${formaPago}&_start=${start}`;
   const endpointAnticipo = `${generalEndpoints.anticipo}${limit}`;
@@ -34,13 +32,13 @@ const FormAnticipo = ({ setDataSearch, dataSearch, setDateTable, setLoading, set
   const handleInputChange = event => setData({ ...data, [event.target.name]: event.target.value });
   const handleSelectChange = event => setFormaPago(event.target.value);
 
-  const { list } = useGetGeneralTable(identifier, password, endpointPago);
+  const { list } = useGetGeneralTable(endpointPago);
 
   const getMoreData = async () => {
     if (dataSearch.length >= end) {
       setVisibleButton(false);
 
-      const resultado = await getGeneralSelect(identifier, password, endpointAnticipo);
+      const resultado = await getGeneralSelect(endpointAnticipo);
 
       setDataSearch(prevData => [...prevData, ...resultado]);
       setEnd(end + 100);
@@ -55,7 +53,7 @@ const FormAnticipo = ({ setDataSearch, dataSearch, setDateTable, setLoading, set
       try {
         setLoading(true);
 
-        const res = await getGeneralSelect(identifier, password, endpointAnticipo);
+        const res = await getGeneralSelect(endpointAnticipo);
         setDataSearch(res.data);
 
         if (res.status >= 200 && res.status <= 299) {

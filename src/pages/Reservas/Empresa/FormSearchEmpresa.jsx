@@ -20,8 +20,6 @@ const FormSearchEmpresa = ({ setSearch, dataEmpresa, setDataEmpresa, setLoading,
   const [end, setEnd] = useState(100);
   const [visibleButton, setVisibleButton] = useState(true);
 
-  const identifier = localStorage.getItem('identifier');
-  const password = localStorage.getItem('password');
   const endpointEmpresa = historicalEndpoints.historicoEmpresa;
 
   useEffect(() => {
@@ -32,7 +30,7 @@ const FormSearchEmpresa = ({ setSearch, dataEmpresa, setDataEmpresa, setLoading,
     if (dataEmpresa.length >= end) {
       setVisibleButton(false);
 
-      const resultado = await getGeneralSelect(identifier, password, `${endpointEmpresa}${start}`);
+      const resultado = await getGeneralSelect(`${endpointEmpresa}${start}`);
 
       setDataEmpresa(prevData => [...prevData, ...resultado.data]);
       setEnd(end + 100);
@@ -46,7 +44,7 @@ const FormSearchEmpresa = ({ setSearch, dataEmpresa, setDataEmpresa, setLoading,
     try {
       setLoading(true);
 
-      const result = await getGeneralSelect(identifier, password, `${endpointEmpresa}${start}`);
+      const result = await getGeneralSelect(`${endpointEmpresa}${start}`);
       setDataEmpresa(result.data);
 
       if (result.data.length >= end) {

@@ -37,8 +37,6 @@ const ModalEgreso = ({ dataEgreso, pago, categoria, dataCategoria, handleCloseMo
   const [disableView, setDisableView] = useState(false);
   const [loaderRequest, setLoaderRequest] = useState(false);
 
-  const identifier = localStorage.getItem('identifier');
-  const password = localStorage.getItem('password');
   const endpointEgreso = generalEndpoints.egreso;
   const endpointCategoria = generalEndpoints.categoria;
   const attributeCategoria = 'id';
@@ -50,8 +48,6 @@ const ModalEgreso = ({ dataEgreso, pago, categoria, dataCategoria, handleCloseMo
 
   const handleCategoria = async event => {
     const result = await getSpecificSelect(
-      identifier,
-      password,
       endpointCategoria,
       attributeCategoria,
       event.target.value,
@@ -79,7 +75,7 @@ const ModalEgreso = ({ dataEgreso, pago, categoria, dataCategoria, handleCloseMo
       };
 
       setLoaderRequest(true);
-      const res = await putGeneralTable(identifier, password, endpointEgreso, dataEgreso.id, generalData);
+      const res = await putGeneralTable(endpointEgreso, dataEgreso.id, generalData);
       setLoaderRequest(false);
 
       if (res.status >= 200 && res.status <= 299) {

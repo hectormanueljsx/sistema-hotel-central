@@ -33,8 +33,6 @@ const ModalTarifa = ({ dataTarifa, handleCloseModal, dataPersonas }) => {
   const [disableView, setDisableView] = useState(false);
   const [loaderRequest, setLoaderRequest] = useState(false);
 
-  const identifier = localStorage.getItem('identifier');
-  const password = localStorage.getItem('password');
   const endpointTarifa = generalEndpoints.tarifa;
   const endpointPersona = generalEndpoints.persona;
 
@@ -63,7 +61,7 @@ const ModalTarifa = ({ dataTarifa, handleCloseModal, dataPersonas }) => {
       };
 
       setLoaderRequest(true);
-      const res = await putGeneralTable(identifier, password, endpointTarifa, dataTarifa.id, generalData);
+      const res = await putGeneralTable(endpointTarifa, dataTarifa.id, generalData);
       setLoaderRequest(false);
 
       if (res.status >= 200 && res.status <= 299) {
@@ -114,7 +112,7 @@ const ModalTarifa = ({ dataTarifa, handleCloseModal, dataPersonas }) => {
     }
   };
 
-  const { list } = useGetGeneralTable(identifier, password, endpointPersona);
+  const { list } = useGetGeneralTable(endpointPersona);
 
   if (loaderRequest) {
     return <LoaderImage />;

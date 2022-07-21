@@ -45,8 +45,6 @@ const TableViewEgresos = ({ pago, categoria }) => {
   const [dataEgreso, setDataEgreso] = useState('');
   const [dataCategoria, setDataCategoria] = useState('');
 
-  const identifier = localStorage.getItem('identifier');
-  const password = localStorage.getItem('password');
   const endpointEgreso = generalEndpoints.egreso;
   const endpointCategoria = generalEndpoints.categoria;
 
@@ -55,7 +53,7 @@ const TableViewEgresos = ({ pago, categoria }) => {
   const attributeCategoria = 'id';
 
   const handleOpen = async (item, categoriaData) => {
-    const result = await getSpecificSelect(identifier, password, endpointCategoria, attributeCategoria, categoriaData);
+    const result = await getSpecificSelect(endpointCategoria, attributeCategoria, categoriaData);
     setDataCategoria(result.data);
     setDataEgreso(item);
     setOpenModal(true);
@@ -70,8 +68,6 @@ const TableViewEgresos = ({ pago, categoria }) => {
   };
 
   const { listGetSpecific, loadingGetSpecific, errorGetSpecific } = useGetSpecific(
-    identifier,
-    password,
     endpointEgreso,
     attribute,
     valueAttribute,

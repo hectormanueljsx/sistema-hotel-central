@@ -21,8 +21,6 @@ const FormCreateSubcategoriaEgresos = () => {
   const [subcategoria, setSubcategoria] = useState('');
   const [loaderRequest, setLoaderRequest] = useState(false);
 
-  const identifier = localStorage.getItem('identifier');
-  const password = localStorage.getItem('password');
   const endpointCategoria = generalEndpoints.categoria;
   const endpointSubcategoria = generalEndpoints.subcategoria;
 
@@ -39,7 +37,7 @@ const FormCreateSubcategoriaEgresos = () => {
       };
 
       setLoaderRequest(true);
-      const res = await postGeneralTable(identifier, password, endpointSubcategoria, subcategoryData);
+      const res = await postGeneralTable(endpointSubcategoria, subcategoryData);
       setLoaderRequest(false);
 
       if (res.status >= 200 && res.status <= 299) {
@@ -76,7 +74,7 @@ const FormCreateSubcategoriaEgresos = () => {
     }
   };
 
-  const { list } = useGetGeneralTable(identifier, password, endpointCategoria);
+  const { list } = useGetGeneralTable(endpointCategoria);
 
   if (loaderRequest) {
     return <LoaderImage />;

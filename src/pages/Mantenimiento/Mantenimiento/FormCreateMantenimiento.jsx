@@ -24,8 +24,6 @@ const FormCreateMantenimiento = ({ habitacion, subcategoria }) => {
   const [idSubcategoria, setIdSubcategoria] = useState('');
   const [loaderRequest, setLoaderRequest] = useState(false);
 
-  const identifier = localStorage.getItem('identifier');
-  const password = localStorage.getItem('password');
   const idUser = localStorage.getItem('id');
   const endpointMantenimiento = generalEndpoints.mantenimiento;
 
@@ -49,7 +47,7 @@ const FormCreateMantenimiento = ({ habitacion, subcategoria }) => {
       };
 
       setLoaderRequest(true);
-      const res = await postGeneralTable(identifier, password, endpointMantenimiento, generalData);
+      const res = await postGeneralTable(endpointMantenimiento, generalData);
       setLoaderRequest(false);
 
       if (res.status >= 200 && res.status <= 299) {

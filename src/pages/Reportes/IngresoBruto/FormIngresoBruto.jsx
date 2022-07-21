@@ -26,8 +26,7 @@ const FormIngresoBruto = ({
   setLoading,
   setError,
 }) => {
-  const identifier = localStorage.getItem('identifier');
-  const password = localStorage.getItem('password');
+
   const limit = `?fecha_gte=${data.fechaInicio}&fecha_lte=${data.fechaFin}&_start=0`;
   const limitHistorial = `?fecha_hosp_gte=${data.fechaInicio}&fecha_hosp_lte=${data.fechaFin}&_start=0`;
   const endpointPago = generalEndpoints.pago;
@@ -36,15 +35,15 @@ const FormIngresoBruto = ({
 
   const handleInputChange = event => setData({ ...data, [event.target.name]: event.target.value });
 
-  const { list } = useGetGeneralTable(identifier, password, endpointPago);
+  const { list } = useGetGeneralTable(endpointPago);
 
   const getData = async () => {
     if (data.fechaInicio.length > 0 && data.fechaFin.length) {
       try {
         setLoading(true);
 
-        const res = await getGeneralSelect(identifier, password, endpointAnticipo);
-        const resHistorial = await getGeneralSelect(identifier, password, endpointHistorial);
+        const res = await getGeneralSelect(endpointAnticipo);
+        const resHistorial = await getGeneralSelect(endpointHistorial);
 
         setDataSearch(res.data);
         setDataPago(list);

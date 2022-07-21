@@ -1,18 +1,17 @@
 import apiConfig from '@/api/apiConfig';
-import getTokenUser from '@/services/getTokenUser';
 
-const postUsers = async (identifier, password, endpoint, dataUser, dataRole) => {
+const postUsers = async (endpoint, dataUser, dataRole) => {
   try {
-    const userToken = await getTokenUser(identifier, password);
+    const jwt = localStorage.getItem('jwt');
     const { data, status } = await apiConfig.post(endpoint, dataUser, {
       headers: {
-        Authorization: `Bearer ${userToken}`,
+        Authorization: `Bearer ${jwt}`,
       },
     });
 
     const { role } = await apiConfig.put(`${endpoint}/${data.id}`, dataRole, {
       headers: {
-        Authorization: `Bearer ${userToken}`,
+        Authorization: `Bearer ${jwt}`,
       },
     });
 
