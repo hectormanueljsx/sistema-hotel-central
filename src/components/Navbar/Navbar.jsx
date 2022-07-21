@@ -147,9 +147,11 @@ const Navbar = () => {
                   onClick={() => {
                     Swal.fire({
                       icon: 'warning',
-                      text: '¿Estás seguro que deseas cerrar sesión?',
+                      title: 'Confirmación de sesión',
+                      text: '¿Estás seguro que deseas cerrar tu sesión actual?',
                       showCancelButton: true,
                       allowOutsideClick: false,
+                      allowEscapeKey: false,
                       confirmButtonColor: '#1976d2',
                       cancelButtonColor: '#d32f2f',
                       confirmButtonText: 'Aceptar',
