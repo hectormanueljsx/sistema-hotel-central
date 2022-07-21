@@ -28,6 +28,8 @@ const useGetSpecific = (endpoint, attribute, valueAttribute) => {
 
   useEffect(() => {
     getData();
+
+    return () => {};
   }, []);
 
   return { listGetSpecific, loadingGetSpecific, errorGetSpecific };

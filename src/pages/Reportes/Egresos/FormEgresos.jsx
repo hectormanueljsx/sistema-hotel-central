@@ -34,6 +34,8 @@ const FormEgresos = ({ dataSearch, setDataSearch, setDateTable, setLoading, setE
 
   useEffect(() => {
     getCategoria();
+
+    return () => {};
   }, []);
 
   const getCategoria = async () => {

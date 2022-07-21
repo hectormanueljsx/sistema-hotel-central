@@ -22,6 +22,8 @@ const FormSearchHistoricoEgresos = ({ setSearch, dataEgreso, setDataEgreso, setL
 
   useEffect(() => {
     getData();
+
+    return () => {};
   }, []);
 
   const getMoreData = async () => {

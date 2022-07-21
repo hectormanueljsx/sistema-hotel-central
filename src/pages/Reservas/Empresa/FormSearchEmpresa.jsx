@@ -24,6 +24,8 @@ const FormSearchEmpresa = ({ setSearch, dataEmpresa, setDataEmpresa, setLoading,
 
   useEffect(() => {
     getData();
+
+    return () => {};
   }, []);
 
   const getMoreData = async () => {

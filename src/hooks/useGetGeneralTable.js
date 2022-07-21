@@ -27,6 +27,8 @@ const useGetGeneralTable = endpoint => {
 
   useEffect(() => {
     getData();
+
+    return () => {};
   }, []);
 
   return { list, loading, error };

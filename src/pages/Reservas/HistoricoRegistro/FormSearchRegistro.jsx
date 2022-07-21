@@ -22,6 +22,8 @@ const FormSearchRegistro = ({ setSearch, dataRegistro, setDataRegistro, setLoadi
 
   useEffect(() => {
     getData();
+
+    return () => {};
   }, []);
 
   const getMoreData = async () => {

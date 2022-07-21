@@ -22,6 +22,8 @@ const FormSearchSaldoPendiente = ({ setSearch, dataHistorico, setDataHistorico, 
 
   useEffect(() => {
     getData();
+
+    return () => {};
   }, []);
 
   const getMoreData = async () => {

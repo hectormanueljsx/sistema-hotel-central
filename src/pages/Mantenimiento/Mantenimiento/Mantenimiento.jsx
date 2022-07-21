@@ -12,7 +12,6 @@ const Mantenimiento = () => {
   const [habitacion, setHabitacion] = useState([]);
   const [subcategoria, setSubcategoria] = useState([]);
 
-
   const endpointHabitacion = generalEndpoints.habitacion;
   const endpointCategoria = generalEndpoints.categoria;
   const attribute = 'categoria';
@@ -32,6 +31,8 @@ const Mantenimiento = () => {
   useEffect(() => {
     getHabitacion();
     getCategoria();
+
+    return () => {};
   }, []);
 
   return (

@@ -32,6 +32,8 @@ const FormSearchMantenimiento = ({ setDataSearch, setDateTable, setLoading, setE
 
   useEffect(() => {
     getSubcategoria();
+
+    return () => {};
   }, []);
 
   const getSubcategoria = async () => {

@@ -22,6 +22,8 @@ const FormSearchReservaciones = ({ setSearch, dataReservacion, setDataReservacio
 
   useEffect(() => {
     getData();
+
+    return () => {};
   }, []);
 
   const getMoreData = async () => {

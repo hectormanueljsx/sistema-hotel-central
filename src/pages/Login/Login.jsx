@@ -34,6 +34,8 @@ const Login = () => {
     const jwt = localStorage.getItem('jwt');
 
     if (jwt) return navigate('/');
+
+    return () => {};
   }, []);
 
   const handleInputChange = event => setDatosLogin({ ...datosLogin, [event.target.name]: event.target.value });

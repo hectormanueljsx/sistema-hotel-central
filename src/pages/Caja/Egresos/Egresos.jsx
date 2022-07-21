@@ -27,6 +27,8 @@ const Egresos = () => {
   useEffect(() => {
     getPago();
     getCategoria();
+
+    return () => {};
   }, []);
 
   return (
