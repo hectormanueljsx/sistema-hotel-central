@@ -88,7 +88,7 @@ const TableViewEmpresas = ({ search, dataEmpresa, loading, error }) => {
               ) : filterName.length > 0 ? (
                 filterName.slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage).map(item => {
                   const { id, rfc, nombre, ciudad, estado } = item;
-                  const url = `/reservas/empresas/${id}`;
+                  const url = `#/reservas/empresas/${id}`;
 
                   return (
                     <TableRow key={id}>
