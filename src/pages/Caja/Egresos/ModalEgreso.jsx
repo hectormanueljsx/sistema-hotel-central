@@ -25,12 +25,12 @@ import {
 
 const ModalEgreso = ({ dataEgreso, pago, categoria, dataCategoria, handleCloseModal }) => {
   const [datos, setDatos] = useState({
-    importe: dataEgreso.importe,
-    concepto: dataEgreso.concepto,
+    importe: dataEgreso?.importe,
+    concepto: dataEgreso?.concepto,
   });
-  const [idPago, setIdPago] = useState(dataEgreso.pago.id);
-  const [idCategoria, setIdCategoria] = useState(dataCategoria[0].id);
-  const [idSubcategoria, setIdSubcategoria] = useState(dataEgreso.subcategoria.id);
+  const [idPago, setIdPago] = useState(dataEgreso?.pago?.id);
+  const [idCategoria, setIdCategoria] = useState(dataCategoria[0]?.id);
+  const [idSubcategoria, setIdSubcategoria] = useState(dataEgreso?.subcategoria?.id);
   const [itemCategoria, setItemCategoria] = useState(dataCategoria[0]);
   const [facturado, setFacturado] = useState(false);
   const [disabledModal, setDisabledModal] = useState(true);
@@ -47,13 +47,9 @@ const ModalEgreso = ({ dataEgreso, pago, categoria, dataCategoria, handleCloseMo
   const handleCheckbox = e => setFacturado(e.target.checked);
 
   const handleCategoria = async event => {
-    const result = await getSpecificSelect(
-      endpointCategoria,
-      attributeCategoria,
-      event.target.value,
-    );
-    setItemCategoria(result.data[0]);
-    setIdCategoria(result.data[0].id);
+    const result = await getSpecificSelect(endpointCategoria, attributeCategoria, event.target.value);
+    setItemCategoria(result?.data[0]);
+    setIdCategoria(result?.data[0]?.id);
   };
 
   const viewDisabled = event => {
@@ -75,7 +71,7 @@ const ModalEgreso = ({ dataEgreso, pago, categoria, dataCategoria, handleCloseMo
       };
 
       setLoaderRequest(true);
-      const res = await putGeneralTable(endpointEgreso, dataEgreso.id, generalData);
+      const res = await putGeneralTable(endpointEgreso, dataEgreso?.id, generalData);
       setLoaderRequest(false);
 
       if (res.status >= 200 && res.status <= 299) {
@@ -139,7 +135,7 @@ const ModalEgreso = ({ dataEgreso, pago, categoria, dataCategoria, handleCloseMo
         <Box component='div'>
           <TitleInput titleInput='Concepto' />
           <TextField
-            defaultValue={dataEgreso.concepto}
+            defaultValue={dataEgreso?.concepto}
             onChange={handleInputChange}
             name='concepto'
             variant='outlined'
@@ -154,7 +150,7 @@ const ModalEgreso = ({ dataEgreso, pago, categoria, dataCategoria, handleCloseMo
         <Box component='div'>
           <TitleInput titleInput='Importe' />
           <TextField
-            defaultValue={dataEgreso.importe}
+            defaultValue={dataEgreso?.importe}
             onChange={handleInputChange}
             name='importe'
             variant='outlined'
@@ -177,8 +173,8 @@ const ModalEgreso = ({ dataEgreso, pago, categoria, dataCategoria, handleCloseMo
           <TitleInput titleInput='Forma de pago' />
           <FormControl disabled={disabledModal} fullWidth>
             <Select size='small' value={idPago} onChange={handlePago}>
-              {pago.length > 0 ? (
-                pago.map(item => {
+              {pago?.length > 0 ? (
+                pago?.map(item => {
                   const { f_pago, id } = item;
 
                   return (
@@ -197,8 +193,8 @@ const ModalEgreso = ({ dataEgreso, pago, categoria, dataCategoria, handleCloseMo
           <TitleInput titleInput='Categoría' />
           <FormControl disabled={disabledModal} fullWidth>
             <Select size='small' value={idCategoria} onChange={handleCategoria}>
-              {categoria.length > 0 ? (
-                categoria.map(item => {
+              {categoria?.length > 0 ? (
+                categoria?.map(item => {
                   const { categoria, id, status } = item;
 
                   return status ? (
@@ -218,8 +214,8 @@ const ModalEgreso = ({ dataEgreso, pago, categoria, dataCategoria, handleCloseMo
           <FormControl disabled={disabledModal} fullWidth>
             <Select size='small' value={idSubcategoria} onChange={handleSubCategoria}>
               {itemCategoria ? (
-                itemCategoria.subcategorias.length > 0 ? (
-                  itemCategoria.subcategorias.map(subitem => {
+                itemCategoria?.subcategorias?.length > 0 ? (
+                  itemCategoria?.subcategorias?.map(subitem => {
                     const { descripcion, id, status } = subitem;
 
                     return status ? (
@@ -240,7 +236,7 @@ const ModalEgreso = ({ dataEgreso, pago, categoria, dataCategoria, handleCloseMo
         <Box component='div'>
           <TitleInput titleInput='Fecha' />
           <TextField
-            value={moment(dataEgreso.fecha).format('YYYY-MM-DD hh:mm:ss')}
+            value={moment(dataEgreso?.fecha).format('YYYY-MM-DD hh:mm:ss')}
             name='fecha'
             variant='outlined'
             type='datetime'
@@ -254,7 +250,7 @@ const ModalEgreso = ({ dataEgreso, pago, categoria, dataCategoria, handleCloseMo
         <Box component='div'>
           <TitleInput titleInput='Usuario' />
           <TextField
-            value={dataEgreso.users_permissions_user.username}
+            value={dataEgreso?.users_permissions_user?.username}
             name='usuario'
             variant='outlined'
             type='text'

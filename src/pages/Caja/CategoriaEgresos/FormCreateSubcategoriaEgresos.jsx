@@ -88,8 +88,8 @@ const FormCreateSubcategoriaEgresos = () => {
           <TitleInput titleInput='Seleccione categoría' />
           <FormControl fullWidth>
             <Select size='small' value={options} onChange={handleChange}>
-              {list.length > 0 ? (
-                list.map(item => {
+              {list?.length > 0 ? (
+                list?.map(item => {
                   const { categoria, id, status } = item;
 
                   return status ? (

@@ -54,7 +54,7 @@ const TableViewEgresos = ({ pago, categoria }) => {
 
   const handleOpen = async (item, categoriaData) => {
     const result = await getSpecificSelect(endpointCategoria, attributeCategoria, categoriaData);
-    setDataCategoria(result.data);
+    setDataCategoria(result?.data);
     setDataEgreso(item);
     setOpenModal(true);
   };
@@ -101,8 +101,8 @@ const TableViewEgresos = ({ pago, categoria }) => {
                     <AlertGlobalTables messageError={messageErrorGetData} />
                   </TableCell>
                 </TableRow>
-              ) : listGetSpecific.length > 0 ? (
-                listGetSpecific.slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage).map(item => {
+              ) : listGetSpecific?.length > 0 ? (
+                listGetSpecific?.slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage)?.map(item => {
                   const {
                     id,
                     fecha,
@@ -145,7 +145,7 @@ const TableViewEgresos = ({ pago, categoria }) => {
           <TablePagination
             rowsPerPageOptions={[]}
             component='div'
-            count={listGetSpecific.length}
+            count={listGetSpecific?.length}
             rowsPerPage={rowsPerPage}
             page={page}
             onPageChange={handleChangePage}

@@ -27,12 +27,12 @@ const FormSearchHistoricoEgresos = ({ setSearch, dataEgreso, setDataEgreso, setL
   }, []);
 
   const getMoreData = async () => {
-    if (dataEgreso.length >= end) {
+    if (dataEgreso?.length >= end) {
       setVisibleButton(false);
 
-      const resultado = await getGeneralSelect(`${endpointEgresos}${start}`);
+      const result = await getGeneralSelect(`${endpointEgresos}${start}`);
 
-      setDataEgreso(prevData => [...prevData, ...resultado.data]);
+      setDataEgreso(prevData => [...prevData, ...result?.data]);
       setEnd(end + 100);
       setStart(start + 100);
     } else {
@@ -41,22 +41,20 @@ const FormSearchHistoricoEgresos = ({ setSearch, dataEgreso, setDataEgreso, setL
   };
 
   const getData = async () => {
-    try {
-      setLoading(true);
+    setLoading(true);
+    const result = await getGeneralSelect(`${endpointEgresos}${start}`);
+    setDataEgreso(result?.data);
+    setLoading(false);
 
-      const result = await getGeneralSelect(`${endpointEgresos}${start}`);
-      setDataEgreso(result.data);
-
-      if (result.data.length >= end) {
+    if (result.status >= 200 && result.status <= 299) {
+      if (result?.data?.length >= end) {
         setStart(start + 100);
         setVisibleButton(false);
       } else {
         setVisibleButton(true);
       }
-    } catch (error) {
-      setError(error);
-    } finally {
-      setLoading(false);
+    } else {
+      setError(result);
     }
   };
 

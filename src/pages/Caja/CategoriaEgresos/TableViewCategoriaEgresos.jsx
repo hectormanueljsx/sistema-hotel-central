@@ -162,8 +162,8 @@ const TableViewCategoriaEgresos = () => {
           <LoaderSkeleton />
         ) : error ? (
           <AlertGlobalTables messageError={messageErrorGetData} />
-        ) : list.length > 0 ? (
-          list.map(item => {
+        ) : list?.length > 0 ? (
+          list?.map(item => {
             const { categoria, subcategorias, id } = item;
 
             return (
@@ -173,9 +173,9 @@ const TableViewCategoriaEgresos = () => {
                     <Typography key={id} sx={stylesTextFontCategoria}>
                       {categoria}
                     </Typography>
-                    {subcategorias.length > 0 ? (
-                      subcategorias.map(option => {
-                        return option.status ? null : (
+                    {subcategorias?.length > 0 ? (
+                      subcategorias?.map(option => {
+                        return option?.status ? null : (
                           <IconButton
                             color='error'
                             size='small'
@@ -198,8 +198,8 @@ const TableViewCategoriaEgresos = () => {
                     )}
                   </Box>
                 </AccordionSummary>
-                {subcategorias.length > 0
-                  ? subcategorias.map(subitem => {
+                {subcategorias?.length > 0
+                  ? subcategorias?.map(subitem => {
                       const { descripcion, id, status } = subitem;
 
                       return (

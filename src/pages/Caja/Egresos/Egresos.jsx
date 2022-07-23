@@ -16,12 +16,12 @@ const Egresos = () => {
 
   const getPago = async () => {
     const res = await getGeneralSelect(endpointPago);
-    setPago(res.data);
+    setPago(res?.data);
   };
 
   const getCategoria = async () => {
     const res = await getGeneralSelect(endpointCategoria);
-    setCategoria(res.data);
+    setCategoria(res?.data);
   };
 
   useEffect(() => {

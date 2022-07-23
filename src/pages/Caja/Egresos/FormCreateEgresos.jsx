@@ -139,8 +139,8 @@ const FormCreateEgresos = ({ pago, categoria }) => {
           <TitleInput titleInput='Forma de pago' />
           <FormControl fullWidth>
             <Select size='small' value={idPago} onChange={handlePago}>
-              {pago.length > 0 ? (
-                pago.map(item => {
+              {pago?.length > 0 ? (
+                pago?.map(item => {
                   const { f_pago, id } = item;
 
                   return (
@@ -159,8 +159,8 @@ const FormCreateEgresos = ({ pago, categoria }) => {
           <TitleInput titleInput='Categoría' />
           <FormControl fullWidth>
             <Select size='small' value={idCategoria} onChange={handleCategoria}>
-              {categoria.length > 0 ? (
-                categoria.map(item => {
+              {categoria?.length > 0 ? (
+                categoria?.map(item => {
                   const { categoria, id, status } = item;
 
                   return status ? (
@@ -180,8 +180,8 @@ const FormCreateEgresos = ({ pago, categoria }) => {
           <FormControl fullWidth>
             <Select size='small' value={idSubcategoria} onChange={handleSubCategoria}>
               {idCategoria ? (
-                idCategoria.subcategorias.length > 0 ? (
-                  idCategoria.subcategorias.map(subitem => {
+                idCategoria?.subcategorias?.length > 0 ? (
+                  idCategoria?.subcategorias?.map(subitem => {
                     const { descripcion, id, status } = subitem;
 
                     return status ? (

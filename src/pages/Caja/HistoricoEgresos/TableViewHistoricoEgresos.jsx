@@ -44,7 +44,9 @@ const TableViewHistoricoEgresos = ({ search, dataEgreso, loading, error }) => {
   };
 
   const filterConcepto =
-    dataEgreso.length > 0 ? dataEgreso.filter(item => item.concepto.toUpperCase().includes(search.toUpperCase())) : [];
+    dataEgreso?.length > 0
+      ? dataEgreso?.filter(item => item?.concepto?.toUpperCase()?.includes(search?.toUpperCase()))
+      : [];
 
   return (
     <Box component='section' sx={[stylesWrapperBoxShadow, stylesWidthHeightTable]}>
@@ -74,8 +76,8 @@ const TableViewHistoricoEgresos = ({ search, dataEgreso, loading, error }) => {
                     <AlertGlobalTables messageError={messageErrorGetData} />
                   </TableCell>
                 </TableRow>
-              ) : filterConcepto.length > 0 ? (
-                filterConcepto.slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage).map(item => {
+              ) : filterConcepto?.length > 0 ? (
+                filterConcepto?.slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage)?.map(item => {
                   const { id, fecha, concepto, importe, p_caja } = item;
 
                   return (
@@ -112,7 +114,7 @@ const TableViewHistoricoEgresos = ({ search, dataEgreso, loading, error }) => {
           <TablePagination
             rowsPerPageOptions={[]}
             component='div'
-            count={filterConcepto.length}
+            count={filterConcepto?.length}
             rowsPerPage={rowsPerPage}
             page={page}
             onPageChange={handleChangePage}
