@@ -46,8 +46,7 @@ const TableViewUsuarios = () => {
   const [dataUsuario, setDataUsuario] = useState('');
   const [openModal, setOpenModal] = useState(false);
   const [loaderRequest, setLoaderRequest] = useState(false);
-/* const jwt = localStorage.getItem('jwt'); */
-  
+
   const endpointUsuario = generalEndpoints.usuario;
 
   const handleOpen = item => {
