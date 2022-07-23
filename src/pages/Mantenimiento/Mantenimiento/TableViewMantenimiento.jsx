@@ -88,8 +88,8 @@ const TableViewMantenimiento = ({ habitacion, subcategoria }) => {
                     <AlertGlobalTables messageError={messageErrorGetData} />
                   </TableCell>
                 </TableRow>
-              ) : list.length > 0 ? (
-                list.slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage).map(item => {
+              ) : list?.length > 0 ? (
+                list?.slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage)?.map(item => {
                   const {
                     id,
                     f_inicio,
@@ -128,7 +128,7 @@ const TableViewMantenimiento = ({ habitacion, subcategoria }) => {
           <TablePagination
             rowsPerPageOptions={[]}
             component='div'
-            count={list.length}
+            count={list?.length}
             rowsPerPage={rowsPerPage}
             page={page}
             onPageChange={handleChangePage}

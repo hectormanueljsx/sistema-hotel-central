@@ -149,8 +149,8 @@ const TableViewUsuarios = () => {
                     <AlertGlobalTables messageError={messageErrorGetData} />
                   </TableCell>
                 </TableRow>
-              ) : list.length > 0 ? (
-                list.slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage).map(item => {
+              ) : list?.length > 0 ? (
+                list?.slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage)?.map(item => {
                   const {
                     id,
                     username,
@@ -190,7 +190,7 @@ const TableViewUsuarios = () => {
           <TablePagination
             rowsPerPageOptions={[]}
             component='div'
-            count={list.length}
+            count={list?.length}
             rowsPerPage={rowsPerPage}
             page={page}
             onPageChange={handleChangePage}

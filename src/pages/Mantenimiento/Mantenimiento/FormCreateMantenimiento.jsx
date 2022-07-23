@@ -124,8 +124,8 @@ const FormCreateMantenimiento = ({ habitacion, subcategoria }) => {
           <TitleInput titleInput='Habitación' />
           <FormControl fullWidth>
             <Select size='small' value={idHabitacion} onChange={handleHabitacion}>
-              {habitacion.length > 0 ? (
-                habitacion.map(item => {
+              {habitacion?.length > 0 ? (
+                habitacion?.map(item => {
                   const { num_hab, id } = item;
 
                   return (
@@ -144,8 +144,8 @@ const FormCreateMantenimiento = ({ habitacion, subcategoria }) => {
           <TitleInput titleInput='Subcategoría' />
           <FormControl fullWidth>
             <Select size='small' value={idSubcategoria} onChange={handleSubcategoria}>
-              {subcategoria.length > 0 ? (
-                subcategoria.map(item => {
+              {subcategoria?.length > 0 ? (
+                subcategoria?.map(item => {
                   const { descripcion, id, status } = item;
 
                   return status ? (

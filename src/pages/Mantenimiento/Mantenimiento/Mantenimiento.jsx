@@ -19,12 +19,12 @@ const Mantenimiento = () => {
 
   const getHabitacion = async () => {
     const res = await getGeneralSelect(endpointHabitacion);
-    setHabitacion(res.data);
+    setHabitacion(res?.data);
   };
 
   const getCategoria = async () => {
     const res = await getSpecificSelect(endpointCategoria, attribute, valueAttribute);
-    const { subcategorias } = res.data[0];
+    const { subcategorias } = res?.data[0];
     setSubcategoria(subcategorias);
   };
 

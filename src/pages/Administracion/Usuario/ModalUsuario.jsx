@@ -26,12 +26,12 @@ import {
 
 const ModalUsuario = ({ dataUsuario, handleCloseModal }) => {
   const [data, setData] = useState({
-    username: dataUsuario.username,
-    password: dataUsuario.identifier,
-    email: dataUsuario.email,
-    confirm: dataUsuario.confirm,
+    username: dataUsuario?.username,
+    password: dataUsuario?.identifier,
+    email: dataUsuario?.email,
+    confirm: dataUsuario?.confirm,
   });
-  const [rol, setRol] = useState(dataUsuario.role.id);
+  const [rol, setRol] = useState(dataUsuario?.role?.id);
   const [disabledModal, setDisabledModal] = useState(true);
   const [disableView, setDisableView] = useState(false);
   const [loaderRequest, setLoaderRequest] = useState(false);
@@ -104,7 +104,7 @@ const ModalUsuario = ({ dataUsuario, handleCloseModal }) => {
     }
 
     setLoaderRequest(true);
-    const res = await putUsers(endpointUsuario, dataUsuario.id, dataUser, dataRole);
+    const res = await putUsers(endpointUsuario, dataUsuario?.id, dataUser, dataRole);
     setLoaderRequest(false);
 
     if (res.status >= 200 && res.status <= 299) {
@@ -156,7 +156,7 @@ const ModalUsuario = ({ dataUsuario, handleCloseModal }) => {
           <TitleInput titleInput='Nombre de usuario' />
           <TextField
             disabled={disabledModal}
-            defaultValue={dataUsuario.username}
+            defaultValue={dataUsuario?.username}
             onChange={handleInputChange}
             name='username'
             variant='outlined'
@@ -171,7 +171,7 @@ const ModalUsuario = ({ dataUsuario, handleCloseModal }) => {
           <TitleInput titleInput='Correo electrónico' />
           <TextField
             disabled={disabledModal}
-            defaultValue={dataUsuario.email}
+            defaultValue={dataUsuario?.email}
             onChange={handleInputChange}
             name='email'
             variant='outlined'
@@ -217,7 +217,7 @@ const ModalUsuario = ({ dataUsuario, handleCloseModal }) => {
           <Box component='div'>
             <RadioGroup
               onChange={handleCheckbox}
-              defaultValue={dataUsuario.role.id}
+              defaultValue={dataUsuario?.role?.id}
               sx={stylesGridWrapperCheckboxsOneLine}
             >
               <FormControlLabel

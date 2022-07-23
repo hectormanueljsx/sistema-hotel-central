@@ -22,21 +22,20 @@ import {
 
 const ModalMantenimiento = ({ habitacion, subcategoria, dataMantenimiento, handleCloseModal }) => {
   const [datos, setDatos] = useState({
-    fechaInicio: dataMantenimiento.f_inicio,
-    fechafin: dataMantenimiento.f_fin,
-    motivo: dataMantenimiento.motivo,
-    precio: dataMantenimiento.costo,
-    reporta: dataMantenimiento.reporta,
-    fechaReporte: dataMantenimiento.f_reporte,
-    trabajador: dataMantenimiento.trabajador,
-    estado: dataMantenimiento.estado,
+    fechaInicio: dataMantenimiento?.f_inicio,
+    fechafin: dataMantenimiento?.f_fin,
+    motivo: dataMantenimiento?.motivo,
+    precio: dataMantenimiento?.costo,
+    reporta: dataMantenimiento?.reporta,
+    fechaReporte: dataMantenimiento?.f_reporte,
+    trabajador: dataMantenimiento?.trabajador,
+    estado: dataMantenimiento?.estado,
   });
-  const [idHabitacion, setIdHabitacion] = useState(dataMantenimiento.habitacion.id);
-  const [idSubcategoria, setIdSubcategoria] = useState(dataMantenimiento.subcategoria.id);
+  const [idHabitacion, setIdHabitacion] = useState(dataMantenimiento?.habitacion?.id);
+  const [idSubcategoria, setIdSubcategoria] = useState(dataMantenimiento?.subcategoria?.id);
   const [disabledModal, setDisabledModal] = useState(true);
   const [disableView, setDisableView] = useState(false);
   const [loaderRequest, setLoaderRequest] = useState(false);
-
 
   const endpointMantenimiento = generalEndpoints.mantenimiento;
 
@@ -76,7 +75,7 @@ const ModalMantenimiento = ({ habitacion, subcategoria, dataMantenimiento, handl
       };
 
       setLoaderRequest(true);
-      const res = await putGeneralTable(endpointMantenimiento, dataMantenimiento.id, generalData);
+      const res = await putGeneralTable(endpointMantenimiento, dataMantenimiento?.id, generalData);
       setLoaderRequest(false);
 
       if (res.status >= 200 && res.status <= 299) {
@@ -141,7 +140,7 @@ const ModalMantenimiento = ({ habitacion, subcategoria, dataMantenimiento, handl
         <Box component='div'>
           <TitleInput titleInput='Motivo' />
           <TextField
-            defaultValue={dataMantenimiento.motivo}
+            defaultValue={dataMantenimiento?.motivo}
             onChange={handleInputChange}
             name='motivo'
             variant='outlined'
@@ -157,7 +156,7 @@ const ModalMantenimiento = ({ habitacion, subcategoria, dataMantenimiento, handl
         <Box component='div'>
           <TitleInput titleInput='Fecha de inicio' />
           <TextField
-            defaultValue={dataMantenimiento.f_inicio}
+            defaultValue={dataMantenimiento?.f_inicio}
             onChange={handleInputChange}
             name='fechaInicio'
             variant='outlined'
@@ -172,7 +171,7 @@ const ModalMantenimiento = ({ habitacion, subcategoria, dataMantenimiento, handl
         <Box component='div'>
           <TitleInput titleInput='Fecha de termino' />
           <TextField
-            defaultValue={dataMantenimiento.f_fin}
+            defaultValue={dataMantenimiento?.f_fin}
             onChange={handleInputChange}
             name='fechafin'
             variant='outlined'
@@ -187,7 +186,7 @@ const ModalMantenimiento = ({ habitacion, subcategoria, dataMantenimiento, handl
         <Box component='div'>
           <TitleInput titleInput='Precio' />
           <TextField
-            defaultValue={dataMantenimiento.costo}
+            defaultValue={dataMantenimiento?.costo}
             onChange={handleInputChange}
             name='precio'
             variant='outlined'
@@ -203,8 +202,8 @@ const ModalMantenimiento = ({ habitacion, subcategoria, dataMantenimiento, handl
           <TitleInput titleInput='Habitación' />
           <FormControl fullWidth disabled={disabledModal}>
             <Select size='small' value={idHabitacion} onChange={handleHabitacion}>
-              {habitacion.length > 0 ? (
-                habitacion.map(item => {
+              {habitacion?.length > 0 ? (
+                habitacion?.map(item => {
                   const { num_hab, id } = item;
 
                   return (
@@ -222,7 +221,7 @@ const ModalMantenimiento = ({ habitacion, subcategoria, dataMantenimiento, handl
         <Box component='div'>
           <TitleInput titleInput='Estado' />
           <TextField
-            defaultValue={dataMantenimiento.estado}
+            defaultValue={dataMantenimiento?.estado}
             name='estado'
             variant='outlined'
             type='text'
@@ -236,7 +235,7 @@ const ModalMantenimiento = ({ habitacion, subcategoria, dataMantenimiento, handl
         <Box component='div'>
           <TitleInput titleInput='Realizado por' />
           <TextField
-            defaultValue={dataMantenimiento.trabajador}
+            defaultValue={dataMantenimiento?.trabajador}
             onChange={handleInputChange}
             name='trabajador'
             variant='outlined'
@@ -251,7 +250,7 @@ const ModalMantenimiento = ({ habitacion, subcategoria, dataMantenimiento, handl
         <Box component='div'>
           <TitleInput titleInput='Reportado por' />
           <TextField
-            defaultValue={dataMantenimiento.reporta}
+            defaultValue={dataMantenimiento?.reporta}
             onChange={handleInputChange}
             name='reporta'
             variant='outlined'
@@ -267,8 +266,8 @@ const ModalMantenimiento = ({ habitacion, subcategoria, dataMantenimiento, handl
           <TitleInput titleInput='Categoría' />
           <FormControl fullWidth disabled={disabledModal}>
             <Select size='small' value={idSubcategoria} onChange={handleSubcategoria}>
-              {subcategoria.length > 0 ? (
-                subcategoria.map(item => {
+              {subcategoria?.length > 0 ? (
+                subcategoria?.map(item => {
                   const { descripcion, id, status } = item;
 
                   return status ? (
@@ -276,7 +275,7 @@ const ModalMantenimiento = ({ habitacion, subcategoria, dataMantenimiento, handl
                       {descripcion}
                     </MenuItem>
                   ) : (
-                    false
+                    <MenuItem value=''>No se encontraron opciones</MenuItem>
                   );
                 })
               ) : (
@@ -288,7 +287,7 @@ const ModalMantenimiento = ({ habitacion, subcategoria, dataMantenimiento, handl
         <Box component='div'>
           <TitleInput titleInput='Usuario' />
           <TextField
-            defaultValue={dataMantenimiento.users_permissions_user.username}
+            defaultValue={dataMantenimiento?.users_permissions_user?.username}
             variant='outlined'
             type='text'
             margin='none'
