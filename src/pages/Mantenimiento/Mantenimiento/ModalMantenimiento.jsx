@@ -274,9 +274,7 @@ const ModalMantenimiento = ({ habitacion, subcategoria, dataMantenimiento, handl
                     <MenuItem key={id} value={id}>
                       {descripcion}
                     </MenuItem>
-                  ) : (
-                    <MenuItem value=''>No se encontraron opciones</MenuItem>
-                  );
+                  ) : null;
                 })
               ) : (
                 <MenuItem value=''>No se encontraron opciones</MenuItem>

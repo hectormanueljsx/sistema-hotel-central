@@ -152,9 +152,7 @@ const FormCreateMantenimiento = ({ habitacion, subcategoria }) => {
                     <MenuItem key={id} value={id}>
                       {descripcion}
                     </MenuItem>
-                  ) : (
-                    false
-                  );
+                  ) : null;
                 })
               ) : (
                 <MenuItem value=''>No se encontraron opciones</MenuItem>

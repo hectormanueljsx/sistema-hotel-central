@@ -26,7 +26,7 @@ import {
 const ModalHabitaciones = ({ dataHabitaciones, dataSelectTarifas, dataDescription, handleCloseModal }) => {
   const [description, setDescriptions] = useState(dataDescription);
   const [optionTarifas, setOptionTarifas] = useState(dataSelectTarifas);
-  const [numHabitacion, setNumHabitacion] = useState(dataHabitaciones.num_hab);
+  const [numHabitacion, setNumHabitacion] = useState(dataHabitaciones?.num_hab);
   const [disabledModal, setDisabledModal] = useState(true);
   const [disableView, setDisableView] = useState(false);
   const [loaderRequest, setLoaderRequest] = useState(false);
@@ -67,7 +67,7 @@ const ModalHabitaciones = ({ dataHabitaciones, dataSelectTarifas, dataDescriptio
       };
 
       setLoaderRequest(true);
-      const res = await putGeneralTable(endpointHabitacion, dataHabitaciones.id, habitacionData);
+      const res = await putGeneralTable(endpointHabitacion, dataHabitaciones?.id, habitacionData);
       setLoaderRequest(false);
 
       if (res.status >= 200 && res.status <= 299) {
@@ -135,7 +135,7 @@ const ModalHabitaciones = ({ dataHabitaciones, dataSelectTarifas, dataDescriptio
           <TitleInput titleInput='No. de habitación' />
           <TextField
             disabled={disabledModal}
-            defaultValue={dataHabitaciones.num_hab}
+            defaultValue={dataHabitaciones?.num_hab}
             onChange={handleInputChangeNumHabitacion}
             name='num_hab'
             variant='outlined'
@@ -150,7 +150,7 @@ const ModalHabitaciones = ({ dataHabitaciones, dataSelectTarifas, dataDescriptio
           <TitleInput titleInput='Descripción de la habitación' />
           <TextField
             disabled={disabledModal}
-            defaultValue={dataHabitaciones.descripcion}
+            defaultValue={dataHabitaciones?.descripcion}
             onChange={handleChangeDescription}
             name='descripcion'
             variant='outlined'
@@ -174,8 +174,8 @@ const ModalHabitaciones = ({ dataHabitaciones, dataSelectTarifas, dataDescriptio
               renderValue={selected => selected.join(', ')}
               size='small'
             >
-              {list.length > 0 ? (
-                list.map(item => {
+              {list?.length > 0 ? (
+                list?.map(item => {
                   const { id, descripcion, status } = item;
 
                   return status ? (

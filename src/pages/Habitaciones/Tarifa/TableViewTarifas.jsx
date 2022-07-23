@@ -54,8 +54,8 @@ const TableViewTarifas = () => {
     const { personas } = item;
     setOpenModal(true);
     setDataTarifa(item);
-    dataSelectPersonas = personas.map(element => {
-      return element.num_persona;
+    dataSelectPersonas = personas?.map(element => {
+      return element?.num_persona;
     });
   };
 
@@ -154,16 +154,16 @@ const TableViewTarifas = () => {
                     <AlertGlobalTables messageError={messageErrorGetData} />
                   </TableCell>
                 </TableRow>
-              ) : list.length > 0 ? (
-                list.slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage).map(item => {
+              ) : list?.length > 0 ? (
+                list?.slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage)?.map(item => {
                   const { id, descripcion, personas, precio } = item;
 
-                  let no_personas = personas.map(persona => `${persona.num_persona}`);
+                  let no_personas = personas?.map(persona => `${persona?.num_persona}`);
 
                   return (
                     <TableRow key={id}>
                       <TableCell sx={stylesTableCellBody}>{descripcion}</TableCell>
-                      <TableCell sx={stylesTableCellBody}>{no_personas.join('-')}</TableCell>
+                      <TableCell sx={stylesTableCellBody}>{no_personas?.join('-')}</TableCell>
                       <TableCell sx={stylesTableCellBody}>
                         {precio.toLocaleString('es-MX', {
                           style: 'currency',
@@ -196,7 +196,7 @@ const TableViewTarifas = () => {
           <TablePagination
             rowsPerPageOptions={[]}
             component='div'
-            count={list.length}
+            count={list?.length}
             rowsPerPage={rowsPerPage}
             page={page}
             onPageChange={handleChangePage}

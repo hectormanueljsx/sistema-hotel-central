@@ -45,9 +45,9 @@ const TableViewHabitaciones = () => {
   const endpointHabitacion = generalEndpoints.habitacion;
 
   const handleOpen = item => {
-    dataDescription = item.descripcion;
-    dataSelectTarifas = item.tarifas.map(element => {
-      return element.descripcion;
+    dataDescription = item?.descripcion;
+    dataSelectTarifas = item?.tarifas?.map(element => {
+      return element?.descripcion;
     });
 
     setOpenModal(true);
@@ -92,8 +92,8 @@ const TableViewHabitaciones = () => {
                     <AlertGlobalTables messageError={messageErrorGetData} />
                   </TableCell>
                 </TableRow>
-              ) : list.length > 0 ? (
-                list.slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage).map(item => {
+              ) : list?.length > 0 ? (
+                list?.slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage)?.map(item => {
                   const { id, num_hab, descripcion } = item;
 
                   return (
@@ -122,7 +122,7 @@ const TableViewHabitaciones = () => {
           <TablePagination
             rowsPerPageOptions={[]}
             component='div'
-            count={list.length}
+            count={list?.length}
             rowsPerPage={rowsPerPage}
             page={page}
             onPageChange={handleChangePage}

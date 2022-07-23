@@ -139,8 +139,8 @@ const FormCreateHabitaciones = () => {
               renderValue={selected => selected.join(', ')}
               size='small'
             >
-              {list.length > 0 ? (
-                list.map(item => {
+              {list?.length > 0 ? (
+                list?.map(item => {
                   const { id, descripcion, status } = item;
 
                   return status ? (

@@ -24,9 +24,9 @@ import {
 
 const ModalTarifa = ({ dataTarifa, handleCloseModal, dataPersonas }) => {
   const [data, setData] = useState({
-    id: dataTarifa.id,
-    descripcion: dataTarifa.descripcion,
-    precio: dataTarifa.precio,
+    id: dataTarifa?.id,
+    descripcion: dataTarifa?.descripcion,
+    precio: dataTarifa?.precio,
   });
   const [numPersonas, setNumPersonas] = useState(dataPersonas);
   const [disabledModal, setDisabledModal] = useState(true);
@@ -61,7 +61,7 @@ const ModalTarifa = ({ dataTarifa, handleCloseModal, dataPersonas }) => {
       };
 
       setLoaderRequest(true);
-      const res = await putGeneralTable(endpointTarifa, dataTarifa.id, generalData);
+      const res = await putGeneralTable(endpointTarifa, dataTarifa?.id, generalData);
       setLoaderRequest(false);
 
       if (res.status >= 200 && res.status <= 299) {
@@ -129,7 +129,7 @@ const ModalTarifa = ({ dataTarifa, handleCloseModal, dataPersonas }) => {
           <TitleInput titleInput='Descripción de la tarifa' />
           <TextField
             disabled={disabledModal}
-            defaultValue={dataTarifa.descripcion}
+            defaultValue={dataTarifa?.descripcion}
             onChange={handleInputChange}
             name='descripcion'
             variant='outlined'
@@ -144,7 +144,7 @@ const ModalTarifa = ({ dataTarifa, handleCloseModal, dataPersonas }) => {
           <TitleInput titleInput='Precio de la tarifa' />
           <TextField
             disabled={disabledModal}
-            defaultValue={dataTarifa.precio}
+            defaultValue={dataTarifa?.precio}
             onChange={handleInputChange}
             name='precio'
             variant='outlined'
@@ -166,15 +166,15 @@ const ModalTarifa = ({ dataTarifa, handleCloseModal, dataPersonas }) => {
               renderValue={selected => selected.join(', ')}
               size='small'
             >
-              {list.length > 0 ? (
-                list.map(name => (
-                  <MenuItem key={name.id} value={name.num_persona}>
+              {list?.length > 0 ? (
+                list?.map(name => (
+                  <MenuItem key={name?.id} value={name?.num_persona}>
                     <Checkbox
-                      checked={numPersonas.indexOf(name.num_persona) > -1}
+                      checked={numPersonas.indexOf(name?.num_persona) > -1}
                       disableRipple
                       sx={stylesCheckboxForm}
                     />
-                    <ListItemText primary={name.num_persona} />
+                    <ListItemText primary={name?.num_persona} />
                   </MenuItem>
                 ))
               ) : (

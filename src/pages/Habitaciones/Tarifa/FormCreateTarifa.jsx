@@ -139,15 +139,15 @@ const FormCreateTarifa = () => {
               renderValue={selected => selected.join(', ')}
               size='small'
             >
-              {list.length > 0 ? (
-                list.map(name => (
-                  <MenuItem key={name.id} value={name.num_persona}>
+              {list?.length > 0 ? (
+                list?.map(name => (
+                  <MenuItem key={name?.id} value={name?.num_persona}>
                     <Checkbox
-                      checked={numPersonas.indexOf(name.num_persona) > -1}
+                      checked={numPersonas.indexOf(name?.num_persona) > -1}
                       disableRipple
                       sx={stylesCheckboxForm}
                     />
-                    <ListItemText primary={name.num_persona} />
+                    <ListItemText primary={name?.num_persona} />
                   </MenuItem>
                 ))
               ) : (
