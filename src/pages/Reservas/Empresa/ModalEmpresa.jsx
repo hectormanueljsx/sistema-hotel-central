@@ -22,13 +22,13 @@ import {
 
 const ModalEmpresa = ({ selectEmpresa, handleCloseModal }) => {
   const [datos, setDatos] = useState({
-    RFC: selectEmpresa.rfc,
-    nombre: selectEmpresa.nombre,
-    direccion: selectEmpresa.direccion,
-    colonia: selectEmpresa.colonia,
-    ciudad: selectEmpresa.ciudad,
-    estado: selectEmpresa.estado,
-    CP: selectEmpresa.cod_p,
+    RFC: selectEmpresa?.rfc,
+    nombre: selectEmpresa?.nombre,
+    direccion: selectEmpresa?.direccion,
+    colonia: selectEmpresa?.colonia,
+    ciudad: selectEmpresa?.ciudad,
+    estado: selectEmpresa?.estado,
+    CP: selectEmpresa?.cod_p,
   });
   const [disabledModal, setDisabledModal] = useState(true);
   const [disableView, setDisableView] = useState(false);
@@ -67,7 +67,7 @@ const ModalEmpresa = ({ selectEmpresa, handleCloseModal }) => {
       };
 
       setLoaderRequest(true);
-      const result = await putGeneralTable(endpointEmpresa, selectEmpresa.id, generalData);
+      const result = await putGeneralTable(endpointEmpresa, selectEmpresa?.id, generalData);
       setLoaderRequest(false);
 
       if (result.status >= 200 && result.status <= 299) {
@@ -134,7 +134,7 @@ const ModalEmpresa = ({ selectEmpresa, handleCloseModal }) => {
           <TextField
             disabled={disabledModal}
             onChange={handleInputChange}
-            defaultValue={selectEmpresa.rfc}
+            defaultValue={selectEmpresa?.rfc}
             variant='outlined'
             name='RFC'
             type='text'
@@ -149,7 +149,7 @@ const ModalEmpresa = ({ selectEmpresa, handleCloseModal }) => {
           <TextField
             disabled={disabledModal}
             onChange={handleInputChange}
-            defaultValue={selectEmpresa.nombre}
+            defaultValue={selectEmpresa?.nombre}
             variant='outlined'
             name='nombre'
             type='text'
@@ -164,7 +164,7 @@ const ModalEmpresa = ({ selectEmpresa, handleCloseModal }) => {
           <TextField
             disabled={disabledModal}
             onChange={handleInputChange}
-            defaultValue={selectEmpresa.direccion}
+            defaultValue={selectEmpresa?.direccion}
             variant='outlined'
             name='direccion'
             type='text'
@@ -179,7 +179,7 @@ const ModalEmpresa = ({ selectEmpresa, handleCloseModal }) => {
           <TextField
             disabled={disabledModal}
             onChange={handleInputChange}
-            defaultValue={selectEmpresa.estado}
+            defaultValue={selectEmpresa?.estado}
             variant='outlined'
             name='estado'
             type='text'
@@ -194,7 +194,7 @@ const ModalEmpresa = ({ selectEmpresa, handleCloseModal }) => {
           <TextField
             disabled={disabledModal}
             onChange={handleInputChange}
-            defaultValue={selectEmpresa.ciudad}
+            defaultValue={selectEmpresa?.ciudad}
             variant='outlined'
             name='ciudad'
             type='text'
@@ -209,7 +209,7 @@ const ModalEmpresa = ({ selectEmpresa, handleCloseModal }) => {
           <TextField
             disabled={disabledModal}
             onChange={handleInputChange}
-            defaultValue={selectEmpresa.colonia}
+            defaultValue={selectEmpresa?.colonia}
             variant='outlined'
             name='colonia'
             type='text'
@@ -224,7 +224,7 @@ const ModalEmpresa = ({ selectEmpresa, handleCloseModal }) => {
           <TextField
             disabled={disabledModal}
             onChange={handleInputChange}
-            defaultValue={selectEmpresa.cod_p}
+            defaultValue={selectEmpresa?.cod_p}
             variant='outlined'
             name='CP'
             type='number'

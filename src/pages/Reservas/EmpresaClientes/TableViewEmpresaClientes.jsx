@@ -29,11 +29,7 @@ const TableViewEmpresaClientes = () => {
   const attribute = 'empresa';
 
   const { id } = useParams();
-  const { listGetSpecific, loadingGetSpecific, errorGetSpecific } = useGetSpecific(
-    endpointCliente,
-    attribute,
-    id,
-  );
+  const { listGetSpecific, loadingGetSpecific, errorGetSpecific } = useGetSpecific(endpointCliente, attribute, id);
 
   const nameEmpresa =
     listGetSpecific?.length > 0
@@ -56,7 +52,7 @@ const TableViewEmpresaClientes = () => {
     <Box component='section' sx={[stylesWrapperBoxShadow, stylesWidthHeightTable]}>
       <TitlePage
         titlePage={
-          listGetSpecific.length > 0
+          listGetSpecific?.length > 0
             ? `Lista de Clientes Relacionados a ${nameEmpresa[0]}`
             : `Lista de Clientes Relacionados`
         }
@@ -86,8 +82,8 @@ const TableViewEmpresaClientes = () => {
                     <AlertGlobalTables messageError={messageErrorGetData} />
                   </TableCell>
                 </TableRow>
-              ) : listGetSpecific.length > 0 ? (
-                listGetSpecific.slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage).map(item => {
+              ) : listGetSpecific?.length > 0 ? (
+                listGetSpecific?.slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage)?.map(item => {
                   const { id, nombre, mail, tel } = item;
 
                   return (
@@ -112,7 +108,7 @@ const TableViewEmpresaClientes = () => {
           <TablePagination
             rowsPerPageOptions={[]}
             component='div'
-            count={listGetSpecific.length}
+            count={listGetSpecific?.length}
             rowsPerPage={rowsPerPage}
             page={page}
             onPageChange={handleChangePage}

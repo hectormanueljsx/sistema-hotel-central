@@ -27,12 +27,12 @@ const FormSearchReservaciones = ({ setSearch, dataReservacion, setDataReservacio
   }, []);
 
   const getMoreData = async () => {
-    if (dataReservacion.length >= end) {
+    if (dataReservacion?.length >= end) {
       setVisibleButton(false);
 
       const resultado = await getGeneralSelect(`${endpointReservas}${start}`);
 
-      setDataReservacion(prevData => [...prevData, ...resultado.data]);
+      setDataReservacion(prevData => [...prevData, ...resultado?.data]);
       setEnd(end + 100);
       setStart(start + 100);
     } else {
@@ -41,22 +41,20 @@ const FormSearchReservaciones = ({ setSearch, dataReservacion, setDataReservacio
   };
 
   const getData = async () => {
-    try {
-      setLoading(true);
+    setLoading(true);
+    const result = await getGeneralSelect(`${endpointReservas}${start}`);
+    setDataReservacion(result?.data);
+    setLoading(false);
 
-      const result = await getGeneralSelect(`${endpointReservas}${start}`);
-      setDataReservacion(result.data);
-
-      if (result.data.length >= end) {
+    if (result.status >= 200 && result.status <= 299) {
+      if (result?.data?.length >= end) {
         setStart(start + 100);
         setVisibleButton(false);
       } else {
         setVisibleButton(true);
       }
-    } catch (error) {
-      setError(error);
-    } finally {
-      setLoading(false);
+    } else {
+      setError(result);
     }
   };
 

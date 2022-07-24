@@ -44,8 +44,8 @@ const TableViewHistoricoEgresos = ({ search, dataRegistro, loading, error }) => 
   };
 
   const filterCliente =
-    dataRegistro.length > 0
-      ? dataRegistro.filter(item => item.cliente.nombre.toUpperCase().includes(search.toUpperCase()))
+    dataRegistro?.length > 0
+      ? dataRegistro?.filter(item => item?.cliente?.nombre?.toUpperCase()?.includes(search?.toUpperCase()))
       : [];
 
   return (
@@ -76,8 +76,8 @@ const TableViewHistoricoEgresos = ({ search, dataRegistro, loading, error }) => 
                     <AlertGlobalTables messageError={messageErrorGetData} />
                   </TableCell>
                 </TableRow>
-              ) : filterCliente.length > 0 ? (
-                filterCliente.slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage).map(item => {
+              ) : filterCliente?.length > 0 ? (
+                filterCliente?.slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage)?.map(item => {
                   const {
                     id,
                     fecha,
@@ -120,7 +120,7 @@ const TableViewHistoricoEgresos = ({ search, dataRegistro, loading, error }) => 
           <TablePagination
             rowsPerPageOptions={[]}
             component='div'
-            count={filterCliente.length}
+            count={filterCliente?.length}
             rowsPerPage={rowsPerPage}
             page={page}
             onPageChange={handleChangePage}

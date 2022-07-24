@@ -27,12 +27,12 @@ const FormSearchRegistro = ({ setSearch, dataRegistro, setDataRegistro, setLoadi
   }, []);
 
   const getMoreData = async () => {
-    if (dataRegistro.length >= end) {
+    if (dataRegistro?.length >= end) {
       setVisibleButton(false);
 
-      const resultado = await getGeneralSelect(`${endpointRegistros}${start}`);
+      const result = await getGeneralSelect(`${endpointRegistros}${start}`);
 
-      setDataRegistro(prevData => [...prevData, ...resultado.data]);
+      setDataRegistro(prevData => [...prevData, ...result?.data]);
       setEnd(end + 100);
       setStart(start + 100);
     } else {
@@ -41,22 +41,20 @@ const FormSearchRegistro = ({ setSearch, dataRegistro, setDataRegistro, setLoadi
   };
 
   const getData = async () => {
-    try {
-      setLoading(true);
+    setLoading(true);
+    const result = await getGeneralSelect(`${endpointRegistros}${start}`);
+    setDataRegistro(result?.data);
+    setLoading(false);
 
-      const result = await getGeneralSelect(`${endpointRegistros}${start}`);
-      setDataRegistro(result.data);
-
-      if (result.data.length >= end) {
+    if (result.status >= 200 && result.status <= 299) {
+      if (result?.data?.length >= end) {
         setStart(start + 100);
         setVisibleButton(false);
       } else {
         setVisibleButton(true);
       }
-    } catch (error) {
-      setError(error);
-    } finally {
-      setLoading(false);
+    } else {
+      setError(result);
     }
   };
 

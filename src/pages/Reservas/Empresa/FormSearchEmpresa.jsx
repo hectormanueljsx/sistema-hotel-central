@@ -29,12 +29,12 @@ const FormSearchEmpresa = ({ setSearch, dataEmpresa, setDataEmpresa, setLoading,
   }, []);
 
   const getMoreData = async () => {
-    if (dataEmpresa.length >= end) {
+    if (dataEmpresa?.length >= end) {
       setVisibleButton(false);
 
-      const resultado = await getGeneralSelect(`${endpointEmpresa}${start}`);
+      const result = await getGeneralSelect(`${endpointEmpresa}${start}`);
 
-      setDataEmpresa(prevData => [...prevData, ...resultado.data]);
+      setDataEmpresa(prevData => [...prevData, ...result?.data]);
       setEnd(end + 100);
       setStart(start + 100);
     } else {
@@ -43,22 +43,20 @@ const FormSearchEmpresa = ({ setSearch, dataEmpresa, setDataEmpresa, setLoading,
   };
 
   const getData = async () => {
-    try {
-      setLoading(true);
+    setLoading(true);
+    const result = await getGeneralSelect(`${endpointEmpresa}${start}`);
+    setDataEmpresa(result?.data);
+    setLoading(false);
 
-      const result = await getGeneralSelect(`${endpointEmpresa}${start}`);
-      setDataEmpresa(result.data);
-
-      if (result.data.length >= end) {
+    if (result.status >= 200 && result.status <= 299) {
+      if (result?.data?.length >= end) {
         setStart(start + 100);
         setVisibleButton(false);
       } else {
         setVisibleButton(true);
       }
-    } catch (error) {
-      setError(error);
-    } finally {
-      setLoading(false);
+    } else {
+      setError(result);
     }
   };
 

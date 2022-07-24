@@ -43,8 +43,12 @@ const TableViewHistoricoReservaciones = ({ search, dataReservacion, loading, err
   };
 
   const filterCliente =
-    dataReservacion.length > 0
-      ? dataReservacion.filter(item => item.cliente.nombre.toUpperCase().includes(search.toUpperCase()))
+    dataReservacion?.length > 0
+      ? dataReservacion?.filter(
+          item =>
+            item?.cliente?.nombre?.toUpperCase()?.includes(search?.toUpperCase()) ||
+            item?.est?.toUpperCase()?.includes(search?.toUpperCase()),
+        )
       : [];
 
   return (
@@ -75,8 +79,8 @@ const TableViewHistoricoReservaciones = ({ search, dataReservacion, loading, err
                     <AlertGlobalTables messageError={messageErrorGetData} />
                   </TableCell>
                 </TableRow>
-              ) : filterCliente.length > 0 ? (
-                filterCliente.slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage).map(item => {
+              ) : filterCliente?.length > 0 ? (
+                filterCliente?.slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage)?.map(item => {
                   const {
                     id,
                     fecha,
@@ -122,7 +126,7 @@ const TableViewHistoricoReservaciones = ({ search, dataReservacion, loading, err
           <TablePagination
             rowsPerPageOptions={[]}
             component='div'
-            count={filterCliente.length}
+            count={filterCliente?.length}
             rowsPerPage={rowsPerPage}
             page={page}
             onPageChange={handleChangePage}

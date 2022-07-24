@@ -55,7 +55,9 @@ const TableViewEmpresas = ({ search, dataEmpresa, loading, error }) => {
   };
 
   const filterName =
-    dataEmpresa.length > 0 ? dataEmpresa.filter(item => item.nombre.toUpperCase().includes(search.toUpperCase())) : [];
+    dataEmpresa?.length > 0
+      ? dataEmpresa?.filter(item => item?.nombre?.toUpperCase()?.includes(search?.toUpperCase()))
+      : [];
 
   return (
     <Box component='section' sx={[stylesWrapperBoxShadow, stylesWidthHeightTable]}>
@@ -85,8 +87,8 @@ const TableViewEmpresas = ({ search, dataEmpresa, loading, error }) => {
                     <AlertGlobalTables messageError={messageErrorGetData} />
                   </TableCell>
                 </TableRow>
-              ) : filterName.length > 0 ? (
-                filterName.slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage).map(item => {
+              ) : filterName?.length > 0 ? (
+                filterName?.slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage)?.map(item => {
                   const { id, rfc, nombre, ciudad, estado } = item;
                   const url = `#/reservas/empresas/${id}`;
 
@@ -121,7 +123,7 @@ const TableViewEmpresas = ({ search, dataEmpresa, loading, error }) => {
           <TablePagination
             rowsPerPageOptions={[]}
             component='div'
-            count={filterName.length}
+            count={filterName?.length}
             rowsPerPage={rowsPerPage}
             page={page}
             onPageChange={handleChangePage}

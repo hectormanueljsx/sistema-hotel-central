@@ -67,7 +67,7 @@ const FormIntercambiarReservacion = () => {
         </Box>
         <Box component='div' sx={[stylesWrapperBoxShadow, stylesWidthHeightForm]}>
           <Typography component='h3' sx={stylesTextTitleForm}>
-            Ingresa la Reservación o Registro para la Segunda Habitación
+            Ingresa la Reservación o Registro para Segunda Habitación
           </Typography>
           <Box component='div' sx={stylesBoxIconArrow}>
             <ArrowCircleLeftIcon sx={stylesArrowLeft} />
