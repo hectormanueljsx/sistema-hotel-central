@@ -40,66 +40,11 @@ const FormEgresos = ({ dataSearch, setDataSearch, setDateTable, setLoading, setE
 
   const getCategoria = async () => {
     const res = await getGeneralSelect(endpointCategoria);
-    setCategoria(res.data);
-  };
-
-  const getData = async () => {
-    if (data.fechaInicio.trim().length > 0 && data.fechaFin.trim().length && idCategoria && idSubcategoria) {
-      try {
-        setLoading(true);
-
-        const endpointEgreso = `egresos?fecha_gte=${data.fechaInicio}T00:00:00.000Z&fecha_lte=${data.fechaFin}T23:59:59.000Z&subcategoria=${idSubcategoria}:DESC&_start=${start}`;
-
-        const res = await getGeneralSelect(endpointEgreso);
-        setDataSearch(res.data);
-
-        if (res.status >= 200 && res.status <= 299) {
-          const dateAnticipo = `${moment(data.fechaInicio).format('DD/MM/YYYY')} - ${moment(data.fechaFin).format(
-            'DD/MM/YYYY',
-          )}`;
-
-          setDateTable(dateAnticipo);
-          setData({ fechaInicio: '', fechaFin: '' });
-          setIdCategoria('');
-          setIdSubcategoria('');
-
-          if (res.data.length >= end) {
-            setStart(start + 100);
-            setVisibleButton(false);
-          } else {
-            setVisibleButton(true);
-          }
-        } else {
-          setError(true);
-          return Swal.fire({
-            icon: 'error',
-            title: 'Ah ocurrido un error',
-            text: 'Lo sentimos, no se pudo buscar el registro debido a un problema internamente',
-            allowOutsideClick: false,
-            allowEscapeKey: false,
-            confirmButtonColor: '#1976d2',
-            confirmButtonText: 'Aceptar',
-          });
-        }
-      } catch (error) {
-      } finally {
-        setLoading(false);
-      }
-    } else {
-      Swal.fire({
-        icon: 'error',
-        title: 'Ah ocurrido un error',
-        text: 'Por favor, rellene todos los campos',
-        allowOutsideClick: false,
-        allowEscapeKey: false,
-        confirmButtonColor: '#1976d2',
-        confirmButtonText: 'Aceptar',
-      });
-    }
+    setCategoria(res?.data);
   };
 
   const getMoreData = async () => {
-    if (dataSearch.length >= end) {
+    if (dataSearch?.length >= end) {
       setVisibleButton(false);
 
       const endpointEgreso = `egresos?fecha_gte=${data.fechaInicio}T00:00:00.000Z&fecha_lte=${data.fechaFin}T23:59:59.000Z&subcategoria=${idSubcategoria}:DESC&_start=${start}`;
@@ -111,6 +56,56 @@ const FormEgresos = ({ dataSearch, setDataSearch, setDateTable, setLoading, setE
       setStart(start + 100);
     } else {
       setVisibleButton(true);
+    }
+  };
+
+  const getData = async () => {
+    if (data.fechaInicio.trim().length > 0 && data.fechaFin.trim().length && idCategoria && idSubcategoria) {
+      const endpointEgreso = `egresos?fecha_gte=${data.fechaInicio}T00:00:00.000Z&fecha_lte=${data.fechaFin}T23:59:59.000Z&subcategoria=${idSubcategoria}:DESC&_start=${start}`;
+
+      setLoading(true);
+      const res = await getGeneralSelect(endpointEgreso);
+      setDataSearch(res?.data);
+      setLoading(false);
+
+      if (res.status >= 200 && res.status <= 299) {
+        const dateAnticipo = `${moment(data.fechaInicio).format('DD/MM/YYYY')} - ${moment(data.fechaFin).format(
+          'DD/MM/YYYY',
+        )}`;
+
+        setDateTable(dateAnticipo);
+        setData({ fechaInicio: '', fechaFin: '' });
+        setIdCategoria('');
+        setIdSubcategoria('');
+
+        if (res?.data?.length >= end) {
+          setStart(start + 100);
+          setVisibleButton(false);
+        } else {
+          setVisibleButton(true);
+        }
+      } else {
+        setError(true);
+        return Swal.fire({
+          icon: 'error',
+          title: 'Ah ocurrido un error',
+          text: 'Lo sentimos, no se pudo buscar el registro debido a un problema internamente',
+          allowOutsideClick: false,
+          allowEscapeKey: false,
+          confirmButtonColor: '#1976d2',
+          confirmButtonText: 'Aceptar',
+        });
+      }
+    } else {
+      Swal.fire({
+        icon: 'error',
+        title: 'Ah ocurrido un error',
+        text: 'Por favor, rellene todos los campos',
+        allowOutsideClick: false,
+        allowEscapeKey: false,
+        confirmButtonColor: '#1976d2',
+        confirmButtonText: 'Aceptar',
+      });
     }
   };
 
@@ -151,8 +146,8 @@ const FormEgresos = ({ dataSearch, setDataSearch, setDateTable, setLoading, setE
           <TitleInput titleInput='Categoría' />
           <FormControl fullWidth>
             <Select size='small' value={idCategoria} onChange={handleCategoria}>
-              {categoria.length > 0 ? (
-                categoria.map(item => {
+              {categoria?.length > 0 ? (
+                categoria?.map(item => {
                   const { categoria, id, status } = item;
 
                   return status ? (
@@ -172,8 +167,8 @@ const FormEgresos = ({ dataSearch, setDataSearch, setDateTable, setLoading, setE
           <FormControl fullWidth>
             <Select size='small' value={idSubcategoria} onChange={handleSubCategoria}>
               {idCategoria ? (
-                idCategoria.subcategorias.length > 0 ? (
-                  idCategoria.subcategorias.map(subitem => {
+                idCategoria?.subcategorias?.length > 0 ? (
+                  idCategoria?.subcategorias?.map(subitem => {
                     const { descripcion, id, status } = subitem;
 
                     return status ? (

@@ -27,12 +27,12 @@ const FormSearchSaldoPendiente = ({ setSearch, dataHistorico, setDataHistorico, 
   }, []);
 
   const getMoreData = async () => {
-    if (dataHistorico.length >= end) {
+    if (dataHistorico?.length >= end) {
       setVisibleButton(false);
 
-      const resultado = await getGeneralSelect(`${endpointHistorico}${start}`);
+      const result = await getGeneralSelect(`${endpointHistorico}${start}`);
 
-      setDataHistorico(prevData => [...prevData, ...resultado.data]);
+      setDataHistorico(prevData => [...prevData, ...result?.data]);
       setEnd(end + 100);
       setStart(start + 100);
     } else {
@@ -41,22 +41,20 @@ const FormSearchSaldoPendiente = ({ setSearch, dataHistorico, setDataHistorico, 
   };
 
   const getData = async () => {
-    try {
-      setLoading(true);
+    setLoading(true);
+    const result = await getGeneralSelect(`${endpointHistorico}${start}`);
+    setDataHistorico(result?.data);
+    setLoading(false);
 
-      const result = await getGeneralSelect(`${endpointHistorico}${start}`);
-      setDataHistorico(result.data);
-
-      if (result.data.length >= end) {
+    if (result.status >= 200 && result.status <= 299) {
+      if (result?.data?.length >= end) {
         setStart(start + 100);
         setVisibleButton(false);
       } else {
         setVisibleButton(true);
       }
-    } catch (error) {
-      setError(error);
-    } finally {
-      setLoading(false);
+    } else {
+      setError(result);
     }
   };
 

@@ -74,8 +74,8 @@ const TableViewAnticipo = ({ dataSearch, dateTable, loading, error }) => {
                     <AlertGlobalTables messageError={messageErrorGetData} />
                   </TableCell>
                 </TableRow>
-              ) : dataSearch.length > 0 ? (
-                dataSearch.slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage).map(item => {
+              ) : dataSearch?.length > 0 ? (
+                dataSearch?.slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage)?.map(item => {
                   const {
                     id,
                     fecha,
@@ -97,7 +97,7 @@ const TableViewAnticipo = ({ dataSearch, dateTable, loading, error }) => {
                           minimumFractionDigits: 2,
                         })}
                       </TableCell>
-                      <TableCell sx={stylesTableCellBody}>{reservacion.id}</TableCell>
+                      <TableCell sx={stylesTableCellBody}>{reservacion?.id}</TableCell>
                     </TableRow>
                   );
                 })
@@ -129,7 +129,7 @@ const TableViewAnticipo = ({ dataSearch, dateTable, loading, error }) => {
           <TablePagination
             rowsPerPageOptions={[]}
             component='div'
-            count={dataSearch.length}
+            count={dataSearch?.length}
             rowsPerPage={rowsPerPage}
             page={page}
             onPageChange={handleChangePage}

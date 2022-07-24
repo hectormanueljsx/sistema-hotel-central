@@ -92,8 +92,8 @@ const TableViewEgresos = ({ dataSearch, dateTable, loading, error }) => {
                     <AlertGlobalTables messageError={messageErrorGetData} />
                   </TableCell>
                 </TableRow>
-              ) : dataSearch.length > 0 ? (
-                dataSearch.slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage).map(item => {
+              ) : dataSearch?.length > 0 ? (
+                dataSearch?.slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage)?.map(item => {
                   const { id, fecha, concepto, subcategoria, importe, pago, users_permissions_user } = item;
 
                   totalImporte += importe;
@@ -101,8 +101,8 @@ const TableViewEgresos = ({ dataSearch, dateTable, loading, error }) => {
                   return (
                     <TableRow key={id}>
                       <TableCell sx={stylesTableCellBody}>{moment(fecha).format('YYYY-MM-DD')}</TableCell>
-                      <TableCell sx={stylesTableCellBody}>{pago.f_pago}</TableCell>
-                      <TableCell sx={stylesTableCellBody}>{subcategoria.descripcion}</TableCell>
+                      <TableCell sx={stylesTableCellBody}>{pago?.f_pago}</TableCell>
+                      <TableCell sx={stylesTableCellBody}>{subcategoria?.descripcion}</TableCell>
                       <TableCell sx={stylesTableCellBody}>
                         {importe.toLocaleString('es-MX', {
                           style: 'currency',
@@ -111,7 +111,7 @@ const TableViewEgresos = ({ dataSearch, dateTable, loading, error }) => {
                         })}
                       </TableCell>
                       <TableCell sx={stylesTableCellBody}>{concepto}</TableCell>
-                      <TableCell sx={stylesTableCellBody}>{users_permissions_user.username}</TableCell>
+                      <TableCell sx={stylesTableCellBody}>{users_permissions_user?.username}</TableCell>
                       <TableCell sx={stylesTableCellBody}>
                         <IconButton color='info' size='small' onClick={() => handleOpen(item)}>
                           <VisibilityIcon />
@@ -151,7 +151,7 @@ const TableViewEgresos = ({ dataSearch, dateTable, loading, error }) => {
           <TablePagination
             rowsPerPageOptions={[]}
             component='div'
-            count={dataSearch.length}
+            count={dataSearch?.length}
             rowsPerPage={rowsPerPage}
             page={page}
             onPageChange={handleChangePage}

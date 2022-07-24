@@ -236,7 +236,7 @@ const ModalEgreso = ({ dataEgreso, pago, categoria, dataCategoria, handleCloseMo
         <Box component='div'>
           <TitleInput titleInput='Fecha' />
           <TextField
-            value={moment(dataEgreso?.fecha).format('YYYY-MM-DD hh:mm:ss')}
+            value={dataEgreso?.fecha ? moment(dataEgreso?.fecha).format('YYYY-MM-DD hh:mm:ss') : null}
             name='fecha'
             variant='outlined'
             type='datetime'

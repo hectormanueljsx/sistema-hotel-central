@@ -62,14 +62,14 @@ const TableViewIngresoBruto = ({ dateTable, dataSearch, dataPago, dataRegistro, 
                       <AlertGlobalTables messageError={messageErrorGetData} />
                     </TableCell>
                   </TableRow>
-                ) : dataSearch.length > 0 ? (
-                  dataPago.map(item => {
+                ) : dataSearch?.length > 0 ? (
+                  dataPago?.map(item => {
                     const { id, f_pago } = item;
                     total = 0;
 
-                    dataSearch.map(item => {
+                    dataSearch?.map(item => {
                       const { cantidad, pago } = item;
-                      const fpago = pago.f_pago;
+                      const fpago = pago?.f_pago;
 
                       if (f_pago === fpago) total = total + cantidad;
                     });
@@ -128,12 +128,12 @@ const TableViewIngresoBruto = ({ dateTable, dataSearch, dataPago, dataRegistro, 
                       <AlertGlobalTables messageError={messageErrorGetData} />
                     </TableCell>
                   </TableRow>
-                ) : dataSearch.length > 0 ? (
-                  dataPago.map(item => {
+                ) : dataSearch?.length > 0 ? (
+                  dataPago?.map(item => {
                     const { id, f_pago } = item;
                     total = 0;
 
-                    dataRegistro.map(item => {
+                    dataRegistro?.map(item => {
                       const { forma_pago, pagado } = item;
 
                       if (f_pago === forma_pago) total = total + pagado;
@@ -193,20 +193,20 @@ const TableViewIngresoBruto = ({ dateTable, dataSearch, dataPago, dataRegistro, 
                       <AlertGlobalTables messageError={messageErrorGetData} />
                     </TableCell>
                   </TableRow>
-                ) : dataSearch.length > 0 ? (
-                  dataPago.map(item => {
+                ) : dataSearch?.length > 0 ? (
+                  dataPago?.map(item => {
                     const { id, f_pago } = item;
                     let total = 0;
                     let totalReg = 0;
                     let totalRes = 0;
 
-                    totalReservas.map(item => {
+                    totalReservas?.map(item => {
                       const { formaPago, total } = item;
 
                       if (f_pago === formaPago) totalRes = total;
                     });
 
-                    totalRegistros.map(item => {
+                    totalRegistros?.map(item => {
                       const { formaPago, total } = item;
 
                       if (f_pago === formaPago) totalReg = total;

@@ -22,7 +22,7 @@ const ModalMantenimiento = ({ dataMantenimiento, handleCloseModal }) => {
         <Box component='div'>
           <TitleInput titleInput='Motivo' />
           <TextField
-            defaultValue={dataMantenimiento.motivo}
+            defaultValue={dataMantenimiento?.motivo}
             disabled={true}
             name='motivo'
             variant='outlined'
@@ -37,7 +37,7 @@ const ModalMantenimiento = ({ dataMantenimiento, handleCloseModal }) => {
         <Box component='div'>
           <TitleInput titleInput='Fecha de inicio' />
           <TextField
-            defaultValue={dataMantenimiento.f_inicio}
+            defaultValue={dataMantenimiento?.f_inicio}
             disabled={true}
             name='fechaInicio'
             variant='outlined'
@@ -51,7 +51,7 @@ const ModalMantenimiento = ({ dataMantenimiento, handleCloseModal }) => {
         <Box component='div'>
           <TitleInput titleInput='Fecha de termino' />
           <TextField
-            defaultValue={dataMantenimiento.f_fin}
+            defaultValue={dataMantenimiento?.f_fin}
             disabled={true}
             name='fechafin'
             variant='outlined'
@@ -65,7 +65,7 @@ const ModalMantenimiento = ({ dataMantenimiento, handleCloseModal }) => {
         <Box component='div'>
           <TitleInput titleInput='Precio' />
           <TextField
-            defaultValue={dataMantenimiento.costo}
+            defaultValue={dataMantenimiento?.costo}
             disabled={true}
             name='precio'
             variant='outlined'
@@ -79,7 +79,7 @@ const ModalMantenimiento = ({ dataMantenimiento, handleCloseModal }) => {
         <Box component='div'>
           <TitleInput titleInput='Habitación' />
           <TextField
-            defaultValue={dataMantenimiento.habitacion.num_hab}
+            defaultValue={dataMantenimiento?.habitacion?.num_hab}
             disabled={true}
             name='habitación'
             variant='outlined'
@@ -93,7 +93,7 @@ const ModalMantenimiento = ({ dataMantenimiento, handleCloseModal }) => {
         <Box component='div'>
           <TitleInput titleInput='Estado' />
           <TextField
-            defaultValue={dataMantenimiento.estado}
+            defaultValue={dataMantenimiento?.estado}
             disabled={true}
             name='estado'
             variant='outlined'
@@ -107,7 +107,7 @@ const ModalMantenimiento = ({ dataMantenimiento, handleCloseModal }) => {
         <Box component='div'>
           <TitleInput titleInput='Realizado por' />
           <TextField
-            defaultValue={dataMantenimiento.trabajador}
+            defaultValue={dataMantenimiento?.trabajador}
             disabled={true}
             name='trabajador'
             variant='outlined'
@@ -121,7 +121,7 @@ const ModalMantenimiento = ({ dataMantenimiento, handleCloseModal }) => {
         <Box component='div'>
           <TitleInput titleInput='Reportado por' />
           <TextField
-            defaultValue={dataMantenimiento.reporta}
+            defaultValue={dataMantenimiento?.reporta}
             disabled={true}
             name='reporta'
             variant='outlined'
@@ -135,7 +135,7 @@ const ModalMantenimiento = ({ dataMantenimiento, handleCloseModal }) => {
         <Box component='div'>
           <TitleInput titleInput='Subcategoría' />
           <TextField
-            defaultValue={dataMantenimiento.subcategoria.descripcion}
+            defaultValue={dataMantenimiento?.subcategoria?.descripcion}
             disabled={true}
             name='subcategoria'
             variant='outlined'
@@ -149,7 +149,7 @@ const ModalMantenimiento = ({ dataMantenimiento, handleCloseModal }) => {
         <Box component='div'>
           <TitleInput titleInput='Usuario' />
           <TextField
-            defaultValue={dataMantenimiento.users_permissions_user.username}
+            defaultValue={dataMantenimiento?.users_permissions_user?.username}
             disabled={true}
             variant='outlined'
             type='text'

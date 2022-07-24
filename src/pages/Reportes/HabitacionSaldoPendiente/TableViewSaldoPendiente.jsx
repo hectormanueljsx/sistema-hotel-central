@@ -47,8 +47,8 @@ const TableViewSaldoPendiente = ({ search, dataHistorico, loading, error }) => {
   };
 
   const filterCliente =
-    dataHistorico.length > 0
-      ? dataHistorico.filter(item => item.registro.cliente.nombre.toUpperCase().includes(search.toUpperCase()))
+    dataHistorico?.length > 0
+      ? dataHistorico?.filter(item => item?.registro?.cliente?.nombre?.toUpperCase()?.includes(search?.toUpperCase()))
       : [];
 
   return (
@@ -79,8 +79,8 @@ const TableViewSaldoPendiente = ({ search, dataHistorico, loading, error }) => {
                     <AlertGlobalTables messageError={messageErrorGetData} />
                   </TableCell>
                 </TableRow>
-              ) : filterCliente.length > 0 ? (
-                filterCliente.slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage).map(item => {
+              ) : filterCliente?.length > 0 ? (
+                filterCliente?.slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage)?.map(item => {
                   const {
                     id,
                     fecha_hosp,
@@ -144,7 +144,7 @@ const TableViewSaldoPendiente = ({ search, dataHistorico, loading, error }) => {
           <TablePagination
             rowsPerPageOptions={[]}
             component='div'
-            count={filterCliente.length}
+            count={filterCliente?.length}
             rowsPerPage={rowsPerPage}
             page={page}
             onPageChange={handleChangePage}

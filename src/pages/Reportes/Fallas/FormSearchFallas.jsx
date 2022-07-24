@@ -38,49 +38,58 @@ const FormSearchMantenimiento = ({ setDataSearch, setDateTable, setLoading, setE
 
   const getSubcategoria = async () => {
     const res = await getGeneralSelect(`${endpointCategoria}?categoria=MANTENIMIENTO`);
-    setIdCategoria(res.data[0]);
+    setIdCategoria(res?.data[0]);
+  };
+
+  const getMoreData = async () => {
+    if (dataSearch?.length >= end) {
+      const endpointMantenimiento = `mantenimientos?f_reporte_gte=${data.firstReport}T00:00:00.000Z&f_reporte_lte=${data.lastReport}T23:59:59.000Z&subcategoria=${idSubcategoria}:DESC&_start=${start}`;
+
+      setVisibleButton(false);
+      const result = await getGeneralSelect(endpointMantenimiento);
+      setDataSearch(prevData => [...prevData, ...result?.data]);
+      setEnd(end + 100);
+      setStart(start + 100);
+    } else {
+      setVisibleButton(true);
+    }
   };
 
   const getData = async () => {
     if (data.firstReport.trim().length > 0 && data.lastReport.trim().length > 0 && idSubcategoria) {
-      try {
-        setLoading(true);
+      const endpointMantenimiento = `mantenimientos?f_reporte_gte=${data.firstReport}T00:00:00.000Z&f_reporte_lte=${data.lastReport}T23:59:59.000Z&subcategoria=${idSubcategoria}:DESC&_start=${start}`;
 
-        const endpointMantenimiento = `mantenimientos?f_reporte_gte=${data.firstReport}T00:00:00.000Z&f_reporte_lte=${data.lastReport}T23:59:59.000Z&subcategoria=${idSubcategoria}:DESC&_start=${start}`;
+      setLoading(true);
+      const result = await getGeneralSelect(endpointMantenimiento);
+      setDataSearch(result?.data);
+      setLoading(false);
 
-        const result = await getGeneralSelect(endpointMantenimiento);
-        setDataSearch(result.data);
+      if (result.status >= 200 && result.status <= 299) {
+        const dateAnticipo = `${moment(data.firstReport).format('DD/MM/YYYY')} - ${moment(data.lastReport).format(
+          'DD/MM/YYYY',
+        )}`;
 
-        if (result.status >= 200 && result.status <= 299) {
-          const dateAnticipo = `${moment(data.firstReport).format('DD/MM/YYYY')} - ${moment(data.lastReport).format(
-            'DD/MM/YYYY',
-          )}`;
+        setDateTable(dateAnticipo);
+        setData({ firstReport: '', lastReport: '' });
+        setIdSubcategoria('');
 
-          setDateTable(dateAnticipo);
-          setData({ firstReport: '', lastReport: '' });
-          setIdSubcategoria('');
-
-          if (res.data.length >= end) {
-            setStart(start + 100);
-            setVisibleButton(false);
-          } else {
-            setVisibleButton(true);
-          }
+        if (result?.data?.length >= end) {
+          setStart(start + 100);
+          setVisibleButton(false);
         } else {
-          setError(true);
-          return Swal.fire({
-            icon: 'error',
-            title: 'Ah ocurrido un error',
-            text: 'Lo sentimos, no se pudo buscar el registro debido a un problema internamente',
-            allowOutsideClick: false,
-            allowEscapeKey: false,
-            confirmButtonColor: '#1976d2',
-            confirmButtonText: 'Aceptar',
-          });
+          setVisibleButton(true);
         }
-      } catch (error) {
-      } finally {
-        setLoading(false);
+      } else {
+        setError(true);
+        return Swal.fire({
+          icon: 'error',
+          title: 'Ah ocurrido un error',
+          text: 'Lo sentimos, no se pudo buscar el registro debido a un problema internamente',
+          allowOutsideClick: false,
+          allowEscapeKey: false,
+          confirmButtonColor: '#1976d2',
+          confirmButtonText: 'Aceptar',
+        });
       }
     } else {
       Swal.fire({
@@ -92,22 +101,6 @@ const FormSearchMantenimiento = ({ setDataSearch, setDateTable, setLoading, setE
         confirmButtonColor: '#1976d2',
         confirmButtonText: 'Aceptar',
       });
-    }
-  };
-
-  const getMoreData = async () => {
-    if (dataSearch.length >= end) {
-      setVisibleButton(false);
-
-      const endpointMantenimiento = `mantenimientos?f_reporte_gte=${data.firstReport}T00:00:00.000Z&f_reporte_lte=${data.lastReport}T23:59:59.000Z&subcategoria=${idSubcategoria}:DESC&_start=${start}`;
-
-      const resultado = await getGeneralSelect(endpointMantenimiento);
-
-      setDataSearch(prevData => [...prevData, ...resultado.data]);
-      setEnd(end + 100);
-      setStart(start + 100);
-    } else {
-      setVisibleButton(true);
     }
   };
 
@@ -149,8 +142,8 @@ const FormSearchMantenimiento = ({ setDataSearch, setDateTable, setLoading, setE
           <FormControl fullWidth>
             <Select size='small' value={idSubcategoria} onChange={handleSubcategoria}>
               {idCategoria ? (
-                idCategoria.subcategorias.length > 0 ? (
-                  idCategoria.subcategorias.map(subitem => {
+                idCategoria?.subcategorias?.length > 0 ? (
+                  idCategoria?.subcategorias?.map(subitem => {
                     const { descripcion, id, status } = subitem;
 
                     return status ? (

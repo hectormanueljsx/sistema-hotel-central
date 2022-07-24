@@ -35,12 +35,12 @@ const FormAnticipo = ({ setDataSearch, dataSearch, setDateTable, setLoading, set
   const { list } = useGetGeneralTable(endpointPago);
 
   const getMoreData = async () => {
-    if (dataSearch.length >= end) {
+    if (dataSearch?.length >= end) {
       setVisibleButton(false);
 
-      const resultado = await getGeneralSelect(endpointAnticipo);
+      const result = await getGeneralSelect(endpointAnticipo);
 
-      setDataSearch(prevData => [...prevData, ...resultado]);
+      setDataSearch(prevData => [...prevData, ...result?.data]);
       setEnd(end + 100);
       setStart(start + 100);
     } else {
@@ -50,42 +50,37 @@ const FormAnticipo = ({ setDataSearch, dataSearch, setDateTable, setLoading, set
 
   const getData = async () => {
     if (data.fechaInicio.length > 0 && data.fechaFin.length && formaPago) {
-      try {
-        setLoading(true);
+      setLoading(true);
+      const res = await getGeneralSelect(endpointAnticipo);
+      setDataSearch(res?.data);
+      setLoading(false);
 
-        const res = await getGeneralSelect(endpointAnticipo);
-        setDataSearch(res.data);
+      if (res.status >= 200 && res.status <= 299) {
+        const dateAnticipo = `${moment(data.fechaInicio).format('DD/MM/YYYY')} - ${moment(data.fechaFin).format(
+          'DD/MM/YYYY',
+        )}`;
 
-        if (res.status >= 200 && res.status <= 299) {
-          const dateAnticipo = `${moment(data.fechaInicio).format('DD/MM/YYYY')} - ${moment(data.fechaFin).format(
-            'DD/MM/YYYY',
-          )}`;
+        setDateTable(dateAnticipo);
+        setData({ fechaInicio: '', fechaFin: '' });
+        setFormaPago('');
 
-          setDateTable(dateAnticipo);
-          setData({ fechaInicio: '', fechaFin: '' });
-          setFormaPago('');
-
-          if (res.data.length >= end) {
-            setStart(start + 100);
-            setVisibleButton(false);
-          } else {
-            setVisibleButton(true);
-          }
+        if (res?.data?.length >= end) {
+          setStart(start + 100);
+          setVisibleButton(false);
         } else {
-          setError(true);
-          return Swal.fire({
-            icon: 'error',
-            title: 'Ah ocurrido un error',
-            text: 'Lo sentimos, no se pudo buscar el registro debido a un problema internamente',
-            allowOutsideClick: false,
-            allowEscapeKey: false,
-            confirmButtonColor: '#1976d2',
-            confirmButtonText: 'Aceptar',
-          });
+          setVisibleButton(true);
         }
-      } catch (error) {
-      } finally {
-        setLoading(false);
+      } else {
+        setError(true);
+        return Swal.fire({
+          icon: 'error',
+          title: 'Ah ocurrido un error',
+          text: 'Lo sentimos, no se pudo buscar el registro debido a un problema internamente',
+          allowOutsideClick: false,
+          allowEscapeKey: false,
+          confirmButtonColor: '#1976d2',
+          confirmButtonText: 'Aceptar',
+        });
       }
     } else {
       Swal.fire({
@@ -137,8 +132,8 @@ const FormAnticipo = ({ setDataSearch, dataSearch, setDateTable, setLoading, set
           <TitleInput titleInput='Forma de pago' />
           <FormControl fullWidth>
             <Select size='small' value={formaPago} onChange={handleSelectChange}>
-              {list.length > 0 ? (
-                list.map(item => {
+              {list?.length > 0 ? (
+                list?.map(item => {
                   const { id, f_pago } = item;
 
                   return (

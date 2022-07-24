@@ -26,7 +26,6 @@ const FormIngresoBruto = ({
   setLoading,
   setError,
 }) => {
-
   const limit = `?fecha_gte=${data.fechaInicio}&fecha_lte=${data.fechaFin}&_start=0`;
   const limitHistorial = `?fecha_hosp_gte=${data.fechaInicio}&fecha_hosp_lte=${data.fechaFin}&_start=0`;
   const endpointPago = generalEndpoints.pago;
@@ -38,39 +37,33 @@ const FormIngresoBruto = ({
   const { list } = useGetGeneralTable(endpointPago);
 
   const getData = async () => {
-    if (data.fechaInicio.length > 0 && data.fechaFin.length) {
-      try {
-        setLoading(true);
+    if (data.fechaInicio.length > 0 && data.fechaFin.length > 0) {
+      setLoading(true);
+      const res = await getGeneralSelect(endpointAnticipo);
+      const resHistorial = await getGeneralSelect(endpointHistorial);
+      setDataSearch(res?.data);
+      setDataPago(list);
+      setDataRegistro(resHistorial?.data);
+      setLoading(false);
 
-        const res = await getGeneralSelect(endpointAnticipo);
-        const resHistorial = await getGeneralSelect(endpointHistorial);
+      if (res.status && resHistorial.status >= 200 && res.status && resHistorial.status <= 299) {
+        const dateIngresoBruto = `${moment(data.fechaInicio).format('DD/MM/YYYY')} - ${moment(data.fechaFin).format(
+          'DD/MM/YYYY',
+        )}`;
 
-        setDataSearch(res.data);
-        setDataPago(list);
-        setDataRegistro(resHistorial.data);
-
-        if (res.status && resHistorial.status >= 200 && res.status && resHistorial.status <= 299) {
-          const dateIngresoBruto = `${moment(data.fechaInicio).format('DD/MM/YYYY')} - ${moment(data.fechaFin).format(
-            'DD/MM/YYYY',
-          )}`;
-
-          setDateTable(dateIngresoBruto);
-          setData({ fechaInicio: '', fechaFin: '' });
-        } else {
-          setError(true);
-          return Swal.fire({
-            icon: 'error',
-            title: 'Ah ocurrido un error',
-            text: 'Lo sentimos, no se pudo buscar el registro debido a un problema internamente',
-            allowOutsideClick: false,
-            allowEscapeKey: false,
-            confirmButtonColor: '#1976d2',
-            confirmButtonText: 'Aceptar',
-          });
-        }
-      } catch (error) {
-      } finally {
-        setLoading(false);
+        setDateTable(dateIngresoBruto);
+        setData({ fechaInicio: '', fechaFin: '' });
+      } else {
+        setError(true);
+        return Swal.fire({
+          icon: 'error',
+          title: 'Ah ocurrido un error',
+          text: 'Lo sentimos, no se pudo buscar el registro debido a un problema internamente',
+          allowOutsideClick: false,
+          allowEscapeKey: false,
+          confirmButtonColor: '#1976d2',
+          confirmButtonText: 'Aceptar',
+        });
       }
     } else {
       Swal.fire({

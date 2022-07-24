@@ -24,7 +24,7 @@ const ModalEgresos = ({ dataEgreso, handleCloseModal }) => {
         <Box component='div'>
           <TitleInput titleInput='Id' />
           <TextField
-            defaultValue={dataEgreso.id}
+            defaultValue={dataEgreso?.id}
             disabled={true}
             variant='outlined'
             type='number'
@@ -37,7 +37,7 @@ const ModalEgresos = ({ dataEgreso, handleCloseModal }) => {
         <Box component='div'>
           <TitleInput titleInput='Concepto' />
           <TextField
-            defaultValue={dataEgreso.concepto}
+            defaultValue={dataEgreso?.concepto}
             disabled={true}
             variant='outlined'
             type='text'
@@ -51,13 +51,13 @@ const ModalEgresos = ({ dataEgreso, handleCloseModal }) => {
           <TitleInput titleInput='Con factura' />
           <FormControlLabel
             disabled={true}
-            control={<Checkbox checked={dataEgreso.facturado} disableRipple sx={stylesCheckboxForm} />}
+            control={<Checkbox checked={dataEgreso?.facturado} disableRipple sx={stylesCheckboxForm} />}
           />
         </Box>
         <Box component='div'>
           <TitleInput titleInput='Importe' />
           <TextField
-            defaultValue={dataEgreso.importe}
+            defaultValue={dataEgreso?.importe}
             disabled={true}
             variant='outlined'
             type='number'
@@ -70,7 +70,7 @@ const ModalEgresos = ({ dataEgreso, handleCloseModal }) => {
         <Box component='div'>
           <TitleInput titleInput='Iva' />
           <TextField
-            value={dataEgreso.iva}
+            value={dataEgreso?.iva}
             disabled={true}
             variant='outlined'
             type='number'
@@ -83,7 +83,7 @@ const ModalEgresos = ({ dataEgreso, handleCloseModal }) => {
         <Box component='div'>
           <TitleInput titleInput='Subtotal' />
           <TextField
-            value={dataEgreso.subtotal}
+            value={dataEgreso?.subtotal}
             disabled={true}
             variant='outlined'
             type='number'
@@ -96,7 +96,7 @@ const ModalEgresos = ({ dataEgreso, handleCloseModal }) => {
         <Box component='div'>
           <TitleInput titleInput='Forma de pago' />
           <TextField
-            value={dataEgreso.pago.f_pago}
+            value={dataEgreso?.pago.f_pago}
             disabled={true}
             variant='outlined'
             type='text'
@@ -109,7 +109,7 @@ const ModalEgresos = ({ dataEgreso, handleCloseModal }) => {
         <Box component='div'>
           <TitleInput titleInput='Subcategoría' />
           <TextField
-            value={dataEgreso.subcategoria.descripcion}
+            value={dataEgreso?.subcategoria?.descripcion}
             disabled={true}
             variant='outlined'
             type='text'
@@ -122,7 +122,8 @@ const ModalEgresos = ({ dataEgreso, handleCloseModal }) => {
         <Box component='div'>
           <TitleInput titleInput='Fecha' />
           <TextField
-            value={moment(dataEgreso.fecha).format('YYYY-MM-DD hh:mm:ss a')}
+            value={dataEgreso?.fecha ? moment(dataEgreso?.fecha).format('DD/MM/YYYY') : null}
+            disabled={true}
             name='fecha'
             variant='outlined'
             type='datetime'
@@ -130,14 +131,12 @@ const ModalEgresos = ({ dataEgreso, handleCloseModal }) => {
             size='small'
             required
             fullWidth
-            disabled={true}
-            autoFocus
           />
         </Box>
         <Box component='div'>
           <TitleInput titleInput='Usuario' />
           <TextField
-            value={dataEgreso.users_permissions_user.username}
+            value={dataEgreso?.users_permissions_user?.username}
             disabled={true}
             name='usuario'
             variant='outlined'
