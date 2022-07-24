@@ -44,37 +44,33 @@ const Login = () => {
     e.preventDefault();
 
     if (datosLogin.username.trim().length > 0 && datosLogin.password.trim().length > 0) {
-      try {
-        setLoaderRequest(true);
-        const res = await postLogin(datosLogin.username, datosLogin.password);
-        const dateTime = new Date();
+      setLoaderRequest(true);
+      const res = await postLogin(datosLogin.username, datosLogin.password);
+      const dateTime = new Date();
 
-        if (res.status >= 200 && res.status <= 299) {
-          const endpointUsuario = generalEndpoints.usuario;
-          const generalData = { ult_ingreso: dateTime.toISOString() };
+      if (res.status >= 200 && res.status <= 299) {
+        const endpointUsuario = generalEndpoints.usuario;
+        const generalData = { ult_ingreso: dateTime.toISOString() };
 
-          localStorage.setItem('id', res.id);
-          localStorage.setItem('jwt', res.jwt);
-          localStorage.setItem('username', res.username);
-          localStorage.setItem('role', res.name);
+        localStorage.setItem('id', res?.id);
+        localStorage.setItem('jwt', res?.jwt);
+        localStorage.setItem('username', res?.username);
+        localStorage.setItem('role', res?.name);
 
-          await putGeneralTable(endpointUsuario, res.id, generalData);
-
-          navigate('/');
-        } else {
-          Swal.fire({
-            icon: 'error',
-            title: 'Ah ocurrido un error',
-            text: 'Por favor, verifique su usuario y contraseña',
-            allowOutsideClick: false,
-            allowEscapeKey: false,
-            confirmButtonColor: '#1976d2',
-            confirmButtonText: 'Aceptar',
-          });
-        }
-      } catch (error) {
-      } finally {
+        await putGeneralTable(endpointUsuario, res?.id, generalData);
         setLoaderRequest(false);
+
+        navigate('/');
+      } else {
+        Swal.fire({
+          icon: 'error',
+          title: 'Ah ocurrido un error',
+          text: 'Por favor, verifique su usuario y contraseña',
+          allowOutsideClick: false,
+          allowEscapeKey: false,
+          confirmButtonColor: '#1976d2',
+          confirmButtonText: 'Aceptar',
+        });
       }
     } else {
       Swal.fire({
